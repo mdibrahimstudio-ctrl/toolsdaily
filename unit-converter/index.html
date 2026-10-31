@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit Converter — Length, Weight &amp; Temperature — ToolsDaily</title>
+<meta name="description" content="Free unit converter for length, weight and temperature: kilometres to miles, kilograms to pounds, Celsius to Fahrenheit and more, with instant results.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Unit Converter</h1>
+<p class="lead">Convert length, weight and temperature units instantly.</p>
+
+<div class="card">
+  <label for="cat">Category</label>
+  <select id="cat"><option value="length">Length</option><option value="weight">Weight</option><option value="temperature">Temperature</option></select>
+  <div class="row">
+    <div><label for="val">Value</label><input type="number" id="val" value="1" step="any"></div>
+    <div><label for="from">From</label><select id="from"></select></div>
+    <div><label for="to">To</label><select id="to"></select></div>
+  </div>
+  <p><button id="swap" type="button" class="secondary">⇄ Swap units</button></p>
+  <p class="out" id="result" aria-live="polite">–</p>
+</div>
+<script>
+(function(){
+  var UNITS={
+    length:{m:{label:'Metres (m)',f:1}, km:{label:'Kilometres (km)',f:1000}, cm:{label:'Centimetres (cm)',f:0.01}, mm:{label:'Millimetres (mm)',f:0.001}, mi:{label:'Miles (mi)',f:1609.344}, yd:{label:'Yards (yd)',f:0.9144}, ft:{label:'Feet (ft)',f:0.3048}, 'in':{label:'Inches (in)',f:0.0254}},
+    weight:{kg:{label:'Kilograms (kg)',f:1}, g:{label:'Grams (g)',f:0.001}, t:{label:'Tonnes (t)',f:1000}, lb:{label:'Pounds (lb)',f:0.45359237}, oz:{label:'Ounces (oz)',f:0.028349523125}},
+    temperature:{C:{label:'Celsius (°C)'}, F:{label:'Fahrenheit (°F)'}, K:{label:'Kelvin (K)'}}
+  };
+  function convert(cat, val, from, to){
+    if(cat==='temperature'){
+      var c = from==='C'? val : from==='F'? (val-32)*5/9 : val-273.15;
+      return to==='C'? c : to==='F'? c*9/5+32 : c+273.15;
+    }
+    return val*UNITS[cat][from].f/UNITS[cat][to].f;
+  }
+  window.TD_convert=convert;
+  function fmt(x){ if(!isFinite(x)) return '–'; return String(parseFloat(x.toPrecision(10))); }
+  var catEl=document.getElementById('cat'), fromEl=document.getElementById('from'), toEl=document.getElementById('to'),
+      valEl=document.getElementById('val'), out=document.getElementById('result');
+  function fillUnits(){
+    var cat=catEl.value; fromEl.innerHTML=''; toEl.innerHTML='';
+    Object.keys(UNITS[cat]).forEach(function(u){
+      var o1=document.createElement('option'); o1.value=u; o1.textContent=UNITS[cat][u].label; fromEl.appendChild(o1);
+      var o2=document.createElement('option'); o2.value=u; o2.textContent=UNITS[cat][u].label; toEl.appendChild(o2);
+    });
+    if(cat==='length'){ fromEl.value='km'; toEl.value='m'; }
+    if(cat==='weight'){ fromEl.value='kg'; toEl.value='lb'; }
+    if(cat==='temperature'){ fromEl.value='C'; toEl.value='F'; }
+    update();
+  }
+  function update(){
+    var v=parseFloat(valEl.value);
+    if(isNaN(v)){ out.textContent='Enter a number to convert.'; return; }
+    var r=convert(catEl.value, v, fromEl.value, toEl.value);
+    out.textContent=fmt(v)+' '+fromEl.value+' = '+fmt(r)+' '+toEl.value;
+  }
+  catEl.addEventListener('change',fillUnits);
+  [fromEl,toEl].forEach(function(el){ el.addEventListener('change',update); });
+  valEl.addEventListener('input',update);
+  document.getElementById('swap').addEventListener('click',function(){
+    var t=fromEl.value; fromEl.value=toEl.value; toEl.value=t; update();
+  });
+  fillUnits();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Pick a category: length, weight or temperature.</li>
+    <li>Enter a value and choose the “from” and “to” units — the result updates instantly.</li>
+    <li>Use the swap button to reverse the conversion.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How accurate are the conversions?</summary><p>They use the official international definitions (for example 1 inch = exactly 25.4 mm), so results are as accurate as your input.</p></details>
+  <details><summary>Which units are included?</summary><p>Length: millimetres to miles. Weight: grams to tonnes, including pounds and ounces. Temperature: Celsius, Fahrenheit and Kelvin.</p></details>
+  <details><summary>Can I convert currency here?</summary><p>Not yet — exchange rates change constantly, so a currency tool needs live data, unlike these fixed unit conversions.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
