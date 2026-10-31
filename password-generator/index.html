@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Password Generator — Strong Random Passwords — ToolsDaily</title>
+<meta name="description" content="Free password generator: create strong, truly random passwords with your browser&#x27;s secure random generator. Length and character options, strength meter, one-click copy.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Password Generator</h1>
+<p class="lead">Create strong, random passwords that are never sent anywhere.</p>
+
+<div class="card">
+  <label for="pwd">Your password</label>
+  <input type="text" id="pwd" readonly class="mono">
+  <label for="length">Length: <span id="len-val">16</span></label>
+  <input type="range" id="length" min="8" max="64" value="16">
+  <div class="checks">
+    <label><input type="checkbox" id="inc-upper" checked> Uppercase letters (A–Z)</label>
+    <label><input type="checkbox" id="inc-numbers" checked> Numbers (0–9)</label>
+    <label><input type="checkbox" id="inc-symbols"> Symbols (!@#$…)</label>
+  </div>
+  <p>Strength: <b id="strength">–</b></p>
+  <button id="gen" type="button">Generate password</button>
+  <button id="copy" type="button" class="secondary">Copy</button>
+  <p class="msg" id="msg"></p>
+</div>
+<script>
+(function(){
+  var SETS={lower:'abcdefghijklmnopqrstuvwxyz', upper:'ABCDEFGHIJKLMNOPQRSTUVWXYZ', numbers:'0123456789', symbols:'!@#$%^&*()-_=+[]{};:,.<>?'};
+  function randInt(max){
+    var limit=Math.floor(4294967296/max)*max, a=new Uint32Array(1);
+    do{ crypto.getRandomValues(a); }while(a[0]>=limit);
+    return a[0]%max;
+  }
+  function genPassword(opts){
+    var pool=SETS.lower, required=[SETS.lower];
+    if(opts.upper){ pool+=SETS.upper; required.push(SETS.upper); }
+    if(opts.numbers){ pool+=SETS.numbers; required.push(SETS.numbers); }
+    if(opts.symbols){ pool+=SETS.symbols; required.push(SETS.symbols); }
+    var len=Math.max(opts.length, required.length);
+    var chars=[];
+    required.forEach(function(set){ chars.push(set[randInt(set.length)]); });
+    while(chars.length<len) chars.push(pool[randInt(pool.length)]);
+    for(var i=chars.length-1;i>0;i--){ var j=randInt(i+1); var t=chars[i]; chars[i]=chars[j]; chars[j]=t; }
+    var entropy=len*Math.log2(pool.length);
+    var label=entropy<40?'Weak':(entropy<60?'Fair':(entropy<80?'Strong':'Excellent'));
+    return {password:chars.join(''), entropy:entropy, strength:label, poolSize:pool.length};
+  }
+  window.TD_genPassword=genPassword;
+  var lenEl=document.getElementById('length');
+  function current(){ return {length:parseInt(lenEl.value,10), upper:document.getElementById('inc-upper').checked,
+    numbers:document.getElementById('inc-numbers').checked, symbols:document.getElementById('inc-symbols').checked}; }
+  function run(){
+    var r=genPassword(current());
+    document.getElementById('pwd').value=r.password;
+    document.getElementById('strength').textContent=r.strength+' (~'+Math.round(r.entropy)+' bits)';
+  }
+  document.getElementById('gen').addEventListener('click',run);
+  lenEl.addEventListener('input',function(){ document.getElementById('len-val').textContent=lenEl.value; run(); });
+  ['inc-upper','inc-numbers','inc-symbols'].forEach(function(id){ document.getElementById(id).addEventListener('change',run); });
+  document.getElementById('copy').addEventListener('click',function(){
+    var v=document.getElementById('pwd').value, msg=document.getElementById('msg');
+    function done(){ msg.textContent='Copied to clipboard.'; msg.className='msg ok'; }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(v).then(done,function(){ fallback(); }); } else fallback();
+    function fallback(){ var ta=document.getElementById('pwd'); ta.select(); try{ document.execCommand('copy'); done(); }catch(e){ msg.textContent='Copy failed — select the password and copy it manually.'; msg.className='msg err'; } }
+  });
+  run();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Choose a length — 16 or more characters is a good default.</li>
+    <li>Tick the character types you want. Every selected type is guaranteed to appear at least once.</li>
+    <li>Click “Generate password”, check the strength label, then copy it into your password manager.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Are these passwords really random?</summary><p>Yes. They are generated with your browser's cryptographic random source (crypto.getRandomValues), never with predictable Math.random().</p></details>
+  <details><summary>Is my password sent anywhere?</summary><p>No. It is created on your device and only copied when you click Copy.</p></details>
+  <details><summary>How long should a password be?</summary><p>Length matters most. A 16+ character password with mixed types is strong enough for almost any account.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
