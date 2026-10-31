@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image to PDF — Convert JPG &amp; PNG Images to PDF Online — ToolsDaily</title>
+<meta name="description" content="Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page. Works in your browser — nothing is uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/image-to-pdf/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Image to PDF — Convert JPG &amp; PNG Images to PDF Online — ToolsDaily">
+<meta property="og:description" content="Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page. Works in your browser — nothing is uploaded.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/image-to-pdf/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image to PDF — Convert JPG &amp; PNG Images to PDF Online — ToolsDaily">
+<meta name="twitter:description" content="Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page. Works in your browser — nothing is uploaded.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image to PDF",
+    "url": "https://toolsdaily.vercel.app/image-to-pdf/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page. Works in your browser \u2014 nothing is uploaded."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Which image formats are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JPG and PNG. If your image is in another format, turn it into a JPG or PNG first with the Image Converter on this site."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are the pages sized?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Each page is made to fit its image, with a small white margin around it \u2014 so photos keep their original shape and are not stretched or cropped."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my images uploaded?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The PDF is built entirely in your browser \u2014 your images never leave your device."
+        }
+      }
+    ]
+  }
+]
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Image to PDF</h1>
+<p class="lead">Turn photos and scans into one tidy PDF — one image per page, in the order you pick them.</p>
+
+<div class="card">
+  <div class="drop" id="drop"><p>📂 Drop JPG or PNG images here, or</p><input type="file" id="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" multiple></div>
+  <ul id="file-list"></ul>
+  <button id="convert" type="button" disabled>Convert to PDF</button>
+  <button id="clear" type="button" class="secondary">Clear list</button>
+  <p class="msg" id="msg"></p>
+  <p><a class="btn hidden" id="dl" href="#" download="images.pdf">Download PDF</a></p>
+</div>
+<script src="../assets/vendor/pdf-lib.min.js"></script>
+<script>
+(function(){
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function imageKind(buf){
+    var b=new Uint8Array(buf);
+    if(b.length>4 && b[0]===0x89 && b[1]===0x50 && b[2]===0x4E && b[3]===0x47) return 'png';
+    if(b.length>3 && b[0]===0xFF && b[1]===0xD8 && b[2]===0xFF) return 'jpg';
+    return null;
+  }
+  window.TD_imageKind=imageKind;
+  async function imagesToPdf(buffers){
+    var doc=await PDFLib.PDFDocument.create(), MARGIN=36;
+    for(var i=0;i<buffers.length;i++){
+      var kind=imageKind(buffers[i]);
+      if(!kind) throw new Error('Image '+(i+1)+' is not a JPG or PNG file.');
+      var img= kind==='png' ? await doc.embedPng(buffers[i]) : await doc.embedJpg(buffers[i]);
+      var page=doc.addPage([img.width+MARGIN*2, img.height+MARGIN*2]);
+      page.drawImage(img,{x:MARGIN, y:MARGIN, width:img.width, height:img.height});
+    }
+    return await doc.save();
+  }
+  window.TD_imagesToPdf=imagesToPdf;
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      list=document.getElementById('file-list'), btn=document.getElementById('convert'),
+      clearBtn=document.getElementById('clear'), msg=document.getElementById('msg'),
+      dl=document.getElementById('dl'), files=[], outUrl=null;
+  function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
+  function isSupported(f){ return f.type==='image/png' || f.type==='image/jpeg' || /\.(png|jpe?g)$/i.test(f.name||''); }
+  function render(){
+    list.innerHTML='';
+    files.forEach(function(f){
+      var li=document.createElement('li'); li.textContent=f.name+' ('+formatBytes(f.size)+')'; list.appendChild(li);
+    });
+    btn.disabled=files.length<1;
+  }
+  function addFiles(fileList){
+    var bad=[];
+    for(var i=0;i<fileList.length;i++){
+      if(isSupported(fileList[i])) files.push(fileList[i]); else bad.push(fileList[i].name);
+    }
+    if(bad.length) showMsg('Not a JPG or PNG image, skipped: '+bad.join(', ')+'.');
+    else if(files.length) showMsg(files.length+' image'+(files.length===1?'':'s')+' ready.', true);
+    render();
+  }
+  fileInput.addEventListener('change',function(){ addFiles(fileInput.files); fileInput.value=''; });
+  ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop',function(e){ if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+  clearBtn.addEventListener('click',function(){ files=[]; dl.classList.add('hidden'); showMsg(''); render(); });
+  btn.addEventListener('click',async function(){
+    if(!files.length){ showMsg('Please choose at least one JPG or PNG image.'); return; }
+    btn.disabled=true; showMsg('Building your PDF…', true);
+    try{
+      var buffers=[];
+      for(var i=0;i<files.length;i++) buffers.push(await files[i].arrayBuffer());
+      var bytes=await imagesToPdf(buffers);
+      if(outUrl) URL.revokeObjectURL(outUrl);
+      outUrl=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+      dl.href=outUrl; dl.classList.remove('hidden');
+      showMsg('Done! Created a PDF with '+files.length+' page'+(files.length===1?'':'s')+' ('+formatBytes(bytes.length)+').', true);
+    }catch(e){
+      showMsg(e.message && e.message.indexOf('not a JPG or PNG')>=0 ? e.message : 'Could not build the PDF. One of the images may be damaged.');
+    }
+    btn.disabled=files.length<1;
+  });
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Choose one or more JPG or PNG images (or drop them onto the box).</li>
+    <li>Check the list — images become pages in the order shown.</li>
+    <li>Click “Convert to PDF” and download your document.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Which image formats are supported?</summary><p>JPG and PNG. If your image is in another format, turn it into a JPG or PNG first with the Image Converter on this site.</p></details>
+  <details><summary>How are the pages sized?</summary><p>Each page is made to fit its image, with a small white margin around it — so photos keep their original shape and are not stretched or cropped.</p></details>
+  <details><summary>Are my images uploaded?</summary><p>No. The PDF is built entirely in your browser — your images never leave your device.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
