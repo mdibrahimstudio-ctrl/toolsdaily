@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMI Calculator — Monthly Loan EMI, Interest and Total Cost — ToolsDaily</title>
+<meta name="description" content="Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest and total amount you will pay back.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/emi-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EMI Calculator — Monthly Loan EMI, Interest and Total Cost — ToolsDaily">
+<meta property="og:description" content="Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest and total amount you will pay back.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/emi-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EMI Calculator — Monthly Loan EMI, Interest and Total Cost — ToolsDaily">
+<meta name="twitter:description" content="Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest and total amount you will pay back.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EMI Calculator",
+    "url": "https://toolsdaily.vercel.app/emi-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest and total amount you will pay back."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is EMI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "EMI (Equated Monthly Instalment) is the fixed amount you pay the lender every month until the loan is repaid. Each payment covers part of the loan amount (principal) and part of the interest."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is the EMI calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With the standard amortisation formula: EMI = P x r x (1 + r)^n / ((1 + r)^n - 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a longer tenure mean I pay less overall?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your monthly EMI goes down, but you pay interest for more months, so the total cost of the loan goes up. This calculator shows both, so you can compare."
+        }
+      }
+    ]
+  }
+]
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>EMI Calculator</h1>
+<p class="lead">Planning a loan? See the monthly EMI, total interest and full repayment before you sign.</p>
+
+<div class="card">
+  <div class="row">
+    <div><label for="amount">Loan amount</label><input type="number" id="amount" min="0" step="any" value="100000"></div>
+    <div><label for="rate">Annual interest rate (%)</label><input type="number" id="rate" min="0" step="any" value="10"></div>
+  </div>
+  <div class="row">
+    <div><label for="tenure">Tenure</label><input type="number" id="tenure" min="0" step="any" value="5"></div>
+    <div><label for="tenure-unit">Tenure unit</label>
+      <select id="tenure-unit"><option value="years" selected>Years</option><option value="months">Months</option></select></div>
+  </div>
+  <p class="msg" id="msg"></p>
+  <div class="stats" id="results">
+    <div class="stat"><b id="r-emi">–</b><span>Monthly EMI</span></div>
+    <div class="stat"><b id="r-interest">–</b><span>Total interest</span></div>
+    <div class="stat"><b id="r-total">–</b><span>Total payment</span></div>
+  </div>
+</div>
+<script>
+(function(){
+  function round2(x){ return Math.round(x*100)/100; }
+  function emi(P, annualPct, months){
+    if(!(P>0) || !(months>0) || !(annualPct>=0)) return {error:'Please enter a valid loan amount, interest rate and tenure.'};
+    var r=annualPct/1200, e;
+    if(r===0){ e=P/months; }
+    else { var f=Math.pow(1+r, months); e=P*r*f/(f-1); }
+    var total=e*months;
+    return {emi:round2(e), totalPayment:round2(total), totalInterest:round2(total-P), months:months};
+  }
+  window.TD_emi=emi;
+  function fmt(x){ return x.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function update(){
+    var P=parseFloat(document.getElementById('amount').value),
+        rate=parseFloat(document.getElementById('rate').value),
+        t=parseFloat(document.getElementById('tenure').value),
+        months=document.getElementById('tenure-unit').value==='years' ? Math.round(t*12) : Math.round(t),
+        r=emi(P, rate, months), msg=document.getElementById('msg');
+    if(r.error){
+      msg.textContent=r.error; msg.className='msg err';
+      document.getElementById('r-emi').textContent='–';
+      document.getElementById('r-interest').textContent='–';
+      document.getElementById('r-total').textContent='–';
+      return;
+    }
+    msg.textContent=''; msg.className='msg';
+    document.getElementById('r-emi').textContent=fmt(r.emi);
+    document.getElementById('r-interest').textContent=fmt(r.totalInterest);
+    document.getElementById('r-total').textContent=fmt(r.totalPayment);
+  }
+  ['amount','rate','tenure','tenure-unit'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', update);
+    document.getElementById(id).addEventListener('change', update);
+  });
+  update();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter the loan amount and the annual interest rate.</li>
+    <li>Enter the tenure and choose years or months.</li>
+    <li>The monthly EMI, total interest and total payment update as you type.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is EMI?</summary><p>EMI (Equated Monthly Instalment) is the fixed amount you pay the lender every month until the loan is repaid. Each payment covers part of the loan amount (principal) and part of the interest.</p></details>
+  <details><summary>How is the EMI calculated?</summary><p>With the standard amortisation formula: EMI = P x r x (1 + r)^n / ((1 + r)^n - 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments.</p></details>
+  <details><summary>Does a longer tenure mean I pay less overall?</summary><p>Your monthly EMI goes down, but you pay interest for more months, so the total cost of the loan goes up. This calculator shows both, so you can compare.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
