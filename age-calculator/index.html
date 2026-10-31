@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Age Calculator — Exact Age in Years, Months &amp; Days — ToolsDaily</title>
+<meta name="description" content="Free age calculator: find your exact age in years, months and days, total days and weeks lived, and days until your next birthday.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Age Calculator</h1>
+<p class="lead">Your exact age — down to the day — plus some fun totals.</p>
+
+<div class="card">
+  <div class="row">
+    <div><label for="dob">Date of birth</label><input type="date" id="dob"></div>
+    <div><label for="at">Age at date (optional)</label><input type="date" id="at"></div>
+  </div>
+  <button id="calc" type="button">Calculate age</button>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="results">
+    <div class="stat"><b id="r-ymd">–</b><span>Age</span></div>
+    <div class="stat"><b id="r-days">–</b><span>Total days</span></div>
+    <div class="stat"><b id="r-weeks">–</b><span>Total weeks</span></div>
+    <div class="stat"><b id="r-next">–</b><span>Days to next birthday</span></div>
+  </div>
+</div>
+<script>
+(function(){
+  function parseDate(s){ var p=s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function calcAge(dobStr, atStr){
+    if(!dobStr) return {error:'Please choose your date of birth.'};
+    var dob=parseDate(dobStr), at=atStr? parseDate(atStr) : new Date();
+    at=new Date(at.getFullYear(), at.getMonth(), at.getDate());
+    if(isNaN(dob.getTime())) return {error:'That date of birth is not valid.'};
+    if(dob>at) return {error:'Date of birth cannot be after the “age at” date.'};
+    var years=at.getFullYear()-dob.getFullYear(), months=at.getMonth()-dob.getMonth(), days=at.getDate()-dob.getDate();
+    if(days<0){ months--; var prev=new Date(at.getFullYear(), at.getMonth(), 0); days+=prev.getDate(); }
+    if(months<0){ years--; months+=12; }
+    var totalDays=Math.round((Date.UTC(at.getFullYear(),at.getMonth(),at.getDate())-Date.UTC(dob.getFullYear(),dob.getMonth(),dob.getDate()))/86400000);
+    var next=new Date(at.getFullYear(), dob.getMonth(), dob.getDate());
+    if(next<at) next=new Date(at.getFullYear()+1, dob.getMonth(), dob.getDate());
+    var nextDays=Math.round((Date.UTC(next.getFullYear(),next.getMonth(),next.getDate())-Date.UTC(at.getFullYear(),at.getMonth(),at.getDate()))/86400000);
+    return {years:years, months:months, days:days, totalDays:totalDays, totalWeeks:Math.floor(totalDays/7), nextBirthdayDays:nextDays};
+  }
+  window.TD_age=calcAge;
+  document.getElementById('calc').addEventListener('click',function(){
+    var r=calcAge(document.getElementById('dob').value, document.getElementById('at').value);
+    var msg=document.getElementById('msg');
+    if(r.error){ msg.textContent=r.error; msg.className='msg err'; document.getElementById('results').classList.add('hidden'); return; }
+    msg.textContent=''; msg.className='msg';
+    document.getElementById('r-ymd').textContent=r.years+'y '+r.months+'m '+r.days+'d';
+    document.getElementById('r-days').textContent=r.totalDays.toLocaleString('en-US');
+    document.getElementById('r-weeks').textContent=r.totalWeeks.toLocaleString('en-US');
+    document.getElementById('r-next').textContent=r.nextBirthdayDays===0?'🎉 Today!':r.nextBirthdayDays;
+    document.getElementById('results').classList.remove('hidden');
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter your date of birth.</li>
+    <li>Optionally choose a different “age at” date — leave it empty to use today.</li>
+    <li>Click “Calculate age” to see your exact age, total days and weeks lived, and the countdown to your next birthday.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How exact is this calculator?</summary><p>It counts real calendar days, including leap years, so totals are exact for the dates you enter.</p></details>
+  <details><summary>Can I calculate age on a future date?</summary><p>Yes — set the “age at” date to any future date, for example a school or job application deadline.</p></details>
+  <details><summary>Is my birth date stored?</summary><p>No. The calculation happens in your browser and nothing is saved.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
