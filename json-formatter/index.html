@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSON Formatter — Format, Minify &amp; Validate JSON — ToolsDaily</title>
+<meta name="description" content="Free JSON formatter and validator: pretty-print, minify and check JSON with clear error messages. Private by design — your data never leaves your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>JSON Formatter</h1>
+<p class="lead">Format, minify and validate JSON — with errors you can actually understand.</p>
+
+<div class="card">
+  <label for="json-in">Input JSON</label>
+  <textarea id="json-in" class="mono" placeholder='{"name":"ToolsDaily","free":true}'>{"name":"ToolsDaily","free":true,"tools":10}</textarea>
+  <label for="indent">Indent</label>
+  <select id="indent"><option value="2">2 spaces</option><option value="4">4 spaces</option></select>
+  <p>
+    <button type="button" id="fmt">Format</button>
+    <button type="button" id="min">Minify</button>
+    <button type="button" id="validate">Validate</button>
+    <button type="button" class="secondary" id="copy">Copy output</button>
+    <button type="button" class="secondary" id="dl-json">Download .json</button>
+  </p>
+  <p class="msg" id="msg"></p>
+  <label for="json-out">Output</label>
+  <textarea id="json-out" class="mono" readonly placeholder="Formatted JSON will appear here…"></textarea>
+</div>
+<script>
+(function(){
+  function formatJSON(text, indent){ return JSON.stringify(JSON.parse(text), null, indent); }
+  function minifyJSON(text){ return JSON.stringify(JSON.parse(text)); }
+  window.TD_json={format:formatJSON, minify:minifyJSON};
+  var inp=document.getElementById('json-in'), out=document.getElementById('json-out'), msg=document.getElementById('msg');
+  function showErr(e){ msg.textContent='Invalid JSON: '+e.message; msg.className='msg err'; }
+  function showOk(t){ msg.textContent=t; msg.className='msg ok'; }
+  document.getElementById('fmt').addEventListener('click',function(){
+    try{ out.value=formatJSON(inp.value, parseInt(document.getElementById('indent').value,10)); showOk('Formatted successfully.'); }
+    catch(e){ showErr(e); }
+  });
+  document.getElementById('min').addEventListener('click',function(){
+    try{ out.value=minifyJSON(inp.value); showOk('Minified successfully.'); } catch(e){ showErr(e); }
+  });
+  document.getElementById('validate').addEventListener('click',function(){
+    try{ JSON.parse(inp.value); showOk('✓ Valid JSON.'); } catch(e){ showErr(e); }
+  });
+  document.getElementById('copy').addEventListener('click',function(){
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(out.value).then(function(){ showOk('Output copied.'); });
+    else { out.select(); try{ document.execCommand('copy'); showOk('Output copied.'); }catch(e){ msg.textContent='Copy failed — copy the output manually.'; msg.className='msg err'; } }
+  });
+  document.getElementById('dl-json').addEventListener('click',function(){
+    var text=out.value||inp.value;
+    try{
+      var blob=new Blob([text],{type:'application/json'}), url=URL.createObjectURL(blob);
+      var a=document.createElement('a'); a.href=url; a.download='formatted.json'; a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 500);
+    }catch(e){ msg.textContent='Download is not available here — copy the output instead.'; msg.className='msg err'; }
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Paste your JSON into the input box.</li>
+    <li>Click Format to pretty-print it (choose 2 or 4 spaces), Minify to compress it, or Validate to check it.</li>
+    <li>Copy the output, or download it as a .json file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Why is my JSON invalid?</summary><p>Common causes are missing commas, trailing commas, single quotes instead of double quotes, or unquoted keys. The error message shows exactly what the parser found.</p></details>
+  <details><summary>Does formatting change my data?</summary><p>No. Format and Minify only change whitespace — the data itself stays identical.</p></details>
+  <details><summary>Is my JSON uploaded for processing?</summary><p>Never. Parsing happens locally in your browser, so it is safe for private data.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
