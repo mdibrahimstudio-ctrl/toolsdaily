@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Counter — Words, Characters &amp; Reading Time — ToolsDaily</title>
+<meta name="description" content="Free word counter: count words, characters, sentences and paragraphs, and estimate reading time. Live results as you type, nothing is uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Word Counter</h1>
+<p class="lead">Count words, characters and reading time — live, as you type.</p>
+
+<div class="card">
+  <label for="text">Your text</label>
+  <textarea id="text" placeholder="Start typing or paste your text here…"></textarea>
+  <div class="stats">
+    <div class="stat"><b id="c-words">0</b><span>Words</span></div>
+    <div class="stat"><b id="c-chars">0</b><span>Characters</span></div>
+    <div class="stat"><b id="c-chars-ns">0</b><span>Characters (no spaces)</span></div>
+    <div class="stat"><b id="c-sent">0</b><span>Sentences</span></div>
+    <div class="stat"><b id="c-para">0</b><span>Paragraphs</span></div>
+    <div class="stat"><b id="c-read">0 min read</b><span>Reading time</span></div>
+  </div>
+  <p><button id="clean" type="button" class="secondary">Remove extra spaces</button></p>
+</div>
+<script>
+(function(){
+  function countText(t){
+    var trimmed=t.trim();
+    var words=trimmed? trimmed.split(/\s+/).length : 0;
+    var chars=t.length;
+    var charsNoSpaces=t.replace(/\s/g,'').length;
+    var sentences=trimmed? trimmed.split(/[.!?]+/).filter(function(s){return s.trim().length>0;}).length : 0;
+    var paras=trimmed? trimmed.split(/\n\s*\n/).filter(function(s){return s.trim().length>0;}).length : 0;
+    var read;
+    if(words===0) read='0 min read';
+    else { var m=words/200; read=(m<1? '< 1' : String(Math.round(m*10)/10))+' min read'; }
+    return {words:words, chars:chars, charsNoSpaces:charsNoSpaces, sentences:sentences, paragraphs:paras, readingTime:read};
+  }
+  window.TD_countText=countText;
+  var ta=document.getElementById('text');
+  function update(){
+    var r=countText(ta.value);
+    document.getElementById('c-words').textContent=r.words;
+    document.getElementById('c-chars').textContent=r.chars;
+    document.getElementById('c-chars-ns').textContent=r.charsNoSpaces;
+    document.getElementById('c-sent').textContent=r.sentences;
+    document.getElementById('c-para').textContent=r.paragraphs;
+    document.getElementById('c-read').textContent=r.readingTime;
+  }
+  ta.addEventListener('input',update);
+  document.getElementById('clean').addEventListener('click',function(){
+    ta.value=ta.value.replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+    update();
+  });
+  update();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type or paste your text into the box.</li>
+    <li>Watch the counts update live: words, characters, sentences, paragraphs and reading time.</li>
+    <li>Click “Remove extra spaces” to tidy up messy pasted text.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How is reading time calculated?</summary><p>We use an average reading speed of about 200 words per minute, the standard used by most writing tools.</p></details>
+  <details><summary>What counts as a word?</summary><p>Any run of characters separated by spaces, tabs or line breaks counts as one word.</p></details>
+  <details><summary>Is my text saved anywhere?</summary><p>No. Counting happens in your browser and your text disappears when you close the page.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
