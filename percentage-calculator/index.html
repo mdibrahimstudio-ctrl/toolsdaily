@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Percentage Calculator — X% of Y, Ratios and Change — ToolsDaily</title>
+<meta name="description" content="Free percentage calculator with three quick tools: find what a percentage of a number is, what percentage one number is of another, and the percentage change between two numbers.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/percentage-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Percentage Calculator — X% of Y, Ratios and Change — ToolsDaily">
+<meta property="og:description" content="Free percentage calculator with three quick tools: find what a percentage of a number is, what percentage one number is of another, and the percentage change between two numbers.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/percentage-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Percentage Calculator — X% of Y, Ratios and Change — ToolsDaily">
+<meta name="twitter:description" content="Free percentage calculator with three quick tools: find what a percentage of a number is, what percentage one number is of another, and the percentage change between two numbers.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Percentage Calculator",
+    "url": "https://toolsdaily.vercel.app/percentage-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free percentage calculator with three quick tools: find what a percentage of a number is, what percentage one number is of another, and the percentage change between two numbers."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I find a percentage of a number?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Multiply the number by the percentage and divide by 100. For example, 15% of 200 is 200 x 15 / 100 = 30."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is percentage change calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Subtract the old value from the new one, divide by the old value, and multiply by 100. A rise from 80 to 100 is (100 - 80) / 80 x 100 = +25%."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is anything I type stored?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All three calculators run in your browser \u2014 your numbers are never saved or sent anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Percentage Calculator</h1>
+<p class="lead">Three everyday percentage questions, answered as you type.</p>
+
+<section><h2>What is X% of Y?</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="a-x">Percentage (X%)</label><input type="number" id="a-x" step="any" placeholder="e.g. 15"></div>
+    <div><label for="a-y">Number (Y)</label><input type="number" id="a-y" step="any" placeholder="e.g. 200"></div>
+  </div>
+  <p class="out" id="a-result" aria-live="polite">–</p>
+</div></section>
+
+<section><h2>X is what % of Y?</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="b-part">Number (X)</label><input type="number" id="b-part" step="any" placeholder="e.g. 50"></div>
+    <div><label for="b-whole">Total (Y)</label><input type="number" id="b-whole" step="any" placeholder="e.g. 200"></div>
+  </div>
+  <p class="out" id="b-result" aria-live="polite">–</p>
+</div></section>
+
+<section><h2>Percentage change</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="c-from">From</label><input type="number" id="c-from" step="any" placeholder="e.g. 80"></div>
+    <div><label for="c-to">To</label><input type="number" id="c-to" step="any" placeholder="e.g. 100"></div>
+  </div>
+  <p class="out" id="c-result" aria-live="polite">–</p>
+</div></section>
+<script>
+(function(){
+  var TD={
+    of:function(x,y){ return x/100*y; },
+    whatPercent:function(part,whole){ if(whole===0) return null; return part/whole*100; },
+    change:function(from,to){ if(from===0) return null; return (to-from)/Math.abs(from)*100; }
+  };
+  window.TD_percent=TD;
+  function num(id){ var v=parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+  function fmt(n){ return String(parseFloat(n.toFixed(2))); }
+  function updA(){
+    var x=num('a-x'), y=num('a-y'), out=document.getElementById('a-result');
+    out.textContent= (x===null || y===null) ? '–' : fmt(x)+'% of '+fmt(y)+' = '+fmt(TD.of(x,y));
+  }
+  function updB(){
+    var p=num('b-part'), w=num('b-whole'), out=document.getElementById('b-result');
+    if(p===null || w===null){ out.textContent='–'; return; }
+    var r=TD.whatPercent(p,w);
+    out.textContent= r===null ? 'Cannot divide by zero — enter a total other than 0.' : fmt(p)+' is '+fmt(r)+'% of '+fmt(w);
+  }
+  function updC(){
+    var a=num('c-from'), b=num('c-to'), out=document.getElementById('c-result');
+    if(a===null || b===null){ out.textContent='–'; return; }
+    var r=TD.change(a,b);
+    if(r===null){ out.textContent='Cannot calculate change from 0.'; return; }
+    out.textContent= (r>0 ? 'Increase of ' : r<0 ? 'Decrease of ' : 'No change: ') + (r===0 ? '0%' : fmt(Math.abs(r))+'%') + ' (from '+fmt(a)+' to '+fmt(b)+')';
+  }
+  [['a-x',updA],['a-y',updA],['b-part',updB],['b-whole',updB],['c-from',updC],['c-to',updC]].forEach(function(pair){
+    document.getElementById(pair[0]).addEventListener('input', pair[1]);
+    document.getElementById(pair[0]).addEventListener('change', pair[1]);
+  });
+  updA(); updB(); updC();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Pick the question you want answered — each box works on its own.</li>
+    <li>Type the two numbers.</li>
+    <li>The answer appears instantly as you type.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How do I find a percentage of a number?</summary><p>Multiply the number by the percentage and divide by 100. For example, 15% of 200 is 200 x 15 / 100 = 30.</p></details>
+  <details><summary>How is percentage change calculated?</summary><p>Subtract the old value from the new one, divide by the old value, and multiply by 100. A rise from 80 to 100 is (100 - 80) / 80 x 100 = +25%.</p></details>
+  <details><summary>Is anything I type stored?</summary><p>No. All three calculators run in your browser — your numbers are never saved or sent anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
