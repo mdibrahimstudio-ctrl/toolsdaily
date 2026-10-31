@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Compressor — Reduce JPG &amp; PNG Size Online — ToolsDaily</title>
+<meta name="description" content="Free image compressor: reduce image file size with a quality slider and optional resize. 100% in your browser — your photos are never uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Image Compressor</h1>
+<p class="lead">Make image files smaller for websites, email and social media — without uploading them anywhere.</p>
+
+<div class="card">
+  <div class="drop" id="drop"><p>📂 Drop an image here, or</p><input type="file" id="file" accept="image/*"></div>
+  <div class="row">
+    <div><label for="quality">JPEG quality: <span id="q-val">80</span>%</label>
+      <input type="range" id="quality" min="10" max="95" value="80"></div>
+    <div><label for="maxw">Max width in px (optional)</label>
+      <input type="number" id="maxw" min="1" placeholder="e.g. 1600"></div>
+  </div>
+  <button id="compress" type="button" disabled>Compress image</button>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="results">
+    <div class="stat"><b id="orig-size">–</b><span>Original size</span></div>
+    <div class="stat"><b id="comp-size">–</b><span>Compressed size</span></div>
+    <div class="stat"><b id="ratio">–</b><span>Saved</span></div>
+  </div>
+  <img class="preview hidden" id="preview" alt="Compressed image preview">
+  <p><a class="btn hidden" id="dl" href="#" download="compressed.jpg">Download compressed image</a></p>
+</div>
+<script>
+(function(){
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  window.TD_formatBytes=formatBytes;
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      q=document.getElementById('quality'), qVal=document.getElementById('q-val'), maxw=document.getElementById('maxw'),
+      btn=document.getElementById('compress'), msg=document.getElementById('msg'),
+      currentFile=null, outUrl=null;
+  function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
+  function setFile(f){
+    if(!f){ return; }
+    if(!/^image\//.test(f.type)){ showMsg('That file is not an image. Please choose a JPG, PNG or WebP file.'); return; }
+    currentFile=f; btn.disabled=false; showMsg('Selected: '+f.name+' ('+formatBytes(f.size)+')');
+  }
+  fileInput.addEventListener('change',function(){ setFile(fileInput.files[0]); });
+  ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop',function(e){ var f=e.dataTransfer.files[0]; if(f) setFile(f); });
+  q.addEventListener('input',function(){ qVal.textContent=q.value; });
+  btn.addEventListener('click',function(){
+    if(!currentFile){ showMsg('Please choose an image first.'); return; }
+    var url=URL.createObjectURL(currentFile), img=new Image();
+    img.onload=function(){
+      var scale=1, mw=parseInt(maxw.value,10);
+      if(mw && img.naturalWidth>mw) scale=mw/img.naturalWidth;
+      var c=document.createElement('canvas');
+      c.width=Math.round(img.naturalWidth*scale); c.height=Math.round(img.naturalHeight*scale);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(function(blob){
+        if(!blob){ showMsg('Compression failed — your browser could not process this image.'); return; }
+        if(outUrl) URL.revokeObjectURL(outUrl);
+        outUrl=URL.createObjectURL(blob);
+        document.getElementById('orig-size').textContent=formatBytes(currentFile.size);
+        document.getElementById('comp-size').textContent=formatBytes(blob.size);
+        var saved=Math.round((1-blob.size/currentFile.size)*100);
+        document.getElementById('ratio').textContent=(saved>=0?saved+'% smaller':Math.abs(saved)+'% larger');
+        document.getElementById('results').classList.remove('hidden');
+        var prev=document.getElementById('preview'); prev.src=outUrl; prev.classList.remove('hidden');
+        var dl=document.getElementById('dl'); dl.href=outUrl; dl.classList.remove('hidden');
+        showMsg('Done! Your compressed image is ready to download.', true);
+      },'image/jpeg', parseInt(q.value,10)/100);
+    };
+    img.onerror=function(){ URL.revokeObjectURL(url); showMsg('Could not read that image file.'); };
+    img.src=url;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Drop an image onto the box, or click to choose a JPG, PNG or WebP file.</li>
+    <li>Move the quality slider — 80% is a good balance of size and looks. Optionally set a maximum width to resize big photos.</li>
+    <li>Click “Compress image”, compare the sizes, then download your smaller file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Does compression reduce quality?</summary><p>JPEG compression trades a little quality for a much smaller file. At 80% most people cannot see any difference.</p></details>
+  <details><summary>Are my photos uploaded?</summary><p>No. Everything happens on your device using your browser's built-in image tools.</p></details>
+  <details><summary>Which format is the output?</summary><p>The compressed file is a JPEG, the most widely supported format for photos.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
