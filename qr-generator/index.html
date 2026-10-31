@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QR Code Generator — Free, No Sign-Up — ToolsDaily</title>
+<meta name="description" content="Free QR code generator: turn any text or URL into a QR code and download it as a PNG. Works fully in your browser — nothing is uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>QR Code Generator</h1>
+<p class="lead">Turn any text or link into a scannable QR code, then download it as a PNG image.</p>
+
+<div class="card">
+  <label for="qr-text">Text or URL</label>
+  <input type="text" id="qr-text" placeholder="https://example.com or any text" value="https://example.com">
+  <div class="row">
+    <div><label for="qr-size">PNG size</label>
+      <select id="qr-size"><option value="256">256 × 256</option><option value="512" selected>512 × 512</option><option value="1024">1024 × 1024</option></select></div>
+    <div><label>&nbsp;</label><button id="qr-generate" type="button">Generate QR code</button>
+    <button id="dl-png" type="button" class="secondary" disabled>Download PNG</button></div>
+  </div>
+  <div id="qr-out" aria-live="polite"></div>
+  <p class="msg" id="qr-msg"></p>
+</div>
+<script src="../assets/vendor/qrcode.js"></script>
+<script>
+(function(){
+  var out=document.getElementById('qr-out'), msg=document.getElementById('qr-msg'),
+      text=document.getElementById('qr-text'), sizeSel=document.getElementById('qr-size'),
+      dl=document.getElementById('dl-png'), lastQR=null, lastText='';
+  function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(ok?'ok':'err'); if(!t) msg.className='msg'; }
+  function build(txt){
+    var qr=qrcode(0,'M'); qr.addData(txt); qr.make(); return qr;
+  }
+  window.TD_buildQR=build;
+  function generate(){
+    var txt=text.value;
+    if(!txt){ out.innerHTML=''; dl.disabled=true; lastQR=null; showMsg('Please enter some text or a URL first.'); return; }
+    try{
+      lastQR=build(txt); lastText=txt;
+      out.innerHTML=lastQR.createSvgTag({cellSize:5, margin:10, scalable:true});
+      dl.disabled=false; showMsg('');
+    }catch(e){ out.innerHTML=''; dl.disabled=true; lastQR=null; showMsg('That text is too long for a QR code. Try something shorter.'); }
+  }
+  document.getElementById('qr-generate').addEventListener('click',generate);
+  text.addEventListener('input',generate);
+  dl.addEventListener('click',function(){
+    if(!lastQR) return;
+    var size=parseInt(sizeSel.value,10), n=lastQR.getModuleCount(), cell=size/n;
+    var c=document.createElement('canvas'); c.width=size; c.height=size;
+    var ctx=c.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,size,size); ctx.fillStyle='#000000';
+    for(var r=0;r<n;r++) for(var col=0;col<n;col++) if(lastQR.isDark(r,col)) ctx.fillRect(col*cell,r*cell,Math.ceil(cell),Math.ceil(cell));
+    var a=document.createElement('a'); a.download='qrcode.png'; a.href=c.toDataURL('image/png'); a.click();
+  });
+  generate();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type or paste any text, link, Wi-Fi name or message into the box.</li>
+    <li>Your QR code appears instantly as you type.</li>
+    <li>Pick a PNG size and click “Download PNG” to save it for printing or sharing.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Is my text sent to a server?</summary><p>No. The QR code is generated entirely in your browser — nothing is uploaded.</p></details>
+  <details><summary>What size PNG should I download?</summary><p>512 × 512 is fine for screens and small prints. Choose 1024 × 1024 for posters or large prints.</p></details>
+  <details><summary>Why did I get an error?</summary><p>QR codes have a capacity limit. Very long text (several thousand characters) cannot fit — shorten it and try again.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
