@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BMI Calculator — Check Your Body Mass Index Online — ToolsDaily</title>
+<meta name="description" content="Free BMI calculator: enter your height and weight to get your Body Mass Index, its category (underweight, normal, overweight, obese) and the healthy weight range for your height.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/bmi-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BMI Calculator — Check Your Body Mass Index Online — ToolsDaily">
+<meta property="og:description" content="Free BMI calculator: enter your height and weight to get your Body Mass Index, its category (underweight, normal, overweight, obese) and the healthy weight range for your height.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/bmi-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BMI Calculator — Check Your Body Mass Index Online — ToolsDaily">
+<meta name="twitter:description" content="Free BMI calculator: enter your height and weight to get your Body Mass Index, its category (underweight, normal, overweight, obese) and the healthy weight range for your height.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BMI Calculator",
+    "url": "https://toolsdaily.vercel.app/bmi-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free BMI calculator: enter your height and weight to get your Body Mass Index, its category (underweight, normal, overweight, obese) and the healthy weight range for your height."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a healthy BMI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For adults, a BMI between 18.5 and 24.9 is classed as normal (healthy). Below 18.5 is underweight, 25 to 29.9 is overweight, and 30 or above is obese."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is BMI the same for children and athletes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No \u2014 BMI is a rough guide for adults. It does not account for muscle mass, age or body type, so athletes and children should use it with care and talk to a doctor for personal advice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data stored?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The calculation happens in your browser \u2014 nothing you type is saved or sent anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>BMI Calculator</h1>
+<p class="lead">A quick Body Mass Index check — and the healthy weight range for your height.</p>
+
+<div class="card">
+  <div class="row">
+    <div><label for="weight">Weight (kg)</label><input type="number" id="weight" min="0" step="0.1" placeholder="e.g. 70"></div>
+    <div><label for="height-unit">Height unit</label>
+      <select id="height-unit"><option value="cm" selected>Centimetres</option><option value="ftin">Feet &amp; inches</option></select></div>
+  </div>
+  <div id="h-cm"><label for="height-cm">Height (cm)</label><input type="number" id="height-cm" min="0" step="0.1" placeholder="e.g. 175"></div>
+  <div id="h-ftin" class="row hidden">
+    <div><label for="height-ft">Feet</label><input type="number" id="height-ft" min="0" step="1" placeholder="e.g. 5"></div>
+    <div><label for="height-in">Inches</label><input type="number" id="height-in" min="0" step="0.5" placeholder="e.g. 9"></div>
+  </div>
+  <button id="calc" type="button">Calculate BMI</button>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="results">
+    <div class="stat"><b id="r-bmi">–</b><span>Your BMI</span></div>
+    <div class="stat"><b id="r-cat">–</b><span>Category</span></div>
+    <div class="stat"><b id="r-range">–</b><span>Healthy weight for your height (kg)</span></div>
+  </div>
+</div>
+<script>
+(function(){
+  function round1(x){ return Math.round(x*10)/10; }
+  function bmi(weightKg, heightCm){
+    if(!(weightKg>0) || !(heightCm>0)) return {error:'Please enter a valid height and weight.'};
+    var m=heightCm/100, raw=weightKg/(m*m);
+    var cat= raw<18.5 ? 'Underweight' : raw<25 ? 'Normal' : raw<30 ? 'Overweight' : 'Obese';
+    return {bmi:round1(raw), category:cat, healthyMin:round1(18.5*m*m), healthyMax:round1(24.9*m*m)};
+  }
+  window.TD_bmi=bmi;
+  var unitSel=document.getElementById('height-unit');
+  unitSel.addEventListener('change',function(){
+    var ftin=unitSel.value==='ftin';
+    document.getElementById('h-cm').classList.toggle('hidden', ftin);
+    document.getElementById('h-ftin').classList.toggle('hidden', !ftin);
+  });
+  document.getElementById('calc').addEventListener('click',function(){
+    var w=parseFloat(document.getElementById('weight').value), hCm;
+    if(unitSel.value==='ftin'){
+      var ft=parseFloat(document.getElementById('height-ft').value)||0,
+          inch=parseFloat(document.getElementById('height-in').value)||0;
+      hCm=(ft*12+inch)*2.54;
+    } else {
+      hCm=parseFloat(document.getElementById('height-cm').value);
+    }
+    var r=bmi(w, hCm), msg=document.getElementById('msg');
+    if(r.error){ msg.textContent=r.error; msg.className='msg err'; document.getElementById('results').classList.add('hidden'); return; }
+    msg.textContent=''; msg.className='msg';
+    document.getElementById('r-bmi').textContent=r.bmi.toFixed(1);
+    document.getElementById('r-cat').textContent=r.category;
+    document.getElementById('r-range').textContent=r.healthyMin.toFixed(1)+' – '+r.healthyMax.toFixed(1);
+    document.getElementById('results').classList.remove('hidden');
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter your weight in kilograms.</li>
+    <li>Enter your height — in centimetres, or switch to feet and inches.</li>
+    <li>Click “Calculate BMI” to see your BMI, its category and the healthy weight range for your height.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is a healthy BMI?</summary><p>For adults, a BMI between 18.5 and 24.9 is classed as normal (healthy). Below 18.5 is underweight, 25 to 29.9 is overweight, and 30 or above is obese.</p></details>
+  <details><summary>Is BMI the same for children and athletes?</summary><p>No — BMI is a rough guide for adults. It does not account for muscle mass, age or body type, so athletes and children should use it with care and talk to a doctor for personal advice.</p></details>
+  <details><summary>Is my data stored?</summary><p>No. The calculation happens in your browser — nothing you type is saved or sent anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
