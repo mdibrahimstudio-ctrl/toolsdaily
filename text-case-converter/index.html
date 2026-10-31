@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text Case Converter — UPPERCASE, Title Case &amp; More — ToolsDaily</title>
+<meta name="description" content="Free text case converter: change text to UPPERCASE, lowercase, Title Case, Sentence case, alternating case, or reverse it. Instant, in your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Text Case Converter</h1>
+<p class="lead">Fix your text&#x27;s case with one click.</p>
+
+<div class="card">
+  <label for="text">Your text</label>
+  <textarea id="text" placeholder="Type or paste your text here…">hello world. this is toolsdaily.</textarea>
+  <p>
+    <button type="button" data-case="upper">UPPERCASE</button>
+    <button type="button" data-case="lower">lowercase</button>
+    <button type="button" data-case="title">Title Case</button>
+    <button type="button" data-case="sentence">Sentence case</button>
+    <button type="button" data-case="alt">aLtErNaTiNg</button>
+    <button type="button" data-case="reverse">Reverse text</button>
+    <button type="button" class="secondary" id="copy">Copy result</button>
+  </p>
+  <p class="msg" id="msg"></p>
+</div>
+<script>
+(function(){
+  function transform(t, mode){
+    if(mode==='upper') return t.toUpperCase();
+    if(mode==='lower') return t.toLowerCase();
+    if(mode==='title') return t.toLowerCase().replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+    if(mode==='sentence') return t.toLowerCase().replace(/(^\s*[a-z])|([.!?]\s*[a-z])/g, function(m){ return m.toUpperCase(); });
+    if(mode==='alt'){ var out='', up=true;
+      for(var i=0;i<t.length;i++){ var ch=t[i];
+        if(/[a-zA-Z]/.test(ch)){ out+= up? ch.toUpperCase() : ch.toLowerCase(); up=!up; } else out+=ch; }
+      return out; }
+    if(mode==='reverse') return t.split('').reverse().join('');
+    return t;
+  }
+  window.TD_case=transform;
+  var ta=document.getElementById('text');
+  document.querySelectorAll('[data-case]').forEach(function(btn){
+    btn.addEventListener('click',function(){ ta.value=transform(ta.value, btn.getAttribute('data-case')); });
+  });
+  document.getElementById('copy').addEventListener('click',function(){
+    var msg=document.getElementById('msg');
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(function(){ msg.textContent='Copied to clipboard.'; msg.className='msg ok'; });
+    } else { ta.select(); try{ document.execCommand('copy'); msg.textContent='Copied to clipboard.'; msg.className='msg ok'; }catch(e){ msg.textContent='Copy failed — copy the text manually.'; msg.className='msg err'; } }
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type or paste the text you want to change.</li>
+    <li>Click a style button — the text transforms instantly, right in the box.</li>
+    <li>Click “Copy result” and paste it wherever you need it.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is Title Case?</summary><p>Title Case capitalises the first letter of every word, like a headline: “The Quick Brown Fox”.</p></details>
+  <details><summary>What is Sentence case?</summary><p>Sentence case capitalises only the first letter of each sentence and lowercases everything else — handy for fixing text typed in all caps.</p></details>
+  <details><summary>Can I undo a change?</summary><p>There is no undo button, so keep a copy of important text before transforming it.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
