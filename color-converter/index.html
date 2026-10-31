@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Color Converter — HEX to RGB, HSL &amp; HSV — ToolsDaily</title>
+<meta name="description" content="Free color converter: turn HEX colors into RGB, HSL and HSV values with one-click copy. Perfect for web design and CSS work.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Color Converter</h1>
+<p class="lead">One color, every format: HEX, RGB, HSL and HSV.</p>
+
+<div class="card">
+  <div class="row">
+    <div><label for="picker">Pick a color</label><input type="color" id="picker" value="#ff0000"></div>
+    <div><label for="hex">HEX value</label><input type="text" id="hex" value="#FF0000" class="mono" maxlength="7"></div>
+  </div>
+  <p class="msg" id="msg"></p>
+  <table class="kv">
+    <tr><td>RGB</td><td class="mono" id="v-rgb">rgb(255, 0, 0)</td><td><button type="button" class="secondary copy-btn" data-target="v-rgb">Copy</button></td></tr>
+    <tr><td>HSL</td><td class="mono" id="v-hsl">hsl(0, 100%, 50%)</td><td><button type="button" class="secondary copy-btn" data-target="v-hsl">Copy</button></td></tr>
+    <tr><td>HSV</td><td class="mono" id="v-hsv">hsv(0, 100%, 100%)</td><td><button type="button" class="secondary copy-btn" data-target="v-hsv">Copy</button></td></tr>
+  </table>
+</div>
+<script>
+(function(){
+  function hexToRgb(hex){
+    var h=hex.trim().replace(/^#/,'');
+    if(/^[0-9a-fA-F]{3}$/.test(h)) h=h.split('').map(function(c){return c+c;}).join('');
+    if(!/^[0-9a-fA-F]{6}$/.test(h)) return null;
+    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+  }
+  function rgbToHsl(r,g,b){
+    r/=255; g/=255; b/=255;
+    var mx=Math.max(r,g,b), mn=Math.min(r,g,b), l=(mx+mn)/2, d=mx-mn, h=0;
+    if(d){ var s=l>0.5? d/(2-mx-mn) : d/(mx+mn);
+      if(mx===r) h=(g-b)/d+(g<b?6:0); else if(mx===g) h=(b-r)/d+2; else h=(r-g)/d+4; h*=60;
+      return [Math.round(h), Math.round(s*100), Math.round(l*100)]; }
+    return [0,0,Math.round(l*100)];
+  }
+  function rgbToHsv(r,g,b){
+    r/=255; g/=255; b/=255;
+    var mx=Math.max(r,g,b), mn=Math.min(r,g,b), d=mx-mn, h=0;
+    if(d){ if(mx===r) h=(g-b)/d+(g<b?6:0); else if(mx===g) h=(b-r)/d+2; else h=(r-g)/d+4; h*=60; }
+    var s=mx===0?0:d/mx;
+    return [Math.round(h), Math.round(s*100), Math.round(mx*100)];
+  }
+  function convertColor(hex){
+    var rgb=hexToRgb(hex); if(!rgb) return null;
+    return {rgb:rgb, hsl:rgbToHsl(rgb[0],rgb[1],rgb[2]), hsv:rgbToHsv(rgb[0],rgb[1],rgb[2])};
+  }
+  window.TD_color=convertColor;
+  var picker=document.getElementById('picker'), hexEl=document.getElementById('hex'), msg=document.getElementById('msg');
+  function render(hex){
+    var r=convertColor(hex);
+    if(!r){ msg.textContent='That is not a valid HEX color. Use a format like #FF8800.'; msg.className='msg err'; return; }
+    msg.textContent=''; msg.className='msg';
+    document.getElementById('v-rgb').textContent='rgb('+r.rgb.join(', ')+')';
+    document.getElementById('v-hsl').textContent='hsl('+r.hsl[0]+', '+r.hsl[1]+'%, '+r.hsl[2]+'%)';
+    document.getElementById('v-hsv').textContent='hsv('+r.hsv[0]+', '+r.hsv[1]+'%, '+r.hsv[2]+'%)';
+    var norm='#'+r.rgb.map(function(v){return v.toString(16).padStart(2,'0');}).join('');
+    picker.value=norm; hexEl.value=norm.toUpperCase();
+  }
+  picker.addEventListener('input',function(){ render(picker.value); });
+  hexEl.addEventListener('input',function(){ render(hexEl.value); });
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var v=document.getElementById(btn.getAttribute('data-target')).textContent;
+      if(navigator.clipboard) navigator.clipboard.writeText(v);
+      msg.textContent='Copied: '+v; msg.className='msg ok';
+    });
+  });
+  render('#FF0000');
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Pick a color with the color swatch, or type a HEX value like #FF8800.</li>
+    <li>Read the same color in RGB, HSL and HSV formats.</li>
+    <li>Click Copy next to any format to use it in your design or code.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is the difference between HSL and HSV?</summary><p>Both describe color by hue, but HSL measures lightness from black to white through the pure color, while HSV (HSB) measures brightness up to the pure color. Design tools use both.</p></details>
+  <details><summary>Can I enter a 3-digit HEX like #F00?</summary><p>Yes — short HEX values are expanded automatically (#F00 becomes #FF0000).</p></details>
+  <details><summary>Which format do I need for CSS?</summary><p>All four work in CSS. HEX and RGB are the most common; HSL is handy when you want to adjust lightness by hand.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
