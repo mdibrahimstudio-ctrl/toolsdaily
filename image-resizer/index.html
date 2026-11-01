@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Resizer — Resize Images by Pixels or Percent — ToolsDaily</title>
+<meta name="description" content="Free image resizer: resize images by width, height, exact size or percentage, keeping the aspect ratio. Fast, private, and no sign-up — files never leave your device.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/image-resizer/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Image Resizer — Resize Images by Pixels or Percent — ToolsDaily">
+<meta property="og:description" content="Free image resizer: resize images by width, height, exact size or percentage, keeping the aspect ratio. Fast, private, and no sign-up — files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/image-resizer/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Resizer — Resize Images by Pixels or Percent — ToolsDaily">
+<meta name="twitter:description" content="Free image resizer: resize images by width, height, exact size or percentage, keeping the aspect ratio. Fast, private, and no sign-up — files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Resizer",
+    "url": "https://toolsdaily.vercel.app/image-resizer/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free image resizer: resize images by width, height, exact size or percentage, keeping the aspect ratio. Fast, private, and no sign-up \u2014 files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Will resizing keep my image proportions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, when Keep aspect ratio is on, the other side is calculated automatically so the image is never stretched or squashed. Turn it off only when you want an exact size."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I resize by percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Choose Resize by percent and enter a value: 50 makes the image half its original size, 200 doubles it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does resizing change the image format?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Only if you choose a different output format. Pick PNG, JPEG or WebP; JPEG fills transparent areas with white, while PNG and WebP keep transparency."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my images uploaded?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Never. The resizing happens entirely in your browser."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+</div></header>
+<main>
+<h1>Image Resizer</h1>
+<p class="lead">Resize any image by width, height, exact size or percentage — with the aspect ratio kept.</p>
+
+<div class="card">
+  <label for="file">Choose an image</label>
+  <input type="file" id="file" accept="image/*">
+  <label for="mode">Resize by</label>
+  <select id="mode">
+    <option value="width">Width (pixels)</option>
+    <option value="height">Height (pixels)</option>
+    <option value="percent">Percent (%)</option>
+    <option value="exact">Exact size (width × height)</option>
+  </select>
+  <div id="row-width">
+    <label for="width">New width (px)</label>
+    <input type="number" id="width" value="800" min="1" max="10000">
+  </div>
+  <div id="row-height" class="hidden">
+    <label for="height">New height (px)</label>
+    <input type="number" id="height" value="600" min="1" max="10000">
+  </div>
+  <div id="row-percent" class="hidden">
+    <label for="percent">Scale (%)</label>
+    <input type="number" id="percent" value="50" min="1" max="500">
+  </div>
+  <div class="checks">
+    <label><input type="checkbox" id="lock" checked> Keep aspect ratio</label>
+  </div>
+  <label for="format">Output format</label>
+  <select id="format"><option value="image/png">PNG</option><option value="image/jpeg">JPEG</option><option value="image/webp">WebP</option></select>
+  <button id="resize" type="button" disabled>Resize image</button>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="results">
+    <div class="stat"><b id="orig-dims">–</b><span>Original size</span></div>
+    <div class="stat"><b id="new-dims">–</b><span>New size</span></div>
+    <div class="stat"><b id="orig-size">–</b><span>Original file</span></div>
+    <div class="stat"><b id="out-size">–</b><span>Resized file</span></div>
+  </div>
+  <img class="preview hidden" id="preview" alt="Resized image preview">
+  <p><a class="btn hidden" id="dl" href="#" download="resized.png">Download resized image</a></p>
+</div>
+<script>
+(function(){
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  window.TD_formatBytes=formatBytes;
+  function isPosInt(v){ return Number.isInteger(v) && v >= 1 && v <= 10000; }
+  function resizeDims(origW, origH, opts){
+    if(!isPosInt(origW) || !isPosInt(origH)) return { error: 'Invalid original dimensions.' };
+    var mode=opts.mode, lock=!!opts.lock;
+    var w=opts.width, h=opts.height, p=opts.percent;
+    if(mode==='width'){
+      if(!isPosInt(w)) return { error: 'Enter a valid width between 1 and 10000 px.' };
+      return { width: w, height: lock ? Math.max(1, Math.round(origH * w / origW)) : (isPosInt(h) ? h : origH) };
+    }
+    if(mode==='height'){
+      if(!isPosInt(h)) return { error: 'Enter a valid height between 1 and 10000 px.' };
+      return { width: lock ? Math.max(1, Math.round(origW * h / origH)) : (isPosInt(w) ? w : origW), height: h };
+    }
+    if(mode==='percent'){
+      if(!Number.isInteger(p) || p < 1 || p > 500) return { error: 'Enter a percentage between 1 and 500.' };
+      return { width: Math.max(1, Math.round(origW * p / 100)), height: Math.max(1, Math.round(origH * p / 100)) };
+    }
+    if(mode==='exact'){
+      if(!isPosInt(w) || !isPosInt(h)) return { error: 'Enter a valid width and height between 1 and 10000 px.' };
+      return { width: w, height: h };
+    }
+    return { error: 'Unknown resize mode.' };
+  }
+  window.TD_resizeDims=resizeDims;
+  var fileInput=document.getElementById('file'), modeSel=document.getElementById('mode'),
+      widthEl=document.getElementById('width'), heightEl=document.getElementById('height'),
+      percentEl=document.getElementById('percent'), lockEl=document.getElementById('lock'),
+      fmt=document.getElementById('format'), btn=document.getElementById('resize'),
+      msg=document.getElementById('msg'), currentFile=null, outUrl=null;
+  var ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'};
+  function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
+  function num(el){ var v=parseInt(el.value,10); return isNaN(v) ? null : v; }
+  function updateRows(){
+    var m=modeSel.value, locked=lockEl.checked;
+    document.getElementById('row-width').classList.toggle('hidden', m==='percent' || (locked && m==='height'));
+    document.getElementById('row-height').classList.toggle('hidden', m==='percent' || (locked && m==='width'));
+    document.getElementById('row-percent').classList.toggle('hidden', m!=='percent');
+  }
+  modeSel.addEventListener('change', updateRows);
+  lockEl.addEventListener('change', updateRows);
+  updateRows();
+  fileInput.addEventListener('change',function(){
+    var f=fileInput.files[0];
+    if(!f) return;
+    if(!/^image\//.test(f.type)){ showMsg('That file is not an image. Please choose an image file.'); btn.disabled=true; return; }
+    currentFile=f; btn.disabled=false; showMsg('Selected: '+f.name+' ('+formatBytes(f.size)+')');
+  });
+  btn.addEventListener('click',function(){
+    if(!currentFile){ showMsg('Please choose an image first.'); return; }
+    var type=fmt.value, url=URL.createObjectURL(currentFile), img=new Image();
+    img.onload=function(){
+      var dims=resizeDims(img.naturalWidth, img.naturalHeight, { mode: modeSel.value, width: num(widthEl), height: num(heightEl), percent: num(percentEl), lock: lockEl.checked });
+      if(dims.error){ URL.revokeObjectURL(url); showMsg(dims.error); return; }
+      var c=document.createElement('canvas'); c.width=dims.width; c.height=dims.height;
+      var ctx=c.getContext('2d');
+      if(type==='image/jpeg'){ ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height); }
+      ctx.drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url);
+      c.toBlob(function(blob){
+        if(!blob){ showMsg('Resizing failed — your browser does not support this output format.'); return; }
+        if(outUrl) URL.revokeObjectURL(outUrl);
+        outUrl=URL.createObjectURL(blob);
+        document.getElementById('orig-dims').textContent=img.naturalWidth+' × '+img.naturalHeight;
+        document.getElementById('new-dims').textContent=c.width+' × '+c.height;
+        document.getElementById('orig-size').textContent=formatBytes(currentFile.size);
+        document.getElementById('out-size').textContent=formatBytes(blob.size);
+        document.getElementById('results').classList.remove('hidden');
+        var prev=document.getElementById('preview'); prev.src=outUrl; prev.classList.remove('hidden');
+        var dl=document.getElementById('dl'); dl.href=outUrl; dl.download='resized.'+ext[type]; dl.classList.remove('hidden');
+        showMsg('Done! Your resized image is ready.', true);
+      }, type, 0.92);
+    };
+    img.onerror=function(){ URL.revokeObjectURL(url); showMsg('Could not read that image file.'); };
+    img.src=url;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Choose any image from your device.</li>
+    <li>Pick how to resize: by width, by height, by percent, or an exact width × height.</li>
+    <li>Keep “Keep aspect ratio” on to avoid stretching, then click “Resize image” and download the result.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Will resizing keep my image proportions?</summary><p>Yes, when Keep aspect ratio is on, the other side is calculated automatically so the image is never stretched or squashed. Turn it off only when you want an exact size.</p></details>
+  <details><summary>Can I resize by percentage?</summary><p>Yes. Choose Resize by percent and enter a value: 50 makes the image half its original size, 200 doubles it.</p></details>
+  <details><summary>Does resizing change the image format?</summary><p>Only if you choose a different output format. Pick PNG, JPEG or WebP; JPEG fills transparent areas with white, while PNG and WebP keep transparency.</p></details>
+  <details><summary>Are my images uploaded?</summary><p>Never. The resizing happens entirely in your browser.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
