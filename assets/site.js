@@ -1,5 +1,24 @@
-// ToolsDaily shared script: footer year + home-page search filter.
+// ToolsDaily shared script: dark/light theme toggle, footer year + home-page search filter.
 (function () {
+  var rootEl = document.documentElement;
+  var toggle = document.getElementById('theme-toggle');
+  function currentTheme() { return rootEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+  function paintToggle() {
+    if (!toggle) return;
+    var dark = currentTheme() === 'dark';
+    toggle.textContent = dark ? '☀️' : '🌙';
+    toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  if (toggle) {
+    paintToggle();
+    toggle.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      rootEl.setAttribute('data-theme', next);
+      try { localStorage.setItem('td-theme', next); } catch (e) {}
+      paintToggle();
+    });
+  }
+
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
