@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Base64 Encoder & Decoder — Text and Files — ToolsDaily</title>
+<meta name="description" content="Free Base64 encoder and decoder that runs in your browser: encode text or any file to Base64, or decode Base64 back to text or a downloadable file. Nothing is uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/base64-encoder-decoder/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Base64 Encoder & Decoder — Text and Files — ToolsDaily">
+<meta property="og:description" content="Free Base64 encoder and decoder that runs in your browser: encode text or any file to Base64, or decode Base64 back to text or a downloadable file. Nothing is uploaded.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/base64-encoder-decoder/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Base64 Encoder & Decoder — Text and Files — ToolsDaily">
+<meta name="twitter:description" content="Free Base64 encoder and decoder that runs in your browser: encode text or any file to Base64, or decode Base64 back to text or a downloadable file. Nothing is uploaded.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Base64 Encoder / Decoder",
+    "url": "https://toolsdaily.vercel.app/base64-encoder-decoder/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free Base64 encoder and decoder that runs in your browser: encode text or any file to Base64, or decode Base64 back to text or a downloadable file. Nothing is uploaded."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Base64?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64 turns binary data into plain text using 64 safe characters (letters, digits, + and /), so it can travel in places that only accept text, like JSON or URLs. It is an encoding, not encryption: anyone can decode it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I encode a file, not just text?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Pick any file and the tool reads it in your browser and shows its Base64 text, which you can copy or download as a .txt file. You can also paste Base64 back and download the original file."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is anything I upload stored?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Encoding and decoding happen entirely in your browser — your text and files are never uploaded or saved anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Base64 Encoder / Decoder</h1>
+<p class="lead">Encode text or files to Base64, or decode Base64 back — all in your browser.</p>
+
+<section><h2>Text</h2>
+<div class="card">
+  <div><label for="text-in">Input text</label><textarea id="text-in" placeholder="Type or paste text here…"></textarea></div>
+  <p><button id="btn-encode" type="button">Encode to Base64 ↓</button> <button id="btn-decode" type="button" class="secondary">Decode from Base64 ↑</button> <button id="copy-out" type="button" class="secondary">Copy result</button></p>
+  <div><label for="text-out">Result</label><textarea id="text-out" readonly placeholder="Your result appears here…"></textarea></div>
+  <p class="msg" id="text-msg"></p>
+</div></section>
+
+<section><h2>File to Base64</h2>
+<div class="card">
+  <div><label for="file-in">Choose a file</label><input type="file" id="file-in"></div>
+  <p><button id="btn-file-encode" type="button" disabled>Encode file</button></p>
+  <div><label for="file-out">Base64 of the file</label><textarea id="file-out" readonly placeholder="The file's Base64 text appears here…"></textarea></div>
+  <p><a class="btn hidden" id="file-dl" href="#" download="file-base64.txt">Download Base64 as .txt</a></p>
+  <p class="msg" id="file-msg"></p>
+</div></section>
+
+<section><h2>Base64 to file</h2>
+<div class="card">
+  <div><label for="b64-in">Paste Base64</label><textarea id="b64-in" placeholder="Paste Base64 text here…"></textarea></div>
+  <div><label for="dl-name">Download filename</label><input type="text" id="dl-name" placeholder="e.g. photo.png (default: decoded-file.bin)"></div>
+  <p><button id="btn-b64-decode" type="button">Decode and prepare download</button></p>
+  <p><a class="btn hidden" id="b64-dl" href="#" download="decoded-file.bin">Download decoded file</a></p>
+  <p class="msg" id="b64-msg"></p>
+</div></section>
+<script>
+(function(){
+  function bytesToBase64(bytes){
+    var bin = '';
+    var CH = 0x8000;
+    for (var i = 0; i < bytes.length; i += CH) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CH));
+    }
+    return btoa(bin);
+  }
+  function base64ToBytes(s){
+    var clean = String(s).replace(/\s+/g, '');
+    if (clean.length % 4 === 1) throw new Error('Invalid Base64: bad length');
+    if (!/^[A-Za-z0-9+/]*={0,2}$/.test(clean)) throw new Error('Invalid Base64: bad characters');
+    while (clean.length % 4 !== 0) clean += '=';
+    var bin = atob(clean);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+  function encodeText(text){ return bytesToBase64(new TextEncoder().encode(text)); }
+  function decodeText(s){ return new TextDecoder().decode(base64ToBytes(s)); }
+  function isValid(s){
+    try { base64ToBytes(s); return true; } catch (e) { return false; }
+  }
+  window.TD_base64 = { encodeText: encodeText, decodeText: decodeText, isValid: isValid, bytesToBase64: bytesToBase64, base64ToBytes: base64ToBytes };
+  function showMsg(id, text, kind){
+    var el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'msg ' + (kind || '');
+  }
+  document.getElementById('btn-encode').addEventListener('click', function(){
+    document.getElementById('text-out').value = encodeText(document.getElementById('text-in').value);
+    showMsg('text-msg', 'Encoded.', 'ok');
+  });
+  document.getElementById('btn-decode').addEventListener('click', function(){
+    try {
+      document.getElementById('text-out').value = decodeText(document.getElementById('text-in').value);
+      showMsg('text-msg', 'Decoded.', 'ok');
+    } catch (e) {
+      showMsg('text-msg', 'Could not decode: that is not valid Base64. Check for typos or missing characters.', 'err');
+    }
+  });
+  document.getElementById('copy-out').addEventListener('click', function(){
+    var out = document.getElementById('text-out');
+    if (!out.value) { showMsg('text-msg', 'Nothing to copy yet — encode or decode something first.', 'err'); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(out.value).then(function(){ showMsg('text-msg', 'Copied to clipboard.', 'ok'); }, function(){ out.select(); showMsg('text-msg', 'Copy failed — the result is selected, press Ctrl+C.', 'err'); });
+    } else { out.select(); showMsg('text-msg', 'Result selected — press Ctrl+C to copy.', 'ok'); }
+  });
+  var fileInput = document.getElementById('file-in');
+  fileInput.addEventListener('change', function(){
+    document.getElementById('btn-file-encode').disabled = !fileInput.files.length;
+    if (fileInput.files.length) showMsg('file-msg', '', '');
+  });
+  document.getElementById('btn-file-encode').addEventListener('click', function(){
+    var f = fileInput.files[0];
+    if (!f) return;
+    f.arrayBuffer().then(function(buf){
+      var b64 = bytesToBase64(new Uint8Array(buf));
+      document.getElementById('file-out').value = b64;
+      var dl = document.getElementById('file-dl');
+      dl.href = URL.createObjectURL(new Blob([b64], { type: 'text/plain' }));
+      dl.download = f.name + '.base64.txt';
+      dl.classList.remove('hidden');
+      showMsg('file-msg', 'Encoded ' + f.name + ' (' + f.size + ' bytes) to ' + b64.length + ' Base64 characters.', 'ok');
+    }, function(){ showMsg('file-msg', 'Could not read that file.', 'err'); });
+  });
+  document.getElementById('btn-b64-decode').addEventListener('click', function(){
+    try {
+      var bytes = base64ToBytes(document.getElementById('b64-in').value);
+      var name = document.getElementById('dl-name').value.trim() || 'decoded-file.bin';
+      var dl = document.getElementById('b64-dl');
+      dl.href = URL.createObjectURL(new Blob([bytes]));
+      dl.download = name;
+      dl.classList.remove('hidden');
+      showMsg('b64-msg', 'Ready: ' + bytes.length + ' bytes decoded. Click the download button to save ' + name + '.', 'ok');
+    } catch (e) {
+      showMsg('b64-msg', 'Could not decode: that is not valid Base64. Check for typos or missing characters.', 'err');
+    }
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>For text: type or paste it, then press Encode or Decode.</li>
+    <li>For a file: choose the file and press Encode file, then copy the Base64 or download it as a .txt file.</li>
+    <li>To get a file back: paste its Base64, type a filename, and press Decode and prepare download.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is Base64?</summary><p>Base64 turns binary data into plain text using 64 safe characters (letters, digits, + and /), so it can travel in places that only accept text, like JSON or URLs. It is an encoding, not encryption: anyone can decode it.</p></details>
+  <details><summary>Can I encode a file, not just text?</summary><p>Yes. Pick any file and the tool reads it in your browser and shows its Base64 text, which you can copy or download as a .txt file. You can also paste Base64 back and download the original file.</p></details>
+  <details><summary>Is anything I upload stored?</summary><p>No. Encoding and decoding happen entirely in your browser — your text and files are never uploaded or saved anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
