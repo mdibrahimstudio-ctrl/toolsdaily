@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Date Difference Calculator — Days, Weeks & Months Between Dates — ToolsDaily</title>
+<meta name="description" content="Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date. All in your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/date-difference-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Date Difference Calculator — Days, Weeks & Months Between Dates — ToolsDaily">
+<meta property="og:description" content="Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date. All in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/date-difference-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Date Difference Calculator — Days, Weeks & Months Between Dates — ToolsDaily">
+<meta name="twitter:description" content="Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date. All in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Date Difference Calculator",
+    "url": "https://toolsdaily.vercel.app/date-difference-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date. All in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does the calculator handle leap years?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It counts real calendar days, so 29 February is included whenever it falls between your two dates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the order of the dates matter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The earlier date is used as the start either way, so swapping the two dates gives the same result."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does Include end date do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It adds one day to the total, counting both the start and end dates. With it off, the difference between the same date twice is 0 days; with it on, it is 1 day."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Date Difference Calculator</h1>
+<p class="lead">How many days, weeks and months between two dates — plus add or subtract days from a date.</p>
+
+<section><h2>Difference between two dates</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="date-from">Start date</label><input type="date" id="date-from"></div>
+    <div><label for="date-to">End date</label><input type="date" id="date-to"></div>
+  </div>
+  <p><label><input type="checkbox" id="include-end"> Include end date (count both dates)</label></p>
+  <p><button id="calc" type="button">Calculate difference</button> <button id="swap" type="button" class="secondary">Swap dates</button></p>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="results">
+    <div class="stat"><b id="r-ymd">–</b><span>Calendar breakdown</span></div>
+    <div class="stat"><b id="r-days">–</b><span>Total days</span></div>
+    <div class="stat"><b id="r-weeks">–</b><span>Total weeks</span></div>
+    <div class="stat"><b id="r-months">–</b><span>Complete months</span></div>
+  </div>
+  <p class="msg" id="r-weekdays"></p>
+</div></section>
+
+<section><h2>Add or subtract days</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="add-date">Date</label><input type="date" id="add-date"></div>
+    <div><label for="add-days">Days (negative subtracts)</label><input type="number" id="add-days" step="1" placeholder="e.g. 30 or -7"></div>
+  </div>
+  <p><button id="add-calc" type="button">Calculate new date</button></p>
+  <p class="out" id="add-result" aria-live="polite">–</p>
+</div></section>
+<script>
+(function(){
+  var WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  function parseDate(s){
+    if(!s) return null;
+    var p = String(s).split('-');
+    if(p.length !== 3) return null;
+    var y = +p[0], m = +p[1], d = +p[2];
+    if(!y || !m || !d) return null;
+    var dt = new Date(y, m - 1, d);
+    if(dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== d) return null;
+    return dt;
+  }
+  function fmtISO(dt){
+    var m = String(dt.getMonth() + 1), d = String(dt.getDate());
+    return dt.getFullYear() + '-' + (m.length < 2 ? '0' + m : m) + '-' + (d.length < 2 ? '0' + d : d);
+  }
+  function diff(fromStr, toStr, includeEnd){
+    var a = parseDate(fromStr), b = parseDate(toStr);
+    if(!a || !b) return { error: 'Please choose two valid dates.' };
+    var from = a, to = b;
+    if(from > to){ var t = from; from = to; to = t; }
+    var years = to.getFullYear() - from.getFullYear();
+    var months = to.getMonth() - from.getMonth();
+    var days = to.getDate() - from.getDate();
+    if(days < 0){ months--; var prev = new Date(to.getFullYear(), to.getMonth(), 0); days += prev.getDate(); }
+    if(months < 0){ years--; months += 12; }
+    var totalDays = Math.round((Date.UTC(to.getFullYear(), to.getMonth(), to.getDate()) - Date.UTC(from.getFullYear(), from.getMonth(), from.getDate())) / 86400000);
+    if(includeEnd) totalDays += 1;
+    return {
+      years: years, months: months, days: days,
+      totalMonths: years * 12 + months,
+      totalDays: totalDays,
+      totalWeeks: Math.floor(totalDays / 7),
+      weekRemainder: totalDays % 7,
+      fromWeekday: WEEKDAYS[from.getDay()],
+      toWeekday: WEEKDAYS[to.getDay()]
+    };
+  }
+  function addDays(dateStr, n){
+    var dt = parseDate(dateStr);
+    if(!dt) return { error: 'Please choose a valid date.' };
+    if(n === null || n === undefined || isNaN(n)) return { error: 'Please enter a number of days.' };
+    var out = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + n);
+    return { date: fmtISO(out), weekday: WEEKDAYS[out.getDay()] };
+  }
+  window.TD_dateDiff = { diff: diff, addDays: addDays, parseDate: parseDate };
+  document.getElementById('calc').addEventListener('click', function(){
+    var r = diff(document.getElementById('date-from').value, document.getElementById('date-to').value, document.getElementById('include-end').checked);
+    var msg = document.getElementById('msg');
+    if(r.error){ msg.textContent = r.error; msg.className = 'msg err'; document.getElementById('results').classList.add('hidden'); document.getElementById('r-weekdays').textContent = ''; return; }
+    msg.textContent = ''; msg.className = 'msg';
+    document.getElementById('r-ymd').textContent = r.years + 'y ' + r.months + 'm ' + r.days + 'd';
+    document.getElementById('r-days').textContent = r.totalDays.toLocaleString('en-US');
+    document.getElementById('r-weeks').textContent = r.totalWeeks.toLocaleString('en-US') + ' weeks, ' + r.weekRemainder + ' days';
+    document.getElementById('r-months').textContent = r.totalMonths.toLocaleString('en-US');
+    document.getElementById('r-weekdays').textContent = 'Start day: ' + r.fromWeekday + ' — End day: ' + r.toWeekday + '.';
+    document.getElementById('results').classList.remove('hidden');
+  });
+  document.getElementById('swap').addEventListener('click', function(){
+    var a = document.getElementById('date-from'), b = document.getElementById('date-to');
+    var tmp = a.value; a.value = b.value; b.value = tmp;
+  });
+  document.getElementById('add-calc').addEventListener('click', function(){
+    var raw = document.getElementById('add-days').value;
+    var n = raw === '' ? null : parseInt(raw, 10);
+    var r = addDays(document.getElementById('add-date').value, n);
+    document.getElementById('add-result').textContent = r.error ? r.error : r.date + ' (' + r.weekday + ')';
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Pick a start date and an end date, then press Calculate difference.</li>
+    <li>Read the calendar breakdown (years, months, days) plus total days, weeks and complete months.</li>
+    <li>To shift a date, enter it below with a number of days — a negative number subtracts days.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Does the calculator handle leap years?</summary><p>Yes. It counts real calendar days, so 29 February is included whenever it falls between your two dates.</p></details>
+  <details><summary>Does the order of the dates matter?</summary><p>No. The earlier date is used as the start either way, so swapping the two dates gives the same result.</p></details>
+  <details><summary>What does Include end date do?</summary><p>It adds one day to the total, counting both the start and end dates. With it off, the difference between the same date twice is 0 days; with it on, it is 1 day.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
