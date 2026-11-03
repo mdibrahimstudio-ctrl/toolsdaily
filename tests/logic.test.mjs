@@ -306,7 +306,7 @@ console.log('HOME');
 {
   const dom = await loadPage('');
   const w = dom.window;
-  ok(w.document.querySelectorAll('.tool-card').length === 18, 'home lists exactly 18 tool cards');
+  ok(w.document.querySelectorAll('.tool-card').length === 19, 'home lists exactly 19 tool cards');
   setVal(w, '#tool-search', 'password');
   const visible = [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden'));
   ok(visible.length === 1 && visible[0].getAttribute('href') === 'password-generator/', 'search "password" filters to 1 card');

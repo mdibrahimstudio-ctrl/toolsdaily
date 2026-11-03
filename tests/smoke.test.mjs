@@ -28,6 +28,7 @@ const PAGES = [
   { path: 'percentage-calculator/', name: 'percentage-calculator', selectors: ['#a-x', '#a-y', '#a-result', '#b-part', '#b-whole', '#b-result', '#c-from', '#c-to', '#c-result'] },
   { path: 'image-resizer/', name: 'image-resizer', selectors: ['#file', '#mode', '#width', '#height', '#percent', '#lock', '#format', '#resize', '#results'] },
   { path: 'base64-encoder-decoder/', name: 'base64-encoder-decoder', selectors: ['#text-in', '#btn-encode', '#btn-decode', '#text-out', '#file-in', '#btn-file-encode', '#file-out', '#b64-in', '#dl-name', '#btn-b64-decode', '#b64-dl'] },
+  { path: 'date-difference-calculator/', name: 'date-difference-calculator', selectors: ['#date-from', '#date-to', '#include-end', '#calc', '#swap', '#results', '#add-date', '#add-days', '#add-calc', '#add-result'] },
 ];
 
 async function loadPage(path) {

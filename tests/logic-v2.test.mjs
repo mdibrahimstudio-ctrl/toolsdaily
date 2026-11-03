@@ -86,12 +86,12 @@ for (const { slug, name } of NEW_PAGES) {
 }
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 19, 'sitemap.xml has 19 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 20, 'sitemap.xml has 20 URLs');
   ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 6 new tools');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-resizer/'), 'sitemap includes image-resizer');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 18, 'home has exactly 18 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 19, 'home has exactly 19 tool cards');
   ok(NEW_PAGES.every(({ slug }) => home.includes(`href="${slug}/"`)), 'home cards + nav include all 6 new tools');
   ok(home.includes('href="image-resizer/"'), 'home cards + nav include image-resizer');
   ok(home.includes('href="base64-encoder-decoder/"'), 'home cards + nav include base64-encoder-decoder');
@@ -107,15 +107,15 @@ console.log('HOME SEARCH');
   const dom = await loadPage('');
   const w = dom.window;
   const visibleCount = () => [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden')).length;
-  ok(visibleCount() === 18, 'home shows 18 cards before searching');
+  ok(visibleCount() === 19, 'home shows 19 cards before searching');
   setVal(w, '#tool-search', 'pdf');
   ok(visibleCount() === 3, 'search "pdf" filters to the 3 PDF tools');
   setVal(w, '#tool-search', 'calculator');
-  ok(visibleCount() === 4, 'search "calculator" finds age, bmi, emi, percentage (4)');
+  ok(visibleCount() === 5, 'search "calculator" finds age, bmi, emi, percentage, date-difference (5)');
   setVal(w, '#tool-search', 'base64');
   ok(visibleCount() === 1, 'search "base64" finds only the new tool (1)');
   setVal(w, '#tool-search', '');
-  ok(visibleCount() === 18, 'clearing the search restores all 18 cards');
+  ok(visibleCount() === 19, 'clearing the search restores all 19 cards');
   dom.window.close();
 }
 
