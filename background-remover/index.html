@@ -96,6 +96,16 @@ gtag('config', 'G-KX85CZXTR4');
   .bgpick button { padding:6px 12px; }
   .bgpick button.on { outline:2px solid #e8590c; }
   input[type="color"] { width:44px; height:32px; padding:0; border:none; background:none; }
+  .steps { list-style:none; padding:0; margin:10px 0 4px; font-size:14px; text-align:left; }
+  .steps li { opacity:.45; padding:2px 0; }
+  .steps li.act { opacity:1; font-weight:600; }
+  .steps li.done { opacity:.85; }
+  .steps .st-ic { display:inline-block; width:1.5em; }
+  .bar.indet > div { width:40% !important; animation:indet 1.1s ease-in-out infinite alternate; }
+  @keyframes indet { from { margin-left:0; } to { margin-left:60%; } }
+  .chip { position:absolute; top:8px; padding:2px 9px; border-radius:10px; background:rgba(0,0,0,.65); color:#fff; font-size:12px; z-index:3; pointer-events:none; }
+  .chip.l { left:8px; } .chip.r { right:8px; }
+  #beforestage img { width:100%; height:auto; display:block; border-radius:8px; }
 </style>
 </head>
 <body>
@@ -111,14 +121,23 @@ gtag('config', 'G-KX85CZXTR4');
 <div class="card">
   <div class="drop" id="drop"><p>📂 Drop an image here, paste one, or</p><input type="file" id="file" accept="image/*"></div>
   <p class="msg" id="selmsg"></p>
+  <div class="stage hidden" id="beforestage"><img id="preview" alt="Your selected photo"><span class="chip l">Your photo</span></div>
   <button id="go" type="button" disabled>Remove background</button>
   <div class="bar hidden" id="barwrap"><div id="bar"></div></div>
+  <ol class="steps hidden" id="steps">
+    <li id="step1"><span class="st-ic">•</span>Download the AI model (one time only, about 91 MB)</li>
+    <li id="step2"><span class="st-ic">•</span>Start the AI engine on your device</li>
+    <li id="step3"><span class="st-ic">•</span>Remove the background</li>
+  </ol>
   <p class="msg" id="msg"></p>
+  <p class="msg" id="elapsed"></p>
 
   <div class="hidden" id="result">
     <div class="stage checker" id="stage">
       <canvas id="out"></canvas>
       <img class="orig hidden" id="origimg" alt="Original image for comparison">
+      <span class="chip l hidden" id="chipbefore">Before</span>
+      <span class="chip r">After</span>
     </div>
     <label for="cmp">Compare with original: <span id="cmp-val">0</span>%</label>
     <input type="range" id="cmp" min="0" max="100" value="0">
@@ -136,7 +155,7 @@ gtag('config', 'G-KX85CZXTR4');
 <script>
 (function(){
   'use strict';
-  var SIZE=1024, MAXSIDE=5000;
+  var SIZE=1024, MAXSIDE=2560;
   var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
       goBtn=document.getElementById('go'), msg=document.getElementById('msg'),
       selMsg=document.getElementById('selmsg'), barWrap=document.getElementById('barwrap'),
@@ -144,22 +163,50 @@ gtag('config', 'G-KX85CZXTR4');
       outCanvas=document.getElementById('out'), origImg=document.getElementById('origimg'),
       cmp=document.getElementById('cmp'), cmpVal=document.getElementById('cmp-val'),
       dl=document.getElementById('dl'), timing=document.getElementById('timing'),
-      customColor=document.getElementById('custom');
+      customColor=document.getElementById('custom'),
+      previewImg=document.getElementById('preview'), beforeStage=document.getElementById('beforestage'),
+      stepsEl=document.getElementById('steps'), elapsedEl=document.getElementById('elapsed'),
+      chipBefore=document.getElementById('chipbefore'),
+      stepEls=[document.getElementById('step1'),document.getElementById('step2'),document.getElementById('step3')];
   var currentFile=null, imgObj=null, baseCanvas=null,
-      currentBg='transparent', dlUrl=null;
+      currentBg='transparent', dlUrl=null, timerInt=null;
 
   function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
   function showMsg(el,t,ok){ el.textContent=t||''; el.className='msg '+(t?(ok?'ok':'err'):''); }
-  function setProgress(p,label){ barWrap.classList.remove('hidden'); bar.style.width=Math.round(p*100)+'%'; if(label) showMsg(msg,label,true); }
+  function setProgress(p,label){ barWrap.classList.remove('hidden'); barWrap.classList.remove('indet'); bar.style.width=Math.round(p*100)+'%'; if(label) showMsg(msg,label,true); }
+  function setIndet(label){ barWrap.classList.remove('hidden'); barWrap.classList.add('indet'); if(label) showMsg(msg,label,true); }
+
+  /* Honest step narration: the user always sees which step is running and how
+     long it has taken, so a slow step never looks like a frozen page. */
+  function setStep(n){
+    stepsEl.classList.remove('hidden');
+    stepEls.forEach(function(el,i){
+      var k=i+1;
+      el.className = n===0 ? 'done' : (k<n ? 'done' : (k===n ? 'act' : ''));
+      el.querySelector('.st-ic').textContent = (n===0||k<n) ? '✓' : (k===n ? '▸' : '•');
+    });
+  }
+  function startTimer(){
+    stopTimer();
+    timerInt=setInterval(function(){
+      var s=Math.round((performance.now()-t0)/1000);
+      elapsedEl.textContent='Working… '+s+'s — please keep this page open.';
+      elapsedEl.className='msg ok';
+    },500);
+  }
+  function stopTimer(){ if(timerInt){ clearInterval(timerInt); timerInt=null; } elapsedEl.textContent=''; }
 
   function setFile(f){
     if(!f) return;
     if(!/^image\//.test(f.type)){ showMsg(selMsg,'That file is not an image. Please choose a JPG, PNG or WebP file.'); return; }
-    currentFile=f; resultBox.classList.add('hidden');
+    currentFile=f; resultBox.classList.add('hidden'); stepsEl.classList.add('hidden');
     var url=URL.createObjectURL(f), img=new Image();
     img.onload=function(){
       imgObj=img; goBtn.disabled=false;
-      showMsg(selMsg,'Selected: '+f.name+' ('+formatBytes(f.size)+', '+img.naturalWidth+'×'+img.naturalHeight+')', true);
+      previewImg.src=url; beforeStage.classList.remove('hidden');
+      var big=f.size>20*1024*1024||img.naturalWidth>6000||img.naturalHeight>6000;
+      showMsg(selMsg,'Selected: '+f.name+' ('+formatBytes(f.size)+', '+img.naturalWidth+'×'+img.naturalHeight+')'+
+        (big?' — this is a large photo, so the result is made at up to 2560 px to keep your device safe.':''), true);
     };
     img.onerror=function(){ URL.revokeObjectURL(url); showMsg(selMsg,'Could not read that image file. If it is an iPhone HEIC photo, please convert it to JPG first (our Image Converter cannot read HEIC in every browser either).'); };
     img.src=url;
@@ -194,6 +241,7 @@ gtag('config', 'G-KX85CZXTR4');
 
   function startEngine(light){
     state='starting';
+    setStep(1);
     setProgress(0,'First run only: downloading the AI model (about 91 MB). Your browser will remember it — later visits start instantly.');
     spawnWorker(light);
     armWatchdog(90000);
@@ -215,11 +263,12 @@ gtag('config', 'G-KX85CZXTR4');
   }
 
   function failRun(text){
-    disarmWatchdog();
+    disarmWatchdog(); stopTimer();
     state='idle'; runWhenReady=false;
     if(worker){ try{ worker.terminate(); }catch(e){} worker=null; }
     workerReady=false;
     barWrap.classList.add('hidden');
+    stepsEl.classList.add('hidden');
     showMsg(msg,text);
     goBtn.disabled=false;
   }
@@ -227,10 +276,11 @@ gtag('config', 'G-KX85CZXTR4');
   function onWorkerMessage(e){
     var m=e.data||{};
     if(m.type==='progress'){
-      setProgress(m.done/m.total,'Downloading the AI model… '+Math.round(m.done/m.total*100)+'% (one-time)');
+      setProgress(m.done/m.total,'Downloading the AI model… '+formatBytes(m.done)+' of '+formatBytes(m.total)+' ('+Math.round(m.done/m.total*100)+'%, one-time)');
       armWatchdog(90000);
     }else if(m.type==='starting'){
-      setProgress(1,'AI model ready. Starting the engine…');
+      setStep(2);
+      setIndet('AI model downloaded. Starting the engine… the first start can take up to a minute on a phone.');
       armWatchdog(120000);
     }else if(m.type==='ready'){
       workerReady=true; disarmWatchdog();
@@ -239,7 +289,11 @@ gtag('config', 'G-KX85CZXTR4');
       disarmWatchdog();
       finishRun(new Float32Array(m.mask));
     }else if(m.type==='error'){
-      if(state!=='idle') recover();
+      if(window.console) console.error('bg engine error ('+(m.phase||'?')+'):', m.message);
+      if(m.phase==='init' && /download|fetch|verify|incomplete/i.test(m.message||'')){
+        failRun('The AI model could not be downloaded. Please check your internet connection, then reload the page and try again.');
+      }
+      else if(state!=='idle') recover();
     }
   }
 
@@ -253,7 +307,8 @@ gtag('config', 'G-KX85CZXTR4');
 
   function sendRun(){
     state='running'; runImg=imgObj;
-    showMsg(msg,'Analyzing your photo on your device…', true);
+    setStep(3);
+    setIndet('Removing the background… this usually takes 20–90 seconds depending on your device.');
     var arr=preprocess(imgObj);
     worker.postMessage({type:'run', buffer:arr.buffer},[arr.buffer]);
     armWatchdog(240000);
@@ -278,10 +333,11 @@ gtag('config', 'G-KX85CZXTR4');
   }
 
   function finishRun(mask){
-    state='idle';
+    state='idle'; stopTimer(); setStep(0);
     baseCanvas=buildBase(runImg||imgObj,mask);
+    beforeStage.classList.add('hidden');
     origImg.src=(runImg||imgObj).src;
-    cmp.value=0; cmpVal.textContent='0'; origImg.classList.add('hidden');
+    cmp.value=0; cmpVal.textContent='0'; origImg.classList.add('hidden'); chipBefore.classList.add('hidden');
     currentBg='transparent';
     document.querySelectorAll('.bgpick button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-bg')==='transparent'); });
     document.getElementById('stage').classList.add('checker');
@@ -329,6 +385,7 @@ gtag('config', 'G-KX85CZXTR4');
   cmp.addEventListener('input',function(){
     cmpVal.textContent=cmp.value;
     origImg.classList.toggle('hidden', cmp.value==='0');
+    chipBefore.classList.toggle('hidden', cmp.value==='0');
     origImg.style.clipPath='inset(0 '+ (100-cmp.value) +'% 0 0)';
   });
 
@@ -336,7 +393,7 @@ gtag('config', 'G-KX85CZXTR4');
     if(!imgObj){ showMsg(selMsg,'Please choose an image first.'); return; }
     if(state==='starting'||state==='running') return;
     goBtn.disabled=true; showMsg(msg,'');
-    retried=false; t0=performance.now();
+    retried=false; t0=performance.now(); startTimer();
     if(workerReady){ sendRun(); }
     else { runWhenReady=true; startEngine(false); }
   });
@@ -353,7 +410,7 @@ gtag('config', 'G-KX85CZXTR4');
   <details><summary>Why does the first use download about 91 MB?</summary><p>That download is the AI model itself. Because the AI lives in your browser instead of on a server, it needs to arrive once. Your browser remembers it, so later visits start instantly.</p></details>
   <details><summary>Which format is the result?</summary><p>With a transparent background you get a PNG. If you pick a solid background colour instead, you can download a JPG.</p></details>
   <details><summary>Is it really free?</summary><p>Yes — no sign-up, no watermark, no per-image credits. The AI runs on your own device, so there is no server bill to pass on to you.</p></details>
-  <details><summary>Why did it take a while on my phone?</summary><p>The AI does heavy maths on your device. Newer phones and computers finish in a few seconds; older devices can take longer. Very large photos are processed at up to 5000 px on the longest side to keep your device from running out of memory.</p></details>
+  <details><summary>Why did it take a while on my phone?</summary><p>The AI does heavy maths on your device. Newer phones and computers finish faster; older devices can take a minute or two. Very large photos are processed at up to 2560 px on the longest side to keep your device from running out of memory.</p></details>
   <details><summary>What powers this tool?</summary><p>The ISNet segmentation model from the DIS project (open source), running on ONNX Runtime Web (Microsoft, open source) — assembled by ToolsDaily into a tool that needs no server at all.</p></details>
 </section>
 <nav class="more"><h2>More tools</h2><ul>
