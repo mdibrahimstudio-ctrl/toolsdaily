@@ -153,19 +153,19 @@ console.log('LOREM UI');
   Object.defineProperty(w.navigator, 'clipboard', { value: { writeText: async (t) => { copied = t; } }, configurable: true });
   w.document.querySelector('#copy').click();
   await sleep(80);
-  ok(copied === out.value && w.document.querySelector('#msg').textContent === 'Copied to clipboard.', 'UI copy writes the output to the clipboard');
+  ok(copied === out.value && w.document.querySelector('#msg').textContent === 'Copied to clipboard.' && w.document.querySelector('#msg').className === 'msg ok', 'UI copy writes the output to the clipboard and shows a visible success message');
   // A clipboard promise that never settles must still give feedback within ~1.5s.
   Object.defineProperty(w.navigator, 'clipboard', { value: { writeText: () => new Promise(() => {}) }, configurable: true });
   w.document.querySelector('#msg').textContent = '';
   w.document.querySelector('#copy').click();
   await sleep(1800);
-  ok(w.document.querySelector('#msg').textContent === 'Could not copy automatically — select the text and copy it manually.', 'UI copy with a hung clipboard promise falls back to a message instead of staying silent');
+  ok(w.document.querySelector('#msg').textContent === 'Could not copy automatically — select the text and copy it manually.' && w.document.querySelector('#msg').className === 'msg err', 'UI copy with a hung clipboard promise falls back to a visible message instead of staying silent');
   // Download with a stubbed createObjectURL.
   w.URL.createObjectURL = () => 'blob:fake';
   w.document.querySelector('#download').click();
   const dl = w.document.querySelector('#dl');
   ok(dl.getAttribute('href') === 'blob:fake' && dl.getAttribute('download') === 'lorem-ipsum.txt', 'UI download link points at blob with lorem-ipsum.txt name');
-  ok(w.document.querySelector('#msg').textContent === 'Downloaded lorem-ipsum.txt.', 'UI download shows the success message');
+  ok(w.document.querySelector('#msg').textContent === 'Downloaded lorem-ipsum.txt.' && w.document.querySelector('#msg').className === 'msg ok', 'UI download shows a visible success message');
   // Home search finds the new tool.
   const homeDom = await loadPage('');
   const hw = homeDom.window;
