@@ -154,6 +154,12 @@ console.log('LOREM UI');
   w.document.querySelector('#copy').click();
   await sleep(80);
   ok(copied === out.value && w.document.querySelector('#msg').textContent === 'Copied to clipboard.', 'UI copy writes the output to the clipboard');
+  // A clipboard promise that never settles must still give feedback within ~1.5s.
+  Object.defineProperty(w.navigator, 'clipboard', { value: { writeText: () => new Promise(() => {}) }, configurable: true });
+  w.document.querySelector('#msg').textContent = '';
+  w.document.querySelector('#copy').click();
+  await sleep(1800);
+  ok(w.document.querySelector('#msg').textContent === 'Could not copy automatically — select the text and copy it manually.', 'UI copy with a hung clipboard promise falls back to a message instead of staying silent');
   // Download with a stubbed createObjectURL.
   w.URL.createObjectURL = () => 'blob:fake';
   w.document.querySelector('#download').click();
