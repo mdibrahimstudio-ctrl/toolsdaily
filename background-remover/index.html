@@ -133,11 +133,10 @@ gtag('config', 'G-KX85CZXTR4');
     <p><a class="btn" id="dl" href="#" download="no-background.png">Download result</a></p>
   </div>
 </div>
-<script src="../assets/vendor/ort/ort.all.min.js"></script>
 <script>
 (function(){
   'use strict';
-  var MODEL_DIR='../assets/models/', SIZE=1024, MAXSIDE=5000;
+  var SIZE=1024, MAXSIDE=5000;
   var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
       goBtn=document.getElementById('go'), msg=document.getElementById('msg'),
       selMsg=document.getElementById('selmsg'), barWrap=document.getElementById('barwrap'),
@@ -146,7 +145,7 @@ gtag('config', 'G-KX85CZXTR4');
       cmp=document.getElementById('cmp'), cmpVal=document.getElementById('cmp-val'),
       dl=document.getElementById('dl'), timing=document.getElementById('timing'),
       customColor=document.getElementById('custom');
-  var currentFile=null, imgObj=null, baseCanvas=null, session=null, sessionPromise=null,
+  var currentFile=null, imgObj=null, baseCanvas=null,
       currentBg='transparent', dlUrl=null;
 
   function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
@@ -171,85 +170,77 @@ gtag('config', 'G-KX85CZXTR4');
   drop.addEventListener('drop',function(e){ e.preventDefault(); drop.classList.remove('over'); var f=e.dataTransfer.files[0]; if(f) setFile(f); });
   document.addEventListener('paste',function(e){ var items=e.clipboardData&&e.clipboardData.files; if(items&&items[0]) setFile(items[0]); });
 
-  function fetchPart(url,onBytes){
-    return fetch(url).then(function(r){
-      if(!r.ok) throw new Error('download failed ('+r.status+')');
-      var total=parseInt(r.headers.get('Content-Length')||'0',10);
-      if(!r.body||!r.body.getReader) return r.arrayBuffer().then(function(ab){ onBytes(total||ab.byteLength); return ab; });
-      var reader=r.body.getReader(), chunks=[], got=0;
-      function pump(){
-        return reader.read().then(function(res){
-          if(res.done){ var ab=new Uint8Array(got), off=0; chunks.forEach(function(c){ ab.set(c,off); off+=c.length; }); return ab.buffer; }
-          chunks.push(res.value); got+=res.value.length; onBytes(res.value.length); return pump();
-        });
-      }
-      return pump();
-    });
+  /* ---- AI engine: a supervised Web Worker (bg-worker.js) ----
+     The engine lives in the worker; this page only supervises it.
+     If the worker stalls or fails, it is terminated and replaced with a
+     fresh one in light mode (single-thread). A fresh worker is the only
+     clean reset: a half-started engine cannot be re-initialised in place
+     (the old in-page retry ladder died with "multiple calls to initWasm()").
+     If light mode also fails, the user gets a plain error — no more loops. */
+  var worker=null, workerReady=false, state='idle', /* idle | starting | running */
+      runWhenReady=false, retried=false, t0=0, watchdog=null, runImg=null;
+
+  function armWatchdog(ms){ clearTimeout(watchdog); watchdog=setTimeout(recover,ms); }
+  function disarmWatchdog(){ clearTimeout(watchdog); watchdog=null; }
+
+  function spawnWorker(light){
+    if(worker){ try{ worker.terminate(); }catch(e){} }
+    workerReady=false;
+    worker=new Worker('bg-worker.js');
+    worker.onmessage=onWorkerMessage;
+    worker.onerror=function(){ if(state!=='idle') recover(); };
+    worker.postMessage({type:'init', light:!!light});
   }
 
-  function withTimeout(p,ms,label){
-    return Promise.race([p,new Promise(function(_,rej){ setTimeout(function(){ rej(new Error(label+' timed out')); },ms); })]);
+  function startEngine(light){
+    state='starting';
+    setProgress(0,'First run only: downloading the AI model (about 91 MB). Your browser will remember it — later visits start instantly.');
+    spawnWorker(light);
+    armWatchdog(90000);
   }
-  function gpuUsable(){
-    if(!navigator.gpu) return Promise.resolve(false);
-    return withTimeout(navigator.gpu.requestAdapter(),8000,'GPU probe').then(function(a){ return !!a; }).catch(function(){ return false; });
-  }
-  async function createSession(buf){
-    var q=new URLSearchParams(location.search);
-    var forced=q.get('ep');
-    function opts(ep,threads,optLevel){
-      try{ ort.env.wasm.numThreads=threads; }catch(e){}
-      var o={executionProviders:[ep]};
-      if(optLevel) o.graphOptimizationLevel=optLevel;
-      return o;
-    }
-    var autoThreads=window.crossOriginIsolated?Math.min(4,navigator.hardwareConcurrency||2):1;
-    if(forced==='wasm'||forced==='webgpu'){
-      showMsg(msg,'Starting the engine ('+forced+', forced by URL)…',true);
-      return ort.InferenceSession.create(buf,opts(forced,autoThreads,q.get('opt')||null));
-    }
-    if(await gpuUsable()){
-      try{
-        showMsg(msg,'Starting the engine (GPU)…',true);
-        return await withTimeout(ort.InferenceSession.create(buf,opts('webgpu',autoThreads,null)),90000,'GPU engine start');
-      }catch(e){
-        showMsg(msg,'GPU engine did not start — switching to the standard engine…',true);
-      }
-    }
-    try{
-      showMsg(msg,'Starting the standard engine…',true);
-      return await withTimeout(ort.InferenceSession.create(buf,opts('wasm',autoThreads,null)),120000,'Standard engine start');
-    }catch(e){
-      showMsg(msg,'Standard engine is slow to start — retrying in light mode…',true);
-      return await withTimeout(ort.InferenceSession.create(buf,opts('wasm',1,'disabled')),180000,'Light engine start');
+
+  function recover(){
+    disarmWatchdog();
+    var wantRun=runWhenReady||state==='running';
+    if(worker){ try{ worker.terminate(); }catch(e){} worker=null; }
+    workerReady=false;
+    if(!retried){
+      retried=true;
+      showMsg(msg,'The engine was slow to start — restarting it in light mode…',true);
+      runWhenReady=wantRun;
+      startEngine(true);
+    }else{
+      failRun('The AI engine could not start on this device. Please reload the page and try once more — if it still fails, a newer browser or device may be needed.');
     }
   }
 
-  function loadSession(){
-    if(sessionPromise) return sessionPromise;
-    sessionPromise=(async function(){
-      if(typeof ort==='undefined') throw new Error('The AI engine failed to load. Please check your connection and reload the page.');
-      ort.env.wasm.wasmPaths='/assets/vendor/ort/';
-      var manifest=await (await fetch(MODEL_DIR+'manifest.json')).json();
-      var total=manifest.totalBytes, done=0, bufs=new Array(manifest.parts.length);
-      setProgress(0,'First run only: downloading the AI model ('+formatBytes(total)+'). Your browser will remember it — later visits start instantly.');
-      var idx=0;
-      async function worker(){
-        while(idx<manifest.parts.length){
-          var i=idx++;
-          bufs[i]=await fetchPart(MODEL_DIR+manifest.parts[i],function(n){ done+=n; setProgress(done/total,'Downloading the AI model… '+Math.round(done/total*100)+'% (one-time)'); });
-        }
-      }
-      await Promise.all([worker(),worker(),worker()]);
-      var whole=new Uint8Array(total), off=0;
-      bufs.forEach(function(b){ whole.set(new Uint8Array(b),off); off+=b.byteLength; });
+  function failRun(text){
+    disarmWatchdog();
+    state='idle'; runWhenReady=false;
+    if(worker){ try{ worker.terminate(); }catch(e){} worker=null; }
+    workerReady=false;
+    barWrap.classList.add('hidden');
+    showMsg(msg,text);
+    goBtn.disabled=false;
+  }
+
+  function onWorkerMessage(e){
+    var m=e.data||{};
+    if(m.type==='progress'){
+      setProgress(m.done/m.total,'Downloading the AI model… '+Math.round(m.done/m.total*100)+'% (one-time)');
+      armWatchdog(90000);
+    }else if(m.type==='starting'){
       setProgress(1,'AI model ready. Starting the engine…');
-      session=await createSession(whole.buffer);
-      barWrap.classList.add('hidden');
-      return session;
-    })();
-    sessionPromise.catch(function(){ sessionPromise=null; });
-    return sessionPromise;
+      armWatchdog(120000);
+    }else if(m.type==='ready'){
+      workerReady=true; disarmWatchdog();
+      if(runWhenReady){ runWhenReady=false; sendRun(); }
+    }else if(m.type==='result'){
+      disarmWatchdog();
+      finishRun(new Float32Array(m.mask));
+    }else if(m.type==='error'){
+      if(state!=='idle') recover();
+    }
   }
 
   function preprocess(img){
@@ -257,7 +248,15 @@ gtag('config', 'G-KX85CZXTR4');
     var ctx=c.getContext('2d'); ctx.drawImage(img,0,0,SIZE,SIZE);
     var d=ctx.getImageData(0,0,SIZE,SIZE).data, n=SIZE*SIZE, arr=new Float32Array(3*n);
     for(var i=0;i<n;i++){ arr[i]=d[i*4]/255-0.5; arr[n+i]=d[i*4+1]/255-0.5; arr[2*n+i]=d[i*4+2]/255-0.5; }
-    return new ort.Tensor('float32',arr,[1,3,SIZE,SIZE]);
+    return arr;
+  }
+
+  function sendRun(){
+    state='running'; runImg=imgObj;
+    showMsg(msg,'Analyzing your photo on your device…', true);
+    var arr=preprocess(imgObj);
+    worker.postMessage({type:'run', buffer:arr.buffer},[arr.buffer]);
+    armWatchdog(240000);
   }
 
   function buildBase(img,mask){
@@ -276,6 +275,23 @@ gtag('config', 'G-KX85CZXTR4');
     ctx.drawImage(mc,0,0,w,h);
     ctx.globalCompositeOperation='source-over';
     return c;
+  }
+
+  function finishRun(mask){
+    state='idle';
+    baseCanvas=buildBase(runImg||imgObj,mask);
+    origImg.src=(runImg||imgObj).src;
+    cmp.value=0; cmpVal.textContent='0'; origImg.classList.add('hidden');
+    currentBg='transparent';
+    document.querySelectorAll('.bgpick button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-bg')==='transparent'); });
+    document.getElementById('stage').classList.add('checker');
+    render();
+    resultBox.classList.remove('hidden');
+    barWrap.classList.add('hidden');
+    var secs=((performance.now()-t0)/1000).toFixed(1);
+    showMsg(timing,'Done in '+secs+' seconds — processed entirely on your device.', true);
+    showMsg(msg,'', true);
+    goBtn.disabled=false;
   }
 
   function render(){
@@ -316,34 +332,16 @@ gtag('config', 'G-KX85CZXTR4');
     origImg.style.clipPath='inset(0 '+ (100-cmp.value) +'% 0 0)';
   });
 
-  goBtn.addEventListener('click',async function(){
+  goBtn.addEventListener('click',function(){
     if(!imgObj){ showMsg(selMsg,'Please choose an image first.'); return; }
+    if(state==='starting'||state==='running') return;
     goBtn.disabled=true; showMsg(msg,'');
-    var t0=performance.now();
-    try{
-      var sess=await loadSession();
-      showMsg(msg,'Analyzing your photo on your device…', true);
-      var input=preprocess(imgObj);
-      var out=await sess.run({input_image:input});
-      var mask=out[sess.outputNames[0]].data;
-      baseCanvas=buildBase(imgObj,mask);
-      origImg.src=imgObj.src;
-      cmp.value=0; cmpVal.textContent='0'; origImg.classList.add('hidden');
-      currentBg='transparent';
-      document.querySelectorAll('.bgpick button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-bg')==='transparent'); });
-      document.getElementById('stage').classList.add('checker');
-      render();
-      resultBox.classList.remove('hidden');
-      var secs=((performance.now()-t0)/1000).toFixed(1);
-      showMsg(timing,'Done in '+secs+' seconds — processed entirely on your device.', true);
-      showMsg(msg,'', true);
-    }catch(err){
-      barWrap.classList.add('hidden');
-      showMsg(msg,'Something went wrong: '+(err&&err.message?err.message:err)+'. A page reload usually fixes it; on very old phones the AI may not be supported.');
-    }
-    goBtn.disabled=false;
+    retried=false; t0=performance.now();
+    if(workerReady){ sendRun(); }
+    else { runWhenReady=true; startEngine(false); }
   });
 })();
+
 </script>
 <section><h2>How to use</h2><ol>
     <li>Drop a photo onto the box, paste one, or click to choose a JPG, PNG or WebP file.</li>
@@ -355,7 +353,7 @@ gtag('config', 'G-KX85CZXTR4');
   <details><summary>Why does the first use download about 91 MB?</summary><p>That download is the AI model itself. Because the AI lives in your browser instead of on a server, it needs to arrive once. Your browser remembers it, so later visits start instantly.</p></details>
   <details><summary>Which format is the result?</summary><p>With a transparent background you get a PNG. If you pick a solid background colour instead, you can download a JPG.</p></details>
   <details><summary>Is it really free?</summary><p>Yes — no sign-up, no watermark, no per-image credits. The AI runs on your own device, so there is no server bill to pass on to you.</p></details>
-  <details><summary>Why did it take a while on my phone?</summary><p>The AI does heavy maths on your device. Newer phones and computers with WebGPU finish in a few seconds; older devices fall back to a slower method and can take longer. Very large photos are processed at up to 5000 px on the longest side to keep your device from running out of memory.</p></details>
+  <details><summary>Why did it take a while on my phone?</summary><p>The AI does heavy maths on your device. Newer phones and computers finish in a few seconds; older devices can take longer. Very large photos are processed at up to 5000 px on the longest side to keep your device from running out of memory.</p></details>
   <details><summary>What powers this tool?</summary><p>The ISNet segmentation model from the DIS project (open source), running on ONNX Runtime Web (Microsoft, open source) — assembled by ToolsDaily into a tool that needs no server at all.</p></details>
 </section>
 <nav class="more"><h2>More tools</h2><ul>
