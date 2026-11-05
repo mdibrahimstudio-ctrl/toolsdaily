@@ -202,7 +202,7 @@ gtag('config', 'G-KX85CZXTR4');
     function done(ok){
       if (settled) return; settled = true;
       msgEl.textContent = ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.';
-      msgEl.className = ok ? 'msg' : 'msg err';
+      msgEl.className = ok ? 'msg ok' : 'msg err';
     }
     function fallback(){
       try {
@@ -228,7 +228,7 @@ gtag('config', 'G-KX85CZXTR4');
     dl.href = URL.createObjectURL(blob);
     dl.download = 'lorem-ipsum.txt';
     dl.click();
-    msgEl.textContent = 'Downloaded lorem-ipsum.txt.'; msgEl.className = 'msg';
+    msgEl.textContent = 'Downloaded lorem-ipsum.txt.'; msgEl.className = 'msg ok';
   });
   render();
 })();
