@@ -191,7 +191,7 @@ gtag('config', 'G-KX85CZXTR4');
     if(sessionPromise) return sessionPromise;
     sessionPromise=(async function(){
       if(typeof ort==='undefined') throw new Error('The AI engine failed to load. Please check your connection and reload the page.');
-      ort.env.wasm.wasmPaths='../assets/vendor/ort/';
+      ort.env.wasm.wasmPaths='/assets/vendor/ort/';
       try{ ort.env.wasm.numThreads=window.crossOriginIsolated?Math.min(4,navigator.hardwareConcurrency||2):1; }catch(e){}
       var manifest=await (await fetch(MODEL_DIR+'manifest.json')).json();
       var total=manifest.totalBytes, done=0, bufs=new Array(manifest.parts.length);
