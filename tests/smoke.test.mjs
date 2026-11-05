@@ -29,6 +29,9 @@ const PAGES = [
   { path: 'image-resizer/', name: 'image-resizer', selectors: ['#file', '#mode', '#width', '#height', '#percent', '#lock', '#format', '#resize', '#results'] },
   { path: 'base64-encoder-decoder/', name: 'base64-encoder-decoder', selectors: ['#text-in', '#btn-encode', '#btn-decode', '#text-out', '#file-in', '#btn-file-encode', '#file-out', '#b64-in', '#dl-name', '#btn-b64-decode', '#b64-dl'] },
   { path: 'date-difference-calculator/', name: 'date-difference-calculator', selectors: ['#date-from', '#date-to', '#include-end', '#calc', '#swap', '#results', '#add-date', '#add-days', '#add-calc', '#add-result'] },
+  { path: 'qr-reader/', name: 'qr-reader', selectors: ['#file', '#drop', '#preview', '#decode', '#clear', '#copy', '#result', '#open-link', '#msg'] },
+  { path: 'background-remover/', name: 'background-remover', selectors: ['#file', '#go', '#drop', '#out', '#dl', '#cmp', '#bar'] },
+  { path: 'lorem-ipsum-generator/', name: 'lorem-ipsum-generator', selectors: ['#gen-type', '#gen-count', '#classic-start', '#generate', '#copy', '#download', '#output', '#st-words', '#st-chars'] },
 ];
 
 async function loadPage(path) {
