@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Background Remover — Remove Image Backgrounds Free — ToolsDaily</title>
+<meta name="description" content="Free AI background remover: cut out any photo's background in seconds and download a transparent PNG. 100% in your browser — your photos are never uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/background-remover/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Background Remover — Remove Image Backgrounds Free — ToolsDaily">
+<meta property="og:description" content="Free AI background remover: cut out any photo's background in seconds and download a transparent PNG. 100% in your browser — your photos are never uploaded.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/background-remover/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Background Remover — Remove Image Backgrounds Free — ToolsDaily">
+<meta name="twitter:description" content="Free AI background remover: cut out any photo's background in seconds and download a transparent PNG. 100% in your browser — your photos are never uploaded.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Background Remover",
+    "url": "https://toolsdaily.vercel.app/background-remover/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free AI background remover: cut out any photo's background in seconds and download a transparent PNG. 100% in your browser \u2014 your photos are never uploaded."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Are my photos uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The AI model runs entirely on your device, inside your browser. Your photo never leaves your phone or computer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does the first use download about 91 MB?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "That download is the AI model itself. Because the AI lives in your browser instead of on a server, it needs to arrive once. Your browser remembers it, so later visits start instantly and even work offline."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which format is the result?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "With a transparent background you get a PNG. If you pick a solid background colour instead, you can download a JPG."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it really free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — no sign-up, no watermark, no per-image credits. The AI runs on your own device, so there is no server bill to pass on to you."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+<style>
+  .checker { background-color:#fff; background-image:linear-gradient(45deg,#cfcfcf 25%,transparent 25%),linear-gradient(-45deg,#cfcfcf 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#cfcfcf 75%),linear-gradient(-45deg,transparent 75%,#cfcfcf 75%); background-size:20px 20px; background-position:0 0,0 10px,10px -10px,-10px 0; }
+  .stage { position:relative; max-width:520px; margin:10px auto; }
+  .stage canvas, .stage img.orig { width:100%; height:auto; display:block; border-radius:8px; }
+  .stage img.orig { position:absolute; inset:0; height:100%; object-fit:contain; background:#8883; }
+  .bar { height:10px; background:#0002; border-radius:6px; overflow:hidden; margin:8px 0; }
+  .bar > div { height:100%; width:0%; background:#e8590c; transition:width .2s; }
+  .bgpick { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0; }
+  .bgpick button { padding:6px 12px; }
+  .bgpick button.on { outline:2px solid #e8590c; }
+  input[type="color"] { width:44px; height:32px; padding:0; border:none; background:none; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>AI Background Remover</h1>
+<p class="lead">Remove the background from any photo with AI — free, no sign-up, no watermark. The AI runs on your device, so your photos are never uploaded.</p>
+
+<div class="card">
+  <div class="drop" id="drop"><p>📂 Drop an image here, paste one, or</p><input type="file" id="file" accept="image/*"></div>
+  <p class="msg" id="selmsg"></p>
+  <button id="go" type="button" disabled>Remove background</button>
+  <div class="bar hidden" id="barwrap"><div id="bar"></div></div>
+  <p class="msg" id="msg"></p>
+
+  <div class="hidden" id="result">
+    <div class="stage checker" id="stage">
+      <canvas id="out"></canvas>
+      <img class="orig hidden" id="origimg" alt="Original image for comparison">
+    </div>
+    <label for="cmp">Compare with original: <span id="cmp-val">0</span>%</label>
+    <input type="range" id="cmp" min="0" max="100" value="0">
+    <div class="bgpick">
+      <span>Background:</span>
+      <button type="button" data-bg="transparent" class="on">Transparent</button>
+      <button type="button" data-bg="#ffffff">White</button>
+      <button type="button" data-bg="#000000">Black</button>
+      <input type="color" id="custom" value="#4dabf7" title="Custom colour">
+    </div>
+    <p class="msg" id="timing"></p>
+    <p><a class="btn" id="dl" href="#" download="no-background.png">Download result</a></p>
+  </div>
+</div>
+<script src="../assets/vendor/ort/ort.all.min.js"></script>
+<script>
+(function(){
+  'use strict';
+  var MODEL_DIR='../assets/models/', SIZE=1024, MAXSIDE=5000;
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      goBtn=document.getElementById('go'), msg=document.getElementById('msg'),
+      selMsg=document.getElementById('selmsg'), barWrap=document.getElementById('barwrap'),
+      bar=document.getElementById('bar'), resultBox=document.getElementById('result'),
+      outCanvas=document.getElementById('out'), origImg=document.getElementById('origimg'),
+      cmp=document.getElementById('cmp'), cmpVal=document.getElementById('cmp-val'),
+      dl=document.getElementById('dl'), timing=document.getElementById('timing'),
+      customColor=document.getElementById('custom');
+  var currentFile=null, imgObj=null, baseCanvas=null, session=null, sessionPromise=null,
+      currentBg='transparent', dlUrl=null;
+
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function showMsg(el,t,ok){ el.textContent=t||''; el.className='msg '+(t?(ok?'ok':'err'):''); }
+  function setProgress(p,label){ barWrap.classList.remove('hidden'); bar.style.width=Math.round(p*100)+'%'; if(label) showMsg(msg,label,true); }
+
+  function setFile(f){
+    if(!f) return;
+    if(!/^image\//.test(f.type)){ showMsg(selMsg,'That file is not an image. Please choose a JPG, PNG or WebP file.'); return; }
+    currentFile=f; resultBox.classList.add('hidden');
+    var url=URL.createObjectURL(f), img=new Image();
+    img.onload=function(){
+      imgObj=img; goBtn.disabled=false;
+      showMsg(selMsg,'Selected: '+f.name+' ('+formatBytes(f.size)+', '+img.naturalWidth+'×'+img.naturalHeight+')', true);
+    };
+    img.onerror=function(){ URL.revokeObjectURL(url); showMsg(selMsg,'Could not read that image file. If it is an iPhone HEIC photo, please convert it to JPG first (our Image Converter cannot read HEIC in every browser either).'); };
+    img.src=url;
+  }
+  fileInput.addEventListener('change',function(){ setFile(fileInput.files[0]); });
+  ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop',function(e){ e.preventDefault(); drop.classList.remove('over'); var f=e.dataTransfer.files[0]; if(f) setFile(f); });
+  document.addEventListener('paste',function(e){ var items=e.clipboardData&&e.clipboardData.files; if(items&&items[0]) setFile(items[0]); });
+
+  function fetchPart(url,onBytes){
+    return fetch(url).then(function(r){
+      if(!r.ok) throw new Error('download failed ('+r.status+')');
+      var total=parseInt(r.headers.get('Content-Length')||'0',10);
+      if(!r.body||!r.body.getReader) return r.arrayBuffer().then(function(ab){ onBytes(total||ab.byteLength); return ab; });
+      var reader=r.body.getReader(), chunks=[], got=0;
+      function pump(){
+        return reader.read().then(function(res){
+          if(res.done){ var ab=new Uint8Array(got), off=0; chunks.forEach(function(c){ ab.set(c,off); off+=c.length; }); return ab.buffer; }
+          chunks.push(res.value); got+=res.value.length; onBytes(res.value.length); return pump();
+        });
+      }
+      return pump();
+    });
+  }
+
+  function loadSession(){
+    if(sessionPromise) return sessionPromise;
+    sessionPromise=(async function(){
+      if(typeof ort==='undefined') throw new Error('The AI engine failed to load. Please check your connection and reload the page.');
+      ort.env.wasm.wasmPaths='../assets/vendor/ort/';
+      try{ ort.env.wasm.numThreads=window.crossOriginIsolated?Math.min(4,navigator.hardwareConcurrency||2):1; }catch(e){}
+      var manifest=await (await fetch(MODEL_DIR+'manifest.json')).json();
+      var total=manifest.totalBytes, done=0, bufs=new Array(manifest.parts.length);
+      setProgress(0,'First run only: downloading the AI model ('+formatBytes(total)+'). Your browser will remember it — later visits start instantly.');
+      var idx=0;
+      async function worker(){
+        while(idx<manifest.parts.length){
+          var i=idx++;
+          bufs[i]=await fetchPart(MODEL_DIR+manifest.parts[i],function(n){ done+=n; setProgress(done/total,'Downloading the AI model… '+Math.round(done/total*100)+'% (one-time)'); });
+        }
+      }
+      await Promise.all([worker(),worker(),worker()]);
+      var whole=new Uint8Array(total), off=0;
+      bufs.forEach(function(b){ whole.set(new Uint8Array(b),off); off+=b.byteLength; });
+      setProgress(1,'AI model ready. Starting the engine…');
+      var eps=(navigator.gpu?['webgpu','wasm']:['wasm']);
+      session=await ort.InferenceSession.create(whole.buffer,{executionProviders:eps});
+      barWrap.classList.add('hidden');
+      return session;
+    })();
+    sessionPromise.catch(function(){ sessionPromise=null; });
+    return sessionPromise;
+  }
+
+  function preprocess(img){
+    var c=document.createElement('canvas'); c.width=SIZE; c.height=SIZE;
+    var ctx=c.getContext('2d'); ctx.drawImage(img,0,0,SIZE,SIZE);
+    var d=ctx.getImageData(0,0,SIZE,SIZE).data, n=SIZE*SIZE, arr=new Float32Array(3*n);
+    for(var i=0;i<n;i++){ arr[i]=d[i*4]/255-0.5; arr[n+i]=d[i*4+1]/255-0.5; arr[2*n+i]=d[i*4+2]/255-0.5; }
+    return new ort.Tensor('float32',arr,[1,3,SIZE,SIZE]);
+  }
+
+  function buildBase(img,mask){
+    var w=img.naturalWidth, h=img.naturalHeight, scale=Math.min(1,MAXSIDE/Math.max(w,h));
+    w=Math.round(w*scale); h=Math.round(h*scale);
+    var mc=document.createElement('canvas'); mc.width=SIZE; mc.height=SIZE;
+    var mctx=mc.getContext('2d'), id=mctx.createImageData(SIZE,SIZE);
+    var mn=Infinity,mx=-Infinity,i,v;
+    for(i=0;i<SIZE*SIZE;i++){ v=mask[i]; if(v<mn)mn=v; if(v>mx)mx=v; }
+    for(i=0;i<SIZE*SIZE;i++){ var a=Math.round((mask[i]-mn)/(mx-mn+1e-9)*255); id.data[i*4]=255; id.data[i*4+1]=255; id.data[i*4+2]=255; id.data[i*4+3]=a; }
+    mctx.putImageData(id,0,0);
+    var c=document.createElement('canvas'); c.width=w; c.height=h;
+    var ctx=c.getContext('2d');
+    ctx.drawImage(img,0,0,w,h);
+    ctx.globalCompositeOperation='destination-in';
+    ctx.drawImage(mc,0,0,w,h);
+    ctx.globalCompositeOperation='source-over';
+    return c;
+  }
+
+  function render(){
+    if(!baseCanvas) return;
+    var ctx=outCanvas.getContext('2d');
+    outCanvas.width=baseCanvas.width; outCanvas.height=baseCanvas.height;
+    if(currentBg!=='transparent'){ ctx.fillStyle=currentBg; ctx.fillRect(0,0,outCanvas.width,outCanvas.height); }
+    ctx.drawImage(baseCanvas,0,0);
+    if(dlUrl) URL.revokeObjectURL(dlUrl);
+    var isJpg=currentBg!=='transparent';
+    outCanvas.toBlob(function(blob){
+      if(!blob) return;
+      dlUrl=URL.createObjectURL(blob);
+      dl.href=dlUrl;
+      var base=(currentFile?currentFile.name.replace(/\.[^.]+$/,''):'image');
+      dl.download=base+(isJpg?'-background.jpg':'-no-background.png');
+      dl.textContent='Download result ('+formatBytes(blob.size)+(isJpg?', JPG':', PNG')+')';
+    }, isJpg?'image/jpeg':'image/png', 0.92);
+  }
+
+  document.querySelectorAll('.bgpick button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.bgpick button').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on'); currentBg=b.getAttribute('data-bg');
+      document.getElementById('stage').classList.toggle('checker', currentBg==='transparent');
+      render();
+    });
+  });
+  customColor.addEventListener('input',function(){
+    document.querySelectorAll('.bgpick button').forEach(function(x){ x.classList.remove('on'); });
+    currentBg=customColor.value;
+    document.getElementById('stage').classList.remove('checker');
+    render();
+  });
+  cmp.addEventListener('input',function(){
+    cmpVal.textContent=cmp.value;
+    origImg.classList.toggle('hidden', cmp.value==='0');
+    origImg.style.clipPath='inset(0 '+ (100-cmp.value) +'% 0 0)';
+  });
+
+  goBtn.addEventListener('click',async function(){
+    if(!imgObj){ showMsg(selMsg,'Please choose an image first.'); return; }
+    goBtn.disabled=true; showMsg(msg,'');
+    var t0=performance.now();
+    try{
+      var sess=await loadSession();
+      showMsg(msg,'Analyzing your photo on your device…', true);
+      var input=preprocess(imgObj);
+      var out=await sess.run({input_image:input});
+      var mask=out[sess.outputNames[0]].data;
+      baseCanvas=buildBase(imgObj,mask);
+      origImg.src=imgObj.src;
+      cmp.value=0; cmpVal.textContent='0'; origImg.classList.add('hidden');
+      currentBg='transparent';
+      document.querySelectorAll('.bgpick button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-bg')==='transparent'); });
+      document.getElementById('stage').classList.add('checker');
+      render();
+      resultBox.classList.remove('hidden');
+      var secs=((performance.now()-t0)/1000).toFixed(1);
+      showMsg(timing,'Done in '+secs+' seconds — processed entirely on your device.', true);
+      showMsg(msg,'', true);
+    }catch(err){
+      barWrap.classList.add('hidden');
+      showMsg(msg,'Something went wrong: '+(err&&err.message?err.message:err)+'. A page reload usually fixes it; on very old phones the AI may not be supported.');
+    }
+    goBtn.disabled=false;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Drop a photo onto the box, paste one, or click to choose a JPG, PNG or WebP file.</li>
+    <li>Click “Remove background”. The first time, the AI model downloads once (about 91 MB) — after that it is instant.</li>
+    <li>Preview the cut-out, optionally place it on a white, black or custom-colour background, compare with the original, then download.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Are my photos uploaded to a server?</summary><p>No. The AI model runs entirely on your device, inside your browser. Your photo never leaves your phone or computer.</p></details>
+  <details><summary>Why does the first use download about 91 MB?</summary><p>That download is the AI model itself. Because the AI lives in your browser instead of on a server, it needs to arrive once. Your browser remembers it, so later visits start instantly.</p></details>
+  <details><summary>Which format is the result?</summary><p>With a transparent background you get a PNG. If you pick a solid background colour instead, you can download a JPG.</p></details>
+  <details><summary>Is it really free?</summary><p>Yes — no sign-up, no watermark, no per-image credits. The AI runs on your own device, so there is no server bill to pass on to you.</p></details>
+  <details><summary>Why did it take a while on my phone?</summary><p>The AI does heavy maths on your device. Newer phones and computers with WebGPU finish in a few seconds; older devices fall back to a slower method and can take longer. Very large photos are processed at up to 5000 px on the longest side to keep your device from running out of memory.</p></details>
+  <details><summary>What powers this tool?</summary><p>The ISNet segmentation model from the DIS project (open source), running on ONNX Runtime Web (Microsoft, open source) — assembled by ToolsDaily into a tool that needs no server at all.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
