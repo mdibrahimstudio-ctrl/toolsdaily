@@ -195,20 +195,34 @@ gtag('config', 'G-KX85CZXTR4');
     return withTimeout(navigator.gpu.requestAdapter(),8000,'GPU probe').then(function(a){ return !!a; }).catch(function(){ return false; });
   }
   async function createSession(buf){
-    var forced=new URLSearchParams(location.search).get('ep');
+    var q=new URLSearchParams(location.search);
+    var forced=q.get('ep');
+    function opts(ep,threads,optLevel){
+      try{ ort.env.wasm.numThreads=threads; }catch(e){}
+      var o={executionProviders:[ep]};
+      if(optLevel) o.graphOptimizationLevel=optLevel;
+      return o;
+    }
+    var autoThreads=window.crossOriginIsolated?Math.min(4,navigator.hardwareConcurrency||2):1;
     if(forced==='wasm'||forced==='webgpu'){
       showMsg(msg,'Starting the engine ('+forced+', forced by URL)…',true);
-      return ort.InferenceSession.create(buf,{executionProviders:[forced]});
+      return ort.InferenceSession.create(buf,opts(forced,autoThreads,q.get('opt')||null));
     }
     if(await gpuUsable()){
       try{
         showMsg(msg,'Starting the engine (GPU)…',true);
-        return await withTimeout(ort.InferenceSession.create(buf,{executionProviders:['webgpu','wasm']}),90000,'GPU engine start');
+        return await withTimeout(ort.InferenceSession.create(buf,opts('webgpu',autoThreads,null)),90000,'GPU engine start');
       }catch(e){
         showMsg(msg,'GPU engine did not start — switching to the standard engine…',true);
       }
     }
-    return ort.InferenceSession.create(buf,{executionProviders:['wasm']});
+    try{
+      showMsg(msg,'Starting the standard engine…',true);
+      return await withTimeout(ort.InferenceSession.create(buf,opts('wasm',autoThreads,null)),120000,'Standard engine start');
+    }catch(e){
+      showMsg(msg,'Standard engine is slow to start — retrying in light mode…',true);
+      return await withTimeout(ort.InferenceSession.create(buf,opts('wasm',1,'disabled')),180000,'Light engine start');
+    }
   }
 
   function loadSession(){
@@ -216,7 +230,6 @@ gtag('config', 'G-KX85CZXTR4');
     sessionPromise=(async function(){
       if(typeof ort==='undefined') throw new Error('The AI engine failed to load. Please check your connection and reload the page.');
       ort.env.wasm.wasmPaths='/assets/vendor/ort/';
-      try{ ort.env.wasm.numThreads=window.crossOriginIsolated?Math.min(4,navigator.hardwareConcurrency||2):1; }catch(e){}
       var manifest=await (await fetch(MODEL_DIR+'manifest.json')).json();
       var total=manifest.totalBytes, done=0, bufs=new Array(manifest.parts.length);
       setProgress(0,'First run only: downloading the AI model ('+formatBytes(total)+'). Your browser will remember it — later visits start instantly.');
