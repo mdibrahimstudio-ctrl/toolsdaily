@@ -198,21 +198,27 @@ gtag('config', 'G-KX85CZXTR4');
   document.getElementById('copy').addEventListener('click', function(){
     var text = outEl.value;
     if (!text) { msgEl.textContent = 'Nothing to copy yet — press Generate first.'; msgEl.className = 'msg err'; return; }
+    var settled = false;
     function done(ok){
+      if (settled) return; settled = true;
       msgEl.textContent = ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.';
       msgEl.className = ok ? 'msg' : 'msg err';
     }
+    function fallback(){
+      try {
+        outEl.select();
+        if (document.execCommand && document.execCommand('copy')) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
         return;
       }
     } catch (e) { /* fall through to the fallback */ }
-    try {
-      outEl.select();
-      if (document.execCommand && document.execCommand('copy')) { done(true); return; }
-    } catch (e) { /* fall through */ }
-    done(false);
+    fallback();
   });
   document.getElementById('download').addEventListener('click', function(){
     var text = outEl.value;
