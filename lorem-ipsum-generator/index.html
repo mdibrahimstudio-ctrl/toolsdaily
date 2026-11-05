@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorem Ipsum Generator — Free Placeholder Text Generator — ToolsDaily</title>
+<meta name="description" content="Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, starting with the classic 'Lorem ipsum dolor sit amet…' opening. Runs entirely in your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/lorem-ipsum-generator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lorem Ipsum Generator — Free Placeholder Text Generator — ToolsDaily">
+<meta property="og:description" content="Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, starting with the classic 'Lorem ipsum dolor sit amet…' opening. Runs entirely in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/lorem-ipsum-generator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lorem Ipsum Generator — Free Placeholder Text Generator — ToolsDaily">
+<meta name="twitter:description" content="Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, starting with the classic 'Lorem ipsum dolor sit amet…' opening. Runs entirely in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Lorem Ipsum Generator",
+    "url": "https://toolsdaily.vercel.app/lorem-ipsum-generator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, starting with the classic 'Lorem ipsum dolor sit amet…' opening. Runs entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is lorem ipsum?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lorem ipsum is placeholder text used by designers and developers to fill a layout before the real words are ready. It looks like Latin, but it is mostly scrambled pseudo-Latin, so readers focus on the design instead of the words."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the text different every time?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Each click generates a fresh mix of classic lorem ipsum words, unless you tick 'Start with the classic sentence', which always opens with 'Lorem ipsum dolor sit amet…'."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the generated text anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Lorem ipsum is in the public domain — use it in mockups, wireframes, templates and demos without credit or restriction."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Lorem Ipsum Generator</h1>
+<p class="lead">Placeholder text for mockups and wireframes — by paragraphs, sentences or words.</p>
+
+<section><h2>Generate placeholder text</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="gen-type">Generate</label><select id="gen-type">
+      <option value="paragraphs">Paragraphs</option>
+      <option value="sentences">Sentences</option>
+      <option value="words">Words</option>
+    </select></div>
+    <div><label for="gen-count">How many</label><input type="number" id="gen-count" min="1" max="1000" step="1" value="3"></div>
+  </div>
+  <p><label><input type="checkbox" id="classic-start" checked> Start with the classic sentence (“Lorem ipsum dolor sit amet…”)</label></p>
+  <p><button id="generate" type="button">Generate</button> <button id="copy" type="button" class="secondary">Copy text</button> <button id="download" type="button" class="secondary">Download .txt</button></p>
+  <p class="msg" id="msg"></p>
+  <textarea id="output" rows="12" readonly aria-label="Generated lorem ipsum text"></textarea>
+  <div class="stats" id="stats">
+    <div class="stat"><b id="st-words">–</b><span>Words</span></div>
+    <div class="stat"><b id="st-chars">–</b><span>Characters</span></div>
+  </div>
+  <a id="dl" class="hidden" href="#" download="lorem-ipsum.txt">Download</a>
+</div></section>
+<script>
+(function(){
+  var WORDS = ('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum perspiciatis unde omnis iste natus error voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore veritatis quasi architecto beatae vitae dicta explicabo aspernatur aut odit consequuntur magni dolores eos ratione sequi nesciunt neque porro quisquam numquam eius modi tempora incidunt magnam quaerat autem vel eum iure quam nihil molestiae consequatur illum dolorem quo voluptas at vero accusamus iusto odio dignissimos ducimus blanditiis praesentium voluptatum deleniti atque corrupti quos quas molestias excepturi occaecati provident similique animi dolorum fuga harum quidem rerum facilis expedita distinctio nam libero tempore cum soluta nobis eligendi optio cumque impedit quo minus quod maxime placeat facere possimus assumenda repellendus temporibus quibusdam officiis debitis rerum necessitatibus saepe eveniet repudiandae recusandae itaque earum hic tenetur sapiente delectus reiciendis maiores alias perferendis asperiores repellat').split(' ');
+  var CLASSIC_FIRST = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  var CLASSIC_WORDS = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua'];
+  var LIMITS = { paragraphs: 50, sentences: 100, words: 1000 };
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+  function makeSentence(rng){
+    var n = 5 + Math.floor(rng() * 10);
+    var ws = [];
+    for (var i = 0; i < n; i++) ws.push(WORDS[Math.floor(rng() * WORDS.length)]);
+    if (rng() < 0.3 && n > 6) {
+      var ci = 2 + Math.floor(rng() * (n - 4));
+      ws[ci] = ws[ci] + ',';
+    }
+    return cap(ws.join(' ')) + '.';
+  }
+  function countWords(text){
+    return text.split(/\s+/).filter(function(w){ return w.length > 0; }).length;
+  }
+  function generate(opts){
+    opts = opts || {};
+    var type = opts.type || 'paragraphs';
+    if (!(type in LIMITS)) return { error: 'Please choose paragraphs, sentences or words.' };
+    var count = opts.count;
+    if (count === undefined || count === null || isNaN(count)) return { error: 'Please enter how many to generate.' };
+    count = Math.floor(count);
+    if (count < 1 || count > LIMITS[type]) return { error: 'Please enter 1–' + LIMITS[type] + ' ' + type + '.' };
+    var seed = (opts.seed === undefined || opts.seed === null) ? (Math.random() * 0xffffffff) >>> 0 : opts.seed >>> 0;
+    var rng = mulberry32(seed);
+    var out = '';
+    if (type === 'words') {
+      var ws = opts.classic ? CLASSIC_WORDS.slice() : [];
+      while (ws.length < count) ws.push(WORDS[Math.floor(rng() * WORDS.length)]);
+      ws = ws.slice(0, count);
+      out = cap(ws.join(' ')) + '.';
+    } else if (type === 'sentences') {
+      var ss = opts.classic ? [CLASSIC_FIRST] : [];
+      while (ss.length < count) ss.push(makeSentence(rng));
+      out = ss.slice(0, count).join(' ');
+    } else {
+      var ps = [];
+      for (var p = 0; p < count; p++) {
+        var n = 4 + Math.floor(rng() * 4);
+        var sents = [];
+        for (var i = 0; i < n; i++) {
+          if (p === 0 && i === 0 && opts.classic) sents.push(CLASSIC_FIRST);
+          else sents.push(makeSentence(rng));
+        }
+        ps.push(sents.join(' '));
+      }
+      out = ps.join('\n\n');
+    }
+    return { text: out, words: countWords(out), chars: out.length };
+  }
+  window.TD_lorem = { generate: generate, countWords: countWords, WORDS: WORDS, CLASSIC_FIRST: CLASSIC_FIRST };
+  var outEl = document.getElementById('output');
+  var msgEl = document.getElementById('msg');
+  function render(){
+    var raw = document.getElementById('gen-count').value;
+    var count = raw === '' ? null : parseInt(raw, 10);
+    var r = generate({
+      type: document.getElementById('gen-type').value,
+      count: count,
+      classic: document.getElementById('classic-start').checked
+    });
+    if (r.error) {
+      msgEl.textContent = r.error; msgEl.className = 'msg err';
+      outEl.value = '';
+      document.getElementById('st-words').textContent = '–';
+      document.getElementById('st-chars').textContent = '–';
+      return;
+    }
+    msgEl.textContent = ''; msgEl.className = 'msg';
+    outEl.value = r.text;
+    document.getElementById('st-words').textContent = r.words.toLocaleString('en-US');
+    document.getElementById('st-chars').textContent = r.chars.toLocaleString('en-US');
+  }
+  document.getElementById('generate').addEventListener('click', render);
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = outEl.value;
+    if (!text) { msgEl.textContent = 'Nothing to copy yet — press Generate first.'; msgEl.className = 'msg err'; return; }
+    function done(ok){
+      msgEl.textContent = ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.';
+      msgEl.className = ok ? 'msg' : 'msg err';
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(false); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    try {
+      outEl.select();
+      if (document.execCommand && document.execCommand('copy')) { done(true); return; }
+    } catch (e) { /* fall through */ }
+    done(false);
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var text = outEl.value;
+    if (!text) { msgEl.textContent = 'Nothing to download yet — press Generate first.'; msgEl.className = 'msg err'; return; }
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var dl = document.getElementById('dl');
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'lorem-ipsum.txt';
+    dl.click();
+    msgEl.textContent = 'Downloaded lorem-ipsum.txt.'; msgEl.className = 'msg';
+  });
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Choose paragraphs, sentences or words and how many you need.</li>
+    <li>Keep “Start with the classic sentence” ticked for the familiar opening, or untick it for a fully random mix.</li>
+    <li>Press Generate, then copy the text or download it as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is lorem ipsum?</summary><p>Lorem ipsum is placeholder text used by designers and developers to fill a layout before the real words are ready. It looks like Latin, but it is mostly scrambled pseudo-Latin, so readers focus on the design instead of the words.</p></details>
+  <details><summary>Is the text different every time?</summary><p>Yes. Each click generates a fresh mix of classic lorem ipsum words, unless you tick 'Start with the classic sentence', which always opens with 'Lorem ipsum dolor sit amet…'.</p></details>
+  <details><summary>Can I use the generated text anywhere?</summary><p>Yes. Lorem ipsum is in the public domain — use it in mockups, wireframes, templates and demos without credit or restriction.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
