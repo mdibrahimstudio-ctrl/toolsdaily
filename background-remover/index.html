@@ -187,6 +187,30 @@ gtag('config', 'G-KX85CZXTR4');
     });
   }
 
+  function withTimeout(p,ms,label){
+    return Promise.race([p,new Promise(function(_,rej){ setTimeout(function(){ rej(new Error(label+' timed out')); },ms); })]);
+  }
+  function gpuUsable(){
+    if(!navigator.gpu) return Promise.resolve(false);
+    return withTimeout(navigator.gpu.requestAdapter(),8000,'GPU probe').then(function(a){ return !!a; }).catch(function(){ return false; });
+  }
+  async function createSession(buf){
+    var forced=new URLSearchParams(location.search).get('ep');
+    if(forced==='wasm'||forced==='webgpu'){
+      showMsg(msg,'Starting the engine ('+forced+', forced by URL)…',true);
+      return ort.InferenceSession.create(buf,{executionProviders:[forced]});
+    }
+    if(await gpuUsable()){
+      try{
+        showMsg(msg,'Starting the engine (GPU)…',true);
+        return await withTimeout(ort.InferenceSession.create(buf,{executionProviders:['webgpu','wasm']}),90000,'GPU engine start');
+      }catch(e){
+        showMsg(msg,'GPU engine did not start — switching to the standard engine…',true);
+      }
+    }
+    return ort.InferenceSession.create(buf,{executionProviders:['wasm']});
+  }
+
   function loadSession(){
     if(sessionPromise) return sessionPromise;
     sessionPromise=(async function(){
@@ -207,8 +231,7 @@ gtag('config', 'G-KX85CZXTR4');
       var whole=new Uint8Array(total), off=0;
       bufs.forEach(function(b){ whole.set(new Uint8Array(b),off); off+=b.byteLength; });
       setProgress(1,'AI model ready. Starting the engine…');
-      var eps=(navigator.gpu?['webgpu','wasm']:['wasm']);
-      session=await ort.InferenceSession.create(whole.buffer,{executionProviders:eps});
+      session=await createSession(whole.buffer);
       barWrap.classList.add('hidden');
       return session;
     })();
