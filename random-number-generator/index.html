@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Random Number Generator — Free Random Number Picker — ToolsDaily</title>
+<meta name="description" content="Free random number generator: pick random numbers in any range, with unique-only and sort options. Uses your browser's secure random generator — runs entirely on your device.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/random-number-generator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Random Number Generator — Free Random Number Picker — ToolsDaily">
+<meta property="og:description" content="Free random number generator: pick random numbers in any range, with unique-only and sort options. Uses your browser's secure random generator — runs entirely on your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/random-number-generator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Random Number Generator — Free Random Number Picker — ToolsDaily">
+<meta name="twitter:description" content="Free random number generator: pick random numbers in any range, with unique-only and sort options. Uses your browser's secure random generator — runs entirely on your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Random Number Generator",
+    "url": "https://toolsdaily.vercel.app/random-number-generator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free random number generator: pick random numbers in any range, with unique-only and sort options. Uses your browser's secure random generator — runs entirely on your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is the random number generator truly random?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. It uses your browser's built-in cryptographic random generator (crypto.getRandomValues), the same kind of randomness used for secure passwords — not a predictable pattern. No numbers are sent to a server; everything happens on your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get unique numbers with no repeats?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tick 'Unique numbers only' before pressing Generate. The tool will only return numbers that have not appeared before. Note the count cannot be larger than the size of your range — for example, you cannot draw 10 unique numbers from 1–5."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What can I use a random number generator for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Raffles and prize draws, picking a winner, rolling dice, choosing a random sample, classroom or game use, and any time you need a fair, unbiased pick."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html">🧰 ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Random Number Generator</h1>
+<p class="lead">Pick random numbers in any range — for raffles, dice, draws and fair picks.</p>
+
+<section><h2>Generate random numbers</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="rng-min">Minimum</label><input type="number" id="rng-min" step="1" value="1"></div>
+    <div><label for="rng-max">Maximum</label><input type="number" id="rng-max" step="1" value="100"></div>
+    <div><label for="rng-count">How many</label><input type="number" id="rng-count" min="1" max="1000" step="1" value="1"></div>
+  </div>
+  <p><label><input type="checkbox" id="rng-unique"> Unique numbers only (no repeats)</label></p>
+  <p><label><input type="checkbox" id="rng-sort"> Sort results (smallest first)</label></p>
+  <p><button id="generate" type="button">Generate</button> <button id="copy" type="button" class="secondary">Copy numbers</button> <button id="download" type="button" class="secondary">Download .txt</button></p>
+  <p class="msg" id="msg"></p>
+  <textarea id="output" rows="8" readonly aria-label="Generated random numbers"></textarea>
+  <div class="stats" id="stats">
+    <div class="stat"><b id="st-count">–</b><span>Numbers</span></div>
+    <div class="stat"><b id="st-min">–</b><span>Smallest</span></div>
+    <div class="stat"><b id="st-max">–</b><span>Largest</span></div>
+  </div>
+  <a id="dl" class="hidden" href="#" download="random-numbers.txt">Download</a>
+</div></section>
+<script>
+(function(){
+  var LIMIT_COUNT = 1000;
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  // Uniform integer in [min, max] using the browser's cryptographic RNG when
+  // available, with rejection sampling so no value is favoured. Falls back
+  // to Math.random only if crypto is unavailable (e.g. an old browser).
+  function cryptoInt(min, max){
+    var span = max - min + 1;
+    try {
+      var c = (typeof window !== 'undefined' && window.crypto) || (typeof crypto !== 'undefined' ? crypto : null);
+      if (c && c.getRandomValues) {
+        var range = 4294967296;
+        var limit = range - (range % span);
+        var buf = new Uint32Array(1);
+        var v;
+        do { c.getRandomValues(buf); v = buf[0]; } while (v >= limit);
+        return min + (v % span);
+      }
+    } catch (e) { /* fall through to Math.random */ }
+    return min + Math.floor(Math.random() * span);
+  }
+  function generate(opts){
+    opts = opts || {};
+    var min = opts.min, max = opts.max, count = opts.count;
+    if (min === undefined || min === null || isNaN(min) || !Number.isInteger(min)) return { error: 'Please enter a whole-number minimum.' };
+    if (max === undefined || max === null || isNaN(max) || !Number.isInteger(max)) return { error: 'Please enter a whole-number maximum.' };
+    if (min > max) return { error: 'Minimum must be less than or equal to maximum.' };
+    if (count === undefined || count === null || isNaN(count) || !Number.isInteger(count)) return { error: 'Please enter how many numbers to generate.' };
+    if (count < 1 || count > LIMIT_COUNT) return { error: 'Please enter 1–' + LIMIT_COUNT + ' numbers.' };
+    var span = max - min + 1;
+    if (opts.unique && count > span) return { error: 'With unique numbers, the count cannot be larger than the range (' + span + ' numbers from ' + min + ' to ' + max + ').' };
+    var seeded = (opts.seed !== undefined && opts.seed !== null);
+    var rng = seeded ? mulberry32(opts.seed >>> 0) : null;
+    function nextInt(){
+      if (rng) return min + Math.floor(rng() * span);
+      return cryptoInt(min, max);
+    }
+    var nums = [];
+    if (opts.unique) {
+      var seen = {};
+      while (nums.length < count) {
+        var n = nextInt();
+        if (!seen[n]) { seen[n] = true; nums.push(n); }
+      }
+    } else {
+      for (var i = 0; i < count; i++) nums.push(nextInt());
+    }
+    if (opts.sort) nums.sort(function(a, b){ return a - b; });
+    var lo = nums[0], hi = nums[0];
+    for (var j = 1; j < nums.length; j++) { if (nums[j] < lo) lo = nums[j]; if (nums[j] > hi) hi = nums[j]; }
+    return { numbers: nums, count: nums.length, min: lo, max: hi };
+  }
+  window.TD_rng = { generate: generate };
+  var outEl = document.getElementById('output');
+  var msgEl = document.getElementById('msg');
+  function render(){
+    var rawMin = document.getElementById('rng-min').value;
+    var rawMax = document.getElementById('rng-max').value;
+    var rawCount = document.getElementById('rng-count').value;
+    var r = generate({
+      min: rawMin === '' ? null : parseInt(rawMin, 10),
+      max: rawMax === '' ? null : parseInt(rawMax, 10),
+      count: rawCount === '' ? null : parseInt(rawCount, 10),
+      unique: document.getElementById('rng-unique').checked,
+      sort: document.getElementById('rng-sort').checked
+    });
+    if (r.error) {
+      msgEl.textContent = r.error; msgEl.className = 'msg err';
+      outEl.value = '';
+      document.getElementById('st-count').textContent = '–';
+      document.getElementById('st-min').textContent = '–';
+      document.getElementById('st-max').textContent = '–';
+      return;
+    }
+    msgEl.textContent = ''; msgEl.className = 'msg';
+    outEl.value = r.numbers.join('\n');
+    document.getElementById('st-count').textContent = r.count.toLocaleString('en-US');
+    document.getElementById('st-min').textContent = r.min.toLocaleString('en-US');
+    document.getElementById('st-max').textContent = r.max.toLocaleString('en-US');
+  }
+  document.getElementById('generate').addEventListener('click', render);
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = outEl.value;
+    if (!text) { msgEl.textContent = 'Nothing to copy yet — press Generate first.'; msgEl.className = 'msg err'; return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      msgEl.textContent = ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.';
+      msgEl.className = ok ? 'msg ok' : 'msg err';
+    }
+    function fallback(){
+      try {
+        outEl.select();
+        if (document.execCommand && document.execCommand('copy')) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var text = outEl.value;
+    if (!text) { msgEl.textContent = 'Nothing to download yet — press Generate first.'; msgEl.className = 'msg err'; return; }
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var dl = document.getElementById('dl');
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'random-numbers.txt';
+    dl.click();
+    msgEl.textContent = 'Downloaded random-numbers.txt.'; msgEl.className = 'msg ok';
+  });
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter the minimum and maximum of your range, and how many numbers you need.</li>
+    <li>Tick “Unique numbers only” for a draw with no repeats, and “Sort results” to list them smallest first.</li>
+    <li>Press Generate, then copy the numbers or download them as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Is the random number generator truly random?</summary><p>Yes. It uses your browser's built-in cryptographic random generator (crypto.getRandomValues), the same kind of randomness used for secure passwords — not a predictable pattern. No numbers are sent to a server; everything happens on your device.</p></details>
+  <details><summary>How do I get unique numbers with no repeats?</summary><p>Tick 'Unique numbers only' before pressing Generate. The tool will only return numbers that have not appeared before. Note the count cannot be larger than the size of your range — for example, you cannot draw 10 unique numbers from 1–5.</p></details>
+  <details><summary>What can I use a random number generator for?</summary><p>Raffles and prize draws, picking a winner, rolling dice, choosing a random sample, classroom or game use, and any time you need a fair, unbiased pick.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+</ul></nav>
+</main>
+<footer class="site">
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
