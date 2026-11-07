@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tip Calculator — Split the Bill &amp; Work Out the Tip — ToolsDaily</title>
+<meta name="description" content="Free tip calculator: work out the tip, the total bill and each person's share. Pick a tip percentage or enter your own, split the bill between friends — runs entirely on your device.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/tip-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tip Calculator — Split the Bill &amp; Work Out the Tip — ToolsDaily">
+<meta property="og:description" content="Free tip calculator: work out the tip, the total bill and each person's share. Pick a tip percentage or enter your own, split the bill between friends — runs entirely on your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/tip-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tip Calculator — Split the Bill &amp; Work Out the Tip — ToolsDaily">
+<meta name="twitter:description" content="Free tip calculator: work out the tip, the total bill and each person's share. Pick a tip percentage or enter your own, split the bill between friends — runs entirely on your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Tip Calculator",
+    "url": "https://toolsdaily.vercel.app/tip-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free tip calculator: work out the tip, the total bill and each person's share. Pick a tip percentage or enter your own, split the bill between friends — runs entirely on your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much should I tip at a restaurant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In the United States, 15–20% of the pre-tax bill is the usual range for good table service — 15% for standard service and 20% (or more) for great service. In many other countries tipping is smaller or already included as a service charge, so check the bill first."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I split the bill between friends?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enter the bill amount and your tip percentage, then set the number of people. The calculator shows each person's share of the total bill and of the tip, so everyone pays the same fair amount."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my bill amount sent anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The calculation happens entirely in your browser — your bill amount never leaves your device and nothing is stored or sent to a server."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../index.html">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Tip Calculator</h1>
+<p class="lead">Work out the tip, the total bill and each person's share — in seconds.</p>
+
+<section><h2>Calculate your tip</h2>
+<div class="card">
+  <div class="row">
+    <div><label for="bill">Bill amount ($)</label><input type="number" id="bill" min="0" step="0.01" value="100"></div>
+    <div><label for="tip-pct">Tip (%)</label><input type="number" id="tip-pct" min="0" max="100" step="0.5" value="15"></div>
+    <div><label for="people">Number of people</label><input type="number" id="people" min="1" max="100" step="1" value="1"></div>
+  </div>
+  <p>Quick tip:
+    <button type="button" class="secondary" data-tip="10">10%</button>
+    <button type="button" class="secondary" data-tip="15">15%</button>
+    <button type="button" class="secondary" data-tip="18">18%</button>
+    <button type="button" class="secondary" data-tip="20">20%</button>
+    <button type="button" class="secondary" data-tip="25">25%</button>
+  </p>
+  <p><button id="copy" type="button" class="secondary">Copy summary</button> <button id="download" type="button" class="secondary">Download .txt</button></p>
+  <p class="msg" id="msg"></p>
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="tip-amount">–</b><span>Tip amount</span></div>
+      <div class="stat"><b id="total">–</b><span>Total bill</span></div>
+      <div class="stat"><b id="per-person">–</b><span>Per person</span></div>
+      <div class="stat"><b id="per-person-tip">–</b><span>Tip per person</span></div>
+    </div>
+  </div>
+  <a id="dl" class="hidden" href="#" download="tip-summary.txt">Download</a>
+</div></section>
+<script>
+(function(){
+  // All money is handled in integer cents so $47.25 at 18% is exactly 851
+  // cents ($8.51), never a floating-point near-miss like 850.499999.
+  var MAX_BILL = 1000000;
+  var MAX_PEOPLE = 100;
+  function fmtCents(cents){
+    return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function calculate(opts){
+    opts = opts || {};
+    var bill = opts.bill, tipPct = opts.tipPct, people = opts.people;
+    if (bill === undefined || bill === null || isNaN(bill)) return { error: 'Please enter a bill amount.' };
+    if (bill <= 0) return { error: 'Please enter a bill amount greater than $0.' };
+    if (bill > MAX_BILL) return { error: 'Please enter a bill of $' + MAX_BILL.toLocaleString('en-US') + ' or less.' };
+    if (tipPct === undefined || tipPct === null || isNaN(tipPct)) return { error: 'Please enter a tip percentage.' };
+    if (tipPct < 0 || tipPct > 100) return { error: 'Please enter a tip between 0% and 100%.' };
+    if (people === undefined || people === null || isNaN(people) || !Number.isInteger(people)) return { error: 'Please enter a whole number of people.' };
+    if (people < 1 || people > MAX_PEOPLE) return { error: 'Please enter 1–' + MAX_PEOPLE + ' people.' };
+    var billCents = Math.round(bill * 100);
+    var tipCents = Math.round(billCents * tipPct / 100);
+    var totalCents = billCents + tipCents;
+    var perPersonCents = Math.round(totalCents / people);
+    var perPersonTipCents = Math.round(tipCents / people);
+    return {
+      billCents: billCents,
+      tipCents: tipCents,
+      totalCents: totalCents,
+      perPersonCents: perPersonCents,
+      perPersonTipCents: perPersonTipCents
+    };
+  }
+  function summary(r, bill, tipPct, people){
+    var lines = [
+      'Tip summary',
+      'Bill amount: ' + fmtCents(r.billCents),
+      'Tip (' + tipPct + '%): ' + fmtCents(r.tipCents),
+      'Total bill: ' + fmtCents(r.totalCents),
+      'People: ' + people,
+      'Per person: ' + fmtCents(r.perPersonCents),
+      'Tip per person: ' + fmtCents(r.perPersonTipCents)
+    ];
+    return lines.join('\n');
+  }
+  window.TD_tip = { calculate: calculate, fmtCents: fmtCents, summary: summary };
+  var msgEl = document.getElementById('msg');
+  function clearResults(){
+    document.getElementById('tip-amount').textContent = '–';
+    document.getElementById('total').textContent = '–';
+    document.getElementById('per-person').textContent = '–';
+    document.getElementById('per-person-tip').textContent = '–';
+  }
+  function render(){
+    var rawBill = document.getElementById('bill').value;
+    var rawPct = document.getElementById('tip-pct').value;
+    var rawPeople = document.getElementById('people').value;
+    var r = calculate({
+      bill: rawBill === '' ? null : parseFloat(rawBill),
+      tipPct: rawPct === '' ? null : parseFloat(rawPct),
+      people: rawPeople === '' ? null : parseInt(rawPeople, 10)
+    });
+    if (r.error) {
+      msgEl.textContent = r.error; msgEl.className = 'msg err';
+      clearResults();
+      return;
+    }
+    msgEl.textContent = ''; msgEl.className = 'msg';
+    document.getElementById('tip-amount').textContent = fmtCents(r.tipCents);
+    document.getElementById('total').textContent = fmtCents(r.totalCents);
+    document.getElementById('per-person').textContent = fmtCents(r.perPersonCents);
+    document.getElementById('per-person-tip').textContent = fmtCents(r.perPersonTipCents);
+  }
+  function currentSummary(){
+    var rawBill = document.getElementById('bill').value;
+    var rawPct = document.getElementById('tip-pct').value;
+    var rawPeople = document.getElementById('people').value;
+    var r = calculate({
+      bill: rawBill === '' ? null : parseFloat(rawBill),
+      tipPct: rawPct === '' ? null : parseFloat(rawPct),
+      people: rawPeople === '' ? null : parseInt(rawPeople, 10)
+    });
+    if (r.error) return null;
+    return summary(r, parseFloat(rawBill), parseFloat(rawPct), parseInt(rawPeople, 10));
+  }
+  ['bill', 'tip-pct', 'people'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-tip]'), function(btn){
+    btn.addEventListener('click', function(){
+      document.getElementById('tip-pct').value = btn.getAttribute('data-tip');
+      render();
+    });
+  });
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = currentSummary();
+    if (!text) { msgEl.textContent = 'Nothing to copy yet — enter a valid bill amount first.'; msgEl.className = 'msg err'; return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      msgEl.textContent = ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.';
+      msgEl.className = ok ? 'msg ok' : 'msg err';
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var text = currentSummary();
+    if (!text) { msgEl.textContent = 'Nothing to download yet — enter a valid bill amount first.'; msgEl.className = 'msg err'; return; }
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var dl = document.getElementById('dl');
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'tip-summary.txt';
+    dl.click();
+    msgEl.textContent = 'Downloaded tip-summary.txt.'; msgEl.className = 'msg ok';
+  });
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter the bill amount, then pick a tip percentage — tap a quick tip button or type your own.</li>
+    <li>Set the number of people if you are splitting the bill.</li>
+    <li>The tip, total bill and each person's share update instantly. Copy the summary or download it as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How much should I tip at a restaurant?</summary><p>In the United States, 15–20% of the pre-tax bill is the usual range for good table service — 15% for standard service and 20% (or more) for great service. In many other countries tipping is smaller or already included as a service charge, so check the bill first.</p></details>
+  <details><summary>How do I split the bill between friends?</summary><p>Enter the bill amount and your tip percentage, then set the number of people. The calculator shows each person's share of the total bill and of the tip, so everyone pays the same fair amount.</p></details>
+  <details><summary>Is my bill amount sent anywhere?</summary><p>No. The calculation happens entirely in your browser — your bill amount never leaves your device and nothing is stored or sent to a server.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
