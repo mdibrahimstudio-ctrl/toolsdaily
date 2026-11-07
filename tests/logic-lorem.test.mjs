@@ -61,10 +61,10 @@ console.log('LOREM STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover'];
   ok(others.every((s) => html.includes(`href="../${s}/"`)), 'lorem: More-tools nav links all other 21 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 24, 'sitemap.xml has 24 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 25, 'sitemap.xml has 25 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/lorem-ipsum-generator/'), 'sitemap includes lorem-ipsum-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 23, 'home has exactly 23 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 24, 'home has exactly 24 tool cards');
   ok(home.includes('href="lorem-ipsum-generator/"'), 'home cards + nav include lorem-ipsum-generator');
 }
 
