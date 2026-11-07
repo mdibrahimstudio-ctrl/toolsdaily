@@ -25,6 +25,7 @@
   var search = document.getElementById('tool-search');
   if (search) {
     var cards = Array.prototype.slice.call(document.querySelectorAll('.tool-card'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.cat'));
     var empty = document.getElementById('no-results');
     search.addEventListener('input', function () {
       var q = search.value.trim().toLowerCase();
@@ -34,6 +35,14 @@
         var show = !q || hay.indexOf(q) !== -1;
         card.classList.toggle('hidden', !show);
         if (show) visible++;
+      });
+      // Hide category sections that have no matching cards while searching.
+      sections.forEach(function (sec) {
+        if (!q) { sec.classList.remove('hidden'); return; }
+        var any = Array.prototype.some.call(sec.querySelectorAll('.tool-card'), function (c) {
+          return !c.classList.contains('hidden');
+        });
+        sec.classList.toggle('hidden', !any);
       });
       if (empty) empty.classList.toggle('hidden', visible !== 0);
     });
