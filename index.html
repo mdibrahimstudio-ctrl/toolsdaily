@@ -40,96 +40,136 @@ gtag('config', 'G-KX85CZXTR4');
 </head>
 <body>
 <header class="site"><div class="wrap">
-  <a class="logo" href="index.html">🧰 ToolsDaily</a>
+  <a class="logo" href="index.html"><span class="logo-mark">🧰</span> ToolsDaily</a>
   <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="index.html">All tools</a></nav>
   <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
 </div></header>
 <main>
-<h1>Free Online Tools for Everyday Tasks</h1>
-<p class="lead">Twenty-three handy tools for the things you do every day — fast, free, and completely private.</p>
+<div class="hero">
+  <h1>Free Online Tools for Everyday Tasks</h1>
+  <p class="lead">Twenty-three handy tools for the things you do every day — fast, free, and completely private. Everything runs right in your browser.</p>
+  <div class="searchbox"><input type="text" id="tool-search" placeholder="🔍 Search tools… (try “qr”, “image”, “password”)" aria-label="Search tools"></div>
+  <div class="trust"><span>✅ 100% free</span><span>🚫 No sign-up</span><span>🔒 Files never leave your device</span><span>⚡ Instant results</span></div>
+</div>
 
-<div class="searchbox"><input type="text" id="tool-search" placeholder="🔍 Search tools… (try “qr”, “image”, “password”)" aria-label="Search tools"></div>
-<div class="grid" id="tool-grid">
-    <a class="tool-card" href="qr-generator/" data-name="qr code generator">
-      <div class="emoji">📷</div><h3>QR Code Generator</h3><p>Turn any text or link into a QR code and download it as a PNG.</p></a>
+<nav class="cat-chips" aria-label="Tool categories">
+  <a class="cat-chip" href="#ai-tools">🤖 AI Tools <span class="n">1</span></a>
+  <a class="cat-chip" href="#image-tools">🖼️ Image Tools <span class="n">4</span></a>
+  <a class="cat-chip" href="#pdf-tools">📄 PDF Tools <span class="n">3</span></a>
+  <a class="cat-chip" href="#calculators">🧮 Calculators <span class="n">5</span></a>
+  <a class="cat-chip" href="#text-tools">✍️ Text Tools <span class="n">3</span></a>
+  <a class="cat-chip" href="#converters">🔄 Converters <span class="n">4</span></a>
+  <a class="cat-chip" href="#generators">✨ Generators <span class="n">3</span></a>
+</nav>
+
+<section class="cat cat-ai" id="ai-tools">
+  <div class="cat-head"><span class="cat-ic">🤖</span><h2>AI Tools</h2><span class="cat-n">1 tool</span></div>
+  <div class="grid">
+    <a class="tool-card" href="background-remover/" data-name="ai background remover remove background transparent png">
+      <div class="emoji">🪄</div><h3>AI Background Remover</h3><p>Remove any photo's background with AI and download a transparent PNG — free, on your device.</p></a>
+  </div>
+</section>
+
+<section class="cat cat-image" id="image-tools">
+  <div class="cat-head"><span class="cat-ic">🖼️</span><h2>Image Tools</h2><span class="cat-n">4 tools</span></div>
+  <div class="grid">
     <a class="tool-card" href="image-compressor/" data-name="image compressor">
       <div class="emoji">🗜️</div><h3>Image Compressor</h3><p>Shrink JPG and PNG images with a quality slider, right in your browser.</p></a>
     <a class="tool-card" href="image-converter/" data-name="image converter">
       <div class="emoji">🖼️</div><h3>Image Converter</h3><p>Convert images between PNG, JPEG and WebP formats instantly.</p></a>
-    <a class="tool-card" href="word-counter/" data-name="word counter">
-      <div class="emoji">🔤</div><h3>Word Counter</h3><p>Count words, characters, sentences and reading time as you type.</p></a>
-    <a class="tool-card" href="password-generator/" data-name="password generator">
-      <div class="emoji">🔐</div><h3>Password Generator</h3><p>Create strong random passwords with a secure random generator.</p></a>
-    <a class="tool-card" href="age-calculator/" data-name="age calculator">
-      <div class="emoji">🎂</div><h3>Age Calculator</h3><p>Find your exact age in years, months and days, plus your next birthday.</p></a>
-    <a class="tool-card" href="unit-converter/" data-name="unit converter">
-      <div class="emoji">📏</div><h3>Unit Converter</h3><p>Convert length, weight and temperature units in one click.</p></a>
-    <a class="tool-card" href="color-converter/" data-name="color converter">
-      <div class="emoji">🎨</div><h3>Color Converter</h3><p>Convert colors between HEX, RGB, HSL and HSV formats.</p></a>
-    <a class="tool-card" href="text-case-converter/" data-name="text case converter">
-      <div class="emoji">🔡</div><h3>Text Case Converter</h3><p>Change text to UPPERCASE, Title Case, Sentence case and more.</p></a>
-    <a class="tool-card" href="json-formatter/" data-name="json formatter">
-      <div class="emoji">🧩</div><h3>JSON Formatter</h3><p>Format, minify and validate JSON with clear error messages.</p></a>
+    <a class="tool-card" href="image-resizer/" data-name="image resizer resize image pixels percent">
+      <div class="emoji">↔️</div><h3>Image Resizer</h3><p>Resize images by width, height, exact size or percent, keeping the aspect ratio.</p></a>
+    <a class="tool-card" href="qr-reader/" data-name="qr code reader decode qr scan">
+      <div class="emoji">🔎</div><h3>QR Code Reader</h3><p>Upload a QR code image and decode its text or link instantly.</p></a>
+  </div>
+</section>
+
+<section class="cat cat-pdf" id="pdf-tools">
+  <div class="cat-head"><span class="cat-ic">📄</span><h2>PDF Tools</h2><span class="cat-n">3 tools</span></div>
+  <div class="grid">
     <a class="tool-card" href="pdf-merge/" data-name="pdf merge combine pdf">
       <div class="emoji">📑</div><h3>PDF Merge</h3><p>Combine two or more PDF files into a single document.</p></a>
     <a class="tool-card" href="pdf-split/" data-name="pdf split extract pages">
       <div class="emoji">✂️</div><h3>PDF Split</h3><p>Extract a page range or single pages from a PDF into a new file.</p></a>
     <a class="tool-card" href="image-to-pdf/" data-name="image to pdf jpg png convert">
       <div class="emoji">📸</div><h3>Image to PDF</h3><p>Turn JPG and PNG images into one PDF, one image per page.</p></a>
+  </div>
+</section>
+
+<section class="cat cat-calc" id="calculators">
+  <div class="cat-head"><span class="cat-ic">🧮</span><h2>Calculators</h2><span class="cat-n">5 tools</span></div>
+  <div class="grid">
+    <a class="tool-card" href="age-calculator/" data-name="age calculator">
+      <div class="emoji">🎂</div><h3>Age Calculator</h3><p>Find your exact age in years, months and days, plus your next birthday.</p></a>
     <a class="tool-card" href="bmi-calculator/" data-name="bmi calculator body mass index health">
       <div class="emoji">⚖️</div><h3>BMI Calculator</h3><p>Check your Body Mass Index and the healthy weight range for your height.</p></a>
     <a class="tool-card" href="emi-calculator/" data-name="emi calculator loan monthly payment interest">
       <div class="emoji">🧮</div><h3>EMI Calculator</h3><p>Work out a loan's monthly EMI, total interest and total repayment.</p></a>
     <a class="tool-card" href="percentage-calculator/" data-name="percentage calculator percent change">
       <div class="emoji">%</div><h3>Percentage Calculator</h3><p>Find percentages of numbers, ratios and percentage change.</p></a>
-    <a class="tool-card" href="image-resizer/" data-name="image resizer resize image pixels percent">
-      <div class="emoji">↔️</div><h3>Image Resizer</h3><p>Resize images by width, height, exact size or percent, keeping the aspect ratio.</p></a>
-    <a class="tool-card" href="base64-encoder-decoder/" data-name="base64 encoder decoder encode decode text file">
-      <div class="emoji">🔢</div><h3>Base64 Encoder / Decoder</h3><p>Encode text or files to Base64, or decode Base64 back to text or a file.</p></a>
-    <a class="tool-card" href="qr-reader/" data-name="qr code reader decode qr scan">
-      <div class="emoji">🔎</div><h3>QR Code Reader</h3><p>Upload a QR code image and decode its text or link instantly.</p></a>
     <a class="tool-card" href="date-difference-calculator/" data-name="date difference calculator days weeks months between dates">
       <div class="emoji">📅</div><h3>Date Difference Calculator</h3><p>Find the days, weeks and calendar months between any two dates.</p></a>
-    <a class="tool-card" href="background-remover/" data-name="ai background remover remove background transparent png">
-      <div class="emoji">🪄</div><h3>AI Background Remover</h3><p>Remove any photo's background with AI and download a transparent PNG — free, on your device.</p></a>
+  </div>
+</section>
+
+<section class="cat cat-text" id="text-tools">
+  <div class="cat-head"><span class="cat-ic">✍️</span><h2>Text Tools</h2><span class="cat-n">3 tools</span></div>
+  <div class="grid">
+    <a class="tool-card" href="word-counter/" data-name="word counter">
+      <div class="emoji">🔤</div><h3>Word Counter</h3><p>Count words, characters, sentences and reading time as you type.</p></a>
+    <a class="tool-card" href="text-case-converter/" data-name="text case converter">
+      <div class="emoji">🔡</div><h3>Text Case Converter</h3><p>Change text to UPPERCASE, Title Case, Sentence case and more.</p></a>
     <a class="tool-card" href="lorem-ipsum-generator/" data-name="lorem ipsum generator placeholder text dummy text">
       <div class="emoji">📝</div><h3>Lorem Ipsum Generator</h3><p>Generate placeholder text by paragraphs, sentences or words for mockups and wireframes.</p></a>
+  </div>
+</section>
+
+<section class="cat cat-conv" id="converters">
+  <div class="cat-head"><span class="cat-ic">🔄</span><h2>Converters</h2><span class="cat-n">4 tools</span></div>
+  <div class="grid">
+    <a class="tool-card" href="unit-converter/" data-name="unit converter">
+      <div class="emoji">📏</div><h3>Unit Converter</h3><p>Convert length, weight and temperature units in one click.</p></a>
+    <a class="tool-card" href="color-converter/" data-name="color converter">
+      <div class="emoji">🎨</div><h3>Color Converter</h3><p>Convert colors between HEX, RGB, HSL and HSV formats.</p></a>
+    <a class="tool-card" href="base64-encoder-decoder/" data-name="base64 encoder decoder encode decode text file">
+      <div class="emoji">🔢</div><h3>Base64 Encoder / Decoder</h3><p>Encode text or files to Base64, or decode Base64 back to text or a file.</p></a>
+    <a class="tool-card" href="json-formatter/" data-name="json formatter">
+      <div class="emoji">🧩</div><h3>JSON Formatter</h3><p>Format, minify and validate JSON with clear error messages.</p></a>
+  </div>
+</section>
+
+<section class="cat cat-gen" id="generators">
+  <div class="cat-head"><span class="cat-ic">✨</span><h2>Generators</h2><span class="cat-n">3 tools</span></div>
+  <div class="grid">
+    <a class="tool-card" href="qr-generator/" data-name="qr code generator">
+      <div class="emoji">📷</div><h3>QR Code Generator</h3><p>Turn any text or link into a QR code and download it as a PNG.</p></a>
+    <a class="tool-card" href="password-generator/" data-name="password generator">
+      <div class="emoji">🔐</div><h3>Password Generator</h3><p>Create strong random passwords with a secure random generator.</p></a>
     <a class="tool-card" href="random-number-generator/" data-name="random number generator picker dice raffle draw">
       <div class="emoji">🎲</div><h3>Random Number Generator</h3><p>Pick random numbers in any range, with unique-only and sort options.</p></a>
-</div>
+  </div>
+</section>
+
 <p id="no-results" class="hidden">No tools match your search. Try a different word.</p>
-<section><h2>Why ToolsDaily?</h2>
+
+<section class="why"><h2>Why ToolsDaily?</h2>
 <p>Every tool on this page runs entirely in your web browser. That means no uploads, no waiting for a server, and no accounts to create — your photos, documents and text stay on your device. Bookmark this page and your everyday toolbox is always one click away.</p></section>
-<nav class="more"><h2>More tools</h2><ul>
-        <li><a href="qr-generator/">📷 QR Code Generator</a></li>
-        <li><a href="image-compressor/">🗜️ Image Compressor</a></li>
-        <li><a href="image-converter/">🖼️ Image Converter</a></li>
-        <li><a href="word-counter/">🔤 Word Counter</a></li>
-        <li><a href="password-generator/">🔐 Password Generator</a></li>
-        <li><a href="age-calculator/">🎂 Age Calculator</a></li>
-        <li><a href="unit-converter/">📏 Unit Converter</a></li>
-        <li><a href="color-converter/">🎨 Color Converter</a></li>
-        <li><a href="text-case-converter/">🔡 Text Case Converter</a></li>
-        <li><a href="json-formatter/">🧩 JSON Formatter</a></li>
-        <li><a href="pdf-merge/">📑 PDF Merge</a></li>
-        <li><a href="pdf-split/">✂️ PDF Split</a></li>
-        <li><a href="image-to-pdf/">📸 Image to PDF</a></li>
-        <li><a href="bmi-calculator/">⚖️ BMI Calculator</a></li>
-        <li><a href="emi-calculator/">🧮 EMI Calculator</a></li>
-        <li><a href="percentage-calculator/">% Percentage Calculator</a></li>
-        <li><a href="image-resizer/">↔️ Image Resizer</a></li>
-        <li><a href="base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
-        <li><a href="date-difference-calculator/">📅 Date Difference Calculator</a></li>
-        <li><a href="qr-reader/">🔎 QR Code Reader</a></li>
-        <li><a href="background-remover/">🪄 AI Background Remover</a></li>
-        <li><a href="lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
-        <li><a href="random-number-generator/">🎲 Random Number Generator</a></li>
-</ul></nav>
 </main>
-<footer class="site">
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="#ai-tools">AI Tools</a>
+    <a href="#image-tools">Image Tools</a>
+    <a href="#pdf-tools">PDF Tools</a>
+    <a href="#calculators">Calculators</a>
+    <a href="#text-tools">Text Tools</a>
+    <a href="#converters">Converters</a>
+    <a href="#generators">Generators</a>
+  </nav>
   <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
   <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
-</footer>
+</div></footer>
 <script src="assets/site.js"></script>
 </body>
 </html>
