@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>URL Encoder &amp; Decoder — Encode or Decode URLs Online — ToolsDaily</title>
+<meta name="description" content="Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text. Runs entirely in your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/url-encoder-decoder/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="URL Encoder &amp; Decoder — Encode or Decode URLs Online — ToolsDaily">
+<meta property="og:description" content="Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text. Runs entirely in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/url-encoder-decoder/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="URL Encoder &amp; Decoder — Encode or Decode URLs Online — ToolsDaily">
+<meta name="twitter:description" content="Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text. Runs entirely in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "URL Encoder / Decoder",
+    "url": "https://toolsdaily.vercel.app/url-encoder-decoder/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text. Runs entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is URL encoding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "URL encoding (percent-encoding) replaces characters that are not safe in a web address with a % sign followed by two hexadecimal digits — for example a space becomes %20 and é becomes %C3%A9. It lets text with spaces, symbols or non-English letters travel safely inside a URL."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I encode a full URL instead of a component?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Encode a full URL when the whole address must stay usable — it keeps : / ? & and = untouched and only encodes the unsafe parts, like spaces. Encode a component when a piece of text goes inside a URL, for example a search term in a query string — then even / ? & and = are encoded so they cannot break the address apart."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my text sent anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Encoding and decoding happen entirely in your browser — your text is never uploaded or saved anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../index.html">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>URL Encoder / Decoder</h1>
+<p class="lead">Percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text.</p>
+
+<section><h2>Encode or decode</h2>
+<div class="card">
+  <div><label for="text-in">Input text</label><textarea id="text-in" placeholder="Type or paste text or a URL here…">Hello World! https://example.com/café?q=tea &amp; cake</textarea></div>
+  <p>Encode as:
+    <label><input type="radio" name="enc-mode" id="mode-component" value="component" checked> Component (encodes / ? &amp; = too)</label>
+    <label><input type="radio" name="enc-mode" id="mode-full" value="full"> Full URL (keeps : / ? &amp; =)</label>
+  </p>
+  <p><label><input type="checkbox" id="plus-space"> Decode + as a space (form data)</label></p>
+  <p><button id="btn-encode" type="button">Encode ↓</button> <button id="btn-decode" type="button" class="secondary">Decode ↑</button> <button id="copy-out" type="button" class="secondary">Copy result</button> <button id="download" type="button" class="secondary">Download .txt</button></p>
+  <div><label for="text-out">Result</label><textarea id="text-out" readonly placeholder="Your result appears here…"></textarea></div>
+  <p class="msg" id="text-msg"></p>
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="st-in">–</b><span>Input characters</span></div>
+      <div class="stat"><b id="st-out">–</b><span>Output characters</span></div>
+      <div class="stat"><b id="st-encoded">–</b><span>% sequences</span></div>
+    </div>
+  </div>
+  <a id="dl" class="hidden" href="#" download="url-result.txt">Download</a>
+</div></section>
+<script>
+(function(){
+  function encodeComponent(text){ return encodeURIComponent(text); }
+  function encodeFull(text){ return encodeURI(text); }
+  function countEncoded(text){ return (String(text).match(/%[0-9A-Fa-f]{2}/g) || []).length; }
+  function decode(text, plusAsSpace){
+    var s = String(text);
+    if (plusAsSpace) s = s.replace(/\+/g, ' ');
+    try {
+      return { result: decodeURIComponent(s) };
+    } catch (e) {
+      return { error: 'Could not decode: that is not valid percent-encoding. Check for a stray % or an incomplete %XX sequence.' };
+    }
+  }
+  function isValidEncoded(text){
+    try { decodeURIComponent(String(text)); return true; } catch (e) { return false; }
+  }
+  window.TD_url = { encodeComponent: encodeComponent, encodeFull: encodeFull, decode: decode, countEncoded: countEncoded, isValidEncoded: isValidEncoded };
+  var msgEl = document.getElementById('text-msg');
+  function showMsg(text, kind){
+    msgEl.textContent = text;
+    msgEl.className = 'msg ' + (kind || '');
+  }
+  function updateStats(){
+    var inp = document.getElementById('text-in').value;
+    var out = document.getElementById('text-out').value;
+    document.getElementById('st-in').textContent = String(inp.length);
+    document.getElementById('st-out').textContent = String(out.length);
+    document.getElementById('st-encoded').textContent = String(countEncoded(out));
+  }
+  function clearStats(){
+    document.getElementById('st-in').textContent = '–';
+    document.getElementById('st-out').textContent = '–';
+    document.getElementById('st-encoded').textContent = '–';
+  }
+  function doEncode(){
+    var mode = document.querySelector('input[name="enc-mode"]:checked').value;
+    var inp = document.getElementById('text-in').value;
+    document.getElementById('text-out').value = mode === 'full' ? encodeFull(inp) : encodeComponent(inp);
+    showMsg('Encoded.', 'ok');
+    updateStats();
+  }
+  function doDecode(){
+    var inp = document.getElementById('text-in').value;
+    var plus = document.getElementById('plus-space').checked;
+    var r = decode(inp, plus);
+    if (r.error) {
+      document.getElementById('text-out').value = '';
+      showMsg(r.error, 'err');
+      clearStats();
+      return;
+    }
+    document.getElementById('text-out').value = r.result;
+    showMsg('Decoded.', 'ok');
+    updateStats();
+  }
+  document.getElementById('btn-encode').addEventListener('click', doEncode);
+  document.getElementById('btn-decode').addEventListener('click', doDecode);
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="enc-mode"]'), function(radio){
+    radio.addEventListener('change', function(){
+      if (document.getElementById('text-out').value) doEncode();
+    });
+  });
+  document.getElementById('copy-out').addEventListener('click', function(){
+    var out = document.getElementById('text-out');
+    if (!out.value) { showMsg('Nothing to copy yet — encode or decode something first.', 'err'); return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      showMsg(ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.', ok ? 'ok' : 'err');
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = out.value;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(out.value).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var out = document.getElementById('text-out');
+    if (!out.value) { showMsg('Nothing to download yet — encode or decode something first.', 'err'); return; }
+    var blob = new Blob([out.value], { type: 'text/plain;charset=utf-8' });
+    var dl = document.getElementById('dl');
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'url-result.txt';
+    dl.click();
+    showMsg('Downloaded url-result.txt.', 'ok');
+  });
+  doEncode();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type or paste text or a URL, then choose whether to encode it as a component or as a full URL.</li>
+    <li>Press Encode to percent-encode it, or Decode to turn an encoded URL back into readable text. Tick "Decode + as a space" for form data, where + means a space.</li>
+    <li>Copy the result or download it as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is URL encoding?</summary><p>URL encoding (percent-encoding) replaces characters that are not safe in a web address with a % sign followed by two hexadecimal digits — for example a space becomes %20 and é becomes %C3%A9. It lets text with spaces, symbols or non-English letters travel safely inside a URL.</p></details>
+  <details><summary>When should I encode a full URL instead of a component?</summary><p>Encode a full URL when the whole address must stay usable — it keeps : / ? &amp; and = untouched and only encodes the unsafe parts, like spaces. Encode a component when a piece of text goes inside a URL, for example a search term in a query string — then even / ? &amp; and = are encoded so they cannot break the address apart.</p></details>
+  <details><summary>Is my text sent anywhere?</summary><p>No. Encoding and decoding happen entirely in your browser — your text is never uploaded or saved anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
