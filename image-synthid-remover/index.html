@@ -1,1 +1,373 @@
-<!-- placeholder - replaced by upload -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image SynthID Remover — Strip EXIF, GPS &amp; C2PA from Photos — ToolsDaily</title>
+<meta name="description" content="Free Image SynthID Remover: see what hidden data your photo carries — EXIF, GPS location, camera info, XMP and C2PA — and download a clean copy with it all stripped. 100% in your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/image-synthid-remover/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Image SynthID Remover — Strip EXIF, GPS &amp; C2PA from Photos — ToolsDaily">
+<meta property="og:description" content="Free Image SynthID Remover: see what hidden data your photo carries — EXIF, GPS location, camera info, XMP and C2PA — and download a clean copy with it all stripped. 100% in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/image-synthid-remover/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image SynthID Remover — Strip EXIF, GPS &amp; C2PA from Photos — ToolsDaily">
+<meta name="twitter:description" content="Free Image SynthID Remover: see what hidden data your photo carries — EXIF, GPS location, camera info, XMP and C2PA — and download a clean copy with it all stripped. 100% in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image SynthID Remover",
+    "url": "https://toolsdaily.vercel.app/image-synthid-remover/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free Image SynthID Remover: see what hidden data your photo carries — EXIF, GPS location, camera info, XMP and C2PA — and download a clean copy with it all stripped. 100% in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What metadata hides inside a photo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Photos can carry EXIF data: the camera or phone model, the date and time, and often GPS coordinates of exactly where the photo was taken. Files may also hold XMP editing data, PNG text chunks (some AI image tools store the prompt there) and C2PA content credentials that state how the image was made."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does removing metadata change the picture itself?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. This tool removes the embedded metadata and AI-source tags attached to the file — EXIF, GPS, camera info, XMP and C2PA — by re-drawing the picture into a fresh file. The pixels you see are not edited, cropped or filtered; only the hidden data attached to the file is left behind. One honest limit: pixel-level watermarks are embedded in the image itself, not in metadata, so they cannot be removed this way. Saving as JPG applies normal JPEG compression, exactly like any photo editor."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why remove metadata before sharing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A photo posted online can reveal your home or workplace location (from its GPS tag), your phone model and when the picture was taken. Removing the metadata first is a simple privacy step before posting to social media, marketplaces or forums."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my photo uploaded anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The scan and the cleaning both run entirely in your browser — your photo never leaves your device."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../index.html">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Image SynthID Remover</h1>
+<p class="lead">See what hidden data your photo carries — location, camera, AI info — and download a clean copy with all of it stripped.</p>
+
+<section><h2>Check and clean your photo</h2>
+<div class="card">
+  <div class="drop" id="drop"><p>📂 Drop a JPG, PNG or WebP image here, or</p><input type="file" id="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"></div>
+  <p class="msg" id="msg"></p>
+  <div id="file-info" class="hidden">
+    <p><strong id="fi-name">–</strong> · <span id="fi-size">–</span></p>
+    <img id="preview" alt="Your image preview" style="max-width:240px;border-radius:8px">
+    <h3>Metadata found in this file</h3>
+    <ul id="meta-list"></ul>
+    <p>
+      <label for="out-format">Clean file format:</label>
+      <select id="out-format">
+        <option value="same" selected>Same as original</option>
+        <option value="image/png">PNG</option>
+        <option value="image/jpeg">JPG</option>
+      </select>
+    </p>
+    <p><label for="quality">JPG quality: <span id="q-val">92</span>%</label>
+      <input type="range" id="quality" min="10" max="100" value="92"></p>
+    <p><button id="clean" type="button" disabled>Remove metadata</button>
+      <a id="dl" class="hidden" href="#" download="clean.png">⬇️ Download clean file</a></p>
+    <div id="results" class="hidden">
+      <div class="stats">
+        <div class="stat"><b id="st-before">–</b><span>Original size</span></div>
+        <div class="stat"><b id="st-after">–</b><span>Clean size</span></div>
+        <div class="stat"><b id="st-diff">–</b><span>Difference</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<script>
+(function(){
+  function u16be(b,o){ return ((b[o]<<8)|b[o+1])>>>0; }
+  function u32be(b,o){ return (((b[o]<<24)|(b[o+1]<<16)|(b[o+2]<<8)|b[o+3])>>>0); }
+  function u32le(b,o){ return (((b[o+3]<<24)|(b[o+2]<<16)|(b[o+1]<<8)|b[o])>>>0); }
+  function asciiAt(b,o,n){ var s=''; for(var i=0;i<n && o+i<b.length;i++) s+=String.fromCharCode(b[o+i]); return s; }
+  function startsWith(b,o,text){ for(var i=0;i<text.length;i++){ if(b[o+i]!==text.charCodeAt(i)) return false; } return true; }
+  function containsAscii(b,text){
+    var codes=[]; for(var i=0;i<text.length;i++) codes.push(text.charCodeAt(i));
+    for(var i=0;i+codes.length<=b.length;i++){
+      var hit=true;
+      for(var j=0;j<codes.length;j++){ if(b[i+j]!==codes[j]){ hit=false; break; } }
+      if(hit) return true;
+    }
+    return false;
+  }
+  function exifHasGPS(b, t){
+    try {
+      var le = b[t]===0x49 && b[t+1]===0x49;
+      var be = b[t]===0x4D && b[t+1]===0x4D;
+      if(!le && !be) return false;
+      function u16(o){ return le ? (b[o]|(b[o+1]<<8)) : ((b[o]<<8)|b[o+1]); }
+      function u32(o){ if(le) return ((b[o]|(b[o+1]<<8)|(b[o+2]<<16)|(b[o+3]<<24))>>>0); return (((b[o]<<24)|(b[o+1]<<16)|(b[o+2]<<8)|b[o+3])>>>0); }
+      if(u16(t+2)!==42) return false;
+      var ifd0 = t + u32(t+4);
+      if(ifd0+2 > b.length) return false;
+      var count = u16(ifd0);
+      for(var i=0;i<count;i++){
+        var e = ifd0 + 2 + i*12;
+        if(e+12 > b.length) break;
+        if(u16(e)===0x8825 && u32(e+8)!==0) return true; // GPSInfo pointer present
+      }
+    } catch(err) { /* a malformed EXIF block simply has no readable GPS tag */ }
+    return false;
+  }
+  function detectFormat(b){
+    if(b.length>=3 && b[0]===0xFF && b[1]===0xD8 && b[2]===0xFF) return 'jpeg';
+    if(b.length>=8 && b[0]===0x89 && b[1]===0x50 && b[2]===0x4E && b[3]===0x47 && b[4]===0x0D && b[5]===0x0A && b[6]===0x1A && b[7]===0x0A) return 'png';
+    if(b.length>=12 && asciiAt(b,0,4)==='RIFF' && asciiAt(b,8,4)==='WEBP') return 'webp';
+    return 'unknown';
+  }
+  function scanMetadata(bytes){
+    var b = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+    var r = { format: detectFormat(b), exif:false, gps:false, xmp:false, c2pa:false, icc:false, comment:false, textKeywords:[], found:[] };
+    var o, len, type, dataStart;
+    if(r.format==='jpeg'){
+      o = 2;
+      while(o+4 <= b.length){
+        if(b[o]!==0xFF) break;
+        var marker = b[o+1];
+        if(marker===0xDA || marker===0xD9) break; // SOS / EOI: metadata lives before here
+        if(marker===0xD8 || marker===0x01 || (marker>=0xD0 && marker<=0xD7)){ o+=2; continue; }
+        len = u16be(b,o+2);
+        if(len<2) break;
+        dataStart = o+4;
+        if(marker===0xE1){
+          if(startsWith(b,dataStart,'Exif\0\0')){ r.exif = true; if(exifHasGPS(b, dataStart+6)) r.gps = true; }
+          else if(startsWith(b,dataStart,'http://ns.adobe.com/xap/1.0/')) r.xmp = true;
+        }
+        if(marker===0xE2 && startsWith(b,dataStart,'ICC_PROFILE')) r.icc = true;
+        if(marker===0xFE) r.comment = true;
+        o = o + 2 + len;
+      }
+    } else if(r.format==='png'){
+      o = 8;
+      while(o+12 <= b.length){
+        len = u32be(b,o); type = asciiAt(b,o+4,4); dataStart = o+8;
+        if(type==='tEXt' || type==='zTXt' || type==='iTXt'){
+          var kw='';
+          for(var i=dataStart; i<Math.min(dataStart+80, dataStart+len) && b[i]!==0; i++) kw += String.fromCharCode(b[i]);
+          if(kw && r.textKeywords.indexOf(kw)===-1) r.textKeywords.push(kw);
+        }
+        if(type==='eXIf'){ r.exif = true; if(exifHasGPS(b, dataStart)) r.gps = true; }
+        if(type==='iCCP') r.icc = true;
+        if(type==='caBX') r.c2pa = true;
+        if(type==='IEND') break;
+        o = dataStart + len + 4;
+      }
+    } else if(r.format==='webp'){
+      o = 12;
+      while(o+8 <= b.length){
+        type = asciiAt(b,o,4); len = u32le(b,o+4); dataStart = o+8;
+        if(type==='EXIF'){ r.exif = true; if(exifHasGPS(b, dataStart)) r.gps = true; }
+        if(type==='XMP ') r.xmp = true;
+        if(type==='ICCP') r.icc = true;
+        o = dataStart + len + (len % 2);
+      }
+    }
+    if(!r.c2pa && containsAscii(b,'c2pa')) r.c2pa = true; // C2PA manifests (e.g. JPEG APP11/JUMBF) carry the string
+    if(r.gps) r.found.push({ id:'gps', label:'GPS location tag — where the photo was taken' });
+    if(r.exif) r.found.push({ id:'exif', label:'EXIF data — camera, date and photo settings' });
+    if(r.xmp) r.found.push({ id:'xmp', label:'XMP data — editing history and content info' });
+    if(r.c2pa) r.found.push({ id:'c2pa', label:'C2PA content credentials — how this file was made' });
+    if(r.textKeywords.length) r.found.push({ id:'pngtext', label:'PNG text chunks (' + r.textKeywords.join(', ') + ') — may hold software or AI prompt info' });
+    if(r.icc) r.found.push({ id:'icc', label:'ICC colour profile' });
+    if(r.comment) r.found.push({ id:'comment', label:'JPEG comment text' });
+    return r;
+  }
+  function formatBytes(n){
+    if(n < 1024) return n + ' B';
+    var units=['KB','MB','GB'], i=-1, v=n;
+    do { v/=1024; i++; } while(v>=1024 && i<units.length-1);
+    return v.toFixed(2) + ' ' + units[i];
+  }
+  function cleanFileName(name, mime){
+    var ext = mime==='image/png' ? 'png' : (mime==='image/webp' ? 'webp' : 'jpg');
+    var base = String(name || 'image').replace(/\.[^.]*$/, '');
+    return base + '-clean.' + ext;
+  }
+  window.TD_metadata = { scanMetadata: scanMetadata, detectFormat: detectFormat, formatBytes: formatBytes, cleanFileName: cleanFileName };
+
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      msgEl=document.getElementById('msg'), infoEl=document.getElementById('file-info'),
+      cleanBtn=document.getElementById('clean'), dl=document.getElementById('dl'),
+      quality=document.getElementById('quality'), qVal=document.getElementById('q-val'),
+      currentFile=null, currentScan=null, previewUrl=null;
+  function showMsg(text, kind){ msgEl.textContent=text; msgEl.className='msg ' + (kind||''); }
+  function setFile(f){
+    if(!f) return;
+    var looksImage = /^image\/(jpeg|png|webp)/.test(f.type||'') || /\.(jpe?g|png|webp)$/i.test(f.name||'');
+    if(!looksImage){ showMsg('That file is not a JPG, PNG or WebP image. Please choose one of those.', 'err'); return; }
+    currentFile = f; currentScan = null;
+    cleanBtn.disabled = true;
+    var reader = new FileReader();
+    reader.onload = function(){
+      currentScan = scanMetadata(new Uint8Array(reader.result));
+      document.getElementById('fi-name').textContent = f.name;
+      document.getElementById('fi-size').textContent = formatBytes(f.size) + ' · ' + currentScan.format.toUpperCase();
+      var list = document.getElementById('meta-list');
+      list.innerHTML = '';
+      if(currentScan.found.length===0){
+        var li = document.createElement('li');
+        li.textContent = '✅ No metadata found — this file already looks clean.';
+        list.appendChild(li);
+      } else {
+        currentScan.found.forEach(function(item){
+          var li = document.createElement('li');
+          li.textContent = '⚠️ ' + item.label;
+          list.appendChild(li);
+        });
+      }
+      if(previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = URL.createObjectURL(f);
+      document.getElementById('preview').src = previewUrl;
+      infoEl.classList.remove('hidden');
+      document.getElementById('results').classList.add('hidden');
+      dl.classList.add('hidden');
+      cleanBtn.disabled = false;
+      showMsg(currentScan.found.length ? 'Scan complete — metadata found. Press "Remove metadata" for a clean copy.' : 'Scan complete — no metadata found. You can still download a re-saved clean copy.', 'ok');
+    };
+    reader.onerror = function(){ showMsg('Could not read that file. Please try another image.', 'err'); };
+    reader.readAsArrayBuffer(f);
+  }
+  fileInput.addEventListener('change', function(){ setFile(fileInput.files[0]); });
+  ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function(e){ var f=e.dataTransfer.files[0]; if(f) setFile(f); });
+  quality.addEventListener('input', function(){ qVal.textContent = quality.value; });
+  cleanBtn.addEventListener('click', function(){
+    if(!currentFile) return;
+    var fmtSel = document.getElementById('out-format').value;
+    var mime = fmtSel==='same' ? (currentFile.type || 'image/png') : fmtSel;
+    if(['image/jpeg','image/png','image/webp'].indexOf(mime)===-1) mime = 'image/png';
+    var img = new Image();
+    img.onload = function(){
+      var canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+      var ctx = canvas.getContext('2d');
+      if(mime==='image/jpeg'){ ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob(function(blob){
+        if(!blob){ showMsg('Sorry — your browser could not create the clean file.', 'err'); return; }
+        dl.href = URL.createObjectURL(blob);
+        dl.download = cleanFileName(currentFile.name, mime);
+        dl.classList.remove('hidden');
+        document.getElementById('st-before').textContent = formatBytes(currentFile.size);
+        document.getElementById('st-after').textContent = formatBytes(blob.size);
+        var diff = blob.size - currentFile.size;
+        document.getElementById('st-diff').textContent = diff===0 ? 'same size' : ((diff<0?'−':'+') + formatBytes(Math.abs(diff)));
+        document.getElementById('results').classList.remove('hidden');
+        showMsg('Clean copy ready — a fresh file drawn from the pixels only, with no metadata attached. Download it below.', 'ok');
+      }, mime, Number(quality.value)/100);
+    };
+    img.onerror = function(){ showMsg('Sorry — your browser could not open that image.', 'err'); };
+    img.src = URL.createObjectURL(currentFile);
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Drop a JPG, PNG or WebP photo above (or pick one). The tool scans the raw file and lists every kind of metadata it finds — EXIF, GPS location, XMP, PNG text chunks and C2PA credentials.</li>
+    <li>Choose the clean file's format and, for JPG, the quality.</li>
+    <li>Press "Remove metadata", then download the clean copy — a brand-new file drawn from the pixels only, so nothing hidden travels with it.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What metadata hides inside a photo?</summary><p>Photos can carry EXIF data: the camera or phone model, the date and time, and often GPS coordinates of exactly where the photo was taken. Files may also hold XMP editing data, PNG text chunks (some AI image tools store the prompt there) and C2PA content credentials that state how the image was made.</p></details>
+  <details><summary>Does removing metadata change the picture itself?</summary><p>No. This tool removes the embedded metadata and AI-source tags attached to the file — EXIF, GPS, camera info, XMP and C2PA — by re-drawing the picture into a fresh file. The pixels you see are not edited, cropped or filtered; only the hidden data attached to the file is left behind. One honest limit: pixel-level watermarks are embedded in the image itself, not in metadata, so they cannot be removed this way. Saving as JPG applies normal JPEG compression, exactly like any photo editor.</p></details>
+  <details><summary>Why remove metadata before sharing?</summary><p>A photo posted online can reveal your home or workplace location (from its GPS tag), your phone model and when the picture was taken. Removing the metadata first is a simple privacy step before posting to social media, marketplaces or forums.</p></details>
+  <details><summary>Is my photo uploaded anywhere?</summary><p>No. The scan and the cleaning both run entirely in your browser — your photo never leaves your device.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
+        <li><a href="../url-encoder-decoder/">🔗 URL Encoder / Decoder</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
