@@ -60,12 +60,12 @@ console.log('URL STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator'];
   ok(others.every((s) => html.includes(`href="../${s}/"`)), 'url: More-tools nav links all other 24 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 26, 'sitemap.xml has 26 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 27, 'sitemap.xml has 27 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/url-encoder-decoder/'), 'sitemap includes url-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 25, 'home has exactly 25 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 26, 'home has exactly 26 tool cards');
   ok(home.includes('href="url-encoder-decoder/"'), 'home cards + nav include url-encoder-decoder');
-  ok(home.includes('Twenty-five handy tools'), 'home lead says Twenty-five tools');
+  ok(home.includes('Twenty-six handy tools'), 'home lead says Twenty-six tools');
 }
 
 console.log('URL CORE');

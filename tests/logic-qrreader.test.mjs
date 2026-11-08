@@ -83,10 +83,10 @@ console.log('QRREADER STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator'];
   ok(others.every((s) => html.includes(`href="../${s}/"`)), 'qr-reader: More-tools nav links all other 19 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 26, 'sitemap.xml has 26 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 27, 'sitemap.xml has 27 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/qr-reader/'), 'sitemap includes qr-reader');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 25, 'home has exactly 25 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 26, 'home has exactly 26 tool cards');
   ok(home.includes('href="qr-reader/"'), 'home cards + nav include qr-reader');
 }
 
