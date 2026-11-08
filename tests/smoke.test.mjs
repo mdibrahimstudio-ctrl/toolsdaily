@@ -34,6 +34,7 @@ const PAGES = [
   { path: 'lorem-ipsum-generator/', name: 'lorem-ipsum-generator', selectors: ['#gen-type', '#gen-count', '#classic-start', '#generate', '#copy', '#download', '#output', '#st-words', '#st-chars'] },
   { path: 'random-number-generator/', name: 'random-number-generator', selectors: ['#rng-min', '#rng-max', '#rng-count', '#rng-unique', '#rng-sort', '#generate', '#copy', '#download', '#output', '#st-count', '#st-min', '#st-max'] },
   { path: 'tip-calculator/', name: 'tip-calculator', selectors: ['#bill', '#tip-pct', '#people', '[data-tip="20"]', '#tip-amount', '#total', '#per-person', '#per-person-tip', '#copy', '#download', '#dl'] },
+  { path: 'url-encoder-decoder/', name: 'url-encoder-decoder', selectors: ['#text-in', '#mode-component', '#mode-full', '#plus-space', '#btn-encode', '#btn-decode', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-encoded'] },
 ];
 
 async function loadPage(path) {

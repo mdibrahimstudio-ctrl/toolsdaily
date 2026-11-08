@@ -69,10 +69,10 @@ console.log('BASE64 STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'date-difference-calculator', 'qr-reader'];
   ok(others.every((s) => html.includes(`href="../${s}/"`)), 'base64: More-tools nav links all other 18 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 25, 'sitemap.xml has 25 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 26, 'sitemap.xml has 26 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 24, 'home has exactly 24 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 25, 'home has exactly 25 tool cards');
   ok(home.includes('href="base64-encoder-decoder/"'), 'home cards + nav include base64-encoder-decoder');
 }
 
