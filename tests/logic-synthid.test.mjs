@@ -105,12 +105,12 @@ console.log('METADATA STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder'];
   ok(others.every((s) => html.includes(`href="../${s}/"`)), 'metadata: More-tools nav links all other 25 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 27, 'sitemap.xml has 27 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 28, 'sitemap.xml has 28 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-synthid-remover/'), 'sitemap includes image-synthid-remover');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 26, 'home has exactly 26 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 27, 'home has exactly 27 tool cards');
   ok(home.includes('href="image-synthid-remover/"'), 'home cards include image-synthid-remover');
-  ok(home.includes('Twenty-six handy tools'), 'home lead says Twenty-six tools');
+  ok(home.includes('Twenty-seven handy tools'), 'home lead says Twenty-seven tools');
 }
 
 console.log('METADATA CORE');
