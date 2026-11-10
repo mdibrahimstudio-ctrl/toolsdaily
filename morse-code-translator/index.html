@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morse Code Translator — Text to Morse Code &amp; Morse to Text Online — ToolsDaily</title>
+<meta name="description" content="Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed. Runs entirely in your browser.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/morse-code-translator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Morse Code Translator — Text to Morse Code &amp; Morse to Text Online — ToolsDaily">
+<meta property="og:description" content="Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed. Runs entirely in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/morse-code-translator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Morse Code Translator — Text to Morse Code &amp; Morse to Text Online — ToolsDaily">
+<meta name="twitter:description" content="Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed. Runs entirely in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Morse Code Translator",
+    "url": "https://toolsdaily.vercel.app/morse-code-translator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed. Runs entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Morse code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Morse code represents every letter and number as a pattern of short dots (.) and long dashes (-). For example, S is three dots (...), O is three dashes (---), and the famous distress call SOS is ... --- .... It was invented in the 1830s for the telegraph and is still used by radio amateurs today."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I decode Morse code back to text?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Choose \"Morse → Text\", then paste Morse code with a space between letters and a slash ( / ) or three spaces between words — for example ... --- ... decodes to SOS. Any pattern that is not a real Morse letter is shown as a question mark (?)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my text sent anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Translating to and from Morse code — and the audio playback — happens entirely in your browser. Your text is never uploaded or saved anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../index.html">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Morse Code Translator</h1>
+<p class="lead">Translate text to Morse code — or decode Morse code back to text — and hear it played as beeps at any speed.</p>
+
+<section><h2>Translate Morse code</h2>
+<div class="card">
+  <p>
+    <label><input type="radio" name="mode" id="mode-encode" checked> Text → Morse</label>
+    &nbsp;&nbsp;<label><input type="radio" name="mode" id="mode-decode"> Morse → Text</label>
+    &nbsp;&nbsp;<button id="btn-swap" type="button" class="secondary">Swap ⇄</button>
+  </p>
+  <div><label for="text-in">Input</label><textarea id="text-in" placeholder="Type text, or paste Morse code…">SOS</textarea></div>
+  <p><label for="word-sep">Word separator (when encoding)</label>
+  <select id="word-sep">
+    <option value="slash" selected>Slash — / (… --- … / …)</option>
+    <option value="spaces">Three spaces (… --- …   …)</option>
+  </select></p>
+  <p><label for="wpm">Playback speed: <span id="wpm-val">20</span> words per minute</label>
+  <input type="range" id="wpm" min="5" max="40" step="1" value="20"></p>
+  <p><button id="btn-convert" type="button">Translate ↓</button> <button id="btn-play" type="button" class="secondary">▶ Play Morse audio</button> <button id="copy-out" type="button" class="secondary">Copy result</button> <button id="download" type="button" class="secondary">Download .txt</button></p>
+  <div><label for="text-out">Result</label><textarea id="text-out" readonly placeholder="Your translation appears here…"></textarea></div>
+  <p class="msg" id="text-msg"></p>
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="st-in">–</b><span>Input characters</span></div>
+      <div class="stat"><b id="st-out">–</b><span>Output characters</span></div>
+      <div class="stat"><b id="st-symbols">–</b><span>Dots &amp; dashes</span></div>
+      <div class="stat"><b id="st-words">–</b><span>Words</span></div>
+    </div>
+  </div>
+  <a id="dl" class="hidden" href="#" download="morse-code.txt">Download</a>
+</div></section>
+<script>
+(function(){
+  var MORSE = {
+    'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..','J':'.---','K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.','S':'...','T':'-','U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..',
+    '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.',
+    '.':'.-.-.-',',':'--..--','?':'..--..',"'":'.----.','!':'-.-.--','/':'-..-','(':'-.--.',')':'-.--.-','&':'.-...',':':'---...',';':'-.-.-.','=':'-...-','+':'.-.-.','-':'-....-','_':'..--.-','"':'.-..-.','$':'...-..-','@':'.--.-.'
+  };
+  var REVERSE = {};
+  Object.keys(MORSE).forEach(function(ch){ REVERSE[MORSE[ch]] = ch; });
+
+  function textToMorse(text, opts){
+    opts = opts || {};
+    var wordSep = opts.wordSep === 'spaces' ? '   ' : ' / ';
+    var input = String(text);
+    var skipped = 0;
+    var words = input.split(/\s+/);
+    var outWords = [];
+    var symbols = 0;
+    for (var w = 0; w < words.length; w++) {
+      if (words[w] === '') continue;
+      var letters = [];
+      for (var i = 0; i < words[w].length; i++) {
+        var ch = words[w][i].toUpperCase();
+        if (Object.prototype.hasOwnProperty.call(MORSE, ch)) {
+          letters.push(MORSE[ch]);
+          symbols += MORSE[ch].length;
+        } else {
+          skipped++;
+        }
+      }
+      if (letters.length) outWords.push(letters.join(' '));
+    }
+    var morse = outWords.join(wordSep);
+    return { morse: morse, skipped: skipped, symbols: symbols, words: outWords.length };
+  }
+
+  function morseToText(morse){
+    var input = String(morse);
+    var unknown = 0;
+    var normalized = input.replace(/\s*\/\s*/g, ' / ').replace(/\s{3,}/g, ' / ');
+    var words = normalized.trim() === '' ? [] : normalized.trim().split(' / ');
+    var outWords = [];
+    var symbols = 0;
+    for (var w = 0; w < words.length; w++) {
+      var word = words[w].trim();
+      if (word === '') continue;
+      var letters = word.split(/\s+/);
+      var out = '';
+      for (var i = 0; i < letters.length; i++) {
+        var token = letters[i];
+        if (token === '') continue;
+        if (/^[.\-]+$/.test(token)) {
+          symbols += token.length;
+          if (Object.prototype.hasOwnProperty.call(REVERSE, token)) out += REVERSE[token];
+          else { out += '?'; unknown++; }
+        } else {
+          out += '?';
+          unknown++;
+        }
+      }
+      outWords.push(out);
+    }
+    return { text: outWords.join(' '), unknown: unknown, symbols: symbols, words: outWords.length };
+  }
+
+  function isMorse(s){
+    var t = String(s).trim();
+    return t.length > 0 && /^[.\-\/\s]+$/.test(t) && /[.\-]/.test(t);
+  }
+
+  // Timing events for audio playback. One unit = 1200 / wpm ms (PARIS standard).
+  // Letter gap = 3 units, word gap = 7 units, intra-letter gap = 1 unit.
+  function morseTiming(morse, wpm){
+    var unit = 1200 / (wpm || 20);
+    var events = [];
+    var normalized = String(morse).replace(/\s*\/\s*/g, ' / ').replace(/\s{3,}/g, ' / ');
+    var words = normalized.trim() === '' ? [] : normalized.trim().split(' / ');
+    var validWords = words.filter(function(wd){ return wd.trim().split(/\s+/).some(function(t){ return /^[.\-]+$/.test(t); }); });
+    for (var w = 0; w < validWords.length; w++) {
+      var word = validWords[w].trim();
+      if (word === '') continue;
+      var letters = word.split(/\s+/).filter(function(t){ return /^[.\-]+$/.test(t); });
+      for (var l = 0; l < letters.length; l++) {
+        var token = letters[l];
+        for (var i = 0; i < token.length; i++) {
+          events.push({ type: token[i] === '.' ? 'dot' : 'dash', ms: token[i] === '.' ? unit : 3 * unit });
+          if (i < token.length - 1) events.push({ type: 'gap', ms: unit });
+        }
+        if (l < letters.length - 1) events.push({ type: 'gap', ms: 3 * unit });
+      }
+      if (w < validWords.length - 1) events.push({ type: 'gap', ms: 7 * unit });
+    }
+    return events;
+  }
+
+  window.TD_morse = { textToMorse: textToMorse, morseToText: morseToText, isMorse: isMorse, morseTiming: morseTiming, MORSE: MORSE };
+  var msgEl = document.getElementById('text-msg');
+  function showMsg(text, kind){
+    msgEl.textContent = text;
+    msgEl.className = 'msg ' + (kind || '');
+  }
+  function plural(n, word){ return n + ' ' + word + (n === 1 ? '' : 's'); }
+  function isEncode(){
+    return document.getElementById('mode-encode').checked;
+  }
+  function updateStats(inputLen, outLen, symbols, words){
+    document.getElementById('st-in').textContent = String(inputLen);
+    document.getElementById('st-out').textContent = String(outLen);
+    document.getElementById('st-symbols').textContent = String(symbols);
+    document.getElementById('st-words').textContent = String(words);
+  }
+  function clearStats(){
+    document.getElementById('st-in').textContent = '–';
+    document.getElementById('st-out').textContent = '–';
+    document.getElementById('st-symbols').textContent = '–';
+    document.getElementById('st-words').textContent = '–';
+  }
+  function doTranslate(){
+    var inp = document.getElementById('text-in').value;
+    var outEl = document.getElementById('text-out');
+    if (inp.trim() === '') {
+      outEl.value = '';
+      showMsg('Nothing to translate — type some text or paste Morse code first.', 'err');
+      clearStats();
+      return;
+    }
+    if (isEncode()) {
+      var r = textToMorse(inp, { wordSep: document.getElementById('word-sep').value });
+      outEl.value = r.morse;
+      var note = r.skipped ? ' (' + plural(r.skipped, 'character') + ' had no Morse code and was skipped)' : '';
+      showMsg('Translated to Morse code.' + note, 'ok');
+      updateStats(inp.length, r.morse.length, r.symbols, r.words);
+    } else {
+      var d = morseToText(inp);
+      outEl.value = d.text;
+      var note2 = d.unknown ? ' (' + plural(d.unknown, 'pattern') + ' not recognised, shown as ?)' : '';
+      showMsg('Decoded from Morse code.' + note2, 'ok');
+      updateStats(inp.length, d.text.length, d.symbols, d.words);
+    }
+  }
+  document.getElementById('btn-convert').addEventListener('click', doTranslate);
+  document.getElementById('mode-encode').addEventListener('change', doTranslate);
+  document.getElementById('mode-decode').addEventListener('change', doTranslate);
+  document.getElementById('word-sep').addEventListener('change', function(){ if (isEncode()) doTranslate(); });
+  document.getElementById('text-in').addEventListener('input', doTranslate);
+  document.getElementById('btn-swap').addEventListener('click', function(){
+    var inp = document.getElementById('text-in');
+    var out = document.getElementById('text-out');
+    var wasEncode = isEncode();
+    if (wasEncode) document.getElementById('mode-decode').checked = true;
+    else document.getElementById('mode-encode').checked = true;
+    if (out.value) inp.value = out.value;
+    doTranslate();
+  });
+  document.getElementById('wpm').addEventListener('input', function(){
+    document.getElementById('wpm-val').textContent = this.value;
+  });
+  var audioCtx = null;
+  var playing = false;
+  document.getElementById('btn-play').addEventListener('click', function(){
+    if (playing) return;
+    var morse = isEncode() ? document.getElementById('text-out').value : document.getElementById('text-in').value;
+    if (!morse || morse.trim() === '') { showMsg('Nothing to play — translate something first.', 'err'); return; }
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { showMsg('Audio playback is not supported in this browser.', 'err'); return; }
+    try {
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      var wpm = parseInt(document.getElementById('wpm').value, 10) || 20;
+      var events = morseTiming(morse, wpm);
+      if (!events.length) { showMsg('Nothing playable in the Morse code.', 'err'); return; }
+      playing = true;
+      var btn = document.getElementById('btn-play');
+      btn.textContent = '♪ Playing…';
+      var t = audioCtx.currentTime + 0.05;
+      var total = 0;
+      events.forEach(function(ev){
+        var dur = ev.ms / 1000;
+        if (ev.type === 'dot' || ev.type === 'dash') {
+          var osc = audioCtx.createOscillator();
+          var gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = 600;
+          gain.gain.setValueAtTime(0.0001, t);
+          gain.gain.exponentialRampToValueAtTime(0.25, t + 0.005);
+          gain.gain.setValueAtTime(0.25, t + dur - 0.005);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(t);
+          osc.stop(t + dur + 0.01);
+        }
+        t += dur;
+        total += ev.ms;
+      });
+      showMsg('Playing Morse code at ' + wpm + ' words per minute.', 'ok');
+      setTimeout(function(){
+        playing = false;
+        btn.textContent = '▶ Play Morse audio';
+      }, total + 150);
+    } catch (e) {
+      playing = false;
+      showMsg('Could not play audio in this browser.', 'err');
+    }
+  });
+  document.getElementById('copy-out').addEventListener('click', function(){
+    var out = document.getElementById('text-out');
+    if (!out.value) { showMsg('Nothing to copy yet — translate something first.', 'err'); return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      showMsg(ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.', ok ? 'ok' : 'err');
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = out.value;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(out.value).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var out = document.getElementById('text-out');
+    if (!out.value) { showMsg('Nothing to download yet — translate something first.', 'err'); return; }
+    var blob = new Blob([out.value], { type: 'text/plain;charset=utf-8' });
+    var dl = document.getElementById('dl');
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'morse-code.txt';
+    dl.click();
+    showMsg('Downloaded morse-code.txt.', 'ok');
+  });
+  doTranslate();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type text and choose "Text → Morse" to encode it — letters become dots and dashes, words are separated by a slash ( / ) or three spaces.</li>
+    <li>Choose "Morse → Text" and paste Morse code to decode it back — for example ... --- ... becomes SOS.</li>
+    <li>Press "Play Morse audio" to hear the code as beeps, and use the speed slider to change the pace. Copy the result or download it as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is Morse code?</summary><p>Morse code represents every letter and number as a pattern of short dots (.) and long dashes (-). For example, S is three dots (...), O is three dashes (---), and the famous distress call SOS is ... --- .... It was invented in the 1830s for the telegraph and is still used by radio amateurs today.</p></details>
+  <details><summary>How do I decode Morse code back to text?</summary><p>Choose "Morse → Text", then paste Morse code with a space between letters and a slash ( / ) or three spaces between words — for example ... --- ... decodes to SOS. Any pattern that is not a real Morse letter is shown as a question mark (?).</p></details>
+  <details><summary>Is my text sent anywhere?</summary><p>No. Translating to and from Morse code — and the audio playback — happens entirely in your browser. Your text is never uploaded or saved anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
+        <li><a href="../url-encoder-decoder/">🔗 URL Encoder / Decoder</a></li>
+        <li><a href="../image-synthid-remover/">🧹 Image SynthID Remover</a></li>
+        <li><a href="../remove-duplicate-lines/">📋 Remove Duplicate Lines</a></li>
+        <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
