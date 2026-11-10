@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Audio Transcriber — Speech to Text Free Online — ToolsDaily</title>
+<meta name="description" content="Free AI audio transcriber: turn voice memos, interviews, meetings and podcasts into text, then download a .txt transcript or .srt subtitles. 100% in your browser — your audio is never uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/audio-transcriber/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Audio Transcriber — Speech to Text Free Online — ToolsDaily">
+<meta property="og:description" content="Free AI audio transcriber: turn voice memos, interviews, meetings and podcasts into text, then download a .txt transcript or .srt subtitles. 100% in your browser — your audio is never uploaded.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/audio-transcriber/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Audio Transcriber — Speech to Text Free Online — ToolsDaily">
+<meta name="twitter:description" content="Free AI audio transcriber: turn voice memos, interviews, meetings and podcasts into text, then download a .txt transcript or .srt subtitles. 100% in your browser — your audio is never uploaded.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Audio Transcriber",
+    "url": "https://toolsdaily.vercel.app/audio-transcriber/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free AI audio transcriber: turn voice memos, interviews, meetings and podcasts into text, then download a .txt transcript or .srt subtitles. 100% in your browser \u2014 your audio is never uploaded."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is my audio uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The AI model runs entirely on your device, inside your browser. Your audio never leaves your phone or computer \u2014 the only thing downloaded is the AI model itself, once."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does the first use download about 42 MB?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "That download is the AI speech model itself \u2014 OpenAI's Whisper, shrunk to fit in a browser. Because the AI lives on your device instead of a server, it needs to arrive once. Your browser remembers it, so later visits start instantly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which formats and languages are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MP3, WAV, M4A, OGG, WebM and FLAC audio files. Whisper understands around 100 languages \u2014 leave the language on Auto detect, or pick English, Bangla, Hindi, Urdu, Spanish, French, Arabic and more from the list."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is the transcription?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Clear speech in a quiet recording transcribes very well. Background noise, music, overlapping voices and heavy accents lower accuracy, so treat the result as a strong first draft and proofread it before you rely on it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long can my audio be?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is no fixed limit, but the work happens on your device: a one-hour recording can take a few minutes on a fast computer and much longer on a phone. Keep this tab open while it works, and prefer shorter clips on older devices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it really free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes \u2014 no sign-up, no per-minute credits. The AI runs on your own device, so there is no server bill to pass on to you."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+<style>
+  .bar { height:10px; background:#0002; border-radius:6px; overflow:hidden; margin:8px 0; }
+  .bar > div { height:100%; width:0%; background:#e8590c; transition:width .2s; }
+  .bar.indet > div { width:40% !important; animation:indet 1.1s ease-in-out infinite alternate; }
+  @keyframes indet { from { margin-left:0; } to { margin-left:60%; } }
+  .steps { list-style:none; padding:0; margin:10px 0 4px; font-size:14px; text-align:left; }
+  .steps li { opacity:.45; padding:2px 0; }
+  .steps li.act { opacity:1; font-weight:600; }
+  .steps li.done { opacity:.85; }
+  .steps .st-ic { display:inline-block; width:1.5em; }
+  .langrow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:10px 0; }
+  .langrow select { padding:6px 8px; max-width:100%; }
+  #out-text { width:100%; min-height:220px; box-sizing:border-box; padding:10px; font:inherit; font-size:15px; line-height:1.55; border-radius:8px; }
+  .dlrow { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:10px 0; }
+  #cancel { margin-left:8px; }
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../index.html"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../index.html">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>AI Audio Transcriber</h1>
+<p class="lead">Turn speech into text with AI — voice memos, interviews, meetings and podcasts, free with no sign-up. The AI runs on your device, so your audio is never uploaded.</p>
+
+<div class="card">
+  <div class="drop" id="drop"><p>🎙️ Drop an audio file here, or</p><input type="file" id="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.opus,.webm,.flac"></div>
+  <p class="msg" id="selmsg"></p>
+  <div class="langrow">
+    <label for="lang">Spoken language:</label>
+    <select id="lang">
+      <option value="" selected>Auto detect</option>
+      <option value="english">English</option>
+      <option value="bengali">Bangla (Bengali)</option>
+      <option value="hindi">Hindi</option>
+      <option value="urdu">Urdu</option>
+      <option value="spanish">Spanish</option>
+      <option value="french">French</option>
+      <option value="arabic">Arabic</option>
+      <option value="german">German</option>
+      <option value="portuguese">Portuguese</option>
+      <option value="russian">Russian</option>
+      <option value="italian">Italian</option>
+      <option value="dutch">Dutch</option>
+      <option value="turkish">Turkish</option>
+      <option value="persian">Persian</option>
+      <option value="ukrainian">Ukrainian</option>
+      <option value="polish">Polish</option>
+      <option value="swedish">Swedish</option>
+      <option value="indonesian">Indonesian</option>
+      <option value="malay">Malay</option>
+      <option value="vietnamese">Vietnamese</option>
+      <option value="thai">Thai</option>
+      <option value="japanese">Japanese</option>
+      <option value="korean">Korean</option>
+      <option value="chinese">Chinese</option>
+      <option value="tamil">Tamil</option>
+      <option value="telugu">Telugu</option>
+      <option value="marathi">Marathi</option>
+      <option value="gujarati">Gujarati</option>
+      <option value="kannada">Kannada</option>
+      <option value="malayalam">Malayalam</option>
+      <option value="punjabi">Punjabi</option>
+      <option value="nepali">Nepali</option>
+      <option value="sinhala">Sinhala</option>
+      <option value="burmese">Burmese</option>
+      <option value="khmer">Khmer</option>
+      <option value="lao">Lao</option>
+      <option value="greek">Greek</option>
+      <option value="hebrew">Hebrew</option>
+      <option value="czech">Czech</option>
+      <option value="danish">Danish</option>
+      <option value="finnish">Finnish</option>
+      <option value="norwegian">Norwegian</option>
+      <option value="azerbaijani">Azerbaijani</option>
+      <option value="kazakh">Kazakh</option>
+    </select>
+  </div>
+  <button id="go" type="button" disabled>Transcribe</button>
+  <button id="cancel" type="button" class="hidden">Cancel</button>
+  <div class="bar hidden" id="barwrap"><div id="bar"></div></div>
+  <ol class="steps hidden" id="steps">
+    <li id="step1"><span class="st-ic">•</span>Download the AI model (one time only, about 42 MB)</li>
+    <li id="step2"><span class="st-ic">•</span>Prepare your audio</li>
+    <li id="step3"><span class="st-ic">•</span>Transcribe the speech</li>
+  </ol>
+  <p class="msg" id="msg"></p>
+  <p class="msg" id="elapsed"></p>
+
+  <div class="hidden" id="result">
+    <label for="out-text">Transcript</label>
+    <textarea id="out-text" readonly></textarea>
+    <p class="msg" id="stats"></p>
+    <div class="dlrow">
+      <button type="button" id="copy">Copy transcript</button>
+      <a class="btn" id="dl-txt" href="#" download="transcript.txt">Download .txt</a>
+      <a class="btn" id="dl-srt" href="#" download="subtitles.srt">Download .srt subtitles</a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  'use strict';
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      goBtn=document.getElementById('go'), cancelBtn=document.getElementById('cancel'),
+      langSel=document.getElementById('lang'),
+      msg=document.getElementById('msg'), selMsg=document.getElementById('selmsg'),
+      barWrap=document.getElementById('barwrap'), bar=document.getElementById('bar'),
+      resultBox=document.getElementById('result'), outText=document.getElementById('out-text'),
+      stats=document.getElementById('stats'), copyBtn=document.getElementById('copy'),
+      dlTxt=document.getElementById('dl-txt'), dlSrt=document.getElementById('dl-srt'),
+      stepsEl=document.getElementById('steps'), elapsedEl=document.getElementById('elapsed'),
+      stepEls=[document.getElementById('step1'),document.getElementById('step2'),document.getElementById('step3')];
+  var AUDIO_EXTS=['mp3','wav','m4a','ogg','opus','webm','flac'];
+  var MAX_BYTES=200*1024*1024;
+  var currentFile=null, timerInt=null, t0=0;
+
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function pad2(n){ return (n<10?'0':'')+n; }
+  function formatClock(s){
+    s=Math.max(0,Math.round(s||0));
+    var h=Math.floor(s/3600), m=Math.floor((s%3600)/60), ss=s%60;
+    return h>0 ? h+':'+pad2(m)+':'+pad2(ss) : m+':'+pad2(ss);
+  }
+  function formatSrtTime(s){
+    if(!(s>0)) s=0;
+    var ms=Math.round(s*1000), h=Math.floor(ms/3600000), m=Math.floor((ms%3600000)/60000),
+        ss=Math.floor((ms%60000)/1000), mmm=ms%1000;
+    return pad2(h)+':'+pad2(m)+':'+pad2(ss)+','+('00'+mmm).slice(-3);
+  }
+  function buildSrt(chunks, duration){
+    var list=(chunks||[]).filter(function(c){ return c && (c.text||'').trim(); });
+    var out=[];
+    for(var i=0;i<list.length;i++){
+      var ts=list[i].timestamp||[], start=(typeof ts[0]==='number')?ts[0]:0, end=ts[1];
+      if(typeof end!=='number'){
+        var next=list[i+1];
+        end=(next && next.timestamp && typeof next.timestamp[0]==='number') ? next.timestamp[0]
+          : (typeof duration==='number' && duration>start ? duration : start+5);
+      }
+      if(end<=start) end=start+1;
+      out.push((i+1)+'\n'+formatSrtTime(start)+' --> '+formatSrtTime(end)+'\n'+list[i].text.trim());
+    }
+    return out.length ? out.join('\n\n')+'\n' : '';
+  }
+  // Exposed for the site test suite (same TD_* pattern as the other tools).
+  window.TD_transcriber={ buildSrt:buildSrt, formatSrtTime:formatSrtTime, formatClock:formatClock };
+
+  function showMsg(el,t,ok){ el.textContent=t||''; el.className='msg '+(t?(ok?'ok':'err'):''); }
+  function setProgress(p,label){ barWrap.classList.remove('hidden'); barWrap.classList.remove('indet'); bar.style.width=Math.round(p*100)+'%'; if(label) showMsg(msg,label,true); }
+  function setIndet(label){ barWrap.classList.remove('hidden'); barWrap.classList.add('indet'); if(label) showMsg(msg,label,true); }
+
+  /* Honest step narration, same as the Background Remover: the user always
+     sees which step is running and how long it has taken. */
+  function setStep(n){
+    stepsEl.classList.remove('hidden');
+    stepEls.forEach(function(el,i){
+      var k=i+1;
+      el.className = n===0 ? 'done' : (k<n ? 'done' : (k===n ? 'act' : ''));
+      el.querySelector('.st-ic').textContent = (n===0||k<n) ? '✓' : (k===n ? '▸' : '•');
+    });
+  }
+  function startTimer(){
+    stopTimer();
+    timerInt=setInterval(function(){
+      var s=Math.round((performance.now()-t0)/1000);
+      elapsedEl.textContent='Working… '+s+'s — please keep this page open.';
+      elapsedEl.className='msg ok';
+    },500);
+  }
+  function stopTimer(){ if(timerInt){ clearInterval(timerInt); timerInt=null; } elapsedEl.textContent=''; }
+
+  function setFile(f){
+    if(!f) return;
+    var ext=(f.name.split('.').pop()||'').toLowerCase();
+    if(AUDIO_EXTS.indexOf(ext)===-1 && !/^audio\//.test(f.type||'')){
+      showMsg(selMsg,'That file does not look like audio. Please choose an MP3, WAV, M4A, OGG, WebM or FLAC file.');
+      return;
+    }
+    if(f.size>MAX_BYTES){
+      showMsg(selMsg,'That file is '+formatBytes(f.size)+' — over the 200 MB limit for on-device transcription. Please trim it or split it into shorter clips.');
+      return;
+    }
+    currentFile=f;
+    resultBox.classList.add('hidden'); stepsEl.classList.add('hidden');
+    goBtn.disabled=false;
+    showMsg(selMsg,'Selected: '+f.name+' ('+formatBytes(f.size)+')', true);
+  }
+  fileInput.addEventListener('change',function(){ setFile(fileInput.files[0]); });
+  ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop',function(e){ e.preventDefault(); drop.classList.remove('over'); var f=e.dataTransfer.files[0]; if(f) setFile(f); });
+
+  /* ---- Decode the chosen file to 16 kHz mono samples (Whisper's input) ---- */
+  function decodeTo16k(file){
+    return file.arrayBuffer().then(function(ab){
+      var AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC) throw new Error('no-audio-context');
+      var ctx=new AC();
+      return ctx.decodeAudioData(ab).then(function(buf){
+        if(ctx.close) ctx.close();
+        var len=Math.max(1,Math.ceil(buf.duration*16000));
+        var off=new OfflineAudioContext(1,len,16000);
+        var src=off.createBufferSource(); src.buffer=buf; src.connect(off.destination); src.start();
+        return off.startRendering().then(function(rendered){
+          return { samples: rendered.getChannelData(0), duration: buf.duration };
+        });
+      }, function(err){ if(ctx.close) ctx.close(); throw err; });
+    });
+  }
+
+  /* ---- AI engine: a supervised module Web Worker (asr-worker.js) ----
+     Same supervision pattern as the Background Remover: the engine lives in
+     the worker; the page only supervises it. A failed or wedged worker is
+     terminated and replaced with a fresh one (exactly one retry); after that
+     the user gets a plain error. Cancel is the same clean kill, by request. */
+  var worker=null, workerReady=false, state='idle', /* idle | loading | preparing | running */
+      retried=false, watchdog=null, decoded=null, fileProgress={};
+
+  function armWatchdog(ms){ clearTimeout(watchdog); watchdog=setTimeout(recover,ms); }
+  function disarmWatchdog(){ clearTimeout(watchdog); watchdog=null; }
+
+  function spawnWorker(){
+    if(worker){ try{ worker.terminate(); }catch(e){} }
+    workerReady=false; fileProgress={};
+    worker=new Worker('asr-worker.js',{type:'module'});
+    worker.onmessage=onWorkerMessage;
+    worker.onerror=function(){ if(state!=='idle') recover(); };
+    worker.postMessage({type:'load'});
+  }
+
+  function startLoad(){
+    state='loading';
+    setStep(1);
+    setProgress(0,'First run only: downloading the AI model (about 42 MB). Your browser will remember it — later visits start instantly.');
+    spawnWorker();
+    armWatchdog(120000);
+  }
+
+  function recover(){
+    disarmWatchdog();
+    if(worker){ try{ worker.terminate(); }catch(e){} worker=null; }
+    workerReady=false;
+    if(!retried && state!=='idle'){
+      retried=true;
+      var phase=state;
+      showMsg(msg,'The engine was slow to respond — restarting it…',true);
+      if(phase==='running' && decoded){ state='loading'; setStep(1); setProgress(0,'Restarting the AI engine…'); spawnWorker(); armWatchdog(120000); }
+      else startLoad();
+    }else{
+      failRun('The AI engine could not finish on this device. Please reload the page and try once more — if it still fails, a newer browser, or a shorter clip, may be needed.');
+    }
+  }
+
+  function failRun(text){
+    disarmWatchdog(); stopTimer();
+    state='idle';
+    if(worker){ try{ worker.terminate(); }catch(e){} worker=null; }
+    workerReady=false;
+    barWrap.classList.add('hidden'); stepsEl.classList.add('hidden');
+    cancelBtn.classList.add('hidden');
+    showMsg(msg,text);
+    goBtn.disabled=false;
+  }
+
+  function onWorkerMessage(e){
+    var m=e.data||{};
+    if(m.type==='progress'){
+      if(m.file){
+        fileProgress[m.file]={loaded:m.loaded||0,total:m.total||0};
+        var done=0,total=0;
+        Object.keys(fileProgress).forEach(function(k){ done+=fileProgress[k].loaded; total+=Math.max(fileProgress[k].total,fileProgress[k].loaded); });
+        if(total>0){
+          var short=m.file.split('/').pop();
+          setProgress(done/total,'Downloading the AI model… '+formatBytes(done)+' of '+formatBytes(total)+' ('+Math.round(done/total*100)+'%, one-time) — '+short);
+        }
+      }
+      armWatchdog(120000);
+    }else if(m.type==='filedone'){
+      armWatchdog(120000);
+    }else if(m.type==='ready'){
+      workerReady=true; disarmWatchdog();
+      if(state==='loading') prepareAndRun();
+    }else if(m.type==='result'){
+      disarmWatchdog();
+      finishRun(m.text||'', m.chunks||[]);
+    }else if(m.type==='error'){
+      if(window.console) console.error('transcriber engine error ('+(m.phase||'?')+'):', m.message);
+      if(m.phase==='load' && /fetch|network|download|404|failed to load/i.test(m.message||'')){
+        failRun('The AI model could not be downloaded. Please check your internet connection, then reload the page and try again.');
+      }
+      else if(state!=='idle') recover();
+    }
+  }
+
+  function prepareAndRun(){
+    state='preparing';
+    setStep(2);
+    setIndet('Preparing your audio…');
+    decodeTo16k(currentFile).then(function(d){
+      decoded=d;
+      state='running';
+      setStep(3);
+      setIndet('Transcribing… Whisper works through your audio in 30-second pieces — long files take a while.');
+      var copy=new Float32Array(d.samples);
+      worker.postMessage({type:'run', buffer:copy.buffer, language:langSel.value||null},[copy.buffer]);
+      armWatchdog(Math.max(300000, d.duration*20000));
+    }).catch(function(err){
+      if(window.console) console.error('audio decode error:', err);
+      failRun('Could not read that audio file. It may be corrupt, or in a format your browser cannot decode — some M4A and OGG files only open in Chrome or Edge. Converting it to MP3 or WAV usually fixes it.');
+    });
+  }
+
+  var txtUrl=null, srtUrl=null;
+  function setDownload(aEl, content, type, filename){
+    var blob=new Blob([content],{type:type});
+    var url=URL.createObjectURL(blob);
+    aEl.href=url; aEl.setAttribute('download',filename);
+    return url;
+  }
+
+  function finishRun(text, chunks){
+    state='idle'; stopTimer(); setStep(0);
+    var clean=(text||'').trim();
+    outText.value=clean;
+    var base=currentFile ? currentFile.name.replace(/\.[^.]+$/,'') : 'audio';
+    if(txtUrl) URL.revokeObjectURL(txtUrl);
+    if(srtUrl) URL.revokeObjectURL(srtUrl);
+    txtUrl=setDownload(dlTxt, clean+'\n', 'text/plain', base+'-transcript.txt');
+    var srt=buildSrt(chunks, decoded?decoded.duration:undefined);
+    if(srt){
+      srtUrl=setDownload(dlSrt, srt, 'application/x-subrip', base+'-subtitles.srt');
+      dlSrt.classList.remove('hidden');
+    }else{
+      dlSrt.classList.add('hidden');
+    }
+    var words=clean ? clean.split(/\s+/).length : 0;
+    var secs=((performance.now()-t0)/1000).toFixed(1);
+    stats.textContent=words+' words · '+clean.length+' characters'+
+      (decoded ? ' · audio '+formatClock(decoded.duration) : '')+
+      ' · done in '+secs+' seconds — processed entirely on your device.';
+    stats.className='msg ok';
+    resultBox.classList.remove('hidden');
+    barWrap.classList.add('hidden');
+    cancelBtn.classList.add('hidden');
+    showMsg(msg, clean ? '' : 'No speech could be heard in that audio. Try a clearer recording.', !!clean);
+    goBtn.disabled=false;
+  }
+
+  copyBtn.addEventListener('click',function(){
+    var t=outText.value;
+    function done(){ showMsg(stats,'Copied to the clipboard ✓',true); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done,function(){ fallback(); });
+    }else fallback();
+    function fallback(){
+      outText.removeAttribute('readonly');
+      outText.select();
+      try{ document.execCommand('copy'); done(); }catch(e){ showMsg(stats,'Copy failed — select the text and copy it manually.'); }
+      outText.setAttribute('readonly','');
+    }
+  });
+
+  cancelBtn.addEventListener('click',function(){
+    if(state==='idle') return;
+    disarmWatchdog(); stopTimer();
+    if(worker){ try{ worker.terminate(); }catch(e){} worker=null; }
+    workerReady=false; state='idle';
+    barWrap.classList.add('hidden'); stepsEl.classList.add('hidden');
+    cancelBtn.classList.add('hidden');
+    showMsg(msg,'Cancelled. The AI model stays in your browser cache, so starting again is quick.',true);
+    goBtn.disabled=false;
+  });
+
+  goBtn.addEventListener('click',function(){
+    if(!currentFile){ showMsg(selMsg,'Please choose an audio file first.'); return; }
+    if(state!=='idle') return;
+    goBtn.disabled=true;
+    cancelBtn.classList.remove('hidden');
+    showMsg(msg,''); showMsg(stats,'');
+    resultBox.classList.add('hidden');
+    retried=false; decoded=null; t0=performance.now(); startTimer();
+    if(workerReady){ prepareAndRun(); }
+    else startLoad();
+  });
+})();
+
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Drop an audio file onto the box, or click to choose an MP3, WAV, M4A, OGG, WebM or FLAC file.</li>
+    <li>Pick the spoken language, or leave it on Auto detect, then click “Transcribe”. The first time, the AI model downloads once (about 42 MB) — after that it starts right away.</li>
+    <li>Read the transcript, copy it, or download it as a .txt file — or as an .srt subtitle file with timestamps.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Is my audio uploaded to a server?</summary><p>No. The AI model runs entirely on your device, inside your browser. Your audio never leaves your phone or computer — the only thing downloaded is the AI model itself, once.</p></details>
+  <details><summary>Why does the first use download about 42 MB?</summary><p>That download is the AI speech model itself — OpenAI's Whisper, shrunk to fit in a browser. Because the AI lives on your device instead of a server, it needs to arrive once. Your browser remembers it, so later visits start instantly.</p></details>
+  <details><summary>Which formats and languages are supported?</summary><p>MP3, WAV, M4A, OGG, WebM and FLAC audio files. Whisper understands around 100 languages — leave the language on Auto detect, or pick English, Bangla, Hindi, Urdu, Spanish, French, Arabic and more from the list.</p></details>
+  <details><summary>How accurate is the transcription?</summary><p>Clear speech in a quiet recording transcribes very well. Background noise, music, overlapping voices and heavy accents lower accuracy, so treat the result as a strong first draft and proofread it before you rely on it.</p></details>
+  <details><summary>How long can my audio be?</summary><p>There is no fixed limit, but the work happens on your device: a one-hour recording can take a few minutes on a fast computer and much longer on a phone. Keep this tab open while it works, and prefer shorter clips on older devices.</p></details>
+  <details><summary>Is it really free?</summary><p>Yes — no sign-up, no per-minute credits. The AI runs on your own device, so there is no server bill to pass on to you.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
+        <li><a href="../url-encoder-decoder/">🔗 URL Encoder / Decoder</a></li>
+        <li><a href="../image-synthid-remover/">🧹 Image SynthID Remover</a></li>
+        <li><a href="../remove-duplicate-lines/">📋 Remove Duplicate Lines</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
