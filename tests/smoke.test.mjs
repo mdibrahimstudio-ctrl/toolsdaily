@@ -36,6 +36,8 @@ const PAGES = [
   { path: 'tip-calculator/', name: 'tip-calculator', selectors: ['#bill', '#tip-pct', '#people', '[data-tip="20"]', '#tip-amount', '#total', '#per-person', '#per-person-tip', '#copy', '#download', '#dl'] },
   { path: 'url-encoder-decoder/', name: 'url-encoder-decoder', selectors: ['#text-in', '#mode-component', '#mode-full', '#plus-space', '#btn-encode', '#btn-decode', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-encoded'] },
   { path: 'remove-duplicate-lines/', name: 'remove-duplicate-lines', selectors: ['#text-in', '#opt-insensitive', '#opt-trim', '#opt-empty', '#opt-sort', '#btn-dedupe', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-removed', '#st-empty'] },
+  { path: 'audio-transcriber/', name: 'audio-transcriber', selectors: ['#file', '#drop', '#lang', '#go', '#cancel', '#bar', '#out-text', '#copy', '#dl-txt', '#dl-srt', '#msg'] },
+  { path: 'morse-code-translator/', name: 'morse-code-translator', selectors: ['#text-in', '#mode-encode', '#mode-decode', '#btn-swap', '#word-sep', '#wpm', '#btn-play', '#btn-convert', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-symbols', '#st-words'] },
 ];
 
 async function loadPage(path) {
