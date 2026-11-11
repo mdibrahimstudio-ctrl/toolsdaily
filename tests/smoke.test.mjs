@@ -38,6 +38,7 @@ const PAGES = [
   { path: 'remove-duplicate-lines/', name: 'remove-duplicate-lines', selectors: ['#text-in', '#opt-insensitive', '#opt-trim', '#opt-empty', '#opt-sort', '#btn-dedupe', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-removed', '#st-empty'] },
   { path: 'audio-transcriber/', name: 'audio-transcriber', selectors: ['#file', '#drop', '#lang', '#go', '#cancel', '#bar', '#out-text', '#copy', '#dl-txt', '#dl-srt', '#msg'] },
   { path: 'morse-code-translator/', name: 'morse-code-translator', selectors: ['#text-in', '#mode-encode', '#mode-decode', '#btn-swap', '#word-sep', '#wpm', '#btn-play', '#btn-convert', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-symbols', '#st-words'] },
+  { path: 'uuid-generator/', name: 'uuid-generator', selectors: ['#uuid-version-v4', '#uuid-version-v1', '#uuid-count', '#uuid-uppercase', '#uuid-no-hyphens', '#uuid-braces', '#uuid-sep', '#generate', '#copy', '#download', '#output', '#st-count', '#st-unique', '#st-version', '#validate-in', '#validate-btn', '#validate-msg'] },
 ];
 
 async function loadPage(path) {

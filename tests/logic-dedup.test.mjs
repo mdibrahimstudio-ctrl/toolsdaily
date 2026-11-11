@@ -60,12 +60,12 @@ console.log('DEDUP STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover'];
   ok(others.length === 26 && others.every((s) => html.includes(`href="../${s}/"`)), 'dedup: More-tools nav links all other 26 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 30, 'sitemap.xml has 30 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 31, 'sitemap.xml has 31 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/remove-duplicate-lines/'), 'sitemap includes remove-duplicate-lines');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 29, 'home has exactly 29 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 30, 'home has exactly 30 tool cards');
   ok(home.includes('href="remove-duplicate-lines/"'), 'home cards + nav include remove-duplicate-lines');
-  ok(home.includes('Twenty-nine handy tools'), 'home lead says Twenty-nine tools');
+  ok(home.includes('Thirty handy tools'), 'home lead says Thirty tools');
 }
 
 console.log('DEDUP CORE');
