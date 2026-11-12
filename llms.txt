@@ -1,0 +1,45 @@
+# ToolsDaily
+
+> ToolsDaily is a free collection of everyday web tools that run entirely in your browser. No sign-up, no accounts, no uploads — your files and text never leave your device. Every tool is free, works on any modern browser, and needs no installation.
+
+## Privacy promise
+
+- All processing happens client-side, in the visitor's own browser (JavaScript/WebAssembly). Files, images, audio and text are never uploaded to any server.
+- No accounts and no sign-up. The only analytics is Google Analytics 4 on the homepage (anonymised usage statistics).
+
+## Tools
+
+- [Age Calculator](https://toolsdaily.vercel.app/age-calculator/): Free age calculator: find your exact age in years, months and days, total days and weeks lived, and days until your next birthday.
+- [AI Audio Transcriber](https://toolsdaily.vercel.app/audio-transcriber/): Free AI audio transcriber: turn voice memos, interviews and podcasts into text, then download .txt or .srt.
+- [AI Background Remover](https://toolsdaily.vercel.app/background-remover/): Free AI background remover: cut out any photo's background in seconds and download a transparent PNG.
+- [Base64 Encoder / Decoder](https://toolsdaily.vercel.app/base64-encoder-decoder/): Free Base64 encoder and decoder that runs in your browser: encode text or any file to Base64, or decode Base64 back to text or a downloadable file.
+- [BMI Calculator](https://toolsdaily.vercel.app/bmi-calculator/): Free BMI calculator: enter your height and weight to get your Body Mass Index, its category and the healthy weight range for your height.
+- [Color Converter](https://toolsdaily.vercel.app/color-converter/): Free color converter: turn HEX colors into RGB, HSL and HSV values with one-click copy.
+- [Date Difference Calculator](https://toolsdaily.vercel.app/date-difference-calculator/): Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date.
+- [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
+- [Image Compressor](https://toolsdaily.vercel.app/image-compressor/): Free image compressor: reduce image file size with a quality slider and optional resize.
+- [Image Converter](https://toolsdaily.vercel.app/image-converter/): Free image converter: change images between PNG, JPEG and WebP formats online.
+- [Image Resizer](https://toolsdaily.vercel.app/image-resizer/): Free image resizer: resize images by width, height, exact size or percentage, keeping the aspect ratio.
+- [Image SynthID Remover](https://toolsdaily.vercel.app/image-synthid-remover/): Free Image SynthID Remover: see the hidden data your photo carries — EXIF, GPS, XMP and C2PA — and download a clean copy with it stripped.
+- [Image to PDF](https://toolsdaily.vercel.app/image-to-pdf/): Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page.
+- [JSON Formatter](https://toolsdaily.vercel.app/json-formatter/): Free JSON formatter and validator: pretty-print, minify and check JSON with clear error messages.
+- [Lorem Ipsum Generator](https://toolsdaily.vercel.app/lorem-ipsum-generator/): Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, with the classic 'Lorem ipsum dolor sit amet…' opening.
+- [Morse Code Translator](https://toolsdaily.vercel.app/morse-code-translator/): Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed.
+- [Password Generator](https://toolsdaily.vercel.app/password-generator/): Free password generator: create strong, truly random passwords with your browser's secure random generator.
+- [PDF Merge](https://toolsdaily.vercel.app/pdf-merge/): Free PDF merger: combine two or more PDF files into a single document, right in your browser.
+- [PDF Split](https://toolsdaily.vercel.app/pdf-split/): Free PDF splitter: extract a page range (like 1-3) or single pages from a PDF into a new file, right in your browser.
+- [Percentage Calculator](https://toolsdaily.vercel.app/percentage-calculator/): Free percentage calculator with three quick tools: find a percentage, what percentage one number is of another, and the percentage change between two numbers.
+- [QR Code Generator](https://toolsdaily.vercel.app/qr-generator/): Free QR code generator: turn any text or URL into a QR code and download it as a PNG.
+- [QR Code Reader](https://toolsdaily.vercel.app/qr-reader/): Free QR code reader: upload a QR code image and decode its text or link instantly, right in your browser.
+- [Random Number Generator](https://toolsdaily.vercel.app/random-number-generator/): Free random number generator: pick random numbers in any range, with unique-only and sort options.
+- [Remove Duplicate Lines](https://toolsdaily.vercel.app/remove-duplicate-lines/): Free duplicate line remover: paste text, remove duplicate lines while keeping the original order, with case-insensitive, trim and sort options.
+- [Text Case Converter](https://toolsdaily.vercel.app/text-case-converter/): Free text case converter: change text to UPPERCASE, lowercase, Title Case, Sentence case, alternating case, or reverse it.
+- [Tip Calculator](https://toolsdaily.vercel.app/tip-calculator/): Free tip calculator: work out the tip, the total bill and each person's share.
+- [Unit Converter](https://toolsdaily.vercel.app/unit-converter/): Free unit converter for length, weight and temperature: kilometres to miles, kilograms to pounds, Celsius to Fahrenheit and more, with instant results.
+- [URL Encoder / Decoder](https://toolsdaily.vercel.app/url-encoder-decoder/): Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text.
+- [UUID Generator](https://toolsdaily.vercel.app/uuid-generator/): Free UUID generator: create one or up to 1,000 unique IDs (UUID v4 random or v1 time-based) in any format, plus a UUID validator.
+- [Word Counter](https://toolsdaily.vercel.app/word-counter/): Free word counter: count words, characters, sentences and paragraphs, and estimate reading time.
+
+## Site
+
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 30 free tools by category, with live search.
