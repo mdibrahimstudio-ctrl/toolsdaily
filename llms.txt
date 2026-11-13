@@ -35,6 +35,7 @@
 - [Remove Duplicate Lines](https://toolsdaily.vercel.app/remove-duplicate-lines/): Free duplicate line remover: paste text, remove duplicate lines while keeping the original order, with case-insensitive, trim and sort options.
 - [Stopwatch & Countdown Timer](https://toolsdaily.vercel.app/stopwatch-countdown-timer/): Free online stopwatch with lap times and a countdown timer with presets and an alarm, right in your browser.
 - [Text Case Converter](https://toolsdaily.vercel.app/text-case-converter/): Free text case converter: change text to UPPERCASE, lowercase, Title Case, Sentence case, alternating case, or reverse it.
+- [Text to Speech](https://toolsdaily.vercel.app/text-to-speech/): Free text to speech reader: type or paste any text and hear it read aloud in your browser, with your choice of voice, speed and pitch.
 - [Tip Calculator](https://toolsdaily.vercel.app/tip-calculator/): Free tip calculator: work out the tip, the total bill and each person's share.
 - [Unit Converter](https://toolsdaily.vercel.app/unit-converter/): Free unit converter for length, weight and temperature: kilometres to miles, kilograms to pounds, Celsius to Fahrenheit and more, with instant results.
 - [URL Encoder / Decoder](https://toolsdaily.vercel.app/url-encoder-decoder/): Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text.
@@ -43,4 +44,4 @@
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 31 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 32 free tools by category, with live search.
