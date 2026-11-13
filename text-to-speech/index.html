@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text to Speech — Free Online Text-to-Speech Reader — ToolsDaily</title>
+<meta name="description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+#text-in{width:100%;min-height:9rem;resize:vertical}
+.tts-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.8rem;margin:.8rem 0}
+.tts-controls label{display:flex;flex-direction:column;gap:.25rem;font-size:.95rem}
+.tts-controls select,.tts-controls input[type=range]{width:100%}
+.tts-controls output{font-family:var(--font-mono);font-size:.9rem;color:var(--muted)}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.now-reading{border-left:3px solid var(--brand);padding:.4rem .7rem;margin:.7rem 0;font-style:italic;color:var(--muted);min-height:1.4em}
+.now-reading:empty{display:none}
+</style>
+<link rel="canonical" href="https://toolsdaily.vercel.app/text-to-speech/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Text to Speech — Free Online Text-to-Speech Reader — ToolsDaily">
+<meta property="og:description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/text-to-speech/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Text to Speech — Free Online Text-to-Speech Reader — ToolsDaily">
+<meta name="twitter:description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Text to Speech",
+    "url": "https://toolsdaily.vercel.app/text-to-speech/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Which voices can I choose from?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The voices come from your own device and browser — Windows, macOS, Android and ChromeOS each ship different voices, and Chrome adds its own Google voices. Pick any voice listed in the dropdown; the list is filled in automatically when your browser reports its voices."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I listen to long articles or documents?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, up to 10,000 characters at a time. Long text is read in short chunks, sentence by sentence, so browsers that cut off very long utterances keep reading smoothly to the end."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does the speech pause sometimes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Some browsers pause speech synthesis when the tab is in the background or after a long stretch. Press Resume to continue — the reader picks up from the current chunk. Keeping the tab visible and the volume up gives the smoothest playback."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my text sent anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The text is read aloud by your browser's built-in speech engine on your own device. Nothing is uploaded or saved anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Text to Speech</h1>
+<p class="lead">Type or paste any text and hear it read aloud — pick a voice, speed and pitch. Free, instant, and entirely in your browser.</p>
+
+<div class="card">
+  <p><label for="text-in">Your text</label>
+  <textarea id="text-in" placeholder="Type or paste text here to hear it read aloud…" maxlength="10000"></textarea></p>
+  <div class="stats">
+    <div class="stat"><b id="st-words">0</b><span>Words</span></div>
+    <div class="stat"><b id="st-chars">0</b><span>Characters</span></div>
+    <div class="stat"><b id="st-time">0 sec</b><span>Estimated time</span></div>
+    <div class="stat"><b id="st-chunks">0</b><span>Chunks</span></div>
+  </div>
+  <div class="tts-controls">
+    <label for="voice">Voice
+      <select id="voice"><option value="">Loading voices…</option></select>
+    </label>
+    <label for="rate">Speed <output id="rate-val">1.00×</output>
+      <input type="range" id="rate" min="0.5" max="2" step="0.05" value="1">
+    </label>
+    <label for="pitch">Pitch <output id="pitch-val">1.00</output>
+      <input type="range" id="pitch" min="0.5" max="2" step="0.05" value="1">
+    </label>
+    <label for="volume">Volume <output id="volume-val">100%</output>
+      <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
+    </label>
+  </div>
+  <p class="btn-row">
+    <button id="speak" type="button">▶️ Speak</button>
+    <button id="pause" type="button" class="secondary" disabled>⏸️ Pause</button>
+    <button id="resume" type="button" class="secondary" disabled>▶️ Resume</button>
+    <button id="stop" type="button" class="secondary" disabled>⏹️ Stop</button>
+    <button id="sample" type="button" class="secondary">Sample text</button>
+    <button id="clear" type="button" class="secondary">Clear</button>
+  </p>
+  <p class="msg" id="msg"></p>
+  <p id="status" aria-live="polite"></p>
+  <p class="now-reading" id="current"></p>
+</div>
+<script>
+(function(){
+  var MAX_CHARS = 10000;
+  var MAX_CHUNK = 200; // keep utterances short: browsers cut off very long ones
+  var BASE_WPM = 150;  // average speaking rate at 1.00x speed
+
+  function clampNum(v, min, max, fallback){
+    var n = Number(v);
+    if (!isFinite(n)) return fallback;
+    return Math.max(min, Math.min(max, n));
+  }
+  function clampRate(v){ return clampNum(v, 0.5, 2, 1); }
+  function clampPitch(v){ return clampNum(v, 0.5, 2, 1); }
+  function clampVolume(v){ return clampNum(v, 0, 1, 1); }
+
+  function countWords(text){
+    var t = String(text == null ? '' : text).trim();
+    if (!t) return 0;
+    return t.split(/\s+/).length;
+  }
+  function countChars(text){ return String(text == null ? '' : text).length; }
+
+  // Estimated speaking time in whole seconds at the given rate.
+  function estimateDurationSeconds(text, rate){
+    var words = countWords(text);
+    if (words <= 0) return 0;
+    return Math.max(1, Math.round(words / (BASE_WPM * clampRate(rate)) * 60));
+  }
+  function formatDuration(sec){
+    sec = Math.max(0, Math.round(Number(sec) || 0));
+    if (sec < 60) return sec + ' sec';
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return s === 0 ? m + ' min' : m + ' min ' + s + ' sec';
+  }
+
+  // Split text into sentence-ish pieces, then pack them into chunks of at most
+  // maxChars characters, never cutting mid-sentence unless a single sentence is
+  // itself too long (then split at commas, then at word boundaries).
+  function splitSentences(text){
+    var t = String(text == null ? '' : text).replace(/\s+/g, ' ').trim();
+    if (!t) return [];
+    var out = [], re = /[^.!?]+[.!?]+["')\]]*|[^.!?]+$/g, m;
+    while ((m = re.exec(t)) !== null) {
+      var s = m[0].trim();
+      if (s) out.push(s);
+    }
+    return out.length ? out : [t];
+  }
+  function splitLongPiece(piece, maxChars){
+    // Split at clause boundaries first (comma, semicolon, colon, dash),
+    // pack the clauses greedily, and hard-split any single clause that is
+    // still too long at word boundaries.
+    var parts = piece.split(/(?<=[,;:—–-])\s+/);
+    var chunks = [], cur = '';
+    function flush(){ if (cur) { chunks.push(cur); cur = ''; } }
+    function addPart(part){
+      part = part.trim();
+      if (!part) return;
+      if (part.length > maxChars) {
+        flush();
+        var words = part.split(/\s+/), wcur = '';
+        words.forEach(function(w){
+          if (!wcur) { wcur = w; return; }
+          if ((wcur + ' ' + w).length <= maxChars) { wcur += ' ' + w; return; }
+          chunks.push(wcur); wcur = w;
+        });
+        if (wcur) chunks.push(wcur);
+        return;
+      }
+      if (!cur) { cur = part; return; }
+      if ((cur + ' ' + part).length <= maxChars) { cur += ' ' + part; return; }
+      flush(); cur = part;
+    }
+    parts.forEach(addPart);
+    flush();
+    return chunks;
+  }
+  function splitIntoChunks(text, maxChars){
+    var max = Math.max(20, Math.floor(Number(maxChars) || MAX_CHUNK));
+    var sentences = splitSentences(text);
+    var chunks = [], cur = '';
+    sentences.forEach(function(s){
+      if (s.length > max) {
+        if (cur) { chunks.push(cur); cur = ''; }
+        splitLongPiece(s, max).forEach(function(c){ chunks.push(c); });
+        return;
+      }
+      if (!cur) { cur = s; return; }
+      if ((cur + ' ' + s).length <= max) { cur += ' ' + s; return; }
+      chunks.push(cur); cur = s;
+    });
+    if (cur) chunks.push(cur);
+    return chunks;
+  }
+
+  // Voice helpers. Voices are plain {name, lang, default} objects.
+  function sortVoices(voices){
+    return (voices || []).slice().sort(function(a, b){
+      var la = String(a.lang || ''), lb = String(b.lang || '');
+      if (la < lb) return -1;
+      if (la > lb) return 1;
+      var na = String(a.name || ''), nb = String(b.name || '');
+      return na < nb ? -1 : na > nb ? 1 : 0;
+    });
+  }
+  function voiceLabel(v){
+    return String(v.name || 'Voice') + (v.lang ? ' (' + v.lang + ')' : '');
+  }
+  function pickVoice(voices, name){
+    var list = voices || [];
+    if (!list.length) return null;
+    if (name) {
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].name === name) return list[i];
+      }
+    }
+    for (var j = 0; j < list.length; j++) {
+      if (list[j].default) return list[j];
+    }
+    return list[0];
+  }
+  function isSupported(){
+    try {
+      return typeof window !== 'undefined' && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+    } catch (e) { return false; }
+  }
+
+  window.TD_tts = {
+    MAX_CHARS: MAX_CHARS, MAX_CHUNK: MAX_CHUNK, BASE_WPM: BASE_WPM,
+    clampRate: clampRate, clampPitch: clampPitch, clampVolume: clampVolume,
+    countWords: countWords, countChars: countChars,
+    estimateDurationSeconds: estimateDurationSeconds, formatDuration: formatDuration,
+    splitSentences: splitSentences, splitIntoChunks: splitIntoChunks,
+    sortVoices: sortVoices, voiceLabel: voiceLabel, pickVoice: pickVoice,
+    isSupported: isSupported
+  };
+
+  /* ---------- UI ---------- */
+  var textEl = document.getElementById('text-in');
+  var voiceEl = document.getElementById('voice');
+  var rateEl = document.getElementById('rate');
+  var pitchEl = document.getElementById('pitch');
+  var volumeEl = document.getElementById('volume');
+  var speakBtn = document.getElementById('speak');
+  var pauseBtn = document.getElementById('pause');
+  var resumeBtn = document.getElementById('resume');
+  var stopBtn = document.getElementById('stop');
+  var msgEl = document.getElementById('msg');
+  var statusEl = document.getElementById('status');
+  var currentEl = document.getElementById('current');
+
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function setStatus(text){ statusEl.textContent = text; }
+
+  var supported = isSupported();
+  var synth = supported ? window.speechSynthesis : null;
+  var chunks = [], chunkIndex = 0, speaking = false, paused = false, keepAlive = null;
+
+  function updateStats(){
+    var text = textEl.value;
+    var rate = clampRate(rateEl.value);
+    document.getElementById('st-words').textContent = String(countWords(text));
+    document.getElementById('st-chars').textContent = String(countChars(text));
+    document.getElementById('st-time').textContent = formatDuration(estimateDurationSeconds(text, rate));
+    document.getElementById('st-chunks').textContent = String(splitIntoChunks(text).length);
+  }
+  function updateSliderLabels(){
+    document.getElementById('rate-val').textContent = clampRate(rateEl.value).toFixed(2) + '×';
+    document.getElementById('pitch-val').textContent = clampPitch(pitchEl.value).toFixed(2);
+    document.getElementById('volume-val').textContent = Math.round(clampVolume(volumeEl.value) * 100) + '%';
+  }
+  function setButtons(){
+    speakBtn.disabled = !supported || speaking;
+    pauseBtn.disabled = !speaking || paused;
+    resumeBtn.disabled = !speaking || !paused;
+    stopBtn.disabled = !speaking;
+  }
+
+  function populateVoices(){
+    if (!supported) return;
+    var voices = sortVoices(synth.getVoices());
+    var prev = voiceEl.value;
+    voiceEl.innerHTML = '';
+    if (!voices.length) {
+      var opt = document.createElement('option');
+      opt.value = ''; opt.textContent = 'No voices found — check your browser settings';
+      voiceEl.appendChild(opt);
+      voiceEl.disabled = true;
+      return;
+    }
+    voiceEl.disabled = false;
+    voices.forEach(function(v){
+      var o = document.createElement('option');
+      o.value = v.name; o.textContent = voiceLabel(v);
+      voiceEl.appendChild(o);
+    });
+    var chosen = pickVoice(voices, prev);
+    if (chosen) voiceEl.value = chosen.name;
+  }
+
+  function clearKeepAlive(){
+    if (keepAlive) { clearInterval(keepAlive); keepAlive = null; }
+  }
+  function finishSpeaking(doneText){
+    clearKeepAlive();
+    speaking = false; paused = false; chunkIndex = 0; chunks = [];
+    currentEl.textContent = '';
+    setButtons();
+    setStatus(doneText);
+  }
+  function speakChunk(){
+    if (chunkIndex >= chunks.length) { finishSpeaking('Finished reading.'); showMsg('Finished reading.', 'ok'); return; }
+    var u = new SpeechSynthesisUtterance(chunks[chunkIndex]);
+    u.rate = clampRate(rateEl.value);
+    u.pitch = clampPitch(pitchEl.value);
+    u.volume = clampVolume(volumeEl.value);
+    var v = pickVoice(synth.getVoices(), voiceEl.value);
+    if (v) u.voice = v;
+    var idx = chunkIndex;
+    u.onend = function(){
+      if (!speaking || idx !== chunkIndex) return; // superseded by Stop / a new Speak
+      chunkIndex++;
+      speakChunk();
+    };
+    u.onerror = function(ev){
+      if (!speaking || idx !== chunkIndex) return;
+      if (ev && ev.error === 'canceled') return; // Stop pressed — finishSpeaking already ran
+      finishSpeaking('Speech stopped: ' + (ev && ev.error ? ev.error : 'unknown error') + '.');
+      showMsg('Speech stopped unexpectedly. Try pressing Speak again.', 'err');
+    };
+    currentEl.textContent = '“' + chunks[chunkIndex] + '”';
+    setStatus('Speaking… part ' + (chunkIndex + 1) + ' of ' + chunks.length + '.');
+    synth.speak(u);
+  }
+
+  speakBtn.addEventListener('click', function(){
+    if (!supported) return;
+    var text = textEl.value.trim();
+    if (!text) { showMsg('Type or paste some text first.', 'err'); return; }
+    if (text.length > MAX_CHARS) { showMsg('Text is too long — keep it under ' + MAX_CHARS.toLocaleString() + ' characters.', 'err'); return; }
+    synth.cancel();
+    clearKeepAlive();
+    chunks = splitIntoChunks(text);
+    chunkIndex = 0; speaking = true; paused = false;
+    showMsg('', '');
+    setButtons();
+    // Chrome sometimes pauses long synthesis in background tabs; nudge it awake.
+    keepAlive = setInterval(function(){
+      try { if (speaking && synth.paused) synth.resume(); } catch (e) { /* ignore */ }
+    }, 10000);
+    speakChunk();
+  });
+  pauseBtn.addEventListener('click', function(){
+    if (!speaking || paused) return;
+    try { synth.pause(); } catch (e) { /* ignore */ }
+    paused = true;
+    setButtons();
+    setStatus('Paused at part ' + (chunkIndex + 1) + ' of ' + chunks.length + '.');
+  });
+  resumeBtn.addEventListener('click', function(){
+    if (!speaking || !paused) return;
+    try { synth.resume(); } catch (e) { /* ignore */ }
+    paused = false;
+    setButtons();
+    setStatus('Speaking… part ' + (chunkIndex + 1) + ' of ' + chunks.length + '.');
+  });
+  stopBtn.addEventListener('click', function(){
+    if (!speaking) return;
+    try { synth.cancel(); } catch (e) { /* ignore */ }
+    finishSpeaking('Stopped.');
+    showMsg('Stopped.', 'ok');
+  });
+  document.getElementById('sample').addEventListener('click', function(){
+    textEl.value = 'Hello! This is ToolsDaily, a free collection of everyday tools that run entirely in your browser. Type or paste any text here, pick a voice, and press Speak to hear it read aloud. You can slow it down, speed it up, or change the pitch — whatever sounds best to you.';
+    updateStats();
+    showMsg('Sample text loaded. Press Speak to hear it.', 'ok');
+  });
+  document.getElementById('clear').addEventListener('click', function(){
+    if (speaking) { try { synth.cancel(); } catch (e) { /* ignore */ } finishSpeaking(''); }
+    textEl.value = '';
+    updateStats();
+    showMsg('Cleared.', 'ok');
+  });
+  textEl.addEventListener('input', updateStats);
+  [rateEl, pitchEl, volumeEl].forEach(function(el){
+    el.addEventListener('input', function(){ updateSliderLabels(); updateStats(); });
+  });
+  if (supported) {
+    populateVoices();
+    if (typeof synth.addEventListener === 'function') {
+      synth.addEventListener('voiceschanged', populateVoices);
+    }
+  } else {
+    voiceEl.innerHTML = '';
+    var o = document.createElement('option');
+    o.value = ''; o.textContent = 'Speech not supported in this browser';
+    voiceEl.appendChild(o);
+    voiceEl.disabled = true;
+    showMsg('Sorry — your browser does not support speech synthesis. Try Chrome, Edge, Safari or Firefox.', 'err');
+  }
+  updateSliderLabels();
+  updateStats();
+  setButtons();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type or paste your text into the box (up to 10,000 characters). The word count and estimated reading time update as you type.</li>
+    <li>Pick a voice from the dropdown — the voices come from your device and browser. Adjust the speed, pitch and volume sliders to taste.</li>
+    <li>Press "Speak" and listen. Pause and Resume work mid-speech, and Stop ends it. The line currently being read is shown below the buttons.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Which voices can I choose from?</summary><p>The voices come from your own device and browser — Windows, macOS, Android and ChromeOS each ship different voices, and Chrome adds its own Google voices. Pick any voice listed in the dropdown; the list is filled in automatically when your browser reports its voices.</p></details>
+  <details><summary>Can I listen to long articles or documents?</summary><p>Yes, up to 10,000 characters at a time. Long text is read in short chunks, sentence by sentence, so browsers that cut off very long utterances keep reading smoothly to the end.</p></details>
+  <details><summary>Why does the speech pause sometimes?</summary><p>Some browsers pause speech synthesis when the tab is in the background or after a long stretch. Press Resume to continue — the reader picks up from the current chunk. Keeping the tab visible and the volume up gives the smoothest playback.</p></details>
+  <details><summary>Is my text sent anywhere?</summary><p>No. The text is read aloud by your browser's built-in speech engine on your own device. Nothing is uploaded or saved anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
+        <li><a href="../url-encoder-decoder/">🔗 URL Encoder / Decoder</a></li>
+        <li><a href="../image-synthid-remover/">🧹 Image SynthID Remover</a></li>
+        <li><a href="../remove-duplicate-lines/">📋 Remove Duplicate Lines</a></li>
+        <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
+        <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
+        <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../stopwatch-countdown-timer/">⏱️ Stopwatch &amp; Countdown Timer</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
