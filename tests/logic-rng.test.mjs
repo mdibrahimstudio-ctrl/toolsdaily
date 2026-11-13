@@ -60,12 +60,12 @@ console.log('RNG STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator'];
   ok(others.every((s) => html.includes(`href="../${s}/"`)), 'rng: More-tools nav links all other 22 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 32, 'sitemap.xml has 32 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 33, 'sitemap.xml has 32 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/random-number-generator/'), 'sitemap includes random-number-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 31, 'home has exactly 31 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 32, 'home has exactly 32 tool cards');
   ok(home.includes('href="random-number-generator/"'), 'home cards + nav include random-number-generator');
-  ok(home.includes('Thirty-one handy tools'), 'home lead says Thirty-one tools');
+  ok(home.includes('Thirty-two handy tools'), 'home lead says Thirty-two tools');
 }
 
 console.log('RNG CORE');

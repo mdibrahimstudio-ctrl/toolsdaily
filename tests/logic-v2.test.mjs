@@ -86,12 +86,12 @@ for (const { slug, name } of NEW_PAGES) {
 }
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 32, 'sitemap.xml has 32 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 33, 'sitemap.xml has 32 URLs');
   ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 6 new tools');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-resizer/'), 'sitemap includes image-resizer');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 31, 'home has exactly 31 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 32, 'home has exactly 32 tool cards');
   ok(NEW_PAGES.every(({ slug }) => home.includes(`href="${slug}/"`)), 'home cards + nav include all 6 new tools');
   ok(home.includes('href="image-resizer/"'), 'home cards + nav include image-resizer');
   ok(home.includes('href="base64-encoder-decoder/"'), 'home cards + nav include base64-encoder-decoder');
@@ -107,7 +107,7 @@ console.log('HOME SEARCH');
   const dom = await loadPage('');
   const w = dom.window;
   const visibleCount = () => [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden')).length;
-  ok(visibleCount() === 31, 'home shows 31 cards before searching');
+  ok(visibleCount() === 32, 'home shows 32 cards before searching');
   setVal(w, '#tool-search', 'pdf');
   ok(visibleCount() === 3, 'search "pdf" filters to the 3 PDF tools');
   setVal(w, '#tool-search', 'calculator');
@@ -115,7 +115,7 @@ console.log('HOME SEARCH');
   setVal(w, '#tool-search', 'base64');
   ok(visibleCount() === 1, 'search "base64" finds only the new tool (1)');
   setVal(w, '#tool-search', '');
-  ok(visibleCount() === 31, 'clearing the search restores all 31 cards');
+  ok(visibleCount() === 32, 'clearing the search restores all 32 cards');
   dom.window.close();
 }
 

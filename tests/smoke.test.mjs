@@ -40,6 +40,7 @@ const PAGES = [
   { path: 'morse-code-translator/', name: 'morse-code-translator', selectors: ['#text-in', '#mode-encode', '#mode-decode', '#btn-swap', '#word-sep', '#wpm', '#btn-play', '#btn-convert', '#copy-out', '#download', '#text-out', '#st-in', '#st-out', '#st-symbols', '#st-words'] },
   { path: 'uuid-generator/', name: 'uuid-generator', selectors: ['#uuid-version-v4', '#uuid-version-v1', '#uuid-count', '#uuid-uppercase', '#uuid-no-hyphens', '#uuid-braces', '#uuid-sep', '#generate', '#copy', '#download', '#output', '#st-count', '#st-unique', '#st-version', '#validate-in', '#validate-btn', '#validate-msg'] },
   { path: 'stopwatch-countdown-timer/', name: 'stopwatch-countdown-timer', selectors: ['#tab-stopwatch', '#tab-timer', '#section-stopwatch', '#section-timer', '#sw-display', '#sw-start', '#sw-lap', '#sw-reset', '#sw-laps', '#st-laps', '#st-fastest', '#st-slowest', '#cd-display', '#cd-hours', '#cd-minutes', '#cd-seconds', '#cd-start', '#cd-reset', '#cd-bar', '[data-preset="1500"]'] },
+  { path: 'text-to-speech/', name: 'text-to-speech', selectors: ['#text-in', '#voice', '#rate', '#pitch', '#volume', '#speak', '#pause', '#resume', '#stop', '#sample', '#clear', '#st-words', '#st-chars', '#st-time', '#st-chunks', '#msg', '#status', '#current'] },
 ];
 
 async function loadPage(path) {

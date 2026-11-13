@@ -61,17 +61,17 @@ console.log('TIMER STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines', 'audio-transcriber', 'morse-code-translator', 'uuid-generator'];
   ok(others.length === 30 && others.every((s) => html.includes(`href="../${s}/"`)), 'timer: More-tools nav links all other 30 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 32, 'sitemap.xml has 32 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 33, 'sitemap.xml has 32 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'sitemap includes stopwatch-countdown-timer');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 31, 'home has exactly 31 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 32, 'home has exactly 32 tool cards');
   ok(home.includes('href="stopwatch-countdown-timer/"'), 'home cards + nav include stopwatch-countdown-timer');
-  ok(home.includes('Thirty-one handy tools'), 'home lead says Thirty-one tools');
-  ok(home.includes('Search 31 tools'), 'home search placeholder says 31 tools');
+  ok(home.includes('Thirty-two handy tools'), 'home lead says Thirty-two tools');
+  ok(home.includes('Search 32 tools'), 'home search placeholder says 32 tools');
   ok(home.includes('Calculators <span class="n">7</span>'), 'home Calculators chip says 7');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 31 free tools'), 'llms.txt says 31 tools');
+  ok(llms.includes('browse all 32 free tools'), 'llms.txt says 32 tools');
 }
 
 console.log('TIMER CORE');
