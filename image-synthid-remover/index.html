@@ -101,6 +101,7 @@ gtag('config', 'G-KX85CZXTR4');
 <div class="card">
   <div class="drop" id="drop"><p>📂 Drop a JPG, PNG or WebP image here, or</p><input type="file" id="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"></div>
   <p class="msg" id="msg"></p>
+  <p><button id="download" type="button" class="secondary">Download clean file</button></p>
   <div id="file-info" class="hidden">
     <p><strong id="fi-name">–</strong> · <span id="fi-size">–</span></p>
     <img id="preview" alt="Your image preview" style="max-width:240px;border-radius:8px">
@@ -274,6 +275,7 @@ gtag('config', 'G-KX85CZXTR4');
       infoEl.classList.remove('hidden');
       document.getElementById('results').classList.add('hidden');
       dl.classList.add('hidden');
+      dl.setAttribute('href', '#');
       cleanBtn.disabled = false;
       showMsg(currentScan.found.length ? 'Scan complete — metadata found. Press "Remove metadata" for a clean copy.' : 'Scan complete — no metadata found. You can still download a re-saved clean copy.', 'ok');
     };
@@ -301,7 +303,6 @@ gtag('config', 'G-KX85CZXTR4');
         if(!blob){ showMsg('Sorry — your browser could not create the clean file.', 'err'); return; }
         dl.href = URL.createObjectURL(blob);
         dl.download = cleanFileName(currentFile.name, mime);
-        dl.classList.remove('hidden');
         document.getElementById('st-before').textContent = formatBytes(currentFile.size);
         document.getElementById('st-after').textContent = formatBytes(blob.size);
         var diff = blob.size - currentFile.size;
@@ -312,6 +313,11 @@ gtag('config', 'G-KX85CZXTR4');
     };
     img.onerror = function(){ showMsg('Sorry — your browser could not open that image.', 'err'); };
     img.src = URL.createObjectURL(currentFile);
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — remove the metadata first.', 'err'); return; }
+    dl.click();
+    showMsg('Downloaded ' + dl.getAttribute('download') + '.', 'ok');
   });
 })();
 </script>
@@ -356,6 +362,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
