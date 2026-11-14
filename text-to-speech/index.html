@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Text to Speech — Free Online Text-to-Speech Reader — ToolsDaily</title>
-<meta name="description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
+<meta name="description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser, or download it as a WAV file. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
 <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
 <script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
 <link rel="stylesheet" href="../assets/style.css">
@@ -15,6 +15,11 @@
 .tts-controls select,.tts-controls input[type=range]{width:100%}
 .tts-controls output{font-family:var(--font-mono);font-size:.9rem;color:var(--muted)}
 .btn-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.bar{height:10px;background:#0002;border-radius:6px;overflow:hidden;margin:.7rem 0}
+.bar>div{height:100%;width:0%;background:var(--brand);transition:width .2s}
+.bar.indet>div{width:40%!important;animation:dl-indet 1.1s ease-in-out infinite alternate}
+@keyframes dl-indet{from{margin-left:0}to{margin-left:60%}}
+.dl-note{font-size:.9rem;color:var(--muted);margin:.5rem 0 0}
 .now-reading{border-left:3px solid var(--brand);padding:.4rem .7rem;margin:.7rem 0;font-style:italic;color:var(--muted);min-height:1.4em}
 .now-reading:empty{display:none}
 </style>
@@ -22,14 +27,14 @@
 <meta property="og:site_name" content="ToolsDaily">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Text to Speech — Free Online Text-to-Speech Reader — ToolsDaily">
-<meta property="og:description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
+<meta property="og:description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser, or download it as a WAV file. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
 <meta property="og:url" content="https://toolsdaily.vercel.app/text-to-speech/">
 <meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Text to Speech — Free Online Text-to-Speech Reader — ToolsDaily">
-<meta name="twitter:description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
+<meta name="twitter:description" content="Free online text to speech: type or paste any text and hear it read aloud in your browser, or download it as a WAV file. Pick a voice, speed and pitch — no sign-up, nothing uploaded.">
 <meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
 <script type="application/ld+json">
 [
@@ -45,7 +50,7 @@
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "Free online text to speech: type or paste any text and hear it read aloud in your browser. Pick a voice, speed and pitch — no sign-up, nothing uploaded."
+    "description": "Free online text to speech: type or paste any text and hear it read aloud in your browser, or download it as a WAV file. Pick a voice, speed and pitch — no sign-up, nothing uploaded."
   },
   {
     "@context": "https://schema.org",
@@ -65,6 +70,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes, up to 10,000 characters at a time. Long text is read in short chunks, sentence by sentence, so browsers that cut off very long utterances keep reading smoothly to the end."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download the audio as a WAV file?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Press “Download WAV” and the page synthesizes the text with the Kokoro AI voice (American English) and saves a WAV file — entirely in your browser. The first download fetches the ~88 MB voice model once; your browser caches it, so later downloads start right away. The voice you picked for playback doesn't affect the download, which always uses the Kokoro voice."
         }
       },
       {
@@ -105,7 +118,7 @@ gtag('config', 'G-KX85CZXTR4');
 </div></header>
 <main>
 <h1>Text to Speech</h1>
-<p class="lead">Type or paste any text and hear it read aloud — pick a voice, speed and pitch. Free, instant, and entirely in your browser.</p>
+<p class="lead">Type or paste any text and hear it read aloud — pick a voice, speed and pitch. Free, instant, and entirely in your browser. You can also download the audio as a WAV file.</p>
 
 <div class="card">
   <p><label for="text-in">Your text</label>
@@ -135,9 +148,12 @@ gtag('config', 'G-KX85CZXTR4');
     <button id="pause" type="button" class="secondary" disabled>⏸️ Pause</button>
     <button id="resume" type="button" class="secondary" disabled>▶️ Resume</button>
     <button id="stop" type="button" class="secondary" disabled>⏹️ Stop</button>
+    <button id="download" type="button" class="secondary">⬇️ Download WAV</button>
     <button id="sample" type="button" class="secondary">Sample text</button>
     <button id="clear" type="button" class="secondary">Clear</button>
   </p>
+  <div class="bar hidden" id="dl-barwrap"><div id="dl-bar"></div></div>
+  <p class="dl-note">Download uses the Kokoro AI voice (American English) — a free neural voice that runs in your browser. The first download fetches the ~88&nbsp;MB model once; your browser caches it for later downloads.</p>
   <p class="msg" id="msg"></p>
   <p id="status" aria-live="polite"></p>
   <p class="now-reading" id="current"></p>
@@ -269,6 +285,54 @@ gtag('config', 'G-KX85CZXTR4');
     } catch (e) { return false; }
   }
 
+  // 16-bit PCM WAV encoding (mono). Pure function: samples is a Float32Array
+  // (or array-like) of -1..1 samples; returns an ArrayBuffer holding a
+  // complete .wav file. Non-finite samples become silence; out-of-range
+  // samples are clamped. The download worker sends raw samples and the page
+  // owns the file bytes, so this is unit-tested here.
+  function encodeWavBuffer(samples, sampleRate){
+    var rate = Math.floor(Number(sampleRate));
+    if (!isFinite(rate) || rate < 8000 || rate > 192000) rate = 24000;
+    var data;
+    if (samples instanceof Float32Array) data = samples;
+    else if (samples && typeof samples.length === 'number') data = Float32Array.from(samples);
+    else data = new Float32Array(0);
+    var dataBytes = data.length * 2;
+    var buf = new ArrayBuffer(44 + dataBytes);
+    var v = new DataView(buf);
+    function str(off, s){ for (var i = 0; i < s.length; i++) v.setUint8(off + i, s.charCodeAt(i)); }
+    str(0, 'RIFF');
+    v.setUint32(4, 36 + dataBytes, true);
+    str(8, 'WAVE');
+    str(12, 'fmt ');
+    v.setUint32(16, 16, true);       // PCM chunk size
+    v.setUint16(20, 1, true);        // audio format: PCM
+    v.setUint16(22, 1, true);        // channels: mono
+    v.setUint32(24, rate, true);     // sample rate
+    v.setUint32(28, rate * 2, true); // byte rate
+    v.setUint16(32, 2, true);        // block align
+    v.setUint16(34, 16, true);       // bits per sample
+    str(36, 'data');
+    v.setUint32(40, dataBytes, true);
+    for (var i = 0; i < data.length; i++) {
+      var s = data[i];
+      if (!isFinite(s)) s = 0;
+      if (s > 1) s = 1;
+      if (s < -1) s = -1;
+      v.setInt16(44 + i * 2, Math.round(s * 32767), true);
+    }
+    return buf;
+  }
+  function encodeWav(samples, sampleRate){
+    return new Blob([encodeWavBuffer(samples, sampleRate)], { type: 'audio/wav' });
+  }
+  function formatBytes(n){
+    n = Math.max(0, Math.floor(Number(n) || 0));
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+    return (n / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
   window.TD_tts = {
     MAX_CHARS: MAX_CHARS, MAX_CHUNK: MAX_CHUNK, BASE_WPM: BASE_WPM,
     clampRate: clampRate, clampPitch: clampPitch, clampVolume: clampVolume,
@@ -276,7 +340,8 @@ gtag('config', 'G-KX85CZXTR4');
     estimateDurationSeconds: estimateDurationSeconds, formatDuration: formatDuration,
     splitSentences: splitSentences, splitIntoChunks: splitIntoChunks,
     sortVoices: sortVoices, voiceLabel: voiceLabel, pickVoice: pickVoice,
-    isSupported: isSupported
+    isSupported: isSupported,
+    encodeWavBuffer: encodeWavBuffer, encodeWav: encodeWav, formatBytes: formatBytes
   };
 
   /* ---------- UI ---------- */
@@ -425,6 +490,156 @@ gtag('config', 'G-KX85CZXTR4');
     updateStats();
     showMsg('Cleared.', 'ok');
   });
+
+  /* ---------- Download WAV (Kokoro AI voice, in-browser) ----------
+     The model (~88 MB) is fetched only when Download is first pressed, in a
+     supervised module worker (tts-worker.js) — the same supervision pattern
+     as the Audio Transcriber: one retry on a wedged worker, then a plain
+     error. The worker stays alive after a download, so the next one reuses
+     the loaded model. Playback (speechSynthesis above) is untouched by this
+     path: the download always uses the Kokoro voice, never the picked voice. */
+  var downloadBtn = document.getElementById('download');
+  var dlBarWrap = document.getElementById('dl-barwrap');
+  var dlBar = document.getElementById('dl-bar');
+  var dlState = 'idle'; // idle | loading | running
+  var dlWorker = null, dlWorkerReady = false, dlRetried = false;
+  var dlWatchdog = null, dlFileProgress = {}, dlPending = null;
+
+  function dlArmWatchdog(ms){ clearTimeout(dlWatchdog); dlWatchdog = setTimeout(dlRecover, ms); }
+  function dlDisarmWatchdog(){ clearTimeout(dlWatchdog); dlWatchdog = null; }
+  function dlSetProgress(p, label){
+    dlBarWrap.classList.remove('hidden');
+    dlBarWrap.classList.remove('indet');
+    dlBar.style.width = Math.round(Math.max(0, Math.min(1, p)) * 100) + '%';
+    if (label) setStatus(label);
+  }
+  function dlSetIndet(label){
+    dlBarWrap.classList.remove('hidden');
+    dlBarWrap.classList.add('indet');
+    if (label) setStatus(label);
+  }
+  function dlHideBar(){ dlBarWrap.classList.add('hidden'); dlBar.style.width = '0%'; }
+
+  function dlSpawnWorker(){
+    if (dlWorker) { try { dlWorker.terminate(); } catch (e) { /* ignore */ } }
+    dlWorkerReady = false; dlFileProgress = {};
+    dlWorker = new Worker('tts-worker.js', { type: 'module' });
+    dlWorker.onmessage = dlOnWorkerMessage;
+    dlWorker.onerror = function(){ if (dlState !== 'idle') dlRecover(); };
+    dlWorker.postMessage({ type: 'load' });
+  }
+
+  function dlFailRun(text){
+    dlDisarmWatchdog();
+    dlState = 'idle'; dlPending = null;
+    if (dlWorker) { try { dlWorker.terminate(); } catch (e) { /* ignore */ } dlWorker = null; }
+    dlWorkerReady = false;
+    dlHideBar();
+    downloadBtn.disabled = false;
+    showMsg(text, 'err');
+    setStatus('');
+  }
+
+  function dlRecover(){
+    dlDisarmWatchdog();
+    if (dlWorker) { try { dlWorker.terminate(); } catch (e) { /* ignore */ } dlWorker = null; }
+    dlWorkerReady = false;
+    if (!dlRetried && dlState !== 'idle') {
+      dlRetried = true;
+      dlState = 'loading';
+      dlSetProgress(0, 'The AI engine was slow to respond — restarting it…');
+      dlSpawnWorker();
+      dlArmWatchdog(180000);
+    } else {
+      dlFailRun('The AI voice could not finish on this device. Please reload the page and try once more — if it still fails, a newer browser, or shorter text, may be needed.');
+    }
+  }
+
+  function dlStartRun(){
+    dlState = 'running';
+    dlSetIndet('Synthesizing with the Kokoro AI voice… long text takes a while.');
+    dlWorker.postMessage({ type: 'run', text: dlPending.text, speed: dlPending.speed });
+    dlArmWatchdog(180000);
+  }
+
+  function dlOnWorkerMessage(e){
+    var m = e.data || {};
+    if (m.type === 'progress') {
+      if (m.file) {
+        dlFileProgress[m.file] = { loaded: m.loaded || 0, total: m.total || 0 };
+        var done = 0, total = 0;
+        Object.keys(dlFileProgress).forEach(function(k){ done += dlFileProgress[k].loaded; total += Math.max(dlFileProgress[k].total, dlFileProgress[k].loaded); });
+        if (total > 0) {
+          dlSetProgress(done / total, 'Downloading the AI voice model… ' + formatBytes(done) + ' of ' + formatBytes(total) + ' (' + Math.round(done / total * 100) + '%, one-time)');
+        }
+      }
+      dlArmWatchdog(180000);
+    } else if (m.type === 'filedone') {
+      dlArmWatchdog(180000);
+    } else if (m.type === 'ready') {
+      dlWorkerReady = true;
+      dlDisarmWatchdog();
+      if (dlState === 'loading' && dlPending) dlStartRun();
+    } else if (m.type === 'chunk') {
+      dlSetIndet('Synthesizing with the Kokoro AI voice… part ' + (m.index || 1) + '.');
+      dlArmWatchdog(180000);
+    } else if (m.type === 'result') {
+      dlDisarmWatchdog();
+      dlFinish(m.samples, m.sampling_rate);
+    } else if (m.type === 'error') {
+      if (window.console) console.error('tts download engine error (' + (m.phase || '?') + '):', m.message);
+      if (m.phase === 'load' && /fetch|network|download|404|failed to load/i.test(m.message || '')) {
+        dlFailRun('The AI voice model could not be downloaded. Please check your internet connection, then reload the page and try again.');
+      } else if (dlState !== 'idle') dlRecover();
+    }
+  }
+
+  function dlFinish(samplesBuffer, samplingRate){
+    dlState = 'idle'; dlPending = null;
+    dlHideBar();
+    downloadBtn.disabled = false;
+    try {
+      var samples = new Float32Array(samplesBuffer);
+      var blob = encodeWav(samples, samplingRate);
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'speech.wav';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+      showMsg('Downloaded speech.wav (' + formatBytes(blob.size) + '). The Kokoro AI voice is ready in this browser now — the next download starts right away.', 'ok');
+      setStatus('Downloaded.');
+    } catch (err) {
+      if (window.console) console.error('tts download failed:', err);
+      showMsg('The audio was synthesized but the file could not be saved. Please try again.', 'err');
+      setStatus('');
+    }
+  }
+
+  downloadBtn.addEventListener('click', function(){
+    if (dlState !== 'idle') return;
+    var text = textEl.value.trim();
+    if (!text) { showMsg('Type or paste some text first.', 'err'); return; }
+    if (text.length > MAX_CHARS) { showMsg('Text is too long — keep it under ' + MAX_CHARS.toLocaleString() + ' characters.', 'err'); return; }
+    if (typeof Worker === 'undefined') {
+      showMsg('Sorry — your browser does not support the background worker the AI voice needs. Try Chrome, Edge, Safari or Firefox.', 'err');
+      return;
+    }
+    dlPending = { text: text, speed: clampRate(rateEl.value) };
+    dlRetried = false;
+    dlState = 'loading';
+    downloadBtn.disabled = true;
+    showMsg('', '');
+    if (dlWorkerReady && dlWorker) {
+      dlStartRun();
+    } else {
+      dlSetProgress(0, 'First download only: fetching the Kokoro AI voice model (about 88 MB). Your browser will remember it — later downloads start instantly.');
+      dlSpawnWorker();
+      dlArmWatchdog(180000);
+    }
+  });
   textEl.addEventListener('input', updateStats);
   [rateEl, pitchEl, volumeEl].forEach(function(el){
     el.addEventListener('input', function(){ updateSliderLabels(); updateStats(); });
@@ -451,10 +666,12 @@ gtag('config', 'G-KX85CZXTR4');
     <li>Type or paste your text into the box (up to 10,000 characters). The word count and estimated reading time update as you type.</li>
     <li>Pick a voice from the dropdown — the voices come from your device and browser. Adjust the speed, pitch and volume sliders to taste.</li>
     <li>Press "Speak" and listen. Pause and Resume work mid-speech, and Stop ends it. The line currently being read is shown below the buttons.</li>
+    <li>Press "Download WAV" to save the text as an audio file. It uses the Kokoro AI voice (American English), synthesized in your browser — the first download fetches the ~88 MB voice model once, then your browser caches it.</li>
 </ol></section>
 <section><h2>FAQ</h2>
   <details><summary>Which voices can I choose from?</summary><p>The voices come from your own device and browser — Windows, macOS, Android and ChromeOS each ship different voices, and Chrome adds its own Google voices. Pick any voice listed in the dropdown; the list is filled in automatically when your browser reports its voices.</p></details>
   <details><summary>Can I listen to long articles or documents?</summary><p>Yes, up to 10,000 characters at a time. Long text is read in short chunks, sentence by sentence, so browsers that cut off very long utterances keep reading smoothly to the end.</p></details>
+  <details><summary>Can I download the audio as a WAV file?</summary><p>Yes. Press “Download WAV” and the page synthesizes the text with the Kokoro AI voice (American English) and saves a WAV file — entirely in your browser. The first download fetches the ~88 MB voice model once; your browser caches it, so later downloads start right away. The voice you picked for playback doesn't affect the download, which always uses the Kokoro voice.</p></details>
   <details><summary>Why does the speech pause sometimes?</summary><p>Some browsers pause speech synthesis when the tab is in the background or after a long stretch. Press Resume to continue — the reader picks up from the current chunk. Keeping the tab visible and the volume up gives the smoothest playback.</p></details>
   <details><summary>Is my text sent anywhere?</summary><p>No. The text is read aloud by your browser's built-in speech engine on your own device. Nothing is uploaded or saved anywhere.</p></details>
 </section>
@@ -490,6 +707,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
         <li><a href="../stopwatch-countdown-timer/">⏱️ Stopwatch &amp; Countdown Timer</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
