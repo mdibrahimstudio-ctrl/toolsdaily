@@ -121,6 +121,7 @@ gtag('config', 'G-KX85CZXTR4');
   <label for="file">Choose an image</label>
   <input type="file" id="file" accept="image/*">
   <div class="drop" id="drop">Or drop an image here — cropping starts automatically</div>
+  <p><button id="download" type="button" class="secondary">Download cropped image</button></p>
   <div id="editor" class="hidden">
     <div class="aspect-row" id="aspects" role="group" aria-label="Aspect ratio presets">
       <button type="button" data-aspect="free" class="secondary active">Free</button>
@@ -159,7 +160,7 @@ gtag('config', 'G-KX85CZXTR4');
     <div class="stat"><b id="out-size">–</b><span>Cropped file</span></div>
   </div>
   <img class="preview hidden" id="preview" alt="Cropped image preview">
-  <p><a class="btn hidden" id="dl" href="#" download="cropped.png">Download cropped image</a></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="cropped.png">Download cropped image</a></p>
 </div>
 <script>
 (function(){
@@ -268,6 +269,7 @@ gtag('config', 'G-KX85CZXTR4');
       document.getElementById('results').classList.add('hidden');
       document.getElementById('preview').classList.add('hidden');
       document.getElementById('dl').classList.add('hidden');
+      document.getElementById('dl').setAttribute('href','#');
       btn.disabled=false;
       renderCrop();
       showMsg('Selected: '+f.name+' ('+formatBytes(f.size)+') — '+imgW+' × '+imgH+'. Drag the box to crop.', true);
@@ -339,9 +341,15 @@ gtag('config', 'G-KX85CZXTR4');
       document.getElementById('out-size').textContent=formatBytes(blob.size);
       document.getElementById('results').classList.remove('hidden');
       var prev=document.getElementById('preview'); prev.src=outUrl; prev.classList.remove('hidden');
-      var dl=document.getElementById('dl'); dl.href=outUrl; dl.download='cropped.'+ext[type]; dl.classList.remove('hidden');
+      var dl=document.getElementById('dl'); dl.href=outUrl; dl.download='cropped.'+ext[type];
       showMsg('Done! Your cropped image is ready.', true);
     }, type, 0.92);
+  });
+  document.getElementById('download').addEventListener('click',function(){
+    var dl=document.getElementById('dl');
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — crop an image first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
   });
 })();
 </script>
