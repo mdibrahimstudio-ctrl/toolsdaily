@@ -131,6 +131,8 @@ gtag('config', 'G-KX85CZXTR4');
   </div>
   <p id="sw-no-laps">No laps yet — press Lap while the stopwatch is running.</p>
   <ol id="sw-laps"></ol>
+  <p><button id="download" type="button" class="secondary">Download laps</button></p>
+  <a id="dl" class="hidden" href="#" download="laps.txt">Download</a>
 </div></section>
 
 <section id="section-timer" class="hidden"><h2>Countdown Timer</h2>
@@ -282,6 +284,19 @@ gtag('config', 'G-KX85CZXTR4');
       }
     };
   }
+  // Plain-text lap report for download: one line per lap (lap time + total
+  // time) plus fastest/slowest summary lines. Returns null when no laps exist.
+  function lapsText(laps){
+    if (!laps || !laps.length) return null;
+    var stats = computeLapStats(laps);
+    var lines = ['Stopwatch laps'];
+    laps.forEach(function(lap){
+      lines.push('Lap ' + lap.n + ': ' + formatElapsed(lap.lapMs) + ' (total ' + formatElapsed(lap.totalMs) + ')');
+    });
+    lines.push('Fastest lap: Lap ' + stats.fastest.n + ' — ' + formatElapsed(stats.fastest.lapMs));
+    lines.push('Slowest lap: Lap ' + stats.slowest.n + ' — ' + formatElapsed(stats.slowest.lapMs));
+    return lines.join('\n');
+  }
   function progressFraction(remainingMs, totalMs){
     var total = Math.max(0, Number(totalMs) || 0);
     if (total <= 0) return 0;
@@ -292,7 +307,8 @@ gtag('config', 'G-KX85CZXTR4');
     formatElapsed: formatElapsed, formatCountdown: formatCountdown,
     parseDuration: parseDuration, presetToParts: presetToParts,
     createStopwatch: createStopwatch, computeLapStats: computeLapStats,
-    createCountdown: createCountdown, progressFraction: progressFraction
+    createCountdown: createCountdown, progressFraction: progressFraction,
+    lapsText: lapsText
   };
 
   /* ---------- UI ---------- */
@@ -381,6 +397,16 @@ gtag('config', 'G-KX85CZXTR4');
     renderSw();
     renderLaps();
     showMsg(swMsg, 'Stopwatch reset.', 'ok');
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var text = lapsText(sw.getLaps());
+    if (!text) { showMsg(swMsg, 'Nothing to download yet — record a lap first.', 'err'); return; }
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var dl = document.getElementById('dl');
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'laps.txt';
+    dl.click();
+    showMsg(swMsg, 'Downloaded laps.txt.', 'ok');
   });
   renderSw();
   renderLaps();
@@ -500,7 +526,7 @@ gtag('config', 'G-KX85CZXTR4');
 })();
 </script>
 <section><h2>How to use</h2><ol>
-    <li>Stopwatch: press "Start", then "Lap" to record split times — the fastest and slowest laps are marked. "Pause" freezes the time, "Reset" clears it.</li>
+    <li>Stopwatch: press "Start", then "Lap" to record split times — the fastest and slowest laps are marked. "Pause" freezes the time, "Reset" clears it. Use "Download laps" to save the lap list as a .txt file.</li>
     <li>Countdown: type hours, minutes and seconds, or pick a preset like 25 minutes for a Pomodoro session, then press "Start". The bar shows how much time is left.</li>
     <li>When the countdown reaches zero you will see "Time's up!" and hear three beeps (keep the tab open and unmuted). Switch between the two timers with the tabs at the top.</li>
 </ol></section>
@@ -541,6 +567,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
