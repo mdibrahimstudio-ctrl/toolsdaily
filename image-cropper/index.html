@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Cropper — Crop Images to Any Size or Aspect Ratio — ToolsDaily</title>
+<meta name="description" content="Free image cropper: drag to crop any photo, pick an aspect ratio preset like 1:1, 4:3 or 16:9, or type exact pixel coordinates. Fast, private — files never leave your device.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.stage{position:relative;display:inline-block;max-width:100%;line-height:0}
+.stage img{display:block;max-width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+#crop-box{position:absolute;border:2px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,.45);cursor:move;touch-action:none;box-sizing:border-box;background-image:linear-gradient(to right,transparent calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% + .5px),transparent calc(33.33% + .5px)),linear-gradient(to right,transparent calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% + .5px),transparent calc(66.66% + .5px)),linear-gradient(to bottom,transparent calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% - .5px),rgba(255,255,255,.55) calc(33.33% + .5px),transparent calc(33.33% + .5px)),linear-gradient(to bottom,transparent calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% - .5px),rgba(255,255,255,.55) calc(66.66% + .5px),transparent calc(66.66% + .5px))}
+.handle{position:absolute;width:14px;height:14px;background:#fff;border:2px solid var(--brand);border-radius:3px;box-sizing:border-box;z-index:2}
+.handle[data-handle="nw"]{left:-8px;top:-8px;cursor:nwse-resize}
+.handle[data-handle="n"]{left:calc(50% - 7px);top:-8px;cursor:ns-resize}
+.handle[data-handle="ne"]{right:-8px;top:-8px;cursor:nesw-resize}
+.handle[data-handle="e"]{right:-8px;top:calc(50% - 7px);cursor:ew-resize}
+.handle[data-handle="se"]{right:-8px;bottom:-8px;cursor:nwse-resize}
+.handle[data-handle="s"]{left:calc(50% - 7px);bottom:-8px;cursor:ns-resize}
+.handle[data-handle="sw"]{left:-8px;bottom:-8px;cursor:nesw-resize}
+.handle[data-handle="w"]{left:-8px;top:calc(50% - 7px);cursor:ew-resize}
+.aspect-row{display:flex;gap:.4rem;flex-wrap:wrap;margin:.7rem 0}
+.aspect-row button{padding:.45rem .8rem;font-size:.92rem}
+.aspect-row button.active{background:var(--grad);color:#fff;border-color:transparent}
+.crop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:.7rem 0}
+.crop-grid label{display:flex;flex-direction:column;gap:.25rem;font-size:.92rem}
+.editor-wrap{overflow-x:auto;padding:.4rem 0}
+</style>
+<link rel="canonical" href="https://toolsdaily.vercel.app/image-cropper/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Image Cropper — Crop Images to Any Size or Aspect Ratio — ToolsDaily">
+<meta property="og:description" content="Free image cropper: drag to crop any photo, pick an aspect ratio preset like 1:1, 4:3 or 16:9, or type exact pixel coordinates. Fast, private — files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/image-cropper/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Image Cropper — Crop Images to Any Size or Aspect Ratio — ToolsDaily">
+<meta name="twitter:description" content="Free image cropper: drag to crop any photo, pick an aspect ratio preset like 1:1, 4:3 or 16:9, or type exact pixel coordinates. Fast, private — files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Cropper",
+    "url": "https://toolsdaily.vercel.app/image-cropper/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free image cropper: drag to crop any photo, pick an aspect ratio preset like 1:1, 4:3 or 16:9, or type exact pixel coordinates. Fast, private, and no sign-up \u2014 files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Will cropping reduce my image quality?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The cropped area is saved at the original resolution, pixel for pixel — cropping only removes the parts outside the box, it never re-scales or blurs what stays."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What aspect ratios can I crop to?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Free (any shape), square 1:1, landscape 4:3, 3:2 and 16:9, and portrait 3:4, 2:3 and 9:16. Pick a preset and the crop box locks to that shape while you drag it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I crop to an exact pixel size?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Type the exact X, Y, width and height in pixels under the preview — the crop box jumps to those coordinates, and the downloaded image is exactly that size."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my images uploaded?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Never. The cropping happens entirely in your browser."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div></header>
+<main>
+<h1>Image Cropper</h1>
+<p class="lead">Crop any image by dragging a box over it — or pick an aspect ratio, or type exact pixel coordinates.</p>
+
+<div class="card">
+  <label for="file">Choose an image</label>
+  <input type="file" id="file" accept="image/*">
+  <div class="drop" id="drop">Or drop an image here — cropping starts automatically</div>
+  <div id="editor" class="hidden">
+    <div class="aspect-row" id="aspects" role="group" aria-label="Aspect ratio presets">
+      <button type="button" data-aspect="free" class="secondary active">Free</button>
+      <button type="button" data-aspect="1:1" class="secondary">1:1</button>
+      <button type="button" data-aspect="4:3" class="secondary">4:3</button>
+      <button type="button" data-aspect="3:2" class="secondary">3:2</button>
+      <button type="button" data-aspect="16:9" class="secondary">16:9</button>
+      <button type="button" data-aspect="3:4" class="secondary">3:4</button>
+      <button type="button" data-aspect="2:3" class="secondary">2:3</button>
+      <button type="button" data-aspect="9:16" class="secondary">9:16</button>
+    </div>
+    <div class="editor-wrap">
+      <div class="stage" id="stage">
+        <img id="stage-img" alt="Image to crop">
+        <div id="crop-box" aria-label="Crop area">
+          <span class="handle" data-handle="nw"></span><span class="handle" data-handle="n"></span><span class="handle" data-handle="ne"></span><span class="handle" data-handle="e"></span><span class="handle" data-handle="se"></span><span class="handle" data-handle="s"></span><span class="handle" data-handle="sw"></span><span class="handle" data-handle="w"></span>
+        </div>
+      </div>
+    </div>
+    <div class="crop-grid">
+      <label>X (px)<input type="number" id="cx" value="0" min="0"></label>
+      <label>Y (px)<input type="number" id="cy" value="0" min="0"></label>
+      <label>Width (px)<input type="number" id="cw" value="0" min="1"></label>
+      <label>Height (px)<input type="number" id="ch" value="0" min="1"></label>
+    </div>
+    <button id="reset-crop" type="button" class="secondary">Reset crop</button>
+    <label for="format">Output format</label>
+    <select id="format"><option value="image/png">PNG</option><option value="image/jpeg">JPEG</option><option value="image/webp">WebP</option></select>
+    <button id="crop" type="button" disabled>Crop image</button>
+  </div>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="results">
+    <div class="stat"><b id="orig-dims">–</b><span>Original size</span></div>
+    <div class="stat"><b id="crop-dims">–</b><span>Cropped size</span></div>
+    <div class="stat"><b id="orig-size">–</b><span>Original file</span></div>
+    <div class="stat"><b id="out-size">–</b><span>Cropped file</span></div>
+  </div>
+  <img class="preview hidden" id="preview" alt="Cropped image preview">
+  <p><a class="btn hidden" id="dl" href="#" download="cropped.png">Download cropped image</a></p>
+</div>
+<script>
+(function(){
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function clampInt(v, lo, hi){ v=Math.round(v); if(isNaN(v)) v=lo; return Math.max(lo, Math.min(hi, v)); }
+  function parseAspect(s){
+    if(s === null || s === undefined) return null;
+    s=String(s).trim().toLowerCase();
+    if(s === '' || s === 'free') return null;
+    var m=/^(\d+(?:\.\d+)?)\s*[:\/]\s*(\d+(?:\.\d+)?)$/.exec(s);
+    if(!m) return null;
+    var a=parseFloat(m[1]), b=parseFloat(m[2]);
+    if(!(a > 0) || !(b > 0)) return null;
+    return a / b;
+  }
+  function clampCrop(r, W, H){
+    if(!r || !isFinite(W) || !isFinite(H) || W < 1 || H < 1) return { error: 'Invalid image dimensions.' };
+    var w=clampInt(r.width, 1, W), h=clampInt(r.height, 1, H);
+    var x=clampInt(r.x, 0, W - w), y=clampInt(r.y, 0, H - h);
+    return { x: x, y: y, width: w, height: h };
+  }
+  function defaultCrop(W, H, ratio){
+    if(!isFinite(W) || !isFinite(H) || W < 1 || H < 1) return { error: 'Invalid image dimensions.' };
+    if(!ratio){
+      var w=Math.round(W * 0.8), h=Math.round(H * 0.8);
+      return { x: Math.round((W - w) / 2), y: Math.round((H - h) / 2), width: w, height: h };
+    }
+    var w2, h2;
+    if(W / H >= ratio){ h2=H; w2=Math.round(H * ratio); }
+    else { w2=W; h2=Math.round(W / ratio); }
+    return { x: Math.round((W - w2) / 2), y: Math.round((H - h2) / 2), width: w2, height: h2 };
+  }
+  function applyAspect(r, ratio, W, H){
+    var c=clampCrop(r, W, H);
+    if(c.error || !ratio) return c;
+    var cx=c.x + c.width / 2, cy=c.y + c.height / 2;
+    var w=c.width, h=c.height;
+    if(w / h > ratio){ w=Math.round(h * ratio); } else { h=Math.round(w / ratio); }
+    w=Math.max(1, Math.min(w, W)); h=Math.max(1, Math.min(h, H));
+    if(w / h > ratio){ w=Math.max(1, Math.round(h * ratio)); } else { h=Math.max(1, Math.round(w / ratio)); }
+    return clampCrop({ x: Math.round(cx - w / 2), y: Math.round(cy - h / 2), width: w, height: h }, W, H);
+  }
+  function moveCrop(r, dx, dy, W, H){
+    var c=clampCrop(r, W, H);
+    if(c.error) return c;
+    return clampCrop({ x: c.x + dx, y: c.y + dy, width: c.width, height: c.height }, W, H);
+  }
+  function resizeCrop(r, handle, dx, dy, W, H, ratio){
+    var c=clampCrop(r, W, H);
+    if(c.error) return c;
+    var x=c.x, y=c.y, w=c.width, h=c.height;
+    function has(s){ return handle.indexOf(s) !== -1; }
+    if(has('e')) w += dx;
+    if(has('s')) h += dy;
+    if(has('w')){ x += dx; w -= dx; }
+    if(has('n')){ y += dy; h -= dy; }
+    w=Math.max(1, w); h=Math.max(1, h);
+    if(x < 0){ w += x; x=0; }
+    if(y < 0){ h += y; y=0; }
+    if(x + w > W) w=W - x;
+    if(y + h > H) h=H - y;
+    w=Math.max(1, w); h=Math.max(1, h);
+    var out={ x: x, y: y, width: w, height: h };
+    if(ratio) out=applyAspect(out, ratio, W, H);
+    return clampCrop(out, W, H);
+  }
+  function cropArea(r){ return r.width * r.height; }
+  function toDisplay(r, scale){ return { x: r.x * scale, y: r.y * scale, width: r.width * scale, height: r.height * scale }; }
+  function toImage(r, scale){ return { x: Math.round(r.x / scale), y: Math.round(r.y / scale), width: Math.round(r.width / scale), height: Math.round(r.height / scale) }; }
+  window.TD_crop={
+    formatBytes: formatBytes, parseAspect: parseAspect, clampCrop: clampCrop,
+    defaultCrop: defaultCrop, applyAspect: applyAspect, moveCrop: moveCrop,
+    resizeCrop: resizeCrop, cropArea: cropArea, toDisplay: toDisplay, toImage: toImage
+  };
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      editor=document.getElementById('editor'), stage=document.getElementById('stage'),
+      stageImg=document.getElementById('stage-img'), box=document.getElementById('crop-box'),
+      cxEl=document.getElementById('cx'), cyEl=document.getElementById('cy'),
+      cwEl=document.getElementById('cw'), chEl=document.getElementById('ch'),
+      fmt=document.getElementById('format'), btn=document.getElementById('crop'),
+      msg=document.getElementById('msg'),
+      imgW=0, imgH=0, imgObj=null, currentFile=null, outUrl=null, aspect=null,
+      crop=null, drag=null;
+  var ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'};
+  function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
+  function num(el){ var v=parseInt(el.value,10); return isNaN(v) ? null : v; }
+  function renderCrop(){
+    if(!crop) return;
+    box.style.left=(crop.x / imgW * 100)+'%';
+    box.style.top=(crop.y / imgH * 100)+'%';
+    box.style.width=(crop.width / imgW * 100)+'%';
+    box.style.height=(crop.height / imgH * 100)+'%';
+    cxEl.value=crop.x; cyEl.value=crop.y; cwEl.value=crop.width; chEl.value=crop.height;
+  }
+  function loadFile(f){
+    if(!f) return;
+    if(!/^image\//.test(f.type)){ showMsg('That file is not an image. Please choose an image file.'); btn.disabled=true; return; }
+    currentFile=f;
+    var url=URL.createObjectURL(f), img=new Image();
+    img.onload=function(){
+      imgW=img.naturalWidth; imgH=img.naturalHeight; imgObj=img;
+      if(!imgW || !imgH){ URL.revokeObjectURL(url); showMsg('Could not read that image file.'); return; }
+      stageImg.src=url;
+      crop=defaultCrop(imgW, imgH, aspect);
+      editor.classList.remove('hidden');
+      document.getElementById('results').classList.add('hidden');
+      document.getElementById('preview').classList.add('hidden');
+      document.getElementById('dl').classList.add('hidden');
+      btn.disabled=false;
+      renderCrop();
+      showMsg('Selected: '+f.name+' ('+formatBytes(f.size)+') — '+imgW+' × '+imgH+'. Drag the box to crop.', true);
+    };
+    img.onerror=function(){ URL.revokeObjectURL(url); showMsg('Could not read that image file.'); };
+    img.src=url;
+  }
+  fileInput.addEventListener('change',function(){ loadFile(fileInput.files[0]); });
+  ['dragenter','dragover'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop',function(e){ loadFile(e.dataTransfer.files[0]); });
+  document.querySelectorAll('#aspects button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#aspects button').forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      aspect=parseAspect(b.getAttribute('data-aspect'));
+      if(crop && imgW){ crop=applyAspect(crop, aspect, imgW, imgH); renderCrop(); }
+    });
+  });
+  [cxEl, cyEl, cwEl, chEl].forEach(function(el){
+    el.addEventListener('change',function(){
+      if(!crop || !imgW) return;
+      var next=clampCrop({ x: num(cxEl), y: num(cyEl), width: num(cwEl), height: num(chEl) }, imgW, imgH);
+      if(next.error){ showMsg(next.error); renderCrop(); return; }
+      crop=aspect ? applyAspect(next, aspect, imgW, imgH) : next;
+      renderCrop();
+    });
+  });
+  document.getElementById('reset-crop').addEventListener('click',function(){
+    if(!imgW) return;
+    crop=defaultCrop(imgW, imgH, aspect); renderCrop();
+  });
+  function stageScale(){
+    var r=stage.getBoundingClientRect();
+    return (r.width > 0 && imgW) ? (r.width / imgW) : 1;
+  }
+  box.addEventListener('pointerdown',function(e){
+    if(!crop || !imgW) return;
+    e.preventDefault();
+    var handle=e.target.getAttribute('data-handle');
+    drag={ handle: handle || 'move', startX: e.clientX, startY: e.clientY, orig: { x: crop.x, y: crop.y, width: crop.width, height: crop.height } };
+    box.setPointerCapture && box.setPointerCapture(e.pointerId);
+  });
+  box.addEventListener('pointermove',function(e){
+    if(!drag) return;
+    var scale=stageScale();
+    var dx=Math.round((e.clientX - drag.startX) / scale), dy=Math.round((e.clientY - drag.startY) / scale);
+    if(drag.handle === 'move'){ crop=moveCrop(drag.orig, dx, dy, imgW, imgH); }
+    else { crop=resizeCrop(drag.orig, drag.handle, dx, dy, imgW, imgH, aspect); }
+    renderCrop();
+  });
+  function endDrag(){ drag=null; }
+  box.addEventListener('pointerup',endDrag);
+  box.addEventListener('pointercancel',endDrag);
+  btn.addEventListener('click',function(){
+    if(!currentFile || !imgObj || !crop){ showMsg('Please choose an image first.'); return; }
+    var type=fmt.value;
+    var c=document.createElement('canvas'); c.width=crop.width; c.height=crop.height;
+    var ctx=c.getContext('2d');
+    if(type==='image/jpeg'){ ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height); }
+    ctx.drawImage(imgObj, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+    c.toBlob(function(blob){
+      if(!blob){ showMsg('Cropping failed — your browser does not support this output format.'); return; }
+      if(outUrl) URL.revokeObjectURL(outUrl);
+      outUrl=URL.createObjectURL(blob);
+      document.getElementById('orig-dims').textContent=imgW+' × '+imgH;
+      document.getElementById('crop-dims').textContent=c.width+' × '+c.height;
+      document.getElementById('orig-size').textContent=formatBytes(currentFile.size);
+      document.getElementById('out-size').textContent=formatBytes(blob.size);
+      document.getElementById('results').classList.remove('hidden');
+      var prev=document.getElementById('preview'); prev.src=outUrl; prev.classList.remove('hidden');
+      var dl=document.getElementById('dl'); dl.href=outUrl; dl.download='cropped.'+ext[type]; dl.classList.remove('hidden');
+      showMsg('Done! Your cropped image is ready.', true);
+    }, type, 0.92);
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Choose any image from your device, or drop it onto the box above.</li>
+    <li>Drag the white box to choose what stays, pull a corner handle to resize it, pick an aspect ratio preset, or type exact pixel coordinates.</li>
+    <li>Pick the output format, click “Crop image” and download the result.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Will cropping reduce my image quality?</summary><p>No. The cropped area is saved at the original resolution, pixel for pixel — cropping only removes the parts outside the box, it never re-scales or blurs what stays.</p></details>
+  <details><summary>What aspect ratios can I crop to?</summary><p>Free (any shape), square 1:1, landscape 4:3, 3:2 and 16:9, and portrait 3:4, 2:3 and 9:16. Pick a preset and the crop box locks to that shape while you drag it.</p></details>
+  <details><summary>Can I crop to an exact pixel size?</summary><p>Yes. Type the exact X, Y, width and height in pixels under the preview — the crop box jumps to those coordinates, and the downloaded image is exactly that size.</p></details>
+  <details><summary>Are my images uploaded?</summary><p>Never. The cropping happens entirely in your browser.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
+        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
+        <li><a href="../image-converter/">🖼️ Image Converter</a></li>
+        <li><a href="../word-counter/">🔤 Word Counter</a></li>
+        <li><a href="../password-generator/">🔐 Password Generator</a></li>
+        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
+        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
+        <li><a href="../color-converter/">🎨 Color Converter</a></li>
+        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
+        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
+        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
+        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
+        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
+        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
+        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
+        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
+        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
+        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
+        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
+        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
+        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
+        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
+        <li><a href="../url-encoder-decoder/">🔗 URL Encoder / Decoder</a></li>
+        <li><a href="../image-synthid-remover/">🧹 Image SynthID Remover</a></li>
+        <li><a href="../remove-duplicate-lines/">📋 Remove Duplicate Lines</a></li>
+        <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
+        <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
+        <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../stopwatch-countdown-timer/">⏱️ Stopwatch &amp; Countdown Timer</a></li>
+        <li><a href="../text-to-speech/">🗣️ Text to Speech</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
+  <nav class="foot-nav">
+    <a href="../#ai-tools">AI Tools</a>
+    <a href="../#image-tools">Image Tools</a>
+    <a href="../#pdf-tools">PDF Tools</a>
+    <a href="../#calculators">Calculators</a>
+    <a href="../#text-tools">Text Tools</a>
+    <a href="../#converters">Converters</a>
+    <a href="../#generators">Generators</a>
+  </nav>
+  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
