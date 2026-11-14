@@ -100,9 +100,9 @@ gtag('config', 'G-KX85CZXTR4');
 <section><h2>File to Base64</h2>
 <div class="card">
   <div><label for="file-in">Choose a file</label><input type="file" id="file-in"></div>
-  <p><button id="btn-file-encode" type="button" disabled>Encode file</button></p>
+  <p><button id="btn-file-encode" type="button" disabled>Encode file</button> <button id="btn-file-download" type="button" class="secondary">Download Base64 as .txt</button></p>
   <div><label for="file-out">Base64 of the file</label><textarea id="file-out" readonly placeholder="The file's Base64 text appears here…"></textarea></div>
-  <p><a class="btn hidden" id="file-dl" href="#" download="file-base64.txt">Download Base64 as .txt</a></p>
+  <p class="hidden"><a class="btn hidden" id="file-dl" href="#" download="file-base64.txt">Download Base64 as .txt</a></p>
   <p class="msg" id="file-msg"></p>
 </div></section>
 
@@ -110,8 +110,8 @@ gtag('config', 'G-KX85CZXTR4');
 <div class="card">
   <div><label for="b64-in">Paste Base64</label><textarea id="b64-in" placeholder="Paste Base64 text here…"></textarea></div>
   <div><label for="dl-name">Download filename</label><input type="text" id="dl-name" placeholder="e.g. photo.png (default: decoded-file.bin)"></div>
-  <p><button id="btn-b64-decode" type="button">Decode and prepare download</button></p>
-  <p><a class="btn hidden" id="b64-dl" href="#" download="decoded-file.bin">Download decoded file</a></p>
+  <p><button id="btn-b64-decode" type="button">Decode and prepare download</button> <button id="btn-b64-download" type="button" class="secondary">Download decoded file</button></p>
+  <p class="hidden"><a class="btn hidden" id="b64-dl" href="#" download="decoded-file.bin">Download decoded file</a></p>
   <p class="msg" id="b64-msg"></p>
 </div></section>
 <script>
@@ -178,9 +178,23 @@ gtag('config', 'G-KX85CZXTR4');
       var dl = document.getElementById('file-dl');
       dl.href = URL.createObjectURL(new Blob([b64], { type: 'text/plain' }));
       dl.download = f.name + '.base64.txt';
-      dl.classList.remove('hidden');
       showMsg('file-msg', 'Encoded ' + f.name + ' (' + f.size + ' bytes) to ' + b64.length + ' Base64 characters.', 'ok');
     }, function(){ showMsg('file-msg', 'Could not read that file.', 'err'); });
+  });
+  // Visible downloads (lorem pattern): both buttons are always in their card;
+  // an early click hints instead of downloading. The download only exists
+  // once a successful encode/decode has set the matching link's href.
+  document.getElementById('btn-file-download').addEventListener('click', function(){
+    var dl = document.getElementById('file-dl');
+    if (dl.getAttribute('href') === '#') { showMsg('file-msg', 'Nothing to download yet — encode a file first.', 'err'); return; }
+    dl.click();
+    showMsg('file-msg', 'Downloaded ' + dl.getAttribute('download') + '.', 'ok');
+  });
+  document.getElementById('btn-b64-download').addEventListener('click', function(){
+    var dl = document.getElementById('b64-dl');
+    if (dl.getAttribute('href') === '#') { showMsg('b64-msg', 'Nothing to download yet — decode some Base64 first.', 'err'); return; }
+    dl.click();
+    showMsg('b64-msg', 'Downloaded ' + dl.getAttribute('download') + '.', 'ok');
   });
   document.getElementById('btn-b64-decode').addEventListener('click', function(){
     try {
@@ -189,7 +203,6 @@ gtag('config', 'G-KX85CZXTR4');
       var dl = document.getElementById('b64-dl');
       dl.href = URL.createObjectURL(new Blob([bytes]));
       dl.download = name;
-      dl.classList.remove('hidden');
       showMsg('b64-msg', 'Ready: ' + bytes.length + ' bytes decoded. Click the download button to save ' + name + '.', 'ok');
     } catch (e) {
       showMsg('b64-msg', 'Could not decode: that is not valid Base64. Check for typos or missing characters.', 'err');
