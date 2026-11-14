@@ -128,7 +128,8 @@ gtag('config', 'G-KX85CZXTR4');
     else { out.select(); try{ document.execCommand('copy'); showOk('Output copied.'); }catch(e){ msg.textContent='Copy failed — copy the output manually.'; msg.className='msg err'; } }
   });
   document.getElementById('dl-json').addEventListener('click',function(){
-    var text=out.value||inp.value;
+    if(!out.value){ msg.textContent='Nothing to download yet — format some JSON first.'; msg.className='msg err'; return; }
+    var text=out.value;
     try{
       var blob=new Blob([text],{type:'application/json'}), url=URL.createObjectURL(blob);
       var a=document.createElement('a'); a.href=url; a.download='formatted.json'; a.click();
@@ -177,6 +178,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
