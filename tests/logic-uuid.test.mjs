@@ -60,12 +60,12 @@ console.log('UUID STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines', 'audio-transcriber', 'morse-code-translator'];
   ok(others.length === 29 && others.every((s) => html.includes(`href="../${s}/"`)), 'uuid: More-tools nav links all other 29 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 33, 'sitemap.xml has 32 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/uuid-generator/'), 'sitemap includes uuid-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 32, 'home has exactly 32 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
   ok(home.includes('href="uuid-generator/"'), 'home cards + nav include uuid-generator');
-  ok(home.includes('Thirty-two handy tools'), 'home lead says Thirty-two tools');
+  ok(home.includes('Thirty-three handy tools'), 'home lead says Thirty-three tools');
 }
 
 console.log('UUID CORE');

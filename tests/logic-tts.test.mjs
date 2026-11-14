@@ -3,6 +3,7 @@
 // speechSynthesis does not exist in jsdom, so UI tests install a mock via
 // beforeParse that records utterances and lets the test fire onend manually.
 import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -63,6 +64,52 @@ async function loadPage(p, withSpeech) {
   await sleep(150);
   return dom;
 }
+// Download-path page: speech mock + a FakeWorker stand-in for the real
+// Kokoro engine + a stubbed createObjectURL so the .wav download can be
+// captured. The worker mock records every message; tests drive it with
+// worker.deliver({type, ...}) exactly as the real worker's postMessage would.
+async function loadDownloadPage(withWorker) {
+  const vc = new VirtualConsole();
+  vc.on('jsdomError', () => {});
+  const dom = await JSDOM.fromURL(BASE + 'text-to-speech/', {
+    resources: 'usable', runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
+    beforeParse(win) {
+      installSpeechMock(win);
+      win.__dlCapture = { blob: null, anchor: null, created: [] };
+      if (withWorker) {
+        class FakeWorker {
+          constructor(url, opts) {
+            this.url = url; this.opts = opts;
+            this.posted = []; this.terminated = false;
+            this.onmessage = null; this.onerror = null;
+            win.__dlCapture.created.push(this);
+          }
+          postMessage(msg) { this.posted.push(msg); }
+          terminate() { this.terminated = true; }
+          deliver(data) { if (typeof this.onmessage === 'function') this.onmessage({ data }); }
+        }
+        win.Worker = FakeWorker;
+      }
+      win.URL.createObjectURL = (blob) => { win.__dlCapture.blob = blob; return 'blob:test-wav'; };
+      win.URL.revokeObjectURL = () => {};
+    },
+  });
+  await new Promise((res) => {
+    if (dom.window.document.readyState === 'complete') res();
+    else dom.window.addEventListener('load', res);
+    setTimeout(res, 5000);
+  });
+  await sleep(150);
+  // Capture the temp anchor the page clicks to trigger the download, and
+  // cancel the click's default action so jsdom does not try to navigate.
+  dom.window.document.addEventListener('click', (e) => {
+    if (e.target && e.target.tagName === 'A') {
+      dom.window.__dlCapture.anchor = { href: e.target.href, download: e.target.getAttribute('download') };
+      e.preventDefault();
+    }
+  }, true);
+  return dom;
+}
 function setVal(win, sel, value) {
   const el = win.document.querySelector(sel);
   el.value = value;
@@ -95,18 +142,55 @@ console.log('TTS STATIC');
   const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines', 'audio-transcriber', 'morse-code-translator', 'uuid-generator', 'stopwatch-countdown-timer'];
   ok(others.length === 31 && others.every((s) => html.includes(`href="../${s}/"`)), 'tts: More-tools nav links all other 31 tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 33, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 34 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/text-to-speech/'), 'sitemap includes text-to-speech');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 32, 'home has exactly 32 tool cards');
+  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
   ok(home.includes('href="text-to-speech/"'), 'home cards + nav include text-to-speech');
-  ok(home.includes('Thirty-two handy tools'), 'home lead says Thirty-two tools');
-  ok(home.includes('Search 32 tools'), 'home search placeholder says 32 tools');
+  ok(home.includes('Thirty-three handy tools'), 'home lead says Thirty-three tools');
+  ok(home.includes('Search 33 tools'), 'home search placeholder says 33 tools');
   ok(home.includes('Text Tools <span class="n">6</span>'), 'home Text Tools chip says 6');
-  ok(home.includes('All <span class="n">32</span>'), 'home All chip says 32');
+  ok(home.includes('All <span class="n">33</span>'), 'home All chip says 33');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/text-to-speech/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 32 free tools'), 'llms.txt says 32 tools');
+  ok(llms.includes('browse all 33 free tools'), 'llms.txt says 33 tools');
+  // Download WAV UI (2026-11-14).
+  ok(html.includes('<button id="download" type="button" class="secondary">⬇️ Download WAV</button>'), 'tts: Download WAV button present (secondary style, after Stop)');
+  ok(html.includes('id="dl-barwrap"') && html.includes('id="dl-bar"'), 'tts: download progress bar present');
+  ok(html.includes('class="dl-note"') && html.includes('Kokoro AI voice') && html.includes('88'), 'tts: download note names the Kokoro voice + ~88 MB model');
+  ok(html.includes('Download uses the Kokoro AI voice (American English)'), 'tts: download note states the English-only Kokoro voice');
+  ok(html.includes('Can I download the audio as a WAV file?'), 'tts: download FAQ present');
+  const faqCount = (html.match(/<details><summary>/g) || []).length;
+  ok(faqCount === 5, 'tts: 5 visible FAQs (download FAQ added)');
+  ok(html.includes('Press "Download WAV" to save the text as an audio file.'), 'tts: How-to mentions the download step');
+  const vj = JSON.parse(fs.readFileSync(path.join(SITE, 'vercel.json'), 'utf8'));
+  const vjAll = JSON.stringify(vj);
+  ok(vjAll.includes('/text-to-speech'), 'vercel.json has COOP/COEP for /text-to-speech');
+  ok(vjAll.includes('/text-to-speech/(.*)'), 'vercel.json COOP/COEP covers the tool subpaths, incl. tts-worker.js');
+}
+
+console.log('TTS WORKER');
+{
+  const wpath = path.join(SITE, 'text-to-speech', 'tts-worker.js');
+  ok(fs.existsSync(wpath), 'tts-worker.js exists');
+  let syntaxOk = true;
+  try { execFileSync('node', ['--check', wpath], { stdio: 'pipe' }); } catch (e) { syntaxOk = false; console.log('    worker syntax error:', String(e.stderr || e.message)); }
+  ok(syntaxOk, 'tts-worker.js parses without syntax errors (node --check)');
+  const src = fs.readFileSync(wpath, 'utf8');
+  ok(src.includes("from 'https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js'"), 'worker imports kokoro-js 1.2.1 browser bundle from the jsDelivr CDN (not vendored)');
+  ok(src.includes("KokoroTTS.from_pretrained(MODEL_ID, {") && src.includes("'onnx-community/Kokoro-82M-v1.0-ONNX'"), 'worker loads onnx-community/Kokoro-82M-v1.0-ONNX');
+  ok(src.includes("dtype: 'q8'"), 'worker uses the quantized (q8) model files');
+  ok(src.includes("device: 'wasm'"), 'worker runs on WASM (no WebGPU dependency)');
+  ok(src.includes('TextSplitterStream') && src.includes('tts.stream(splitter'), 'worker streams long text through TextSplitterStream');
+  ok(src.includes('progress_callback'), 'worker reports model-download progress');
+  ok(src.includes("VOICE = 'af_heart'"), 'worker uses the af_heart voice');
+  ok(src.includes('allowLocalModels = false'), 'worker loads the model from the HF CDN only');
+  ok(src.includes('crossOriginIsolated') && src.includes('numThreads'), 'worker sets WASM threads defensively (no SharedArrayBuffer requirement)');
+  ok(src.includes("type: 'result'") && src.includes('sampling_rate'), 'worker posts merged samples + sampling rate back to the page');
+  const page = fs.readFileSync(path.join(SITE, 'text-to-speech', 'index.html'), 'utf8');
+  ok(page.includes("new Worker('tts-worker.js', { type: 'module' })"), 'page runs the download engine in the module worker');
+  ok(page.includes('dlWorker.terminate()'), 'page recovers by terminating the worker');
+  ok((page.match(/new Worker\(/g) || []).length === 1 && page.includes('function dlSpawnWorker()'), 'page creates the worker in exactly one place (dlSpawnWorker, called only from the Download click handler or recovery — lazy, never on page load)');
 }
 
 console.log('TTS CORE');
@@ -159,6 +243,33 @@ console.log('TTS CORE');
   ok(TD.pickVoice([{ name: 'A', lang: 'en' }, { name: 'B', lang: 'en' }], '').name === 'A', 'pickVoice: no default -> first voice');
   ok(TD.pickVoice([], 'x') === null, 'pickVoice: no voices -> null');
   ok(TD.isSupported() === true, 'isSupported: true with the mock installed');
+  // WAV encoding (Download path).
+  ok(typeof TD.encodeWavBuffer === 'function' && typeof TD.encodeWav === 'function' && typeof TD.formatBytes === 'function', 'TD_tts exposes encodeWavBuffer / encodeWav / formatBytes');
+  {
+    const buf = TD.encodeWavBuffer(new Float32Array([0, 0.5, -0.5, 1, -1]), 24000);
+    const v = new DataView(buf);
+    const str = (off, n) => Array.from({ length: n }, (_, i) => String.fromCharCode(v.getUint8(off + i))).join('');
+    ok(buf.byteLength === 44 + 10, 'wav: 5 samples -> 54-byte file (44 header + 10 data)');
+    ok(str(0, 4) === 'RIFF' && str(8, 4) === 'WAVE' && str(12, 4) === 'fmt ' && str(36, 4) === 'data', 'wav: RIFF/WAVE/fmt/data markers present');
+    ok(v.getUint32(4, true) === 36 + 10 && v.getUint32(40, true) === 10, 'wav: chunk sizes correct');
+    ok(v.getUint16(20, true) === 1 && v.getUint16(22, true) === 1 && v.getUint32(24, true) === 24000 && v.getUint16(34, true) === 16, 'wav: PCM, mono, 24000 Hz, 16-bit');
+    ok(v.getUint32(28, true) === 48000 && v.getUint16(32, true) === 2, 'wav: byte rate 48000, block align 2');
+    ok(v.getInt16(44, true) === 0 && v.getInt16(46, true) === 16384 && v.getInt16(48, true) === -16383 && v.getInt16(50, true) === 32767 && v.getInt16(52, true) === -32767, 'wav: samples scale 0/0.5/-0.5/1/-1 -> 0/16384/-16383/32767/-32767');
+    const clamped = TD.encodeWavBuffer(new Float32Array([2, -2, NaN, Infinity]), 24000);
+    const cv = new DataView(clamped);
+    ok(cv.getInt16(44, true) === 32767 && cv.getInt16(46, true) === -32767 && cv.getInt16(48, true) === 0 && cv.getInt16(50, true) === 0, 'wav: out-of-range clamps, NaN/Infinity become silence');
+    const empty = TD.encodeWavBuffer(new Float32Array(0), 24000);
+    ok(empty.byteLength === 44 && new DataView(empty).getUint32(40, true) === 0, 'wav: empty input -> valid 44-byte header, 0 data');
+    const nullIn = TD.encodeWavBuffer(null, 24000);
+    ok(nullIn.byteLength === 44, 'wav: null input -> valid empty file, no throw');
+    const badRate = TD.encodeWavBuffer(new Float32Array([0]), 'junk');
+    ok(new DataView(badRate).getUint32(24, true) === 24000, 'wav: invalid sample rate falls back to 24000');
+    const rate16k = TD.encodeWavBuffer(new Float32Array([0]), 16000);
+    ok(new DataView(rate16k).getUint32(24, true) === 16000 && new DataView(rate16k).getUint32(28, true) === 32000, 'wav: 16000 Hz honored with matching byte rate');
+    const blob = TD.encodeWav(new Float32Array([0, 0.5]), 24000);
+    ok(blob && blob.type === 'audio/wav' && blob.size === 48, 'encodeWav: Blob type audio/wav, size 48 for 2 samples');
+    ok(TD.formatBytes(0) === '0 B' && TD.formatBytes(512) === '512 B' && TD.formatBytes(1536) === '1.5 KB' && TD.formatBytes(92 * 1024 * 1024) === '92.0 MB', 'formatBytes: B/KB/MB formatting');
+  }
   dom.window.close();
 }
 
@@ -238,6 +349,101 @@ console.log('TTS UI (unsupported browser)');
   ok(q('#msg').textContent.includes('does not support speech synthesis'), 'unsupported: explanatory message shown');
   ok(q('#voice').options[0].textContent === 'Speech not supported in this browser', 'unsupported: voice dropdown explains itself');
   dom.window.close();
+}
+
+console.log('TTS DOWNLOAD UI (mocked worker)');
+{
+  const dom = await loadDownloadPage(true);
+  const w = dom.window, d = w.document, q = (s) => d.querySelector(s);
+  const cap = w.__dlCapture;
+  // Lazy: no worker before the first click.
+  ok(cap.created.length === 0, 'dl: no worker created before the first Download click (lazy)');
+  ok(q('#dl-barwrap').classList.contains('hidden'), 'dl: progress bar hidden before the first click');
+  // Empty text: error, no worker.
+  q('#download').click();
+  ok(q('#msg').textContent.includes('Type or paste some text first.'), 'dl: empty text -> error message');
+  ok(cap.created.length === 0, 'dl: empty text spawns no worker');
+  ok(q('#download').disabled === false, 'dl: button stays enabled after the empty-text error');
+  // Real click: worker spawns, load posted, button disabled, bar visible.
+  q('#text-in').value = 'Hello download world.';
+  setVal(w, '#rate', '1.5');
+  q('#download').click();
+  ok(cap.created.length === 1, 'dl: worker spawned on first click');
+  const worker = cap.created[0];
+  ok(worker.url === 'tts-worker.js' && worker.opts && worker.opts.type === 'module', 'dl: module worker created for tts-worker.js');
+  ok(worker.posted.length === 1 && worker.posted[0].type === 'load', 'dl: load posted to the worker');
+  ok(q('#download').disabled === true, 'dl: button disabled while busy');
+  ok(!q('#dl-barwrap').classList.contains('hidden'), 'dl: progress bar visible while loading');
+  ok(q('#status').textContent.includes('88 MB'), 'dl: status explains the one-time model download');
+  // Double-click while busy is ignored.
+  q('#download').click();
+  ok(cap.created.length === 1 && worker.posted.length === 1, 'dl: second click while busy is ignored');
+  // Progress: bar width follows the aggregate.
+  worker.deliver({ type: 'progress', file: 'model_quantized.onnx', loaded: 46 * 1024 * 1024, total: 92 * 1024 * 1024 });
+  ok(q('#dl-bar').style.width === '50%', 'dl: bar shows 50% after half the model');
+  ok(q('#status').textContent.includes('Downloading the AI voice model'), 'dl: status shows model-download progress');
+  // Ready: run posted with the text + clamped speed.
+  worker.deliver({ type: 'ready' });
+  ok(worker.posted.length === 2 && worker.posted[1].type === 'run' && worker.posted[1].text === 'Hello download world.' && worker.posted[1].speed === 1.5, 'dl: run posted with the text + speed 1.5 after ready');
+  // Chunk: status updates, still busy.
+  worker.deliver({ type: 'chunk', index: 1 });
+  ok(q('#status').textContent.includes('Synthesizing'), 'dl: chunk -> synthesizing status');
+  ok(q('#download').disabled === true, 'dl: button still disabled while synthesizing');
+  // Result: a real .wav download is triggered.
+  const samples = new Float32Array([0, 0.5, -0.5, 1, -1]);
+  worker.deliver({ type: 'result', samples: samples.buffer, sampling_rate: 24000 });
+  ok(cap.blob !== null && cap.blob.type === 'audio/wav' && cap.blob.size === 54, 'dl: download blob is a 54-byte WAV (5 samples)');
+  ok(cap.anchor !== null && cap.anchor.download === 'speech.wav' && cap.anchor.href === 'blob:test-wav', 'dl: temp anchor clicked with download=speech.wav');
+  ok(q('#download').disabled === false, 'dl: button re-enabled after success');
+  ok(q('#msg').textContent.includes('Downloaded speech.wav'), 'dl: success message shown');
+  ok(q('#dl-barwrap').classList.contains('hidden'), 'dl: progress bar hidden after success');
+  // Second download reuses the loaded worker (no new worker, no load).
+  cap.blob = null; cap.anchor = null;
+  q('#text-in').value = 'Second download.';
+  q('#download').click();
+  ok(cap.created.length === 1, 'dl: second download reuses the same worker');
+  ok(worker.posted.length === 3 && worker.posted[2].type === 'run' && worker.posted[2].text === 'Second download.', 'dl: second download posts run directly (no reload)');
+  worker.deliver({ type: 'result', samples: new Float32Array([0.25]).buffer, sampling_rate: 24000 });
+  ok(cap.blob !== null && cap.blob.size === 46 && cap.anchor.download === 'speech.wav', 'dl: second download also triggers a real WAV file');
+  // Run-phase error: one retry, then a plain message.
+  q('#download').click();
+  ok(worker.posted.length === 4 && worker.posted[3].type === 'run', 'dl: third download starts a run');
+  worker.deliver({ type: 'error', phase: 'run', message: 'synthesis exploded' });
+  ok(cap.created.length === 2, 'dl: run error retries once with a fresh worker');
+  ok(worker.terminated === true, 'dl: wedged worker terminated on retry');
+  const worker2 = cap.created[1];
+  ok(worker2.posted.length === 1 && worker2.posted[0].type === 'load', 'dl: retry worker gets a load message');
+  worker2.deliver({ type: 'ready' });
+  ok(worker2.posted.length === 2 && worker2.posted[1].type === 'run', 'dl: retry re-runs the same text after ready');
+  worker2.deliver({ type: 'error', phase: 'run', message: 'synthesis exploded again' });
+  ok(q('#msg').textContent.includes('could not finish on this device'), 'dl: second failure shows a plain error message');
+  ok(q('#download').disabled === false, 'dl: button re-enabled after failure');
+  ok(worker2.terminated === true, 'dl: failed worker terminated');
+  dom.window.close();
+}
+
+console.log('TTS DOWNLOAD (load error + no worker)');
+{
+  // Load-phase network error: plain connection message, no retry loop.
+  const dom = await loadDownloadPage(true);
+  const w = dom.window, d = w.document, q = (s) => d.querySelector(s);
+  const cap = w.__dlCapture;
+  q('#text-in').value = 'Hello.';
+  q('#download').click();
+  ok(cap.created.length === 1, 'dl-err: worker spawned for the load-error case');
+  cap.created[0].deliver({ type: 'error', phase: 'load', message: 'Failed to fetch model file' });
+  ok(q('#msg').textContent.includes('could not be downloaded'), 'dl-err: load network error -> connection message');
+  ok(q('#download').disabled === false, 'dl-err: button re-enabled after load failure');
+  ok(cap.created.length === 1, 'dl-err: load network error does not retry (no second worker)');
+  dom.window.close();
+  // No-Worker browser: plain not-supported message, nothing spawned.
+  const dom2 = await loadDownloadPage(false);
+  const w2 = dom2.window, d2 = w2.document, q2 = (s) => d2.querySelector(s);
+  q2('#text-in').value = 'Hello.';
+  q2('#download').click();
+  ok(q2('#msg').textContent.includes('does not support the background worker'), 'dl-noworker: no-Worker browser -> plain not-supported message');
+  ok(q2('#download').disabled === false, 'dl-noworker: button stays enabled when Worker is missing');
+  dom2.window.close();
 }
 
 console.log(`\nTTS TOTAL: ${pass} passed, ${fail} failed`);
