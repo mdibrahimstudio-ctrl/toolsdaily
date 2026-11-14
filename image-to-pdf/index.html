@@ -94,8 +94,9 @@ gtag('config', 'G-KX85CZXTR4');
   <ul id="file-list"></ul>
   <button id="convert" type="button" disabled>Convert to PDF</button>
   <button id="clear" type="button" class="secondary">Clear list</button>
+  <button id="download" type="button" class="secondary">Download PDF</button>
   <p class="msg" id="msg"></p>
-  <p><a class="btn hidden" id="dl" href="#" download="images.pdf">Download PDF</a></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="images.pdf">Download PDF</a></p>
 </div>
 <script src="../assets/vendor/pdf-lib.min.js"></script>
 <script>
@@ -146,7 +147,7 @@ gtag('config', 'G-KX85CZXTR4');
   ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
   ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
   drop.addEventListener('drop',function(e){ if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
-  clearBtn.addEventListener('click',function(){ files=[]; dl.classList.add('hidden'); showMsg(''); render(); });
+  clearBtn.addEventListener('click',function(){ files=[]; dl.classList.add('hidden'); dl.setAttribute('href','#'); showMsg(''); render(); });
   btn.addEventListener('click',async function(){
     if(!files.length){ showMsg('Please choose at least one JPG or PNG image.'); return; }
     btn.disabled=true; showMsg('Building your PDF…', true);
@@ -156,12 +157,17 @@ gtag('config', 'G-KX85CZXTR4');
       var bytes=await imagesToPdf(buffers);
       if(outUrl) URL.revokeObjectURL(outUrl);
       outUrl=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-      dl.href=outUrl; dl.classList.remove('hidden');
+      dl.href=outUrl;
       showMsg('Done! Created a PDF with '+files.length+' page'+(files.length===1?'':'s')+' ('+formatBytes(bytes.length)+').', true);
     }catch(e){
       showMsg(e.message && e.message.indexOf('not a JPG or PNG')>=0 ? e.message : 'Could not build the PDF. One of the images may be damaged.');
     }
     btn.disabled=files.length<1;
+  });
+  document.getElementById('download').addEventListener('click',function(){
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — convert images to PDF first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
   });
   render();
 })();
@@ -206,6 +212,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
