@@ -127,7 +127,7 @@ gtag('config', 'G-KX85CZXTR4');
 </div></header>
 <main>
 <h1>AI Audio Transcriber</h1>
-<p class="lead">Turn speech into text with AI — voice memos, interviews, meetings and podcasts, free with no sign-up. The AI runs on your device, so your audio is never uploaded.</p>
+<p class="lead">Turn speech into text with AI — voice memos, interviews, meetings and podcasts, free with no sign-up. The AI runs on your device, so your audio is never uploaded. When it’s done, download the transcript as a .txt file — or as .srt subtitles with timestamps.</p>
 
 <div class="card">
   <div class="drop" id="drop"><p>🎙️ Drop an audio file here, or</p><input type="file" id="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.opus,.webm,.flac"></div>
@@ -184,6 +184,8 @@ gtag('config', 'G-KX85CZXTR4');
   </div>
   <button id="go" type="button" disabled>Transcribe</button>
   <button id="cancel" type="button" class="hidden">Cancel</button>
+  <button id="download-txt" type="button" class="secondary">Download .txt</button>
+  <button id="download-srt" type="button" class="secondary">Download .srt</button>
   <div class="bar hidden" id="barwrap"><div id="bar"></div></div>
   <ol class="steps hidden" id="steps">
     <li id="step1"><span class="st-ic">•</span>Download the AI model (one time only, about 42 MB)</li>
@@ -199,8 +201,8 @@ gtag('config', 'G-KX85CZXTR4');
     <p class="msg" id="stats"></p>
     <div class="dlrow">
       <button type="button" id="copy">Copy transcript</button>
-      <a class="btn" id="dl-txt" href="#" download="transcript.txt">Download .txt</a>
-      <a class="btn" id="dl-srt" href="#" download="subtitles.srt">Download .srt subtitles</a>
+      <a class="btn hidden" id="dl-txt" href="#" download="transcript.txt">Download .txt</a>
+      <a class="btn hidden" id="dl-srt" href="#" download="subtitles.srt">Download .srt subtitles</a>
     </div>
   </div>
 </div>
@@ -215,6 +217,7 @@ gtag('config', 'G-KX85CZXTR4');
       resultBox=document.getElementById('result'), outText=document.getElementById('out-text'),
       stats=document.getElementById('stats'), copyBtn=document.getElementById('copy'),
       dlTxt=document.getElementById('dl-txt'), dlSrt=document.getElementById('dl-srt'),
+      downloadTxtBtn=document.getElementById('download-txt'), downloadSrtBtn=document.getElementById('download-srt'),
       stepsEl=document.getElementById('steps'), elapsedEl=document.getElementById('elapsed'),
       stepEls=[document.getElementById('step1'),document.getElementById('step2'),document.getElementById('step3')];
   var AUDIO_EXTS=['mp3','wav','m4a','ogg','opus','webm','flac'];
@@ -436,9 +439,6 @@ gtag('config', 'G-KX85CZXTR4');
     var srt=buildSrt(chunks, decoded?decoded.duration:undefined);
     if(srt){
       srtUrl=setDownload(dlSrt, srt, 'application/x-subrip', base+'-subtitles.srt');
-      dlSrt.classList.remove('hidden');
-    }else{
-      dlSrt.classList.add('hidden');
     }
     var words=clean ? clean.split(/\s+/).length : 0;
     var secs=((performance.now()-t0)/1000).toFixed(1);
@@ -452,6 +452,23 @@ gtag('config', 'G-KX85CZXTR4');
     showMsg(msg, clean ? '' : 'No speech could be heard in that audio. Try a clearer recording.', !!clean);
     goBtn.disabled=false;
   }
+
+  /* Visible downloads (lorem pattern): the buttons are always in the card, so
+     the payoff is clear before the 42 MB model downloads; an early click hints
+     instead of downloading. A download only exists once the result box is
+     shown and its link has a real blob URL. */
+  function dlReady(aEl){ return !resultBox.classList.contains('hidden') && aEl.getAttribute('href') !== '#'; }
+  downloadTxtBtn.addEventListener('click',function(){
+    if(!dlReady(dlTxt)){ showMsg(msg,'Nothing to download yet — transcribe an audio file first.'); return; }
+    dlTxt.click();
+    showMsg(msg,'Downloaded '+dlTxt.getAttribute('download')+'.',true);
+  });
+  downloadSrtBtn.addEventListener('click',function(){
+    if(!dlReady(dlTxt)){ showMsg(msg,'Nothing to download yet — transcribe an audio file first.'); return; }
+    if(!dlReady(dlSrt)){ showMsg(msg,'No subtitles were produced — this transcript has no timed speech to subtitle.'); return; }
+    dlSrt.click();
+    showMsg(msg,'Downloaded '+dlSrt.getAttribute('download')+'.',true);
+  });
 
   copyBtn.addEventListener('click',function(){
     var t=outText.value;
