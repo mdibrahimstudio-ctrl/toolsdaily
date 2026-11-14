@@ -124,6 +124,7 @@ gtag('config', 'G-KX85CZXTR4');
   <p class="msg" id="selmsg"></p>
   <div class="stage hidden" id="beforestage"><img id="preview" alt="Your selected photo"><span class="chip l">Your photo</span></div>
   <button id="go" type="button" disabled>Remove background</button>
+  <button id="download" type="button" class="secondary">Download result</button>
   <div class="bar hidden" id="barwrap"><div id="bar"></div></div>
   <ol class="steps hidden" id="steps">
     <li id="step1"><span class="st-ic">•</span>Download the AI model (one time only, about 91 MB)</li>
@@ -150,7 +151,7 @@ gtag('config', 'G-KX85CZXTR4');
       <input type="color" id="custom" value="#4dabf7" title="Custom colour">
     </div>
     <p class="msg" id="timing"></p>
-    <p><a class="btn" id="dl" href="#" download="no-background.png">Download result</a></p>
+    <p class="hidden"><a class="btn hidden" id="dl" href="#" download="no-background.png">Download result</a></p>
   </div>
 </div>
 <script>
@@ -164,6 +165,7 @@ gtag('config', 'G-KX85CZXTR4');
       outCanvas=document.getElementById('out'), origImg=document.getElementById('origimg'),
       cmp=document.getElementById('cmp'), cmpVal=document.getElementById('cmp-val'),
       dl=document.getElementById('dl'), timing=document.getElementById('timing'),
+      downloadBtn=document.getElementById('download'),
       customColor=document.getElementById('custom'),
       previewImg=document.getElementById('preview'), beforeStage=document.getElementById('beforestage'),
       stepsEl=document.getElementById('steps'), elapsedEl=document.getElementById('elapsed'),
@@ -388,6 +390,19 @@ gtag('config', 'G-KX85CZXTR4');
     origImg.classList.toggle('hidden', cmp.value==='0');
     chipBefore.classList.toggle('hidden', cmp.value==='0');
     origImg.style.clipPath='inset(0 '+ (100-cmp.value) +'% 0 0)';
+  });
+
+  /* Visible download (lorem pattern): always in the card, so the payoff is
+     clear before the 91 MB model downloads; an early click hints instead of
+     downloading. The result only exists once the result box is shown and the
+     link has a real blob URL. */
+  downloadBtn.addEventListener('click',function(){
+    if(resultBox.classList.contains('hidden') || dl.getAttribute('href') === '#'){
+      showMsg(msg,'Nothing to download yet — remove a background first.');
+      return;
+    }
+    dl.click();
+    showMsg(msg,'Downloaded '+dl.getAttribute('download')+'.',true);
   });
 
   goBtn.addEventListener('click',function(){
