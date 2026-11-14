@@ -95,8 +95,9 @@ gtag('config', 'G-KX85CZXTR4');
   <label for="range">Pages to extract</label>
   <input type="text" id="range" placeholder="e.g. 1-3 or 2,5" disabled>
   <button id="split" type="button" disabled>Extract pages</button>
+  <button id="download" type="button" class="secondary">Download extracted PDF</button>
   <p class="msg" id="msg"></p>
-  <p><a class="btn hidden" id="dl" href="#" download="split.pdf">Download extracted PDF</a></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="split.pdf">Download extracted PDF</a></p>
 </div>
 <script src="../assets/vendor/pdf-lib.min.js"></script>
 <script>
@@ -138,11 +139,12 @@ gtag('config', 'G-KX85CZXTR4');
   var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
       info=document.getElementById('file-info'), range=document.getElementById('range'),
       btn=document.getElementById('split'), msg=document.getElementById('msg'),
+      downloadBtn=document.getElementById('download'),
       dl=document.getElementById('dl'), docBuf=null, pageCount=0, outUrl=null;
   function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
   function isPdf(f){ return f.type==='application/pdf' || /\.pdf$/i.test(f.name||''); }
   async function setFile(f){
-    docBuf=null; pageCount=0; range.disabled=true; btn.disabled=true; dl.classList.add('hidden');
+    docBuf=null; pageCount=0; range.disabled=true; btn.disabled=true; dl.classList.add('hidden'); dl.setAttribute('href','#');
     if(!f) return;
     if(!isPdf(f)){ info.textContent=''; showMsg('"'+f.name+'" is not a PDF file. Please choose a PDF.'); return; }
     try{
@@ -160,6 +162,14 @@ gtag('config', 'G-KX85CZXTR4');
   ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
   ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
   drop.addEventListener('drop',function(e){ var f=e.dataTransfer.files[0]; if(f) setFile(f); });
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The extracted PDF only exists once a successful
+     extraction has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click',function(){
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — extract pages from a PDF first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
+  });
   btn.addEventListener('click',async function(){
     if(!docBuf){ showMsg('Please choose a PDF first.'); return; }
     var r=parseRange(range.value, pageCount);
@@ -169,7 +179,7 @@ gtag('config', 'G-KX85CZXTR4');
       var bytes=await splitPdf(docBuf, r.indices);
       if(outUrl) URL.revokeObjectURL(outUrl);
       outUrl=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-      dl.href=outUrl; dl.classList.remove('hidden');
+      dl.href=outUrl;
       showMsg('Done! Extracted '+r.indices.length+' page'+(r.indices.length===1?'':'s')+' into a new PDF.', true);
     }catch(e){
       showMsg('Could not extract those pages. The PDF may be damaged.');
@@ -218,6 +228,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
