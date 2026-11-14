@@ -98,6 +98,7 @@ gtag('config', 'G-KX85CZXTR4');
       <input type="number" id="maxw" min="1" placeholder="e.g. 1600"></div>
   </div>
   <button id="compress" type="button" disabled>Compress image</button>
+  <button id="download" type="button" class="secondary">Download compressed image</button>
   <p class="msg" id="msg"></p>
   <div class="stats hidden" id="results">
     <div class="stat"><b id="orig-size">–</b><span>Original size</span></div>
@@ -105,7 +106,7 @@ gtag('config', 'G-KX85CZXTR4');
     <div class="stat"><b id="ratio">–</b><span>Saved</span></div>
   </div>
   <img class="preview hidden" id="preview" alt="Compressed image preview">
-  <p><a class="btn hidden" id="dl" href="#" download="compressed.jpg">Download compressed image</a></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="compressed.jpg">Download compressed image</a></p>
 </div>
 <script>
 (function(){
@@ -146,12 +147,18 @@ gtag('config', 'G-KX85CZXTR4');
         document.getElementById('ratio').textContent=(saved>=0?saved+'% smaller':Math.abs(saved)+'% larger');
         document.getElementById('results').classList.remove('hidden');
         var prev=document.getElementById('preview'); prev.src=outUrl; prev.classList.remove('hidden');
-        var dl=document.getElementById('dl'); dl.href=outUrl; dl.classList.remove('hidden');
+        var dl=document.getElementById('dl'); dl.href=outUrl;
         showMsg('Done! Your compressed image is ready to download.', true);
       },'image/jpeg', parseInt(q.value,10)/100);
     };
     img.onerror=function(){ URL.revokeObjectURL(url); showMsg('Could not read that image file.'); };
     img.src=url;
+  });
+  document.getElementById('download').addEventListener('click',function(){
+    var dl=document.getElementById('dl');
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — compress an image first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
   });
 })();
 </script>
@@ -195,6 +202,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
