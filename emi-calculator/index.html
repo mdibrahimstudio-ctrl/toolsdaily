@@ -105,6 +105,8 @@ gtag('config', 'G-KX85CZXTR4');
     <div class="stat"><b id="r-interest">–</b><span>Total interest</span></div>
     <div class="stat"><b id="r-total">–</b><span>Total payment</span></div>
   </div>
+  <p><button id="download" type="button" class="secondary">Download .txt</button></p>
+  <a id="dl" class="hidden" href="#" download="emi-summary.txt">Download</a>
 </div>
 <script>
 (function(){
@@ -119,6 +121,30 @@ gtag('config', 'G-KX85CZXTR4');
   }
   window.TD_emi=emi;
   function fmt(x){ return x.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function summary(P, annualPct, tenureLabel, r){
+    var lines=[
+      'EMI summary',
+      'Loan amount: '+fmt(P),
+      'Annual interest rate: '+annualPct+'%',
+      'Tenure: '+tenureLabel,
+      'Monthly EMI: '+fmt(r.emi),
+      'Total interest: '+fmt(r.totalInterest),
+      'Total payment: '+fmt(r.totalPayment)
+    ];
+    return lines.join('\n');
+  }
+  emi.summary=summary;
+  function currentSummary(){
+    var P=parseFloat(document.getElementById('amount').value),
+        rate=parseFloat(document.getElementById('rate').value),
+        t=parseFloat(document.getElementById('tenure').value),
+        unit=document.getElementById('tenure-unit').value,
+        months=unit==='years' ? Math.round(t*12) : Math.round(t),
+        r=emi(P, rate, months);
+    if(r.error) return null;
+    var label=unit==='years' ? t+(t===1?' year':' years')+' ('+months+' months)' : months+(months===1?' month':' months');
+    return summary(P, rate, label, r);
+  }
   function update(){
     var P=parseFloat(document.getElementById('amount').value),
         rate=parseFloat(document.getElementById('rate').value),
@@ -141,13 +167,24 @@ gtag('config', 'G-KX85CZXTR4');
     document.getElementById(id).addEventListener('input', update);
     document.getElementById(id).addEventListener('change', update);
   });
+  document.getElementById('download').addEventListener('click', function(){
+    var msg=document.getElementById('msg');
+    var text=currentSummary();
+    if(!text){ msg.textContent='Nothing to download yet — calculate your EMI first.'; msg.className='msg err'; return; }
+    var blob=new Blob([text], { type:'text/plain;charset=utf-8' });
+    var dl=document.getElementById('dl');
+    dl.href=URL.createObjectURL(blob);
+    dl.download='emi-summary.txt';
+    dl.click();
+    msg.textContent='Downloaded emi-summary.txt.'; msg.className='msg ok';
+  });
   update();
 })();
 </script>
 <section><h2>How to use</h2><ol>
     <li>Enter the loan amount and the annual interest rate.</li>
     <li>Enter the tenure and choose years or months.</li>
-    <li>The monthly EMI, total interest and total payment update as you type.</li>
+    <li>The monthly EMI, total interest and total payment update as you type — download the summary as a .txt file with the Download button.</li>
 </ol></section>
 <section><h2>FAQ</h2>
   <details><summary>What is EMI?</summary><p>EMI (Equated Monthly Instalment) is the fixed amount you pay the lender every month until the loan is repaid. Each payment covers part of the loan amount (principal) and part of the interest.</p></details>
@@ -184,6 +221,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
