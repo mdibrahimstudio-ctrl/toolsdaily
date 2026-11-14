@@ -94,8 +94,9 @@ gtag('config', 'G-KX85CZXTR4');
   <ul id="file-list"></ul>
   <button id="merge" type="button" disabled>Merge PDFs</button>
   <button id="clear" type="button" class="secondary">Clear list</button>
+  <button id="download" type="button" class="secondary">Download merged PDF</button>
   <p class="msg" id="msg"></p>
-  <p><a class="btn hidden" id="dl" href="#" download="merged.pdf">Download merged PDF</a></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="merged.pdf">Download merged PDF</a></p>
 </div>
 <script src="../assets/vendor/pdf-lib.min.js"></script>
 <script>
@@ -114,6 +115,7 @@ gtag('config', 'G-KX85CZXTR4');
   var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
       list=document.getElementById('file-list'), btn=document.getElementById('merge'),
       clearBtn=document.getElementById('clear'), msg=document.getElementById('msg'),
+      downloadBtn=document.getElementById('download'),
       dl=document.getElementById('dl'), files=[], outUrl=null;
   function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
   function isPdf(f){ return f.type==='application/pdf' || /\.pdf$/i.test(f.name||''); }
@@ -137,7 +139,15 @@ gtag('config', 'G-KX85CZXTR4');
   ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
   ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
   drop.addEventListener('drop',function(e){ if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
-  clearBtn.addEventListener('click',function(){ files=[]; dl.classList.add('hidden'); showMsg(''); render(); });
+  clearBtn.addEventListener('click',function(){ files=[]; dl.classList.add('hidden'); dl.setAttribute('href','#'); showMsg(''); render(); });
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The merged PDF only exists once a successful merge
+     has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click',function(){
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — merge at least two PDFs first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
+  });
   btn.addEventListener('click',async function(){
     if(files.length<2){ showMsg('Please choose at least two PDF files to merge.'); return; }
     btn.disabled=true; showMsg('Merging…', true);
@@ -148,7 +158,7 @@ gtag('config', 'G-KX85CZXTR4');
       var check=await PDFLib.PDFDocument.load(bytes);
       if(outUrl) URL.revokeObjectURL(outUrl);
       outUrl=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-      dl.href=outUrl; dl.classList.remove('hidden');
+      dl.href=outUrl;
       showMsg('Done! Merged '+files.length+' files into one PDF with '+check.getPageCount()+' pages ('+formatBytes(bytes.length)+').', true);
     }catch(e){
       showMsg('Could not merge those PDFs. One of them may be password-protected or damaged — remove the password or repair the file and try again.');
@@ -198,6 +208,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
