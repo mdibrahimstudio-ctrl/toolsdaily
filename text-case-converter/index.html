@@ -100,8 +100,10 @@ gtag('config', 'G-KX85CZXTR4');
     <button type="button" data-case="alt">aLtErNaTiNg</button>
     <button type="button" data-case="reverse">Reverse text</button>
     <button type="button" class="secondary" id="copy">Copy result</button>
+    <button type="button" class="secondary" id="download">Download .txt</button>
   </p>
   <p class="msg" id="msg"></p>
+  <a id="dl" class="hidden" href="#" download="converted-text.txt">Download</a>
 </div>
 <script>
 (function(){
@@ -128,12 +130,23 @@ gtag('config', 'G-KX85CZXTR4');
       navigator.clipboard.writeText(ta.value).then(function(){ msg.textContent='Copied to clipboard.'; msg.className='msg ok'; });
     } else { ta.select(); try{ document.execCommand('copy'); msg.textContent='Copied to clipboard.'; msg.className='msg ok'; }catch(e){ msg.textContent='Copy failed — copy the text manually.'; msg.className='msg err'; } }
   });
+  document.getElementById('download').addEventListener('click',function(){
+    var msg=document.getElementById('msg');
+    var text=ta.value;
+    if(!text){ msg.textContent='Nothing to download yet — enter some text first.'; msg.className='msg err'; return; }
+    var blob=new Blob([text], { type:'text/plain;charset=utf-8' });
+    var dl=document.getElementById('dl');
+    dl.href=URL.createObjectURL(blob);
+    dl.download='converted-text.txt';
+    dl.click();
+    msg.textContent='Downloaded converted-text.txt.'; msg.className='msg ok';
+  });
 })();
 </script>
 <section><h2>How to use</h2><ol>
     <li>Type or paste the text you want to change.</li>
     <li>Click a style button — the text transforms instantly, right in the box.</li>
-    <li>Click “Copy result” and paste it wherever you need it.</li>
+    <li>Click “Copy result” to paste it wherever you need it, or “Download .txt” to save the converted text as a file.</li>
 </ol></section>
 <section><h2>FAQ</h2>
   <details><summary>What is Title Case?</summary><p>Title Case capitalises the first letter of every word, like a headline: “The Quick Brown Fox”.</p></details>
@@ -170,6 +183,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
