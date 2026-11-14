@@ -95,6 +95,7 @@ gtag('config', 'G-KX85CZXTR4');
   <label for="format">Convert to</label>
   <select id="format"><option value="image/png">PNG</option><option value="image/jpeg">JPEG</option><option value="image/webp">WebP</option></select>
   <button id="convert" type="button" disabled>Convert image</button>
+  <button id="download" type="button" class="secondary">Download converted image</button>
   <p class="msg" id="msg"></p>
   <div class="stats hidden" id="results">
     <div class="stat"><b id="orig-size">–</b><span>Original size</span></div>
@@ -102,7 +103,7 @@ gtag('config', 'G-KX85CZXTR4');
     <div class="stat"><b id="out-dims">–</b><span>Dimensions</span></div>
   </div>
   <img class="preview hidden" id="preview" alt="Converted image preview">
-  <p><a class="btn hidden" id="dl" href="#" download="converted.png">Download converted image</a></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="converted.png">Download converted image</a></p>
 </div>
 <script>
 (function(){
@@ -135,12 +136,18 @@ gtag('config', 'G-KX85CZXTR4');
         document.getElementById('out-dims').textContent=c.width+' × '+c.height;
         document.getElementById('results').classList.remove('hidden');
         var prev=document.getElementById('preview'); prev.src=outUrl; prev.classList.remove('hidden');
-        var dl=document.getElementById('dl'); dl.href=outUrl; dl.download='converted.'+ext[type]; dl.classList.remove('hidden');
+        var dl=document.getElementById('dl'); dl.href=outUrl; dl.download='converted.'+ext[type];
         showMsg('Done! Your converted image is ready.', true);
       }, type, 0.92);
     };
     img.onerror=function(){ URL.revokeObjectURL(url); showMsg('Could not read that image file.'); };
     img.src=url;
+  });
+  document.getElementById('download').addEventListener('click',function(){
+    var dl=document.getElementById('dl');
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — convert an image first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
   });
 })();
 </script>
@@ -184,6 +191,7 @@ gtag('config', 'G-KX85CZXTR4');
         <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
         <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
         <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
+        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
