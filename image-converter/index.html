@@ -7,7 +7,7 @@
 <meta name="description" content="Free image converter: change images between PNG, JPEG and WebP formats online. Fast, private, and no sign-up — files never leave your device.">
 <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
 <script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/design.css">
 <link rel="canonical" href="https://toolsdaily.vercel.app/image-converter/">
 <meta property="og:site_name" content="ToolsDaily">
 <meta property="og:type" content="website">
@@ -79,17 +79,19 @@ gtag('config', 'G-KX85CZXTR4');
 </script>
 </head>
 <body>
+<a class="skip" href="#tool">Skip to tool</a>
 <header class="site"><div class="wrap">
-  <a class="logo" href="../"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6l-3.2 3.2-2.4-2.4 3.2-3.2a4.5 4.5 0 0 0-.6-.6z"/></svg></span> ToolsDaily</a>
   <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
-  <nav class="main-nav"><a href="../">All tools</a></nav>
-  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div></header>
 <main>
-<h1>Image Converter</h1>
-<p class="lead">Convert any image to PNG, JPEG or WebP in seconds.</p>
+<div class="panel-head rise"><p class="eyebrow">Image Tools · No. 04</p></div>
+<h1 class="rise rise-1">Image Converter</h1>
+<p class="lead rise rise-2">Convert any image to PNG, JPEG or WebP in seconds. If the image holds a QR code, you can <a href="../qr-reader/">read QR codes online</a> with our free reader instead.</p>
 
-<div class="card">
+<div class="card rise rise-3" id="tool">
   <label for="file">Choose an image</label>
   <input type="file" id="file" accept="image/*">
   <label for="format">Convert to</label>
@@ -162,51 +164,28 @@ gtag('config', 'G-KX85CZXTR4');
   <details><summary>Are my images uploaded?</summary><p>Never. The conversion happens entirely in your browser.</p></details>
 </section>
 <nav class="more"><h2>More tools</h2><ul>
-        <li><a href="../qr-generator/">📷 QR Code Generator</a></li>
-        <li><a href="../image-compressor/">🗜️ Image Compressor</a></li>
-        <li><a href="../word-counter/">🔤 Word Counter</a></li>
-        <li><a href="../password-generator/">🔐 Password Generator</a></li>
-        <li><a href="../age-calculator/">🎂 Age Calculator</a></li>
-        <li><a href="../unit-converter/">📏 Unit Converter</a></li>
-        <li><a href="../color-converter/">🎨 Color Converter</a></li>
-        <li><a href="../text-case-converter/">🔡 Text Case Converter</a></li>
-        <li><a href="../json-formatter/">🧩 JSON Formatter</a></li>
-        <li><a href="../pdf-merge/">📑 PDF Merge</a></li>
-        <li><a href="../pdf-split/">✂️ PDF Split</a></li>
-        <li><a href="../image-to-pdf/">📸 Image to PDF</a></li>
-        <li><a href="../bmi-calculator/">⚖️ BMI Calculator</a></li>
-        <li><a href="../emi-calculator/">🧮 EMI Calculator</a></li>
-        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
-        <li><a href="../image-resizer/">↔️ Image Resizer</a></li>
-        <li><a href="../base64-encoder-decoder/">🔢 Base64 Encoder / Decoder</a></li>
-        <li><a href="../date-difference-calculator/">📅 Date Difference Calculator</a></li>
-        <li><a href="../qr-reader/">🔎 QR Code Reader</a></li>
-        <li><a href="../background-remover/">🪄 AI Background Remover</a></li>
-        <li><a href="../lorem-ipsum-generator/">📝 Lorem Ipsum Generator</a></li>
-        <li><a href="../random-number-generator/">🎲 Random Number Generator</a></li>
-        <li><a href="../tip-calculator/">💸 Tip Calculator</a></li>
-        <li><a href="../url-encoder-decoder/">🔗 URL Encoder / Decoder</a></li>
-        <li><a href="../image-synthid-remover/">🧹 Image SynthID Remover</a></li>
-        <li><a href="../remove-duplicate-lines/">📋 Remove Duplicate Lines</a></li>
-        <li><a href="../audio-transcriber/">🎙️ AI Audio Transcriber</a></li>
-        <li><a href="../morse-code-translator/">📻 Morse Code Translator</a></li>
-        <li><a href="../uuid-generator/">🆔 UUID Generator</a></li>
-        <li><a href="../image-cropper/">🔲 Image Cropper</a></li>
+        <li><a href="../image-compressor/">Image Compressor</a></li>
+        <li><a href="../image-resizer/">Image Resizer</a></li>
+        <li><a href="../image-cropper/">Image Cropper</a></li>
+        <li><a href="../image-to-pdf/">Image to PDF</a></li>
+        <li><a href="../image-synthid-remover/">Image SynthID Remover</a></li>
 </ul></nav>
 </main>
 <footer class="site"><div class="foot-wrap">
-  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
-  <nav class="foot-nav">
-    <a href="../#ai-tools">AI Tools</a>
-    <a href="../#image-tools">Image Tools</a>
-    <a href="../#pdf-tools">PDF Tools</a>
-    <a href="../#calculators">Calculators</a>
-    <a href="../#text-tools">Text Tools</a>
-    <a href="../#converters">Converters</a>
-    <a href="../#generators">Generators</a>
-  </nav>
-  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
-  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6l-3.2 3.2-2.4-2.4 3.2-3.2a4.5 4.5 0 0 0-.6-.6z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>33 tools · New tools added regularly.</p></div>
 </div></footer>
 <script src="../assets/site.js"></script>
 </body>
