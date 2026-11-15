@@ -7,7 +7,7 @@
 <meta name="description" content="Free online tools for everyday tasks: QR generator, image compressor, word counter, password generator and more. No sign-up, files never leave your device.">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/design.css">
 <link rel="canonical" href="https://toolsdaily.vercel.app/">
 <meta property="og:site_name" content="ToolsDaily">
 <meta property="og:type" content="website">
@@ -39,170 +39,169 @@ gtag('config', 'G-KX85CZXTR4');
 </script>
 </head>
 <body>
+<a class="skip" href="#tools">Skip to tools</a>
 <header class="site"><div class="wrap">
-  <a class="logo" href="/"><span class="logo-mark">🧰</span> ToolsDaily</a>
+  <a class="logo" href="./" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6l-3.2 3.2-2.4-2.4 3.2-3.2a4.5 4.5 0 0 0-.6-.6z"/></svg></span> ToolsDaily</a>
   <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
-  <nav class="main-nav"><a href="/">All tools</a></nav>
-  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+  <nav class="main-nav" aria-label="Main"><a href="./">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </div></header>
 <main>
 <div class="hero">
-  <h1>Free Everyday Online Tools — Private, Fast, In-Browser</h1>
-  <p class="lead">Thirty-three handy tools for the things you do every day — fast, free, and completely private. Everything runs right in your browser.</p>
-  <div class="searchbox"><input type="text" id="tool-search" placeholder="🔍 Search 33 tools (try “compress”, “qr”, “pdf”, “json”, “synthid”)…" aria-label="Search tools"></div>
-  <div class="trust"><span>✅ 100% Free</span><span>🚫 No Sign-up</span><span>🔒 Files Never Leave Device</span><span>⚡ Instant Client-Side Execution</span></div>
+  <p class="eyebrow rise rise-1">33 free tools · No sign-up · Private by design</p>
+  <h1 class="rise rise-2">Everyday tools, <span class="accent">right in your browser.</span></h1>
+  <p class="lead rise rise-3">Thirty-three handy tools for the things you do every day — fast, free, and completely private. Everything runs on your device; nothing is ever uploaded.</p>
+  <div class="searchbox rise rise-4"><svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="text" id="tool-search" placeholder="Search 33 tools — try “compress”, “qr”, “pdf”, “json”, “synthid”…" aria-label="Search tools" autocomplete="off"></div>
+  <div class="trust rise rise-5"><span>100% free</span><span>No sign-up</span><span>Files never leave your device</span><span>Instant, client-side</span></div>
 </div>
 
-<div class="quick-access"><span class="qa-label">⭐ Quick Access:</span>
-  <a href="background-remover/">🪄 AI Background Remover</a>
-  <a href="image-compressor/">🗜️ Image Compressor</a>
-  <a href="pdf-merge/">📑 PDF Merge</a>
-  <a href="json-formatter/">🧩 JSON Formatter</a>
-  <a href="image-synthid-remover/">🧹 SynthID Remover</a>
+<div class="cat-chips" role="group" aria-label="Filter tools by category" id="tools">
+  <button type="button" class="cat-chip" data-filter="all" aria-pressed="true">All <span class="n">33</span></button>
+  <button type="button" class="cat-chip" data-filter="ai-tools" aria-pressed="false">AI Tools <span class="n">2</span></button>
+  <button type="button" class="cat-chip" data-filter="image-tools" aria-pressed="false">Image Tools <span class="n">6</span></button>
+  <button type="button" class="cat-chip" data-filter="pdf-tools" aria-pressed="false">PDF Tools <span class="n">3</span></button>
+  <button type="button" class="cat-chip" data-filter="calculators" aria-pressed="false">Calculators <span class="n">7</span></button>
+  <button type="button" class="cat-chip" data-filter="text-tools" aria-pressed="false">Text Tools <span class="n">6</span></button>
+  <button type="button" class="cat-chip" data-filter="converters" aria-pressed="false">Converters <span class="n">5</span></button>
+  <button type="button" class="cat-chip" data-filter="generators" aria-pressed="false">Generators <span class="n">4</span></button>
 </div>
 
-<nav class="cat-chips" aria-label="Tool categories">
-  <a class="cat-chip all" href="#">All <span class="n">33</span></a>
-  <a class="cat-chip" href="#ai-tools">🤖 AI Tools <span class="n">2</span></a>
-  <a class="cat-chip" href="#image-tools">🖼️ Image Tools <span class="n">6</span></a>
-  <a class="cat-chip" href="#pdf-tools">📄 PDF Tools <span class="n">3</span></a>
-  <a class="cat-chip" href="#calculators">🧮 Calculators <span class="n">7</span></a>
-  <a class="cat-chip" href="#text-tools">✍️ Text Tools <span class="n">6</span></a>
-  <a class="cat-chip" href="#converters">🔄 Converters <span class="n">5</span></a>
-  <a class="cat-chip" href="#generators">✨ Generators <span class="n">4</span></a>
-</nav>
-
-<section class="cat cat-ai" id="ai-tools">
-  <div class="cat-head"><span class="cat-ic">🤖</span><h2>AI Tools</h2><span class="cat-n">2 tools</span><span class="cat-desc">Local Browser Inference</span></div>
+<section class="cat" id="ai-tools" data-cat="ai-tools">
+  <div class="cat-head"><span class="cat-no">01</span><h2>AI Tools</h2><span class="cat-n">2 tools</span><span class="cat-desc">Local browser inference</span></div>
   <div class="grid">
-    <a class="tool-card" href="background-remover/" data-name="ai background remover remove background transparent png">
-      <div class="emoji">🪄</div><h3>AI Background Remover</h3><span class="card-badge">WebAssembly</span><p>Remove any photo's background with AI and download a transparent PNG — free, on your device.<span class="card-foot"><span class="card-meta">No server lag</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="audio-transcriber/" data-name="ai audio transcriber speech to text voice transcription whisper mp3 wav m4a convert audio subtitles srt">
-      <div class="emoji">🎙️</div><h3>AI Audio Transcriber</h3><span class="card-badge">WebAssembly</span><p>Turn voice memos, interviews and meetings into text with AI — free, on your device.<span class="card-foot"><span class="card-meta">~100 languages</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/background-remover/" data-name="ai background remover remove background transparent png">
+      <span class="card-kicker"><span class="card-no">01</span> AI</span><h3>AI Background Remover</h3><span class="card-badge">WebAssembly</span><p>Remove any photo's background with AI and download a transparent PNG — free, on your device.</p><span class="card-foot"><span class="card-meta">No server lag</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/audio-transcriber/" data-name="ai audio transcriber speech to text voice transcription whisper mp3 wav m4a convert audio subtitles srt">
+      <span class="card-kicker"><span class="card-no">02</span> AI</span><h3>AI Audio Transcriber</h3><span class="card-badge">WebAssembly</span><p>Turn voice memos, interviews and meetings into text with AI — free, on your device.</p><span class="card-foot"><span class="card-meta">~100 languages</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
-<section class="cat cat-image" id="image-tools">
-  <div class="cat-head"><span class="cat-ic">🖼️</span><h2>Image Tools</h2><span class="cat-n">6 tools</span><span class="cat-desc">Canvas &amp; WebGL processing</span></div>
+<section class="cat" id="image-tools" data-cat="image-tools">
+  <div class="cat-head"><span class="cat-no">02</span><h2>Image Tools</h2><span class="cat-n">6 tools</span><span class="cat-desc">Canvas &amp; WebGL processing</span></div>
   <div class="grid">
-    <a class="tool-card" href="image-compressor/" data-name="image compressor">
-      <div class="emoji">🗜️</div><h3>Image Compressor</h3><p>Shrink JPG and PNG images with a quality slider, right in your browser.<span class="card-foot"><span class="card-meta">Real-time preview</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="image-converter/" data-name="image converter">
-      <div class="emoji">🖼️</div><h3>Image Converter</h3><p>Convert images between PNG, JPEG and WebP formats instantly.<span class="card-foot"><span class="card-meta">Batch conversion</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="image-resizer/" data-name="image resizer resize image pixels percent">
-      <div class="emoji">↔️</div><h3>Image Resizer</h3><p>Resize images by width, height, exact size or percent, keeping the aspect ratio.<span class="card-foot"><span class="card-meta">High-DPI support</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="qr-reader/" data-name="qr code reader decode qr scan">
-      <div class="emoji">🔎</div><h3>QR Code Reader</h3><p>Upload a QR code image and decode its text or link instantly.<span class="card-foot"><span class="card-meta">Native Barcode API</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="image-synthid-remover/" data-name="image synthid remover metadata remover exif gps photo privacy strip c2pa">
-      <div class="emoji">🧹</div><h3>Image SynthID Remover</h3><span class="card-badge">Privacy</span><p>See the EXIF, GPS and C2PA data hiding in a photo — and download a clean copy with it all stripped.<span class="card-foot"><span class="card-meta">Zero watermarks</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="image-cropper/" data-name="image cropper crop photo aspect ratio square 16:9">
-      <div class="emoji">🔲</div><h3>Image Cropper</h3><p>Drag to crop any photo, lock it to an aspect ratio, or type exact pixel coordinates.<span class="card-foot"><span class="card-meta">Full resolution</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/image-compressor/" data-name="image compressor">
+      <span class="card-kicker"><span class="card-no">03</span> Image</span><h3>Image Compressor</h3><p>Shrink JPG and PNG images with a quality slider, right in your browser.</p><span class="card-foot"><span class="card-meta">Real-time preview</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/image-converter/" data-name="image converter">
+      <span class="card-kicker"><span class="card-no">04</span> Image</span><h3>Image Converter</h3><p>Convert images between PNG, JPEG and WebP formats instantly.</p><span class="card-foot"><span class="card-meta">Batch conversion</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-3" href="https://toolsdaily.vercel.app/image-resizer/" data-name="image resizer resize image pixels percent">
+      <span class="card-kicker"><span class="card-no">05</span> Image</span><h3>Image Resizer</h3><p>Resize images by width, height, exact size or percent, keeping the aspect ratio.</p><span class="card-foot"><span class="card-meta">High-DPI support</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-4" href="https://toolsdaily.vercel.app/qr-reader/" data-name="qr code reader decode qr scan">
+      <span class="card-kicker"><span class="card-no">06</span> Image</span><h3>QR Code Reader</h3><p>Upload a QR code image and decode its text or link instantly.</p><span class="card-foot"><span class="card-meta">Native Barcode API</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-5" href="https://toolsdaily.vercel.app/image-synthid-remover/" data-name="image synthid remover metadata remover exif gps photo privacy strip c2pa">
+      <span class="card-kicker"><span class="card-no">07</span> Image</span><h3>Image SynthID Remover</h3><span class="card-badge">Privacy</span><p>See the EXIF, GPS and C2PA data hiding in a photo — and download a clean copy with it all stripped.</p><span class="card-foot"><span class="card-meta">Zero watermarks</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-6" href="https://toolsdaily.vercel.app/image-cropper/" data-name="image cropper crop photo aspect ratio square 16:9">
+      <span class="card-kicker"><span class="card-no">08</span> Image</span><h3>Image Cropper</h3><p>Drag to crop any photo, lock it to an aspect ratio, or type exact pixel coordinates.</p><span class="card-foot"><span class="card-meta">Full resolution</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
-<section class="cat cat-pdf" id="pdf-tools">
-  <div class="cat-head"><span class="cat-ic">📄</span><h2>PDF Tools</h2><span class="cat-n">3 tools</span><span class="cat-desc">Direct PDF-lib assembly</span></div>
+<section class="cat" id="pdf-tools" data-cat="pdf-tools">
+  <div class="cat-head"><span class="cat-no">03</span><h2>PDF Tools</h2><span class="cat-n">3 tools</span><span class="cat-desc">Direct PDF-lib assembly</span></div>
   <div class="grid">
-    <a class="tool-card" href="pdf-merge/" data-name="pdf merge combine pdf">
-      <div class="emoji">📑</div><h3>PDF Merge</h3><p>Combine two or more PDF files into a single document.<span class="card-foot"><span class="card-meta">Drag &amp; reorder pages</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="pdf-split/" data-name="pdf split extract pages">
-      <div class="emoji">✂️</div><h3>PDF Split</h3><p>Extract a page range or single pages from a PDF into a new file.<span class="card-foot"><span class="card-meta">Lossless extraction</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="image-to-pdf/" data-name="image to pdf jpg png convert">
-      <div class="emoji">📸</div><h3>Image to PDF</h3><p>Turn JPG and PNG images into one PDF, one image per page.<span class="card-foot"><span class="card-meta">Custom margins &amp; fit</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/pdf-merge/" data-name="pdf merge combine pdf">
+      <span class="card-kicker"><span class="card-no">09</span> PDF</span><h3>PDF Merge</h3><p>Combine two or more PDF files into a single document.</p><span class="card-foot"><span class="card-meta">Drag &amp; reorder pages</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/pdf-split/" data-name="pdf split extract pages">
+      <span class="card-kicker"><span class="card-no">10</span> PDF</span><h3>PDF Split</h3><p>Extract a page range or single pages from a PDF into a new file.</p><span class="card-foot"><span class="card-meta">Lossless extraction</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-3" href="https://toolsdaily.vercel.app/image-to-pdf/" data-name="image to pdf jpg png convert">
+      <span class="card-kicker"><span class="card-no">11</span> PDF</span><h3>Image to PDF</h3><p>Turn JPG and PNG images into one PDF, one image per page.</p><span class="card-foot"><span class="card-meta">Custom margins &amp; fit</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
-<section class="cat cat-calc" id="calculators">
-  <div class="cat-head"><span class="cat-ic">🧮</span><h2>Calculators</h2><span class="cat-n">7 tools</span><span class="cat-desc">Instant computations</span></div>
+<section class="cat" id="calculators" data-cat="calculators">
+  <div class="cat-head"><span class="cat-no">04</span><h2>Calculators</h2><span class="cat-n">7 tools</span><span class="cat-desc">Instant computations</span></div>
   <div class="grid">
-    <a class="tool-card" href="age-calculator/" data-name="age calculator">
-      <div class="emoji">🎂</div><h3>Age Calculator</h3><p>Find your exact age in years, months and days, plus your next birthday.<span class="card-foot"><span class="card-meta">Next birthday countdown</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="bmi-calculator/" data-name="bmi calculator body mass index health">
-      <div class="emoji">⚖️</div><h3>BMI Calculator</h3><p>Check your Body Mass Index and the healthy weight range for your height.<span class="card-foot"><span class="card-meta">Metric &amp; Imperial</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="emi-calculator/" data-name="emi calculator loan monthly payment interest">
-      <div class="emoji">🧮</div><h3>EMI Calculator</h3><p>Work out a loan's monthly EMI, total interest and total repayment.<span class="card-foot"><span class="card-meta">Amortization chart</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="percentage-calculator/" data-name="percentage calculator percent change">
-      <div class="emoji">%</div><h3>Percentage Calculator</h3><p>Find percentages of numbers, ratios and percentage change.<span class="card-foot"><span class="card-meta">3 common formulas</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="date-difference-calculator/" data-name="date difference calculator days weeks months between dates">
-      <div class="emoji">📅</div><h3>Date Difference Calculator</h3><p>Find the days, weeks and calendar months between any two dates.<span class="card-foot"><span class="card-meta">Excludes holidays</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="tip-calculator/" data-name="tip calculator split bill restaurant gratuity">
-      <div class="emoji">💸</div><h3>Tip Calculator</h3><p>Work out the tip, the total bill and each person's share at the table.<span class="card-foot"><span class="card-meta">Even split slider</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="stopwatch-countdown-timer/" data-name="stopwatch countdown timer clock pomodoro lap">
-      <div class="emoji">⏱️</div><h3>Stopwatch &amp; Countdown Timer</h3><p>Time anything with a lap stopwatch, or count down with presets and an alarm.<span class="card-foot"><span class="card-meta">Lap times</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/age-calculator/" data-name="age calculator">
+      <span class="card-kicker"><span class="card-no">12</span> Calculator</span><h3>Age Calculator</h3><p>Find your exact age in years, months and days, plus your next birthday.</p><span class="card-foot"><span class="card-meta">Next birthday countdown</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/bmi-calculator/" data-name="bmi calculator body mass index health">
+      <span class="card-kicker"><span class="card-no">13</span> Calculator</span><h3>BMI Calculator</h3><p>Check your Body Mass Index and the healthy weight range for your height.</p><span class="card-foot"><span class="card-meta">Metric &amp; Imperial</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-3" href="https://toolsdaily.vercel.app/emi-calculator/" data-name="emi calculator loan monthly payment interest">
+      <span class="card-kicker"><span class="card-no">14</span> Calculator</span><h3>EMI Calculator</h3><p>Work out a loan's monthly EMI, total interest and total repayment.</p><span class="card-foot"><span class="card-meta">Amortization chart</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-4" href="https://toolsdaily.vercel.app/percentage-calculator/" data-name="percentage calculator percent change">
+      <span class="card-kicker"><span class="card-no">15</span> Calculator</span><h3>Percentage Calculator</h3><p>Find percentages of numbers, ratios and percentage change.</p><span class="card-foot"><span class="card-meta">3 common formulas</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-5" href="https://toolsdaily.vercel.app/date-difference-calculator/" data-name="date difference calculator days weeks months between dates">
+      <span class="card-kicker"><span class="card-no">16</span> Calculator</span><h3>Date Difference Calculator</h3><p>Find the days, weeks and calendar months between any two dates.</p><span class="card-foot"><span class="card-meta">Excludes holidays</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-6" href="https://toolsdaily.vercel.app/tip-calculator/" data-name="tip calculator split bill restaurant gratuity">
+      <span class="card-kicker"><span class="card-no">17</span> Calculator</span><h3>Tip Calculator</h3><p>Work out the tip, the total bill and each person's share at the table.</p><span class="card-foot"><span class="card-meta">Even split slider</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-7" href="https://toolsdaily.vercel.app/stopwatch-countdown-timer/" data-name="stopwatch countdown timer clock pomodoro lap">
+      <span class="card-kicker"><span class="card-no">18</span> Calculator</span><h3>Stopwatch &amp; Countdown Timer</h3><p>Time anything with a lap stopwatch, or count down with presets and an alarm.</p><span class="card-foot"><span class="card-meta">Lap times</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
-<section class="cat cat-text" id="text-tools">
-  <div class="cat-head"><span class="cat-ic">✍️</span><h2>Text Tools</h2><span class="cat-n">6 tools</span><span class="cat-desc">Client-side text editing</span></div>
+<section class="cat" id="text-tools" data-cat="text-tools">
+  <div class="cat-head"><span class="cat-no">05</span><h2>Text Tools</h2><span class="cat-n">6 tools</span><span class="cat-desc">Client-side text editing</span></div>
   <div class="grid">
-    <a class="tool-card" href="word-counter/" data-name="word counter">
-      <div class="emoji">🔤</div><h3>Word Counter</h3><p>Count words, characters, sentences and reading time as you type.<span class="card-foot"><span class="card-meta">Live syllable stats</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="text-case-converter/" data-name="text case converter">
-      <div class="emoji">🔡</div><h3>Text Case Converter</h3><p>Change text to UPPERCASE, Title Case, Sentence case and more.<span class="card-foot"><span class="card-meta">10+ case mutations</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="lorem-ipsum-generator/" data-name="lorem ipsum generator placeholder text dummy text">
-      <div class="emoji">📝</div><h3>Lorem Ipsum Generator</h3><p>Generate placeholder text by paragraphs, sentences or words for mockups and wireframes.<span class="card-foot"><span class="card-meta">HTML / Markdown copy</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="remove-duplicate-lines/" data-name="remove duplicate lines dedupe text lines unique">
-      <div class="emoji">📋</div><h3>Remove Duplicate Lines</h3><p>Paste text and drop duplicate lines, keeping the first occurrence — with sort, trim and case options.<span class="card-foot"><span class="card-meta">Instant line count</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="morse-code-translator/" data-name="morse code translator dots dashes telegraph sos encode decode audio beeps">
-      <div class="emoji">📻</div><h3>Morse Code Translator</h3><p>Convert text to Morse code and decode it back, with audio playback at any speed.<span class="card-foot"><span class="card-meta">Playable beeps</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="text-to-speech/" data-name="text to speech reader voice narrator speak aloud tts listen">
-      <div class="emoji">🗣️</div><h3>Text to Speech</h3><p>Type or paste any text and hear it read aloud — pick a voice, speed and pitch.<span class="card-foot"><span class="card-meta">Voices on your device</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/word-counter/" data-name="word counter">
+      <span class="card-kicker"><span class="card-no">19</span> Text</span><h3>Word Counter</h3><p>Count words, characters, sentences and reading time as you type.</p><span class="card-foot"><span class="card-meta">Live syllable stats</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/text-case-converter/" data-name="text case converter">
+      <span class="card-kicker"><span class="card-no">20</span> Text</span><h3>Text Case Converter</h3><p>Change text to UPPERCASE, Title Case, Sentence case and more.</p><span class="card-foot"><span class="card-meta">10+ case mutations</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-3" href="https://toolsdaily.vercel.app/lorem-ipsum-generator/" data-name="lorem ipsum generator placeholder text dummy text">
+      <span class="card-kicker"><span class="card-no">21</span> Text</span><h3>Lorem Ipsum Generator</h3><p>Generate placeholder text by paragraphs, sentences or words for mockups and wireframes.</p><span class="card-foot"><span class="card-meta">HTML / Markdown copy</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-4" href="https://toolsdaily.vercel.app/remove-duplicate-lines/" data-name="remove duplicate lines dedupe text lines unique">
+      <span class="card-kicker"><span class="card-no">22</span> Text</span><h3>Remove Duplicate Lines</h3><p>Paste text and drop duplicate lines, keeping the first occurrence — with sort, trim and case options.</p><span class="card-foot"><span class="card-meta">Instant line count</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-5" href="https://toolsdaily.vercel.app/morse-code-translator/" data-name="morse code translator dots dashes telegraph sos encode decode audio beeps">
+      <span class="card-kicker"><span class="card-no">23</span> Text</span><h3>Morse Code Translator</h3><p>Convert text to Morse code and decode it back, with audio playback at any speed.</p><span class="card-foot"><span class="card-meta">Playable beeps</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-6" href="https://toolsdaily.vercel.app/text-to-speech/" data-name="text to speech reader voice narrator speak aloud tts listen">
+      <span class="card-kicker"><span class="card-no">24</span> Text</span><h3>Text to Speech</h3><span class="card-badge">New look</span><p>Type or paste any text and hear it read aloud — pick a voice, speed and pitch. Now with WAV download.</p><span class="card-foot"><span class="card-meta">Voices on your device</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
-<section class="cat cat-conv" id="converters">
-  <div class="cat-head"><span class="cat-ic">🔄</span><h2>Converters</h2><span class="cat-n">5 tools</span><span class="cat-desc">Format encoders &amp; units</span></div>
+<section class="cat" id="converters" data-cat="converters">
+  <div class="cat-head"><span class="cat-no">06</span><h2>Converters</h2><span class="cat-n">5 tools</span><span class="cat-desc">Format encoders &amp; units</span></div>
   <div class="grid">
-    <a class="tool-card" href="unit-converter/" data-name="unit converter">
-      <div class="emoji">📏</div><h3>Unit Converter</h3><p>Convert length, weight and temperature units in one click.<span class="card-foot"><span class="card-meta">Real-time sync</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="color-converter/" data-name="color converter">
-      <div class="emoji">🎨</div><h3>Color Converter</h3><p>Convert colors between HEX, RGB, HSL and HSV formats.<span class="card-foot"><span class="card-meta">Eye dropper picker</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="base64-encoder-decoder/" data-name="base64 encoder decoder encode decode text file">
-      <div class="emoji">🔢</div><h3>Base64 Encoder / Decoder</h3><p>Encode text or files to Base64, or decode Base64 back to text or a file.<span class="card-foot"><span class="card-meta">Binary safe</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="json-formatter/" data-name="json formatter">
-      <div class="emoji">🧩</div><h3>JSON Formatter</h3><span class="card-badge">Tree View</span><p>Format, minify and validate JSON with clear error messages.<span class="card-foot"><span class="card-meta">Syntax highlighting</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="url-encoder-decoder/" data-name="url encoder decoder encode decode percent encoding">
-      <div class="emoji">🔗</div><h3>URL Encoder / Decoder</h3><p>Encode text for safe use in URLs, or decode percent-encoded URLs back to readable text.<span class="card-foot"><span class="card-meta">RFC 3986 support</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/unit-converter/" data-name="unit converter">
+      <span class="card-kicker"><span class="card-no">25</span> Converter</span><h3>Unit Converter</h3><p>Convert length, weight and temperature units in one click.</p><span class="card-foot"><span class="card-meta">Real-time sync</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/color-converter/" data-name="color converter">
+      <span class="card-kicker"><span class="card-no">26</span> Converter</span><h3>Color Converter</h3><p>Convert colors between HEX, RGB, HSL and HSV formats.</p><span class="card-foot"><span class="card-meta">Eye dropper picker</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-3" href="https://toolsdaily.vercel.app/base64-encoder-decoder/" data-name="base64 encoder decoder encode decode text file">
+      <span class="card-kicker"><span class="card-no">27</span> Converter</span><h3>Base64 Encoder / Decoder</h3><p>Encode text or files to Base64, or decode Base64 back to text or a file.</p><span class="card-foot"><span class="card-meta">Binary safe</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-4" href="https://toolsdaily.vercel.app/json-formatter/" data-name="json formatter">
+      <span class="card-kicker"><span class="card-no">28</span> Converter</span><h3>JSON Formatter</h3><span class="card-badge">Tree View</span><p>Format, minify and validate JSON with clear error messages.</p><span class="card-foot"><span class="card-meta">Syntax highlighting</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-5" href="https://toolsdaily.vercel.app/url-encoder-decoder/" data-name="url encoder decoder encode decode percent encoding">
+      <span class="card-kicker"><span class="card-no">29</span> Converter</span><h3>URL Encoder / Decoder</h3><p>Encode text for safe use in URLs, or decode percent-encoded URLs back to readable text.</p><span class="card-foot"><span class="card-meta">RFC 3986 support</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
-<section class="cat cat-gen" id="generators">
-  <div class="cat-head"><span class="cat-ic">✨</span><h2>Generators</h2><span class="cat-n">4 tools</span><span class="cat-desc">Entropy &amp; random generation</span></div>
+<section class="cat" id="generators" data-cat="generators">
+  <div class="cat-head"><span class="cat-no">07</span><h2>Generators</h2><span class="cat-n">4 tools</span><span class="cat-desc">Entropy &amp; random generation</span></div>
   <div class="grid">
-    <a class="tool-card" href="qr-generator/" data-name="qr code generator">
-      <div class="emoji">📷</div><h3>QR Code Generator</h3><p>Turn any text or link into a QR code and download it as a PNG.<span class="card-foot"><span class="card-meta">Custom colors &amp; logos</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="password-generator/" data-name="password generator">
-      <div class="emoji">🔐</div><h3>Password Generator</h3><span class="card-badge">Crypto API</span><p>Create strong random passwords with a secure random generator.<span class="card-foot"><span class="card-meta">Zero storage</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="random-number-generator/" data-name="random number generator picker dice raffle draw">
-      <div class="emoji">🎲</div><h3>Random Number Generator</h3><p>Pick random numbers in any range, with unique-only and sort options.<span class="card-foot"><span class="card-meta">Export to CSV</span><span class="open">Open Tool →</span></span></p></a>
-    <a class="tool-card" href="uuid-generator/" data-name="uuid generator unique identifier guid bulk v4 v1 random">
-      <div class="emoji">🆔</div><h3>UUID Generator</h3><p>Generate one or hundreds of unique IDs (UUID v4 or v1) — copy or download as text.<span class="card-foot"><span class="card-meta">Bulk up to 1,000</span><span class="open">Open Tool →</span></span></p></a>
+    <a class="tool-card rise rise-1" href="https://toolsdaily.vercel.app/qr-generator/" data-name="qr code generator">
+      <span class="card-kicker"><span class="card-no">30</span> Generator</span><h3>QR Code Generator</h3><p>Turn any text or link into a QR code and download it as a PNG.</p><span class="card-foot"><span class="card-meta">Custom colors &amp; logos</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-2" href="https://toolsdaily.vercel.app/password-generator/" data-name="password generator">
+      <span class="card-kicker"><span class="card-no">31</span> Generator</span><h3>Password Generator</h3><span class="card-badge">Crypto API</span><p>Create strong random passwords with a secure random generator.</p><span class="card-foot"><span class="card-meta">Zero storage</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-3" href="https://toolsdaily.vercel.app/random-number-generator/" data-name="random number generator picker dice raffle draw">
+      <span class="card-kicker"><span class="card-no">32</span> Generator</span><h3>Random Number Generator</h3><p>Pick random numbers in any range, with unique-only and sort options.</p><span class="card-foot"><span class="card-meta">Export to CSV</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
+    <a class="tool-card rise rise-4" href="https://toolsdaily.vercel.app/uuid-generator/" data-name="uuid generator unique identifier guid bulk v4 v1 random">
+      <span class="card-kicker"><span class="card-no">33</span> Generator</span><h3>UUID Generator</h3><p>Generate one or hundreds of unique IDs (UUID v4 or v1) — copy or download as text.</p><span class="card-foot"><span class="card-meta">Bulk up to 1,000</span><span class="open">Open tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a>
   </div>
 </section>
 
 <p id="no-results" class="hidden">No tools match your search. Try a different word.</p>
 
-<section class="why"><p class="why-eyebrow">Local-First Architecture</p><h2>Why ToolsDaily?</h2>
-<p>Every tool on this page runs entirely in your web browser. That means no uploads, no waiting for a server, and no accounts to create — your photos, documents and text stay on your device. Bookmark this page and your everyday toolbox is always one click away.</p>
-<div class="why-grid">
-  <div class="why-card"><h3>🛡️ 100% Client-Side Privacy</h3><p>Files and inputs never touch an external server or cloud bucket. Compute is distributed directly to your device via HTML5 Canvas, Web Workers, and WebAssembly.</p><span class="why-tag">● Verified Zero Telemetry</span></div>
-  <div class="why-card"><h3>⚡ Instant Execution</h3><p>No queue times, upload bottlenecks, or server timeouts. Whether converting a 50MB image or running regex replacement, operations complete in milliseconds.</p><span class="why-tag">● Native Speed</span></div>
-  <div class="why-card"><h3>🎉 Always Accessible</h3><p>Completely free forever with zero sign-ups, credit cards, or subscription tiers. Just open the page and your everyday toolbox is ready — on any modern browser.</p><span class="why-tag">● No Account Needed</span></div>
-</div></section>
+<section class="why">
+  <p class="eyebrow">Local-first architecture</p>
+  <h2>Why ToolsDaily?</h2>
+  <p>Every tool on this page runs entirely in your web browser. That means no uploads, no waiting for a server, and no accounts to create — your photos, documents and text stay on your device. Bookmark this page and your everyday toolbox is always one click away.</p>
+  <div class="why-grid">
+    <div class="why-item"><span class="why-no">01</span><h3>100% client-side privacy</h3><p>Files and inputs never touch an external server or cloud bucket. Compute is distributed directly to your device via HTML5 Canvas, Web Workers, and WebAssembly.</p><span class="why-tag">Verified zero telemetry</span></div>
+    <div class="why-item"><span class="why-no">02</span><h3>Instant execution</h3><p>No queue times, upload bottlenecks, or server timeouts. Whether converting a 50MB image or running regex replacement, operations complete in milliseconds.</p><span class="why-tag">Native speed</span></div>
+    <div class="why-item"><span class="why-no">03</span><h3>Always accessible</h3><p>Completely free forever with zero sign-ups, credit cards, or subscription tiers. Just open the page and your everyday toolbox is ready — on any modern browser.</p><span class="why-tag">No account needed</span></div>
+  </div>
+</section>
 </main>
 <footer class="site"><div class="foot-wrap">
-  <p class="foot-brand">🧰 <strong>ToolsDaily</strong> — free tools for everyday tasks.</p>
-  <nav class="foot-nav">
-    <a href="#ai-tools">AI Tools</a>
-    <a href="#image-tools">Image Tools</a>
-    <a href="#pdf-tools">PDF Tools</a>
-    <a href="#calculators">Calculators</a>
-    <a href="#text-tools">Text Tools</a>
-    <a href="#converters">Converters</a>
-    <a href="#generators">Generators</a>
-  </nav>
-  <p>🔒 Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
-  <p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p>
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6l-3.2 3.2-2.4-2.4 3.2-3.2a4.5 4.5 0 0 0-.6-.6z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="#ai-tools">AI Tools</a>
+      <a href="#image-tools">Image Tools</a>
+      <a href="#pdf-tools">PDF Tools</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#text-tools">Text Tools</a>
+      <a href="#converters">Converters</a>
+      <a href="#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>33 tools · New tools added regularly.</p></div>
 </div></footer>
 <script src="assets/site.js"></script>
 </body>
