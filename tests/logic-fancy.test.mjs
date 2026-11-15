@@ -61,16 +61,16 @@ console.log('FANCY STATIC');
   const related = ['word-counter', 'text-case-converter', 'lorem-ipsum-generator', 'remove-duplicate-lines', 'morse-code-translator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'fancy: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 34 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/fancy-text-generator/'), 'sitemap includes fancy-text-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
   ok(home.includes('/fancy-text-generator/'), 'home cards + nav include fancy-text-generator');
-  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-four tools');
   ok(home.includes('Text Tools <span class="n">7</span>'), 'home Text Tools chip says 7');
   ok(home.includes('<span class="cat-n">7 tools</span>'), 'home Text Tools section says 7 tools');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
-  ok(llms.includes('browse all 34 free tools'), 'llms.txt says 34 tools');
+  ok(llms.includes('browse all 38 free tools'), 'llms.txt says 34 tools');
   ok(llms.includes('https://toolsdaily.vercel.app/fancy-text-generator/'), 'llms.txt lists fancy-text-generator');
 }
 
