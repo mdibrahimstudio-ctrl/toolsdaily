@@ -57,14 +57,15 @@ console.log('DATEDIFF STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `datediff: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'qr-reader'];
-  ok(others.every((s) => html.includes(`href="../${s}/"`)), 'datediff: More-tools nav links all other 18 tools');
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['age-calculator', 'stopwatch-countdown-timer', 'percentage-calculator', 'bmi-calculator', 'emi-calculator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'datediff: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/date-difference-calculator/'), 'sitemap includes date-difference-calculator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="date-difference-calculator/"'), 'home cards + nav include date-difference-calculator');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/date-difference-calculator/'), 'home cards + nav include date-difference-calculator');
 }
 
 console.log('DATEDIFF CORE + UI');

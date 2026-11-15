@@ -306,13 +306,16 @@ console.log('HOME');
 {
   const dom = await loadPage('');
   const w = dom.window;
-  ok(w.document.querySelectorAll('.tool-card').length === 33, 'home lists exactly 33 tool cards');
+  ok(w.document.querySelectorAll('.tool-card').length === 34, 'home lists exactly 34 tool cards');
   setVal(w, '#tool-search', 'password');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   const visible = [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'password-generator/', 'search "password" filters to 1 card');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/password-generator/', 'search "password" filters to 1 card');
   setVal(w, '#tool-search', 'zzzz');
+  await sleep(200);
   ok(!w.document.querySelector('#no-results').classList.contains('hidden'), 'no-match search shows the empty note');
   setVal(w, '#tool-search', '');
+  await sleep(200);
   ok([...w.document.querySelectorAll('.tool-card')].every((c) => !c.classList.contains('hidden')), 'clearing search restores all cards');
   dom.window.close();
 }

@@ -66,14 +66,15 @@ console.log('BASE64 STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `base64: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'date-difference-calculator', 'qr-reader'];
-  ok(others.every((s) => html.includes(`href="../${s}/"`)), 'base64: More-tools nav links all other 18 tools');
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['url-encoder-decoder', 'json-formatter', 'unit-converter', 'color-converter'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'base64: More-tools nav links exactly its 4 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="base64-encoder-decoder/"'), 'home cards + nav include base64-encoder-decoder');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/base64-encoder-decoder/'), 'home cards + nav include base64-encoder-decoder');
 }
 
 console.log('BASE64 CORE + UI');
@@ -110,14 +111,14 @@ console.log('BASE64 CORE + UI');
   w.document.querySelector('#btn-file-encode').click();
   await sleep(400);
   ok(w.document.querySelector('#file-out').value === 'aGVsbG8=', 'UI file encode: "hello" -> aGVsbG8=');
-  ok(!w.document.querySelector('#file-dl').classList.contains('hidden'), 'file encode reveals the .txt download link');
+  ok(w.document.querySelector('#file-dl').classList.contains('hidden'), 'file encode keeps the .txt download anchor hidden — the visible button is the only affordance');
   ok(w.document.querySelector('#file-dl').getAttribute('download') === 'hello.txt.base64.txt', 'file download name is hello.txt.base64.txt');
   // UI: base64 -> file
   setVal(w, '#b64-in', 'aGVsbG8=');
   setVal(w, '#dl-name', 'hello.txt');
   w.document.querySelector('#btn-b64-decode').click();
   await sleep(200);
-  ok(!w.document.querySelector('#b64-dl').classList.contains('hidden'), 'base64 decode reveals the file download link');
+  ok(w.document.querySelector('#b64-dl').classList.contains('hidden'), 'base64 decode keeps the file download anchor hidden — the visible button is the only affordance');
   ok(w.document.querySelector('#b64-dl').getAttribute('download') === 'hello.txt', 'decoded download uses the typed filename');
   ok(w.document.querySelector('#b64-msg').textContent.includes('5 bytes'), 'base64 decode message reports 5 bytes');
   setVal(w, '#b64-in', '!!!');

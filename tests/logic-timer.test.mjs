@@ -58,20 +58,21 @@ console.log('TIMER STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `timer: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines', 'audio-transcriber', 'morse-code-translator', 'uuid-generator'];
-  ok(others.length === 30 && others.every((s) => html.includes(`href="../${s}/"`)), 'timer: More-tools nav links all other 30 tools');
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['date-difference-calculator', 'age-calculator', 'percentage-calculator', 'tip-calculator', 'bmi-calculator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'timer: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'sitemap includes stopwatch-countdown-timer');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="stopwatch-countdown-timer/"'), 'home cards + nav include stopwatch-countdown-timer');
-  ok(home.includes('Thirty-three handy tools'), 'home lead says Thirty-three tools');
-  ok(home.includes('Search 33 tools'), 'home search placeholder says 33 tools');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/stopwatch-countdown-timer/'), 'home cards + nav include stopwatch-countdown-timer');
+  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Search 34 tools'), 'home search placeholder says 34 tools');
   ok(home.includes('Calculators <span class="n">7</span>'), 'home Calculators chip says 7');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 33 free tools'), 'llms.txt says 33 tools');
+  ok(llms.includes('browse all 34 free tools'), 'llms.txt says 34 tools');
 }
 
 console.log('TIMER CORE');
@@ -267,12 +268,12 @@ console.log('TIMER UI');
   await sleep(1300);
   ok(w.document.querySelector('#cd-display').textContent === '00:00', 'UI countdown: display reaches 00:00');
   ok(w.document.querySelector('#cd-msg').textContent === "Time's up!" && w.document.querySelector('#cd-msg').className === 'msg ok', 'UI countdown: "Time\'s up!" message shown');
-  ok(w.document.querySelector('#cd-bar').style.width === '0%', 'UI countdown: progress bar at 0% when finished');
+  ok(w.document.querySelector('#cd-bar').style.transform === 'scaleX(0)', 'UI countdown: progress bar at 0% when finished');
   ok(w.document.querySelector('#cd-display').classList.contains('done'), 'UI countdown: display marked done');
   ok(w.document.querySelector('#cd-start').textContent === 'Start', 'UI countdown: button back to Start after finishing');
   // Reset after finishing restores the 1-second duration.
   w.document.querySelector('#cd-reset').click();
-  ok(w.document.querySelector('#cd-display').textContent === '00:01' && w.document.querySelector('#cd-bar').style.width === '100%', 'UI countdown reset: display 00:01, bar back to 100%');
+  ok(w.document.querySelector('#cd-display').textContent === '00:01' && w.document.querySelector('#cd-bar').style.transform === 'scaleX(1)', 'UI countdown reset: display 00:01, bar back to 100%');
   // Zero duration errors instead of starting.
   setVal(w, '#cd-seconds', '0');
   w.document.querySelector('#cd-start').click();
@@ -285,17 +286,21 @@ console.log('TIMER UI');
   const homeDom = await loadPage('');
   const hw = homeDom.window;
   setVal(hw, '#tool-search', 'timer');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   let visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'stopwatch-countdown-timer/', 'home search "timer" finds the new tool');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/stopwatch-countdown-timer/', 'home search "timer" finds the new tool');
   setVal(hw, '#tool-search', 'stopwatch');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'stopwatch-countdown-timer/', 'home search "stopwatch" finds the new tool');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/stopwatch-countdown-timer/', 'home search "stopwatch" finds the new tool');
   setVal(hw, '#tool-search', 'pomodoro');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'stopwatch-countdown-timer/', 'home search "pomodoro" finds the new tool');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/stopwatch-countdown-timer/', 'home search "pomodoro" finds the new tool');
   setVal(hw, '#tool-search', 'calculator');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 6, 'home search "calculator" still finds exactly 6 (new tool is not a calculator)');
+  ok(visible.length === 7, 'home search "calculator" finds all 7 Calculators (v2 kicker labels make section membership searchable)');
   homeDom.window.close();
   dom.window.close();
 }

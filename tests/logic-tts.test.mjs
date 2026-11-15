@@ -139,23 +139,24 @@ console.log('TTS STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `tts: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines', 'audio-transcriber', 'morse-code-translator', 'uuid-generator', 'stopwatch-countdown-timer'];
-  ok(others.length === 31 && others.every((s) => html.includes(`href="../${s}/"`)), 'tts: More-tools nav links all other 31 tools');
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['audio-transcriber', 'word-counter', 'text-case-converter', 'lorem-ipsum-generator', 'remove-duplicate-lines', 'fancy-text-generator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'tts: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 34 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/text-to-speech/'), 'sitemap includes text-to-speech');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="text-to-speech/"'), 'home cards + nav include text-to-speech');
-  ok(home.includes('Thirty-three handy tools'), 'home lead says Thirty-three tools');
-  ok(home.includes('Search 33 tools'), 'home search placeholder says 33 tools');
-  ok(home.includes('Text Tools <span class="n">6</span>'), 'home Text Tools chip says 6');
-  ok(home.includes('All <span class="n">33</span>'), 'home All chip says 33');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/text-to-speech/'), 'home cards + nav include text-to-speech');
+  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Search 34 tools'), 'home search placeholder says 34 tools');
+  ok(home.includes('Text Tools <span class="n">7</span>'), 'home Text Tools chip says 7');
+  ok(home.includes('All <span class="n">34</span>'), 'home All chip says 34');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/text-to-speech/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 33 free tools'), 'llms.txt says 33 tools');
+  ok(llms.includes('browse all 34 free tools'), 'llms.txt says 34 tools');
   // Download WAV UI (2026-11-14).
-  ok(html.includes('<button id="download" type="button" class="secondary">⬇️ Download WAV</button>'), 'tts: Download WAV button present (secondary style, after Stop)');
+  ok(html.includes('<button id="download" type="button" class="secondary">') && html.includes('Download WAV</button>') && html.indexOf('id="stop"') < html.indexOf('id="download"'), 'tts: Download WAV button present (secondary style, after Stop)');
   ok(html.includes('id="dl-barwrap"') && html.includes('id="dl-bar"'), 'tts: download progress bar present');
   ok(html.includes('class="dl-note"') && html.includes('Kokoro AI voice') && html.includes('88'), 'tts: download note names the Kokoro voice + ~88 MB model');
   ok(html.includes('Download uses the Kokoro AI voice (American English)'), 'tts: download note states the English-only Kokoro voice');
@@ -378,9 +379,9 @@ console.log('TTS DOWNLOAD UI (mocked worker)');
   // Double-click while busy is ignored.
   q('#download').click();
   ok(cap.created.length === 1 && worker.posted.length === 1, 'dl: second click while busy is ignored');
-  // Progress: bar width follows the aggregate.
+  // Progress: bar transform follows the aggregate (v2 uses scaleX, not width).
   worker.deliver({ type: 'progress', file: 'model_quantized.onnx', loaded: 46 * 1024 * 1024, total: 92 * 1024 * 1024 });
-  ok(q('#dl-bar').style.width === '50%', 'dl: bar shows 50% after half the model');
+  ok(q('#dl-bar').style.transform === 'scaleX(0.5)', 'dl: bar shows 50% after half the model');
   ok(q('#status').textContent.includes('Downloading the AI voice model'), 'dl: status shows model-download progress');
   // Ready: run posted with the text + clamped speed.
   worker.deliver({ type: 'ready' });

@@ -56,23 +56,27 @@ console.log('TRANSCRIBER STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `transcriber: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines'];
-  ok(others.length === 27 && others.every((s) => html.includes(`href="../${s}/"`)), 'transcriber: More-tools nav links all other 27 tools');
-  // Cross-linking: every other tool page links back here (bg-remover pattern).
-  let linked = 0;
-  for (const s of others) {
-    if (fs.readFileSync(path.join(SITE, s, 'index.html'), 'utf8').includes('href="../audio-transcriber/"')) linked++;
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['text-to-speech', 'background-remover', 'word-counter', 'text-case-converter'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'transcriber: More-tools nav links exactly its 4 related tools');
+  // Cross-linking: only the related pages link back here (related-tools internal linking).
+  const linkers = [];
+  for (const dir of fs.readdirSync(SITE, { withFileTypes: true })) {
+    if (!dir.isDirectory() || dir.name === 'assets' || dir.name === 'tests' || dir.name === 'audio-transcriber') continue;
+    const p = path.join(SITE, dir.name, 'index.html');
+    if (!fs.existsSync(p)) continue;
+    if (fs.readFileSync(p, 'utf8').includes('href="../audio-transcriber/"')) linkers.push(dir.name);
   }
-  ok(linked === 27, `transcriber: cross-linked from ${linked}/27 other tool pages`);
+  ok(JSON.stringify(linkers.sort()) === JSON.stringify(['background-remover', 'text-to-speech', 'word-counter']), `transcriber: cross-linked from ${linkers.length} related pages (${linkers.join(', ')})`);
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/audio-transcriber/'), 'sitemap includes audio-transcriber');
   ok(/audio-transcriber\/<\/loc>\s*<lastmod>2026-11-10<\/lastmod>/.test(sitemap), 'sitemap audio-transcriber lastmod is 2026-11-10');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="audio-transcriber/"'), 'home card links audio-transcriber');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/audio-transcriber/'), 'home card links audio-transcriber');
   ok(home.includes('AI Audio Transcriber</h3>'), 'home has the transcriber card');
-  ok(home.includes('Thirty-three handy tools'), 'home lead says Thirty-three tools');
+  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
   const vj = JSON.parse(fs.readFileSync(path.join(SITE, 'vercel.json'), 'utf8'));
   const all = JSON.stringify(vj);
   ok(all.includes('/audio-transcriber'), 'vercel.json has COOP/COEP for /audio-transcriber');

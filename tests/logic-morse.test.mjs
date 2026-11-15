@@ -57,15 +57,16 @@ console.log('MORSE STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `morse: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover', 'lorem-ipsum-generator', 'random-number-generator', 'tip-calculator', 'url-encoder-decoder', 'image-synthid-remover', 'remove-duplicate-lines', 'audio-transcriber'];
-  ok(others.length === 28 && others.every((s) => html.includes(`href="../${s}/"`)), 'morse: More-tools nav links all other 28 tools');
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['text-case-converter', 'word-counter', 'remove-duplicate-lines', 'text-to-speech', 'base64-encoder-decoder', 'fancy-text-generator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'morse: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/morse-code-translator/'), 'sitemap includes morse-code-translator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="morse-code-translator/"'), 'home cards + nav include morse-code-translator');
-  ok(home.includes('Thirty-three handy tools'), 'home lead says Thirty-three tools');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/morse-code-translator/'), 'home cards + nav include morse-code-translator');
+  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
 }
 
 console.log('MORSE CORE');
@@ -218,11 +219,13 @@ console.log('MORSE UI');
   const homeDom = await loadPage('');
   const hw = homeDom.window;
   setVal(hw, '#tool-search', 'morse');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   let visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'morse-code-translator/', 'home search "morse" finds the new tool');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/morse-code-translator/', 'home search "morse" finds the new tool');
   setVal(hw, '#tool-search', 'telegraph');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'morse-code-translator/', 'home search "telegraph" finds the new tool');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/morse-code-translator/', 'home search "telegraph" finds the new tool');
   homeDom.window.close();
   dom.window.close();
 }

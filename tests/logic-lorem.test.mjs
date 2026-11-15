@@ -58,14 +58,15 @@ console.log('LOREM STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `lorem: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter', 'pdf-merge', 'pdf-split', 'image-to-pdf', 'bmi-calculator', 'emi-calculator', 'percentage-calculator', 'image-resizer', 'base64-encoder-decoder', 'date-difference-calculator', 'qr-reader', 'background-remover'];
-  ok(others.every((s) => html.includes(`href="../${s}/"`)), 'lorem: More-tools nav links all other 21 tools');
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  const related = ['word-counter', 'text-case-converter', 'remove-duplicate-lines', 'text-to-speech', 'morse-code-translator', 'fancy-text-generator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'lorem: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/lorem-ipsum-generator/'), 'sitemap includes lorem-ipsum-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(home.includes('href="lorem-ipsum-generator/"'), 'home cards + nav include lorem-ipsum-generator');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(home.includes('/lorem-ipsum-generator/'), 'home cards + nav include lorem-ipsum-generator');
 }
 
 console.log('LOREM CORE');
@@ -170,8 +171,9 @@ console.log('LOREM UI');
   const homeDom = await loadPage('');
   const hw = homeDom.window;
   setVal(hw, '#tool-search', 'lorem');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   const visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'lorem-ipsum-generator/', 'home search "lorem" finds the new tool');
+  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/lorem-ipsum-generator/', 'home search "lorem" finds the new tool');
   homeDom.window.close();
   dom.window.close();
 }

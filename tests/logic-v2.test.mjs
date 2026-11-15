@@ -61,6 +61,31 @@ const NEW_PAGES = [
   { slug: 'percentage-calculator', name: 'Percentage Calculator' },
 ];
 const OLD_SLUGS = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter'];
+// Related-tools internal linking (2026-11-15): each page's More-tools nav links
+// only its same-category / most-related tools (4-6), not every tool on the site.
+const RELATED = {
+  'pdf-merge': ['pdf-split', 'image-to-pdf', 'image-converter', 'image-compressor'],
+  'pdf-split': ['pdf-merge', 'image-to-pdf', 'image-converter', 'image-compressor'],
+  'image-to-pdf': ['pdf-merge', 'pdf-split', 'image-converter', 'image-compressor', 'image-resizer'],
+  'bmi-calculator': ['age-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator', 'date-difference-calculator'],
+  'emi-calculator': ['percentage-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'date-difference-calculator'],
+  'percentage-calculator': ['emi-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'unit-converter'],
+  'qr-generator': ['qr-reader', 'password-generator', 'random-number-generator', 'uuid-generator', 'url-encoder-decoder'],
+  'image-compressor': ['image-converter', 'image-resizer', 'image-cropper', 'image-synthid-remover', 'background-remover'],
+  'image-converter': ['image-compressor', 'image-resizer', 'image-cropper', 'image-to-pdf', 'image-synthid-remover'],
+  'word-counter': ['text-case-converter', 'remove-duplicate-lines', 'lorem-ipsum-generator', 'text-to-speech', 'morse-code-translator', 'fancy-text-generator'],
+  'password-generator': ['uuid-generator', 'random-number-generator', 'qr-generator', 'base64-encoder-decoder'],
+  'age-calculator': ['date-difference-calculator', 'bmi-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator'],
+  'unit-converter': ['color-converter', 'base64-encoder-decoder', 'json-formatter', 'url-encoder-decoder'],
+  'color-converter': ['unit-converter', 'base64-encoder-decoder', 'json-formatter', 'url-encoder-decoder', 'image-converter'],
+  'text-case-converter': ['word-counter', 'remove-duplicate-lines', 'lorem-ipsum-generator', 'text-to-speech', 'morse-code-translator', 'fancy-text-generator'],
+  'json-formatter': ['base64-encoder-decoder', 'url-encoder-decoder', 'unit-converter', 'color-converter', 'uuid-generator'],
+  'image-resizer': ['image-compressor', 'image-converter', 'image-cropper', 'image-synthid-remover', 'background-remover'],
+};
+const navLinksExactly = (html, related) => {
+  const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
+  return (nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`));
+};
 for (const { slug, name } of NEW_PAGES) {
   const html = fs.readFileSync(path.join(SITE, slug, 'index.html'), 'utf8');
   const canon = `https://toolsdaily.vercel.app/${slug}/`;
@@ -81,23 +106,22 @@ for (const { slug, name } of NEW_PAGES) {
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `${slug}: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const navHrefs = OLD_SLUGS.concat(NEW_PAGES.map((p) => p.slug)).filter((s) => s !== slug);
-  ok(navHrefs.every((s) => html.includes(`href="../${s}/"`)), `${slug}: More-tools nav links all other 15 tools`);
+  ok(navLinksExactly(html, RELATED[slug]), `${slug}: More-tools nav links exactly its ${RELATED[slug].length} related tools`);
 }
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 34, 'sitemap.xml has 33 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
   ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 6 new tools');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-resizer/'), 'sitemap includes image-resizer');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card"/g) || []).length === 33, 'home has exactly 33 tool cards');
-  ok(NEW_PAGES.every(({ slug }) => home.includes(`href="${slug}/"`)), 'home cards + nav include all 6 new tools');
-  ok(home.includes('href="image-resizer/"'), 'home cards + nav include image-resizer');
-  ok(home.includes('href="base64-encoder-decoder/"'), 'home cards + nav include base64-encoder-decoder');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok(NEW_PAGES.every(({ slug }) => home.includes(`/${slug}/`)), 'home cards + nav include all 6 new tools');
+  ok(home.includes('/image-resizer/'), 'home cards + nav include image-resizer');
+  ok(home.includes('/base64-encoder-decoder/'), 'home cards + nav include base64-encoder-decoder');
   for (const slug of OLD_SLUGS) {
     const html = fs.readFileSync(path.join(SITE, slug, 'index.html'), 'utf8');
-    ok(NEW_PAGES.every(({ slug: ns }) => html.includes(`href="../${ns}/"`)), `${slug}: More-tools nav now links the 6 new tools`);
+    ok(navLinksExactly(html, RELATED[slug]), `${slug}: More-tools nav links exactly its ${RELATED[slug].length} related tools`);
   }
 }
 
@@ -107,15 +131,19 @@ console.log('HOME SEARCH');
   const dom = await loadPage('');
   const w = dom.window;
   const visibleCount = () => [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden')).length;
-  ok(visibleCount() === 33, 'home shows 33 cards before searching');
+  ok(visibleCount() === 34, 'home shows 34 cards before searching');
   setVal(w, '#tool-search', 'pdf');
+  await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   ok(visibleCount() === 3, 'search "pdf" filters to the 3 PDF tools');
   setVal(w, '#tool-search', 'calculator');
-  ok(visibleCount() === 6, 'search "calculator" finds age, bmi, emi, percentage, date-difference, tip (6)');
+  await sleep(200);
+  ok(visibleCount() === 7, 'search "calculator" finds the 7 Calculators (v2 kicker labels make section membership searchable)');
   setVal(w, '#tool-search', 'base64');
+  await sleep(200);
   ok(visibleCount() === 1, 'search "base64" finds only the new tool (1)');
   setVal(w, '#tool-search', '');
-  ok(visibleCount() === 33, 'clearing the search restores all 33 cards');
+  await sleep(200);
+  ok(visibleCount() === 34, 'clearing the search restores all 34 cards');
   dom.window.close();
 }
 
@@ -229,7 +257,7 @@ const bytesJpg = fs.readFileSync(path.join(SITE, 'tests/test-image.jpg'));
   ok(w.document.querySelector('#merge').disabled === false, 'Merge button enables with 2 files');
   w.document.querySelector('#merge').click();
   await sleep(700);
-  ok(!w.document.querySelector('#dl').classList.contains('hidden'), 'after Merge, the download link appears');
+  ok(w.document.querySelector('#dl').classList.contains('hidden'), 'after Merge, the #dl anchor stays hidden — the visible Download button is the only affordance');
   ok(w.document.querySelector('#msg').textContent.includes('3 pages'), 'success message reports 3 pages');
   const fTxt = new w.File(['hello'], 'notes.txt', { type: 'text/plain' });
   w.document.querySelector('#clear').click();
@@ -265,7 +293,7 @@ console.log('PDF SPLIT');
   setVal(w, '#range', '2');
   w.document.querySelector('#split').click();
   await sleep(500);
-  ok(!w.document.querySelector('#dl').classList.contains('hidden'), 'after Extract, the download link appears');
+  ok(w.document.querySelector('#dl').classList.contains('hidden'), 'after Extract, the #dl anchor stays hidden — the visible Download button is the only affordance');
   ok(w.document.querySelector('#msg').textContent.includes('Extracted 1 page'), 'success message reports 1 extracted page');
   setVal(w, '#range', '9');
   w.document.querySelector('#split').click();
@@ -303,7 +331,7 @@ console.log('IMAGE TO PDF');
   ok(w.document.querySelector('#convert').disabled === false, 'Convert enables after selecting an image');
   w.document.querySelector('#convert').click();
   await sleep(700);
-  ok(!w.document.querySelector('#dl').classList.contains('hidden'), 'after Convert, the download link appears');
+  ok(w.document.querySelector('#dl').classList.contains('hidden'), 'after Convert, the #dl anchor stays hidden — the visible Download button is the only affordance');
   ok(w.document.querySelector('#msg').textContent.includes('1 page'), 'success message reports 1 page');
   const fTxt = new w.File(['hello'], 'notes.txt', { type: 'text/plain' });
   w.document.querySelector('#clear').click();
@@ -335,8 +363,7 @@ console.log('IMAGE RESIZER STATIC');
     const schema = (faq ? faq.mainEntity : []).map((q) => ({ name: q.name, text: q.acceptedAnswer.text }));
     ok(JSON.stringify(visible) === JSON.stringify(schema), `image-resizer: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
-  const others = OLD_SLUGS.concat(NEW_PAGES.map((p) => p.slug));
-  ok(others.every((s) => html.includes(`href="../${s}/"`)), 'image-resizer: More-tools nav links all other 16 tools');
+  ok(navLinksExactly(html, RELATED['image-resizer']), 'image-resizer: More-tools nav links exactly its 5 related tools');
 }
 console.log('IMAGE RESIZER');
 function stubResizeEnv(win) {
