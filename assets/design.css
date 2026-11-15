@@ -25,6 +25,8 @@
   --header-bg:rgba(247,246,252,.86);
   --ring:0 0 0 3px rgba(91,33,182,.22);
   --dot:rgba(27,23,48,.10);
+  --dot-page:rgba(27,23,48,.055);
+  --glow:rgba(91,33,182,.08);
   --font-display:'Space Grotesk','Inter',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-body:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -33,7 +35,11 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;font-family:var(--font-body);color:var(--ink);line-height:1.6;
-  background:var(--bg);transition:background-color .2s ease,color .2s ease}
+  background:
+    radial-gradient(880px 460px at 8% -120px,var(--glow),transparent 70%),
+    radial-gradient(880px 460px at 92% -120px,var(--glow),transparent 70%),
+    radial-gradient(circle at 1px 1px,var(--dot-page) 1px,transparent 0) 0 0/22px 22px,
+    var(--bg);transition:background-color .2s ease,color .2s ease}
 a{color:var(--brand);text-decoration:none}
 a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
@@ -53,7 +59,7 @@ svg{flex:none}
 header.site{position:sticky;top:0;z-index:20;background:var(--header-bg);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border)}
-header.site .wrap{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:.75rem;
+header.site .wrap{max-width:1360px;margin:0 auto;display:flex;align-items:center;gap:.75rem;
   padding:.6rem 1rem}
 header.site .logo{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--ink);
   display:flex;align-items:center;gap:.6rem;letter-spacing:-.02em}
@@ -79,7 +85,7 @@ header.site .theme-toggle:hover svg{transform:rotate(24deg)}
 [data-theme="dark"] .theme-toggle .ic-moon{display:none}
 
 /* ---------- Layout & type ---------- */
-main{max-width:1120px;margin:0 auto;padding:1.5rem 1rem 3rem}
+main{max-width:1360px;margin:0 auto;padding:1.5rem 1rem 3rem}
 h1{font-family:var(--font-display);font-size:2rem;margin:.4rem 0 .5rem;line-height:1.15;letter-spacing:-.025em}
 h2{font-family:var(--font-display);font-size:1.5rem;margin:2rem 0 .6rem;letter-spacing:-.02em;line-height:1.25}
 h3{font-family:var(--font-display);letter-spacing:-.015em}
@@ -109,10 +115,10 @@ section{scroll-margin-top:88px}
     var(--surface);
   border:1px solid var(--border);box-shadow:var(--shadow)}
 .hero .eyebrow{position:relative}
-.hero h1{font-size:2.6rem;line-height:1.08;margin:.15rem 0 .6rem;max-width:640px;position:relative}
+.hero h1{font-size:2.6rem;line-height:1.08;margin:.15rem 0 .6rem;max-width:780px;position:relative}
 .hero h1 .accent{color:var(--brand)}
-.hero .lead{position:relative}
-.hero .searchbox{max-width:620px;margin:1.4rem 0 0;position:relative}
+.hero .lead{position:relative;max-width:720px}
+.hero .searchbox{max-width:680px;margin:1.4rem 0 0;position:relative}
 .hero .searchbox .search-ic{position:absolute;left:1.05rem;top:50%;transform:translateY(-50%);
   color:var(--muted);width:20px;height:20px;pointer-events:none}
 .hero .searchbox input{width:100%;border:1px solid var(--border-strong);border-radius:999px;
@@ -266,7 +272,7 @@ summary{font-weight:600;cursor:pointer;font-family:var(--font-display)}
 
 /* ---------- Footer ---------- */
 footer.site{margin-top:3.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.92rem}
-footer.site .foot-wrap{max-width:1120px;margin:0 auto;padding:2rem 1rem 2.4rem}
+footer.site .foot-wrap{max-width:1360px;margin:0 auto;padding:2rem 1rem 2.4rem}
 .foot-top{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;align-items:flex-start}
 footer.site .foot-brand{font-size:1.05rem;color:var(--ink);margin:0;display:flex;align-items:center;gap:.5rem;
   font-family:var(--font-display);font-weight:700}
@@ -300,6 +306,11 @@ footer.site .foot-copy{border-top:1px solid var(--border);margin-top:1.4rem;padd
 @media (max-width:380px){
   .grid{grid-template-columns:1fr}
 }
+/* Ultra-wide: stretch the workbench a little further so big monitors
+   don't get dead gutters; the page dot texture carries the rest. */
+@media (min-width:1600px){
+  header.site .wrap,main,footer.site .foot-wrap{max-width:1440px}
+}
 
 /* ---------- Dark theme: same system, violet-tinted ink ---------- */
 [data-theme="dark"]{
@@ -312,6 +323,8 @@ footer.site .foot-copy{border-top:1px solid var(--border);margin-top:1.4rem;padd
   --header-bg:rgba(14,12,22,.86);
   --ring:0 0 0 3px rgba(167,139,250,.3);
   --dot:rgba(244,242,250,.07);
+  --dot-page:rgba(244,242,250,.045);
+  --glow:rgba(167,139,250,.12);
 }
 [data-theme="dark"] ::selection{background:rgba(167,139,250,.35)}
 [data-theme="dark"] .hero{background:
