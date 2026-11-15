@@ -44,6 +44,10 @@ const PAGES = [
   { path: 'text-to-speech/', name: 'text-to-speech', selectors: ['#text-in', '#voice', '#rate', '#pitch', '#volume', '#speak', '#pause', '#resume', '#stop', '#download', '#dl-barwrap', '#dl-bar', '#sample', '#clear', '#st-words', '#st-chars', '#st-time', '#st-chunks', '#msg', '#status', '#current'] },
   { path: 'image-cropper/', name: 'image-cropper', selectors: ['#file', '#drop', '#stage', '#stage-img', '#crop-box', '#cx', '#cy', '#cw', '#ch', '#format', '#crop', '#download', '#results'] },
   { path: 'fancy-text-generator/', name: 'fancy-text-generator', selectors: ['#text-in', '#styles-list', '#download', '#dl', '#st-chars', '#st-words', '#st-styles', '.style-row', '[data-copy="bold"]', '#out-bold'] },
+  { path: 'gpa-calculator/', name: 'gpa-calculator', selectors: ['#courses', '#add-course', '#clear-courses', '#st-gpa', '#st-credits', '#st-courses', '#r-gpa', '#download', '#dl', '#msg', '#target-current', '#target-completed', '#target-goal', '#target-planned', '#target-calc', '#target-result', '#target-needed', '.course-row'] },
+  { path: 'binary-text-converter/', name: 'binary-text-converter', selectors: ['#mode-encode', '#mode-decode', '#text-in', '#sep', '#btn-convert', '#btn-swap', '#text-out', '#st-in', '#st-out', '#st-bits', '#copy-out', '#download', '#dl', '#msg'] },
+  { path: 'dice-roller-coin-flip/', name: 'dice-roller-coin-flip', selectors: ['#dice-sides', '#dice-count', '#roll', '#clear-history', '#dice-results', '#dice-total', '#st-rolls', '#st-highest', '#st-lowest', '#dice-history', '#coin-flip', '#coin-result', '#coin-heads', '#coin-tails', '#coin-flips', '#msg', '#coin-msg'] },
+  { path: 'username-generator/', name: 'username-generator', selectors: ['#keyword', '#style', '#count', '#generate', '#copy-all', '#download', '#dl', '#msg', '#st-count', '#st-style', '#st-keyword', '#results-list', '.name-row', '[data-copy]'] },
 ];
 
 async function loadPage(path) {

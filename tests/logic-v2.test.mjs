@@ -67,19 +67,19 @@ const RELATED = {
   'pdf-merge': ['pdf-split', 'image-to-pdf', 'image-converter', 'image-compressor'],
   'pdf-split': ['pdf-merge', 'image-to-pdf', 'image-converter', 'image-compressor'],
   'image-to-pdf': ['pdf-merge', 'pdf-split', 'image-converter', 'image-compressor', 'image-resizer'],
-  'bmi-calculator': ['age-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator', 'date-difference-calculator'],
-  'emi-calculator': ['percentage-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'date-difference-calculator'],
-  'percentage-calculator': ['emi-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'unit-converter'],
-  'qr-generator': ['qr-reader', 'password-generator', 'random-number-generator', 'uuid-generator', 'url-encoder-decoder'],
+  'bmi-calculator': ['age-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator', 'date-difference-calculator', 'gpa-calculator'],
+  'emi-calculator': ['percentage-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'date-difference-calculator', 'gpa-calculator'],
+  'percentage-calculator': ['emi-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'unit-converter', 'gpa-calculator'],
+  'qr-generator': ['qr-reader', 'password-generator', 'random-number-generator', 'uuid-generator', 'dice-roller-coin-flip', 'username-generator'],
   'image-compressor': ['image-converter', 'image-resizer', 'image-cropper', 'image-synthid-remover', 'background-remover'],
   'image-converter': ['image-compressor', 'image-resizer', 'image-cropper', 'image-to-pdf', 'image-synthid-remover'],
   'word-counter': ['text-case-converter', 'remove-duplicate-lines', 'lorem-ipsum-generator', 'text-to-speech', 'morse-code-translator', 'fancy-text-generator'],
-  'password-generator': ['uuid-generator', 'random-number-generator', 'qr-generator', 'base64-encoder-decoder'],
-  'age-calculator': ['date-difference-calculator', 'bmi-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator'],
-  'unit-converter': ['color-converter', 'base64-encoder-decoder', 'json-formatter', 'url-encoder-decoder'],
-  'color-converter': ['unit-converter', 'base64-encoder-decoder', 'json-formatter', 'url-encoder-decoder', 'image-converter'],
+  'password-generator': ['uuid-generator', 'random-number-generator', 'qr-generator', 'base64-encoder-decoder', 'dice-roller-coin-flip', 'username-generator'],
+  'age-calculator': ['date-difference-calculator', 'bmi-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator', 'gpa-calculator'],
+  'unit-converter': ['color-converter', 'base64-encoder-decoder', 'json-formatter', 'url-encoder-decoder', 'binary-text-converter'],
+  'color-converter': ['unit-converter', 'base64-encoder-decoder', 'json-formatter', 'url-encoder-decoder', 'image-converter', 'binary-text-converter'],
   'text-case-converter': ['word-counter', 'remove-duplicate-lines', 'lorem-ipsum-generator', 'text-to-speech', 'morse-code-translator', 'fancy-text-generator'],
-  'json-formatter': ['base64-encoder-decoder', 'url-encoder-decoder', 'unit-converter', 'color-converter', 'uuid-generator'],
+  'json-formatter': ['base64-encoder-decoder', 'url-encoder-decoder', 'unit-converter', 'color-converter', 'uuid-generator', 'binary-text-converter'],
   'image-resizer': ['image-compressor', 'image-converter', 'image-cropper', 'image-synthid-remover', 'background-remover'],
 };
 const navLinksExactly = (html, related) => {
@@ -110,12 +110,12 @@ for (const { slug, name } of NEW_PAGES) {
 }
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
   ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 6 new tools');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-resizer/'), 'sitemap includes image-resizer');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
   ok(NEW_PAGES.every(({ slug }) => home.includes(`/${slug}/`)), 'home cards + nav include all 6 new tools');
   ok(home.includes('/image-resizer/'), 'home cards + nav include image-resizer');
   ok(home.includes('/base64-encoder-decoder/'), 'home cards + nav include base64-encoder-decoder');
@@ -131,19 +131,19 @@ console.log('HOME SEARCH');
   const dom = await loadPage('');
   const w = dom.window;
   const visibleCount = () => [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden')).length;
-  ok(visibleCount() === 34, 'home shows 34 cards before searching');
+  ok(visibleCount() === 38, 'home shows 38 cards before searching');
   setVal(w, '#tool-search', 'pdf');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   ok(visibleCount() === 3, 'search "pdf" filters to the 3 PDF tools');
   setVal(w, '#tool-search', 'calculator');
   await sleep(200);
-  ok(visibleCount() === 7, 'search "calculator" finds the 7 Calculators (v2 kicker labels make section membership searchable)');
+  ok(visibleCount() === 8, 'search "calculator" finds the 8 Calculators (v2 kicker labels make section membership searchable)');
   setVal(w, '#tool-search', 'base64');
   await sleep(200);
   ok(visibleCount() === 1, 'search "base64" finds only the new tool (1)');
   setVal(w, '#tool-search', '');
   await sleep(200);
-  ok(visibleCount() === 34, 'clearing the search restores all 34 cards');
+  ok(visibleCount() === 38, 'clearing the search restores all 38 cards');
   dom.window.close();
 }
 
