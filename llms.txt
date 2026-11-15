@@ -17,6 +17,7 @@
 - [Color Converter](https://toolsdaily.vercel.app/color-converter/): Free color converter: turn HEX colors into RGB, HSL and HSV values with one-click copy.
 - [Date Difference Calculator](https://toolsdaily.vercel.app/date-difference-calculator/): Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date.
 - [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
+- [Fancy Text Generator](https://toolsdaily.vercel.app/fancy-text-generator/): Free fancy text generator: turn plain text into bold, italic, script, fraktur, circled, fullwidth and 12 more stylish Unicode fonts for Instagram, TikTok and gaming bios — copy any style in one click.
 - [Image Compressor](https://toolsdaily.vercel.app/image-compressor/): Free image compressor: reduce image file size with a quality slider and optional resize.
 - [Image Converter](https://toolsdaily.vercel.app/image-converter/): Free image converter: change images between PNG, JPEG and WebP formats online.
 - [Image Cropper](https://toolsdaily.vercel.app/image-cropper/): Free image cropper: drag to crop any photo, lock it to an aspect ratio like 1:1 or 16:9, or type exact pixel coordinates.
@@ -45,4 +46,4 @@
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 33 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 34 free tools by category, with live search.
