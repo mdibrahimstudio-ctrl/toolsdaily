@@ -13,11 +13,14 @@
 - [AI Audio Transcriber](https://toolsdaily.vercel.app/audio-transcriber/): Free AI audio transcriber: turn voice memos, interviews and podcasts into text, then download .txt or .srt.
 - [AI Background Remover](https://toolsdaily.vercel.app/background-remover/): Free AI background remover: cut out any photo's background in seconds and download a transparent PNG.
 - [Base64 Encoder / Decoder](https://toolsdaily.vercel.app/base64-encoder-decoder/): Free Base64 encoder and decoder that runs in your browser: encode text or any file to Base64, or decode Base64 back to text or a downloadable file.
+- [Binary / Text Converter](https://toolsdaily.vercel.app/binary-text-converter/): Free binary to text converter: turn text into binary code and decode binary back to text, with UTF-8 support, one-click copy and .txt download.
 - [BMI Calculator](https://toolsdaily.vercel.app/bmi-calculator/): Free BMI calculator: enter your height and weight to get your Body Mass Index, its category and the healthy weight range for your height.
 - [Color Converter](https://toolsdaily.vercel.app/color-converter/): Free color converter: turn HEX colors into RGB, HSL and HSV values with one-click copy.
 - [Date Difference Calculator](https://toolsdaily.vercel.app/date-difference-calculator/): Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date.
+- [Dice Roller & Coin Flip](https://toolsdaily.vercel.app/dice-roller-coin-flip/): Free dice roller and coin flip: roll d4, d6, d8, d10, d12 or d20 dice, up to 10 at once, with roll history — plus a coin flip with heads and tails totals.
 - [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
 - [Fancy Text Generator](https://toolsdaily.vercel.app/fancy-text-generator/): Free fancy text generator: turn plain text into bold, italic, script, fraktur, circled, fullwidth and 12 more stylish Unicode fonts for Instagram, TikTok and gaming bios — copy any style in one click.
+- [GPA Calculator](https://toolsdaily.vercel.app/gpa-calculator/): Free GPA calculator: work out your GPA on a 4.0 scale from course grades and credit hours, and find the GPA you need to hit your target.
 - [Image Compressor](https://toolsdaily.vercel.app/image-compressor/): Free image compressor: reduce image file size with a quality slider and optional resize.
 - [Image Converter](https://toolsdaily.vercel.app/image-converter/): Free image converter: change images between PNG, JPEG and WebP formats online.
 - [Image Cropper](https://toolsdaily.vercel.app/image-cropper/): Free image cropper: drag to crop any photo, lock it to an aspect ratio like 1:1 or 16:9, or type exact pixel coordinates.
@@ -41,9 +44,10 @@
 - [Tip Calculator](https://toolsdaily.vercel.app/tip-calculator/): Free tip calculator: work out the tip, the total bill and each person's share.
 - [Unit Converter](https://toolsdaily.vercel.app/unit-converter/): Free unit converter for length, weight and temperature: kilometres to miles, kilograms to pounds, Celsius to Fahrenheit and more, with instant results.
 - [URL Encoder / Decoder](https://toolsdaily.vercel.app/url-encoder-decoder/): Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text.
+- [Username Generator](https://toolsdaily.vercel.app/username-generator/): Free username generator: create unique usernames from a keyword and style — gamer, cool or professional — in bulk, with one-click copy and .txt download.
 - [UUID Generator](https://toolsdaily.vercel.app/uuid-generator/): Free UUID generator: create one or up to 1,000 unique IDs (UUID v4 random or v1 time-based) in any format, plus a UUID validator.
 - [Word Counter](https://toolsdaily.vercel.app/word-counter/): Free word counter: count words, characters, sentences and paragraphs, and estimate reading time.
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 34 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 38 free tools by category, with live search.
