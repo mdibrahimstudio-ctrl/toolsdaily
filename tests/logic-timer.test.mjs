@@ -59,20 +59,20 @@ console.log('TIMER STATIC');
     ok(JSON.stringify(visible) === JSON.stringify(schema), `timer: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
   const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
-  const related = ['date-difference-calculator', 'age-calculator', 'percentage-calculator', 'tip-calculator', 'bmi-calculator'];
-  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'timer: More-tools nav links exactly its 5 related tools');
+  const related = ['date-difference-calculator', 'age-calculator', 'percentage-calculator', 'tip-calculator', 'bmi-calculator', 'gpa-calculator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'timer: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'sitemap includes stopwatch-countdown-timer');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
   ok(home.includes('/stopwatch-countdown-timer/'), 'home cards + nav include stopwatch-countdown-timer');
-  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
-  ok(home.includes('Search 34 tools'), 'home search placeholder says 34 tools');
-  ok(home.includes('Calculators <span class="n">7</span>'), 'home Calculators chip says 7');
+  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Search 38 tools'), 'home search placeholder says 34 tools');
+  ok(home.includes('Calculators <span class="n">8</span>'), 'home Calculators chip says 8');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 34 free tools'), 'llms.txt says 34 tools');
+  ok(llms.includes('browse all 38 free tools'), 'llms.txt says 34 tools');
 }
 
 console.log('TIMER CORE');
@@ -300,7 +300,7 @@ console.log('TIMER UI');
   setVal(hw, '#tool-search', 'calculator');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 7, 'home search "calculator" finds all 7 Calculators (v2 kicker labels make section membership searchable)');
+  ok(visible.length === 8, 'home search "calculator" finds all 8 Calculators (v2 kicker labels make section membership searchable)');
   homeDom.window.close();
   dom.window.close();
 }

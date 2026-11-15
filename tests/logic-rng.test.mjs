@@ -58,15 +58,15 @@ console.log('RNG STATIC');
     ok(JSON.stringify(visible) === JSON.stringify(schema), `rng: FAQPage schema exactly matches the ${visible.length} visible FAQs`);
   }
   const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
-  const related = ['password-generator', 'uuid-generator', 'qr-generator', 'lorem-ipsum-generator'];
-  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'rng: More-tools nav links exactly its 4 related tools');
+  const related = ['password-generator', 'uuid-generator', 'qr-generator', 'lorem-ipsum-generator', 'dice-roller-coin-flip', 'username-generator'];
+  ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'rng: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/random-number-generator/'), 'sitemap includes random-number-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
   ok(home.includes('/random-number-generator/'), 'home cards + nav include random-number-generator');
-  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-four tools');
 }
 
 console.log('RNG CORE');

@@ -69,14 +69,14 @@ console.log('TRANSCRIBER STATIC');
   }
   ok(JSON.stringify(linkers.sort()) === JSON.stringify(['background-remover', 'text-to-speech', 'word-counter']), `transcriber: cross-linked from ${linkers.length} related pages (${linkers.join(', ')})`);
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 35, 'sitemap.xml has 35 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/audio-transcriber/'), 'sitemap includes audio-transcriber');
   ok(/audio-transcriber\/<\/loc>\s*<lastmod>2026-11-10<\/lastmod>/.test(sitemap), 'sitemap audio-transcriber lastmod is 2026-11-10');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 34, 'home has exactly 34 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
   ok(home.includes('/audio-transcriber/'), 'home card links audio-transcriber');
   ok(home.includes('AI Audio Transcriber</h3>'), 'home has the transcriber card');
-  ok(home.includes('Thirty-four handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-four tools');
   const vj = JSON.parse(fs.readFileSync(path.join(SITE, 'vercel.json'), 'utf8'));
   const all = JSON.stringify(vj);
   ok(all.includes('/audio-transcriber'), 'vercel.json has COOP/COEP for /audio-transcriber');
