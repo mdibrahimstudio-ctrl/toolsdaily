@@ -61,12 +61,12 @@ console.log('UUID STATIC');
   const related = ['password-generator', 'random-number-generator', 'qr-generator', 'json-formatter', 'dice-roller-coin-flip', 'username-generator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'uuid: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/uuid-generator/'), 'sitemap includes uuid-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
   ok(home.includes('/uuid-generator/'), 'home cards + nav include uuid-generator');
-  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-four tools');
+  ok(home.includes('Forty-eight handy tools'), 'home lead says Forty-eight tools');
 }
 
 console.log('UUID CORE');
