@@ -73,6 +73,9 @@ header.site nav.main-nav{margin-left:auto;display:flex;align-items:center;gap:.4
 header.site nav.main-nav a{color:var(--ink);font-weight:600;font-size:.92rem;padding:.5rem .9rem;
   border-radius:999px;transition:background-color .15s ease;min-height:44px;display:inline-flex;align-items:center}
 header.site nav.main-nav a:hover{background:var(--surface-2);text-decoration:none}
+header.site nav.main-nav a.nav-feedback{font-family:var(--font-mono);font-size:.78rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+header.site nav.main-nav a.nav-feedback:hover{color:var(--ink)}
 header.site .theme-toggle{margin-left:.25rem;background:var(--surface);border:1px solid var(--border);
   color:var(--ink);border-radius:999px;width:44px;height:44px;cursor:pointer;
   display:inline-flex;align-items:center;justify-content:center;
@@ -131,6 +134,9 @@ section{scroll-margin-top:88px}
 .hero .trust span{font-family:var(--font-mono);font-size:.78rem;font-weight:500;letter-spacing:.04em;
   text-transform:uppercase;color:var(--muted);padding:.1rem .9rem;border-left:1px solid var(--border-strong)}
 .hero .trust span:first-child{padding-left:0;border-left:0}
+.hero .hero-feedback{margin:.95rem 0 0;position:relative}
+.hero .hero-feedback a{font-family:var(--font-mono);font-size:.85rem;font-weight:600;color:var(--brand)}
+.hero .hero-feedback a:hover{color:var(--brand-strong)}
 
 /* ---------- Category filter (real buttons) ---------- */
 .cat-chips{display:flex;gap:.5rem;flex-wrap:wrap;margin:.2rem 0 1.8rem}
