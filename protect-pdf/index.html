@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protect PDF — Add a Password to a PDF (AES-256) — ToolsDaily</title>
+<meta name="description" content="Free PDF password protection: encrypt a PDF with AES-256 so only people with the password can open it. Runs in your browser — files never leave your device.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/protect-pdf/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Protect PDF — Add a Password to a PDF (AES-256) — ToolsDaily">
+<meta property="og:description" content="Free PDF password protection: encrypt a PDF with AES-256 so only people with the password can open it. Runs in your browser — files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/protect-pdf/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Protect PDF — Add a Password to a PDF (AES-256) — ToolsDaily">
+<meta name="twitter:description" content="Free PDF password protection: encrypt a PDF with AES-256 so only people with the password can open it. Runs in your browser — files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Protect PDF",
+    "url": "https://toolsdaily.vercel.app/protect-pdf/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free PDF password protection: encrypt a PDF with AES-256 so only people with the password can open it. Runs in your browser — files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What happens if I forget the password?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The password cannot be recovered if lost — it is never sent anywhere and there is no back door, so a forgotten password means the PDF cannot be opened again. Store it somewhere safe before you share the file."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I protect a PDF that already has a password?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — an already-encrypted PDF cannot be re-encrypted directly. Unlock it first with Unlock PDF, then protect it with the new password."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my PDF uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The AES-256 encryption runs entirely in your browser — your file never leaves your device, and the password is never sent anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">PDF Tools · No. 44</p></div>
+<h1 class="rise rise-1">Protect PDF</h1>
+<p class="lead rise rise-2">Lock a PDF with a password — AES-256 encryption, so only people with the password can open it.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="drop" id="drop"><p>Drop a PDF file here, or</p><input type="file" id="file" accept="application/pdf,.pdf"></div>
+  <p id="file-info" class="mono"></p>
+  <label for="password">Password <span class="muted">(at least 4 characters)</span></label>
+  <input type="password" id="password" autocomplete="new-password" minlength="4" placeholder="Choose a password">
+  <label for="confirm-password">Confirm password</label>
+  <input type="password" id="confirm-password" autocomplete="new-password" placeholder="Type the password again">
+  <button id="protect" type="button">Protect PDF</button>
+  <button id="clear" type="button" class="secondary">Clear</button>
+  <button id="download" type="button" class="secondary">Download protected PDF</button>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="protected.pdf">Download protected PDF</a></p>
+  <p class="note"><strong>Keep your password safe:</strong> the password cannot be recovered if lost — there is no back door. An already-encrypted PDF cannot be re-encrypted directly — <a href="../unlock-pdf/">unlock it first with Unlock PDF</a>. The protected file needs a viewer that supports AES-256 (all current browsers and PDF readers do).</p>
+  <p class="foot-note">Privacy first: your PDF and password never leave your device — everything runs in your browser.</p>
+</div>
+<script src="../assets/vendor/pdf.min.js"></script>
+<script>
+(function(){
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '../assets/vendor/pdf.worker.min.js';
+
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+
+  /* ---------- qpdf WASM engine, lazy-loaded on first use ----------
+     The ~1.4 MB engine must NOT block page load: its <script> tag is injected
+     only when the user clicks "Protect PDF" (TTS Kokoro lazy-load precedent).
+     After the script loads, the global Module factory is available. */
+  var qpdfPromise = null;
+  function loadQpdfEngine(){
+    if (qpdfPromise) return qpdfPromise;
+    qpdfPromise = new Promise(function(resolve, reject){
+      function init(){
+        var factory = window.Module;
+        if (typeof factory !== 'function') {
+          qpdfPromise = null;
+          reject(new Error('The encryption engine failed to start. Please reload the page and try again.'));
+          return;
+        }
+        factory({ locateFile: function(){ return '../assets/vendor/qpdf/qpdf.wasm'; } }).then(resolve, function(err){
+          qpdfPromise = null;
+          reject(new Error('The encryption engine failed to start. Please reload the page and try again.'));
+        });
+      }
+      if (typeof window.Module === 'function') { init(); return; }
+      var s = document.createElement('script');
+      s.src = '../assets/vendor/qpdf/qpdf.js';
+      s.onload = init;
+      s.onerror = function(){
+        qpdfPromise = null;
+        reject(new Error('Could not load the encryption engine. Check your connection and try again.'));
+      };
+      document.head.appendChild(s);
+    });
+    return qpdfPromise;
+  }
+
+  /* Pure core: encrypt a PDF with AES-256. The same password is used for the
+     user and owner password (like thepdf.io) — one password to remember.
+     qpdf's callMain returns an exit code (0 = success); a non-zero code or a
+     missing output file means the input was damaged or already encrypted. */
+  async function protectPdf(pdfBytes, password){
+    if (typeof password !== 'string' || password.length < 4) {
+      var shortErr = new Error('Password must be at least 4 characters long.');
+      shortErr.code = 'PASSWORD_TOO_SHORT';
+      throw shortErr;
+    }
+    var qpdf = await loadQpdfEngine();
+    var input = pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes);
+    try { qpdf.FS.unlink('/output.pdf'); } catch (e) {}
+    qpdf.FS.writeFile('/input.pdf', input);
+    var rc;
+    try {
+      rc = qpdf.callMain(['/input.pdf', '--encrypt', password, password, '256', '--', '/output.pdf']);
+    } catch (e) {
+      rc = 1;
+    }
+    if (rc !== 0) {
+      var failErr = new Error('Could not encrypt this PDF. It may be damaged or already password-protected — unlock it first and try again.');
+      failErr.code = 'ENCRYPT_FAILED';
+      throw failErr;
+    }
+    var out;
+    try { out = qpdf.FS.readFile('/output.pdf'); }
+    catch (e) {
+      var missingErr = new Error('Could not encrypt this PDF. It may be damaged or already password-protected — unlock it first and try again.');
+      missingErr.code = 'ENCRYPT_FAILED';
+      throw missingErr;
+    }
+    var copy = new Uint8Array(out.length);
+    copy.set(out);
+    try { qpdf.FS.unlink('/input.pdf'); } catch (e) {}
+    try { qpdf.FS.unlink('/output.pdf'); } catch (e) {}
+    return copy;
+  }
+  window.TD_protectPdf = protectPdf;
+
+  var fileInput = document.getElementById('file'), drop = document.getElementById('drop'),
+      fileInfo = document.getElementById('file-info'),
+      passwordInput = document.getElementById('password'),
+      confirmInput = document.getElementById('confirm-password'),
+      btn = document.getElementById('protect'),
+      clearBtn = document.getElementById('clear'), msg = document.getElementById('msg'),
+      downloadBtn = document.getElementById('download'),
+      dl = document.getElementById('dl'), file = null, outUrl = null, engineReady = false;
+
+  function showMsg(t, ok){ msg.textContent = t; msg.className = 'msg ' + (t ? (ok ? 'ok' : 'err') : ''); }
+  function isPdf(f){ return f.type === 'application/pdf' || /\.pdf$/i.test(f.name || ''); }
+  function baseName(name){ return name.replace(/\.pdf$/i, ''); }
+
+  function setFile(f){
+    if (!isPdf(f)) {
+      showMsg('Not a PDF file: ' + f.name + '. Only PDF files can be protected.');
+      return;
+    }
+    file = f;
+    fileInfo.textContent = f.name + ' (' + formatBytes(f.size) + ')';
+    dl.setAttribute('href', '#');
+    showMsg('Ready — type a password below and press “Protect PDF”.', true);
+  }
+  fileInput.addEventListener('change', function(){ if (fileInput.files.length) setFile(fileInput.files[0]); fileInput.value = ''; });
+  ['dragover', 'dragenter'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function(e){ if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]); });
+
+  clearBtn.addEventListener('click', function(){
+    file = null; fileInfo.textContent = '';
+    passwordInput.value = ''; confirmInput.value = '';
+    dl.setAttribute('href', '#');
+    showMsg('');
+  });
+
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The protected PDF only exists once a successful
+     protect has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click', function(){
+    if (dl.getAttribute('href') === '#') { showMsg('Nothing to download yet — protect a PDF first.'); return; }
+    dl.click();
+    showMsg('Downloaded ' + dl.getAttribute('download') + '.', true);
+  });
+
+  btn.addEventListener('click', async function(){
+    if (!file) { showMsg('Please choose a PDF file first.'); return; }
+    var password = passwordInput.value;
+    var confirm = confirmInput.value;
+    if (password.length < 4) { showMsg('Password must be at least 4 characters long.'); return; }
+    if (password !== confirm) { showMsg('The two passwords do not match. Please type them again.'); return; }
+    btn.disabled = true;
+    try {
+      var bytes = new Uint8Array(await file.arrayBuffer());
+      /* Pre-check with pdf.js: an already-encrypted PDF throws PasswordException,
+         a damaged file throws a different error — both get a friendly message
+         before the engine ever runs. (pdf.js transfers the buffer, so re-read
+         the file for the encryption step.) */
+      try {
+        var checkDoc = await pdfjsLib.getDocument({ data: bytes }).promise;
+        await checkDoc.destroy();
+      } catch (e) {
+        if (e && e.name === 'PasswordException') {
+          showMsg('This PDF is already password-protected and cannot be re-encrypted directly. Unlock it first with Unlock PDF, then protect it with the new password.');
+          btn.disabled = false;
+          return;
+        }
+        showMsg('Could not read this PDF — it may be damaged. Please try a different file.');
+        btn.disabled = false;
+        return;
+      }
+      if (!engineReady) showMsg('Loading encryption engine… (first use only — your browser caches it after that.)', true);
+      var freshBytes = new Uint8Array(await file.arrayBuffer());
+      var out = await protectPdf(freshBytes, password);
+      engineReady = true;
+      if (outUrl) URL.revokeObjectURL(outUrl);
+      outUrl = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      dl.href = outUrl;
+      dl.setAttribute('download', baseName(file.name) + '-protected.pdf');
+      showMsg('Done! Your PDF is now protected with AES-256 (' + formatBytes(out.length) + '). Keep the password safe — it cannot be recovered if lost.', true);
+    } catch (e) {
+      if (e && e.code === 'PASSWORD_TOO_SHORT') {
+        showMsg('Password must be at least 4 characters long.');
+      } else if (e && e.code === 'ENCRYPT_FAILED') {
+        showMsg('Could not encrypt this PDF. It may be damaged or already password-protected — unlock it first and try again.');
+      } else {
+        showMsg('Something went wrong while protecting the PDF. Please reload the page and try again.');
+      }
+    }
+    btn.disabled = false;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Click the box (or drop a file onto it) and choose one PDF file.</li>
+    <li>Type a password (at least 4 characters) and confirm it.</li>
+    <li>Click “Protect PDF”, then download your password-protected file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What happens if I forget the password?</summary><p>The password cannot be recovered if lost — it is never sent anywhere and there is no back door, so a forgotten password means the PDF cannot be opened again. Store it somewhere safe before you share the file.</p></details>
+  <details><summary>Can I protect a PDF that already has a password?</summary><p>No — an already-encrypted PDF cannot be re-encrypted directly. Unlock it first with Unlock PDF, then protect it with the new password.</p></details>
+  <details><summary>Is my PDF uploaded to a server?</summary><p>No. The AES-256 encryption runs entirely in your browser — your file never leaves your device, and the password is never sent anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../pdf-merge/">PDF Merge</a></li>
+        <li><a href="../pdf-split/">PDF Split</a></li>
+        <li><a href="../unlock-pdf/">Unlock PDF</a></li>
+        <li><a href="../sign-pdf/">Sign PDF</a></li>
+        <li><a href="../watermark-pdf/">Watermark PDF</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>48 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
