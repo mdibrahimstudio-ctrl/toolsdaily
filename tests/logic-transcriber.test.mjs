@@ -69,7 +69,7 @@ console.log('TRANSCRIBER STATIC');
   }
   ok(JSON.stringify(linkers.sort()) === JSON.stringify(['background-remover', 'text-to-speech', 'word-counter']), `transcriber: cross-linked from ${linkers.length} related pages (${linkers.join(', ')})`);
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/audio-transcriber/'), 'sitemap includes audio-transcriber');
   ok(/audio-transcriber\/<\/loc>\s*<lastmod>2026-11-10<\/lastmod>/.test(sitemap), 'sitemap audio-transcriber lastmod is 2026-11-10');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');

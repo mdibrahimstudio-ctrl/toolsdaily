@@ -61,7 +61,7 @@ console.log('MORSE STATIC');
   const related = ['text-case-converter', 'word-counter', 'remove-duplicate-lines', 'text-to-speech', 'base64-encoder-decoder', 'fancy-text-generator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'morse: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/morse-code-translator/'), 'sitemap includes morse-code-translator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
   ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
