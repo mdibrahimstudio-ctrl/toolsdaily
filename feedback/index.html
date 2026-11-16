@@ -100,17 +100,22 @@ fieldset.type-pills legend{display:block;font-weight:600;margin:.85rem 0 .3rem;f
 <p class="lead rise rise-2">Suggest a new tool, report a problem, or tell us anything else — we read every message.</p>
 
 <div class="card rise rise-3" id="tool">
+  <!-- Entry IDs below are the form's TRUE entry IDs (inner numbers from the
+       form HTML data-params), verified by a live POST 2026-11-16. They are NOT
+       the item IDs (433333223 etc.) that FormApp getId() and the data-params
+       outer numbers return — those silently fail with HTTP 400. Do not
+       "correct" them back. -->
   <form id="feedback-form" method="POST" action="https://docs.google.com/forms/d/e/1FAIpQLSfD5uphzzmHjnjOpBZ4OgOPUkR6fa55gMd3gZjpHuWspOz8qw/formResponse" target="fb-target">
     <fieldset class="type-pills">
       <legend>What is your message about?</legend>
       <div class="pills">
-        <label class="pill"><input type="radio" name="entry.433333223" value="Suggest a new tool" required checked><span>Suggest a new tool</span></label>
-        <label class="pill"><input type="radio" name="entry.433333223" value="Report a problem"><span>Report a problem</span></label>
-        <label class="pill"><input type="radio" name="entry.433333223" value="Other feedback"><span>Other feedback</span></label>
+        <label class="pill"><input type="radio" name="entry.710891572" value="Suggest a new tool" required checked><span>Suggest a new tool</span></label>
+        <label class="pill"><input type="radio" name="entry.710891572" value="Report a problem"><span>Report a problem</span></label>
+        <label class="pill"><input type="radio" name="entry.710891572" value="Other feedback"><span>Other feedback</span></label>
       </div>
     </fieldset>
     <label for="fb-tool">Which tool is this about? (optional)</label>
-    <input type="text" id="fb-tool" name="entry.740112104" list="tool-list" placeholder="Start typing a tool name…" autocomplete="off">
+    <input type="text" id="fb-tool" name="entry.1158283484" list="tool-list" placeholder="Start typing a tool name…" autocomplete="off">
     <datalist id="tool-list">
       <option value="AI Audio Transcriber"></option>
       <option value="AI Background Remover"></option>
@@ -162,12 +167,12 @@ fieldset.type-pills legend{display:block;font-weight:600;margin:.85rem 0 .3rem;f
       <option value="Word Counter"></option>
     </datalist>
     <label for="fb-message">Your message</label>
-    <textarea id="fb-message" name="entry.2137828048" rows="6" minlength="10" required placeholder="Tell us what tool you would like, or what went wrong — the more detail, the better."></textarea>
+    <textarea id="fb-message" name="entry.504355358" rows="6" minlength="10" required placeholder="Tell us what tool you would like, or what went wrong — the more detail, the better."></textarea>
     <div class="row">
       <div><label for="fb-name">Your name (optional)</label>
-      <input type="text" id="fb-name" name="entry.1003199486" autocomplete="name"></div>
+      <input type="text" id="fb-name" name="entry.1980865801" autocomplete="name"></div>
       <div><label for="fb-email">Your email (optional — only if you would like a reply)</label>
-      <input type="email" id="fb-email" name="entry.321475876" autocomplete="email" placeholder="you@example.com"></div>
+      <input type="email" id="fb-email" name="entry.373892500" autocomplete="email" placeholder="you@example.com"></div>
     </div>
     <div class="hp" aria-hidden="true">
       <label for="fb-hp">Leave this field empty</label>
