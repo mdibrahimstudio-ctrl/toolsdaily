@@ -9,6 +9,7 @@
 
 ## Tools
 
+- [Add Page Numbers](https://toolsdaily.vercel.app/add-page-numbers/): Free page number adder: stamp "Page N of M" on every page of a PDF, with your choice of format, position and start page.
 - [Age Calculator](https://toolsdaily.vercel.app/age-calculator/): Free age calculator: find your exact age in years, months and days, total days and weeks lived, and days until your next birthday.
 - [AI Audio Transcriber](https://toolsdaily.vercel.app/audio-transcriber/): Free AI audio transcriber: turn voice memos, interviews and podcasts into text, then download .txt or .srt.
 - [AI Background Remover](https://toolsdaily.vercel.app/background-remover/): Free AI background remover: cut out any photo's background in seconds and download a transparent PNG.
@@ -16,6 +17,7 @@
 - [Binary / Text Converter](https://toolsdaily.vercel.app/binary-text-converter/): Free binary to text converter: turn text into binary code and decode binary back to text, with UTF-8 support, one-click copy and .txt download.
 - [BMI Calculator](https://toolsdaily.vercel.app/bmi-calculator/): Free BMI calculator: enter your height and weight to get your Body Mass Index, its category and the healthy weight range for your height.
 - [Color Converter](https://toolsdaily.vercel.app/color-converter/): Free color converter: turn HEX colors into RGB, HSL and HSV values with one-click copy.
+- [Compress PDF](https://toolsdaily.vercel.app/pdf-compressor/): Free PDF compressor: shrink a PDF for email and upload limits, with a quality choice and before/after sizes.
 - [Date Difference Calculator](https://toolsdaily.vercel.app/date-difference-calculator/): Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date.
 - [Dice Roller & Coin Flip](https://toolsdaily.vercel.app/dice-roller-coin-flip/): Free dice roller and coin flip: roll d4, d6, d8, d10, d12 or d20 dice, up to 10 at once, with roll history — plus a coin flip with heads and tails totals.
 - [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
@@ -30,24 +32,32 @@
 - [JSON Formatter](https://toolsdaily.vercel.app/json-formatter/): Free JSON formatter and validator: pretty-print, minify and check JSON with clear error messages.
 - [Lorem Ipsum Generator](https://toolsdaily.vercel.app/lorem-ipsum-generator/): Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, with the classic 'Lorem ipsum dolor sit amet…' opening.
 - [Morse Code Translator](https://toolsdaily.vercel.app/morse-code-translator/): Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed.
+- [OCR PDF](https://toolsdaily.vercel.app/ocr-pdf/): Free OCR for PDFs: read scanned or image-only PDFs into selectable text in your browser, then download it as .txt.
+- [Organize PDF](https://toolsdaily.vercel.app/organize-pdf/): Free PDF organizer: delete, reorder and rotate PDF pages with thumbnails, then save the rearranged file.
 - [Password Generator](https://toolsdaily.vercel.app/password-generator/): Free password generator: create strong, truly random passwords with your browser's secure random generator.
 - [PDF Merge](https://toolsdaily.vercel.app/pdf-merge/): Free PDF merger: combine two or more PDF files into a single document, right in your browser.
 - [PDF Split](https://toolsdaily.vercel.app/pdf-split/): Free PDF splitter: extract a page range (like 1-3) or single pages from a PDF into a new file, right in your browser.
+- [PDF to JPG/PNG](https://toolsdaily.vercel.app/pdf-to-image/): Free PDF to image converter: export every PDF page as a JPG or PNG at 72–300 DPI, as a ZIP for multi-page files.
+- [PDF to Word](https://toolsdaily.vercel.app/pdf-to-word/): Free PDF to Word converter: turn a PDF into an editable Word document, keeping text, paragraphs and headings.
 - [Percentage Calculator](https://toolsdaily.vercel.app/percentage-calculator/): Free percentage calculator with three quick tools: find a percentage, what percentage one number is of another, and the percentage change between two numbers.
+- [Protect PDF](https://toolsdaily.vercel.app/protect-pdf/): Free PDF password protection: lock a PDF with AES-256 encryption, entirely in your browser.
 - [QR Code Generator](https://toolsdaily.vercel.app/qr-generator/): Free QR code generator: turn any text or URL into a QR code and download it as a PNG.
 - [QR Code Reader](https://toolsdaily.vercel.app/qr-reader/): Free QR code reader: upload a QR code image and decode its text or link instantly, right in your browser.
 - [Random Number Generator](https://toolsdaily.vercel.app/random-number-generator/): Free random number generator: pick random numbers in any range, with unique-only and sort options.
 - [Remove Duplicate Lines](https://toolsdaily.vercel.app/remove-duplicate-lines/): Free duplicate line remover: paste text, remove duplicate lines while keeping the original order, with case-insensitive, trim and sort options.
+- [Sign PDF](https://toolsdaily.vercel.app/sign-pdf/): Free PDF signer: draw, type or upload a signature and stamp it onto any pages of a PDF.
 - [Stopwatch & Countdown Timer](https://toolsdaily.vercel.app/stopwatch-countdown-timer/): Free online stopwatch with lap times and a countdown timer with presets and an alarm, right in your browser.
 - [Text Case Converter](https://toolsdaily.vercel.app/text-case-converter/): Free text case converter: change text to UPPERCASE, lowercase, Title Case, Sentence case, alternating case, or reverse it.
 - [Text to Speech](https://toolsdaily.vercel.app/text-to-speech/): Free text to speech reader: type or paste any text and hear it read aloud in your browser, with your choice of voice, speed and pitch.
 - [Tip Calculator](https://toolsdaily.vercel.app/tip-calculator/): Free tip calculator: work out the tip, the total bill and each person's share.
 - [Unit Converter](https://toolsdaily.vercel.app/unit-converter/): Free unit converter for length, weight and temperature: kilometres to miles, kilograms to pounds, Celsius to Fahrenheit and more, with instant results.
+- [Unlock PDF](https://toolsdaily.vercel.app/unlock-pdf/): Free PDF unlocker: remove the password from a PDF you own, when you already know the password.
 - [URL Encoder / Decoder](https://toolsdaily.vercel.app/url-encoder-decoder/): Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text.
 - [Username Generator](https://toolsdaily.vercel.app/username-generator/): Free username generator: create unique usernames from a keyword and style — gamer, cool or professional — in bulk, with one-click copy and .txt download.
 - [UUID Generator](https://toolsdaily.vercel.app/uuid-generator/): Free UUID generator: create one or up to 1,000 unique IDs (UUID v4 random or v1 time-based) in any format, plus a UUID validator.
+- [Watermark PDF](https://toolsdaily.vercel.app/watermark-pdf/): Free PDF watermarker: stamp a text or image watermark on any pages of a PDF, with opacity and angle controls.
 - [Word Counter](https://toolsdaily.vercel.app/word-counter/): Free word counter: count words, characters, sentences and paragraphs, and estimate reading time.
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 38 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 48 free tools by category, with live search.

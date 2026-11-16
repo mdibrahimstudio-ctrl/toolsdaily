@@ -156,4 +156,14 @@
     <loc>https://toolsdaily.vercel.app/username-generator/</loc>
     <lastmod>2026-11-15</lastmod>
   </url>
+  <url><loc>https://toolsdaily.vercel.app/pdf-compressor/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/pdf-to-word/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/pdf-to-image/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/sign-pdf/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/unlock-pdf/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/protect-pdf/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/organize-pdf/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/watermark-pdf/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/add-page-numbers/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolsdaily.vercel.app/ocr-pdf/</loc><lastmod>2026-11-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
