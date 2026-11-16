@@ -130,12 +130,12 @@ for (const { slug, name } of NEW_PAGES) {
 }
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 55, 'sitemap.xml has 55 URLs');
   ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 16 new tools');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-resizer/'), 'sitemap includes image-resizer');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 53, 'home has exactly 53 tool cards');
   ok(NEW_PAGES.every(({ slug }) => home.includes(`/${slug}/`)), 'home cards + nav include all 16 new tools');
   ok(home.includes('/image-resizer/'), 'home cards + nav include image-resizer');
   ok(home.includes('/base64-encoder-decoder/'), 'home cards + nav include base64-encoder-decoder');
@@ -151,19 +151,19 @@ console.log('HOME SEARCH');
   const dom = await loadPage('');
   const w = dom.window;
   const visibleCount = () => [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden')).length;
-  ok(visibleCount() === 48, 'home shows 48 cards before searching');
+  ok(visibleCount() === 53, 'home shows 53 cards before searching');
   setVal(w, '#tool-search', 'pdf');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   ok(visibleCount() === 13, 'search "pdf" filters to the 13 PDF tools');
   setVal(w, '#tool-search', 'calculator');
   await sleep(200);
-  ok(visibleCount() === 8, 'search "calculator" finds the 8 Calculators (v2 kicker labels make section membership searchable)');
+  ok(visibleCount() === 12, 'search "calculator" finds the 12 Calculators (v2 kicker labels make section membership searchable)');
   setVal(w, '#tool-search', 'base64');
   await sleep(200);
   ok(visibleCount() === 1, 'search "base64" finds only the new tool (1)');
   setVal(w, '#tool-search', '');
   await sleep(200);
-  ok(visibleCount() === 48, 'clearing the search restores all 48 cards');
+  ok(visibleCount() === 53, 'clearing the search restores all 53 cards');
   dom.window.close();
 }
 

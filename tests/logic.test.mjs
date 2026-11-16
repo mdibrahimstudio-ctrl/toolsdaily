@@ -306,7 +306,7 @@ console.log('HOME');
 {
   const dom = await loadPage('');
   const w = dom.window;
-  ok(w.document.querySelectorAll('.tool-card').length === 48, 'home lists exactly 48 tool cards');
+  ok(w.document.querySelectorAll('.tool-card').length === 53, 'home lists exactly 53 tool cards');
   setVal(w, '#tool-search', 'password');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   const visible = [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden'));
