@@ -58,6 +58,7 @@ const PAGES = [
   { path: 'watermark-pdf/', name: 'watermark-pdf', selectors: ['#file', '#wm-text', '#opacity', '#angle', '#watermark', '#download', '#dl', '#drop', '#tab-text', '#tab-image'] },
   { path: 'add-page-numbers/', name: 'add-page-numbers', selectors: ['#file', '#format', '#position', '#start-page', '#add-numbers', '#download', '#dl', '#drop'] },
   { path: 'ocr-pdf/', name: 'ocr-pdf', selectors: ['#file', '#ocr', '#download', '#dl', '#drop', '#results', '#status'] },
+  { path: 'feedback/', name: 'feedback', selectors: ['#feedback-form', '#fb-tool', '#fb-message', '#fb-name', '#fb-email', '#fb-submit', '#fb-target', '#fb-msg'] },
 ];
 
 async function loadPage(path) {
