@@ -61,3 +61,4 @@
 ## Site
 
 - [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 48 free tools by category, with live search.
+- [Feedback](https://toolsdaily.vercel.app/feedback/): suggest a new tool or report a problem with one — we read every message.
