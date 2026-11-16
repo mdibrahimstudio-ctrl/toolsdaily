@@ -17,7 +17,9 @@
 - [Binary / Text Converter](https://toolsdaily.vercel.app/binary-text-converter/): Free binary to text converter: turn text into binary code and decode binary back to text, with UTF-8 support, one-click copy and .txt download.
 - [BMI Calculator](https://toolsdaily.vercel.app/bmi-calculator/): Free BMI calculator: enter your height and weight to get your Body Mass Index, its category and the healthy weight range for your height.
 - [Color Converter](https://toolsdaily.vercel.app/color-converter/): Free color converter: turn HEX colors into RGB, HSL and HSV values with one-click copy.
+- [Compound Interest Calculator](https://toolsdaily.vercel.app/compound-interest-calculator/): Free compound interest calculator: see how savings grow with monthly contributions, a year-by-year table and a growth chart, plus a downloadable CSV schedule.
 - [Compress PDF](https://toolsdaily.vercel.app/pdf-compressor/): Free PDF compressor: shrink a PDF for email and upload limits, with a quality choice and before/after sizes.
+- [Calorie & TDEE Calculator](https://toolsdaily.vercel.app/calorie-tdee-calculator/): Free calorie and TDEE calculator: work out your BMR with the Mifflin-St Jeor formula and your daily calories for cutting, maintaining or bulking.
 - [Date Difference Calculator](https://toolsdaily.vercel.app/date-difference-calculator/): Free date difference calculator: find the days, weeks and calendar months between any two dates, including leap years, and add or subtract days from a date.
 - [Dice Roller & Coin Flip](https://toolsdaily.vercel.app/dice-roller-coin-flip/): Free dice roller and coin flip: roll d4, d6, d8, d10, d12 or d20 dice, up to 10 at once, with roll history — plus a coin flip with heads and tails totals.
 - [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
@@ -31,7 +33,9 @@
 - [Image to PDF](https://toolsdaily.vercel.app/image-to-pdf/): Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page.
 - [JSON Formatter](https://toolsdaily.vercel.app/json-formatter/): Free JSON formatter and validator: pretty-print, minify and check JSON with clear error messages.
 - [Lorem Ipsum Generator](https://toolsdaily.vercel.app/lorem-ipsum-generator/): Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, with the classic 'Lorem ipsum dolor sit amet…' opening.
+- [Loan Calculator](https://toolsdaily.vercel.app/loan-calculator/): Free loan calculator: work out the monthly payment, total interest and payoff time, with a full amortization schedule and CSV download.
 - [Morse Code Translator](https://toolsdaily.vercel.app/morse-code-translator/): Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed.
+- [Mortgage Calculator](https://toolsdaily.vercel.app/mortgage-calculator/): Free mortgage calculator: work out the monthly payment on a home loan — principal and interest plus tax, insurance and PMI — with a full amortization schedule and CSV download.
 - [OCR PDF](https://toolsdaily.vercel.app/ocr-pdf/): Free OCR for PDFs: read scanned or image-only PDFs into selectable text in your browser, then download it as .txt.
 - [Organize PDF](https://toolsdaily.vercel.app/organize-pdf/): Free PDF organizer: delete, reorder and rotate PDF pages with thumbnails, then save the rearranged file.
 - [Password Generator](https://toolsdaily.vercel.app/password-generator/): Free password generator: create strong, truly random passwords with your browser's secure random generator.
@@ -57,8 +61,9 @@
 - [UUID Generator](https://toolsdaily.vercel.app/uuid-generator/): Free UUID generator: create one or up to 1,000 unique IDs (UUID v4 random or v1 time-based) in any format, plus a UUID validator.
 - [Watermark PDF](https://toolsdaily.vercel.app/watermark-pdf/): Free PDF watermarker: stamp a text or image watermark on any pages of a PDF, with opacity and angle controls.
 - [Word Counter](https://toolsdaily.vercel.app/word-counter/): Free word counter: count words, characters, sentences and paragraphs, and estimate reading time.
+- [Word Frequency Counter](https://toolsdaily.vercel.app/word-frequency-counter/): Free word frequency counter: count how often each word appears in your text, with percentages, a top-N limit and a downloadable list.
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 48 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 53 free tools by category, with live search.
 - [Feedback](https://toolsdaily.vercel.app/feedback/): suggest a new tool or report a problem with one — we read every message.
