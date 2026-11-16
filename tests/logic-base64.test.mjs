@@ -70,7 +70,7 @@ console.log('BASE64 STATIC');
   const related = ['url-encoder-decoder', 'json-formatter', 'unit-converter', 'color-converter', 'binary-text-converter'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'base64: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
   ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');

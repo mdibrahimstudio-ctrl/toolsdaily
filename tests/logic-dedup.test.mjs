@@ -61,7 +61,7 @@ console.log('DEDUP STATIC');
   const related = ['word-counter', 'text-case-converter', 'lorem-ipsum-generator', 'text-to-speech', 'morse-code-translator', 'fancy-text-generator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'dedup: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/remove-duplicate-lines/'), 'sitemap includes remove-duplicate-lines');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
   ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');

@@ -86,7 +86,7 @@ console.log('CROPPER STATIC');
   const related = ['image-resizer', 'image-compressor', 'image-converter', 'image-synthid-remover', 'background-remover'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'cropper: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-cropper/'), 'sitemap includes image-cropper');
   ok(/image-cropper\/<\/loc>\s*<lastmod>2026-11-14<\/lastmod>/.test(sitemap), 'sitemap image-cropper lastmod is 2026-11-14');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
