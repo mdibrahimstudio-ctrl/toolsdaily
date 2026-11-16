@@ -86,19 +86,19 @@ console.log('CROPPER STATIC');
   const related = ['image-resizer', 'image-compressor', 'image-converter', 'image-synthid-remover', 'background-remover'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'cropper: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-cropper/'), 'sitemap includes image-cropper');
   ok(/image-cropper\/<\/loc>\s*<lastmod>2026-11-14<\/lastmod>/.test(sitemap), 'sitemap image-cropper lastmod is 2026-11-14');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
   ok(home.includes('/image-cropper/'), 'home cards + nav include image-cropper');
-  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-four tools');
-  ok(home.includes('Search 38 tools'), 'home search placeholder says 34 tools');
+  ok(home.includes('Forty-eight handy tools'), 'home lead says Forty-eight tools');
+  ok(home.includes('Search 48 tools'), 'home search placeholder says 48 tools');
   ok(home.includes('Image Tools <span class="n">6</span>'), 'home Image Tools chip says 6');
   ok(home.includes('All <span class="n">38</span>'), 'home All chip says 34');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/image-cropper/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 38 free tools'), 'llms.txt says 34 tools');
+  ok(llms.includes('browse all 48 free tools'), 'llms.txt says 48 tools');
 }
 
 console.log('CROPPER CORE');

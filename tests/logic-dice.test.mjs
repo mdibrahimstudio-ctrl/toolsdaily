@@ -63,17 +63,17 @@ console.log('DICE STATIC');
   const related = ['random-number-generator', 'password-generator', 'uuid-generator', 'qr-generator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'dice: More-tools nav links exactly its 4 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/dice-roller-coin-flip/'), 'sitemap includes dice-roller-coin-flip');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
   ok(home.includes('/dice-roller-coin-flip/'), 'home cards + nav include dice-roller-coin-flip');
-  ok(home.includes('Thirty-eight handy tools'), 'home lead says Thirty-eight tools');
+  ok(home.includes('Forty-eight handy tools'), 'home lead says Forty-eight tools');
   ok(home.includes('Generators <span class="n">6</span>'), 'home Generators chip says 6');
   const genSec = home.match(/<section class="cat" id="generators"[\s\S]*?<\/section>/)[0];
   ok(genSec.includes('<span class="cat-n">6 tools</span>'), 'home Generators section says 6 tools');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
-  ok(llms.includes('browse all 38 free tools'), 'llms.txt says 38 tools');
+  ok(llms.includes('browse all 48 free tools'), 'llms.txt says 48 tools');
   ok(llms.includes('https://toolsdaily.vercel.app/dice-roller-coin-flip/'), 'llms.txt lists dice-roller-coin-flip');
 }
 
