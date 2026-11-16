@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organize PDF — Delete, Reorder &amp; Rotate Pages — ToolsDaily</title>
+<meta name="description" content="Free PDF organizer: delete, reorder and rotate pages in one place, right in your browser. No uploads, no sign-up — your files never leave your device.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/organize-pdf/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Organize PDF — Delete, Reorder &amp; Rotate Pages — ToolsDaily">
+<meta property="og:description" content="Free PDF organizer: delete, reorder and rotate pages in one place, right in your browser. No uploads, no sign-up — your files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/organize-pdf/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Organize PDF — Delete, Reorder &amp; Rotate Pages — ToolsDaily">
+<meta name="twitter:description" content="Free PDF organizer: delete, reorder and rotate pages in one place, right in your browser. No uploads, no sign-up — your files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<style>
+#pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem;margin-top:1rem}
+.pg{margin:0;text-align:center;border:1px solid var(--border);border-radius:var(--radius);padding:.6rem;background:var(--surface)}
+.pg img{max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--border);border-radius:6px}
+.pg figcaption{font-size:.85rem;margin:.45rem 0 .5rem}
+.pg .pg-controls{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:center}
+.pg .pg-controls button{padding:.3rem .55rem;font-size:.8rem}
+#file-name{font-size:.9rem;color:var(--muted)}
+</style>
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Organize PDF",
+    "url": "https://toolsdaily.vercel.app/organize-pdf/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free PDF organizer: delete, reorder and rotate pages in one place, right in your browser. No uploads, no sign-up \u2014 your files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Are my PDF files uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Organizing happens entirely in your browser \u2014 your documents never leave your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I rotate a page more than once?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Each click on Rotate turns the page 90\u00b0 clockwise, so four clicks bring it back to where it started. The rotation is saved into the downloaded PDF."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I delete every page by mistake?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You cannot \u2014 the tool always keeps at least one page. If you try to delete the last remaining page it will tell you, and the Reset button restores the original order, rotation and deleted pages."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">PDF Tools · No. 45</p></div>
+<h1 class="rise rise-1">Organize PDF</h1>
+<p class="lead rise rise-2">Delete, reorder and rotate the pages of a PDF in one place — fix a scanned document or tidy a file before you share it.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="drop" id="drop"><p>Drop one PDF file here, or</p><input type="file" id="file" accept="application/pdf,.pdf"></div>
+  <p id="file-name"></p>
+  <div id="pages"></div>
+  <p>
+    <button id="save" type="button" disabled>Save organized PDF</button>
+    <button id="reset" type="button" class="secondary">Reset</button>
+    <button id="download" type="button" class="secondary">Download organized PDF</button>
+  </p>
+  <p class="msg" id="msg"></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="organized.pdf">Download organized PDF</a></p>
+</div>
+<script src="../assets/vendor/pdf.min.js"></script>
+<script src="../assets/vendor/pdf-lib.min.js"></script>
+<script>
+(function(){
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '../assets/vendor/pdf.worker.min.js';
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  /* Pure core: rebuild a PDF from a page-order plan.
+     pdfBytes: Uint8Array/ArrayBuffer of the source PDF.
+     ops: [{ srcIndex, rotation }] in the new page order; rotation in degrees
+     clockwise, added to the page's existing rotation. Returns Promise<Uint8Array>. */
+  async function organizePdf(pdfBytes, ops){
+    if(!Array.isArray(ops) || ops.length===0) throw new Error('At least one page must remain.');
+    var src=await PDFLib.PDFDocument.load(pdfBytes);
+    var count=src.getPageCount();
+    /* Build the index list with a plain loop (not ops.map): Array#map keeps the
+       caller's realm, and pdf-lib's copyPages rejects a foreign-realm array. */
+    var indices=[];
+    for(var k=0;k<ops.length;k++){
+      var i=ops[k] && ops[k].srcIndex;
+      if(typeof i!=='number' || i<0 || i>=count) throw new Error('Page index out of range.');
+      indices.push(i);
+    }
+    var out=await PDFLib.PDFDocument.create();
+    var pages=await out.copyPages(src, indices);
+    pages.forEach(function(page, k){
+      var rot=ops[k] && ops[k].rotation ? (((ops[k].rotation % 360)+360)%360) : 0;
+      if(rot) page.setRotation(PDFLib.degrees((page.getRotation().angle+rot)%360));
+      out.addPage(page);
+    });
+    return await out.save();
+  }
+  window.TD_organizePdf=organizePdf;
+  function friendlyError(e){
+    if(e && e.name==='PasswordException') return 'This PDF is password-protected. Remove the password and try again.';
+    if(e && (e.name==='InvalidPDFException' || /invalid pdf/i.test(e.message||''))) return 'That file does not look like a valid PDF. Please choose a different file.';
+    if(e && /encrypted/i.test(e.message||'')) return 'This PDF is password-protected. Remove the password and try again.';
+    return 'Could not read this PDF. It may be damaged or password-protected — please try another file.';
+  }
+  var fileInput=document.getElementById('file'), drop=document.getElementById('drop'),
+      fileName=document.getElementById('file-name'), pagesEl=document.getElementById('pages'),
+      saveBtn=document.getElementById('save'), resetBtn=document.getElementById('reset'),
+      msg=document.getElementById('msg'), downloadBtn=document.getElementById('download'),
+      dl=document.getElementById('dl'),
+      file=null, pdfBytes=null, pdfDoc=null, pages=[], thumbCache={}, outUrl=null, busy=false;
+  function showMsg(t,ok){ msg.textContent=t; msg.className='msg '+(t?(ok?'ok':'err'):''); }
+  function isPdf(f){ return f.type==='application/pdf' || /\.pdf$/i.test(f.name||''); }
+  function resetOutput(){
+    if(outUrl){ URL.revokeObjectURL(outUrl); outUrl=null; }
+    dl.setAttribute('href','#');
+    dl.setAttribute('download','organized.pdf');
+  }
+  function clearAll(){
+    file=null; pdfBytes=null; pdfDoc=null; pages=[]; thumbCache={};
+    pagesEl.innerHTML=''; fileName.textContent='';
+    saveBtn.disabled=true; resetOutput(); showMsg('');
+  }
+  async function thumbFor(entry){
+    var key=entry.srcIndex+':'+entry.rotation;
+    if(thumbCache[key]) return thumbCache[key];
+    var page=await pdfDoc.getPage(entry.srcIndex+1);
+    var base=page.getViewport({scale:1});
+    var viewport=page.getViewport({scale:150/base.width, rotation:entry.rotation});
+    var canvas=document.createElement('canvas');
+    canvas.width=Math.round(viewport.width);
+    canvas.height=Math.round(viewport.height);
+    var ctx=canvas.getContext('2d');
+    ctx.fillStyle='#ffffff';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    await page.render({canvasContext:ctx, viewport:viewport}).promise;
+    var url=canvas.toDataURL('image/png');
+    thumbCache[key]=url;
+    return url;
+  }
+  function makeBtn(label, cls, title, disabled, handler){
+    var b=document.createElement('button');
+    b.type='button'; b.className='secondary '+cls; b.textContent=label;
+    b.title=title; b.disabled=!!disabled;
+    b.addEventListener('click',handler);
+    return b;
+  }
+  async function renderGrid(){
+    pagesEl.innerHTML='';
+    for(var i=0;i<pages.length;i++){
+      (function(entry, idx){
+        var fig=document.createElement('figure');
+        fig.className='pg'; fig.dataset.srcIndex=entry.srcIndex;
+        var im=document.createElement('img');
+        im.alt='Page '+(entry.srcIndex+1);
+        var cap=document.createElement('figcaption');
+        cap.textContent='Page '+(entry.srcIndex+1)+(entry.rotation?' · '+entry.rotation+'°':'');
+        var controls=document.createElement('div');
+        controls.className='pg-controls';
+        controls.appendChild(makeBtn('←','pg-move-left','Move left',idx===0,function(){
+          if(idx>0){ var t=pages[idx-1]; pages[idx-1]=pages[idx]; pages[idx]=t; resetOutput(); renderGrid(); }
+        }));
+        controls.appendChild(makeBtn('→','pg-move-right','Move right',idx===pages.length-1,function(){
+          if(idx<pages.length-1){ var t=pages[idx+1]; pages[idx+1]=pages[idx]; pages[idx]=t; resetOutput(); renderGrid(); }
+        }));
+        controls.appendChild(makeBtn('Rotate','pg-rotate','Rotate 90° clockwise',false,function(){
+          entry.rotation=(entry.rotation+90)%360; resetOutput(); renderGrid();
+        }));
+        controls.appendChild(makeBtn('Delete','pg-delete','Delete this page',false,function(){
+          if(pages.length<=1){ showMsg('At least one page must remain — this is the last page, so it cannot be deleted.'); return; }
+          pages.splice(idx,1); resetOutput(); renderGrid();
+          showMsg('Page deleted. '+pages.length+' page'+(pages.length===1?'':'s')+' left.', true);
+        }));
+        fig.appendChild(im); fig.appendChild(cap); fig.appendChild(controls);
+        pagesEl.appendChild(fig);
+        thumbFor(entry).then(function(url){ im.src=url; }).catch(function(){});
+      })(pages[i], i);
+    }
+  }
+  async function setFile(f){
+    if(!isPdf(f)){ showMsg('That is not a PDF file — please choose a file ending in .pdf.'); return; }
+    clearAll();
+    file=f;
+    fileName.textContent=f.name+' ('+formatBytes(f.size)+')';
+    showMsg('Loading pages…', true);
+    try{
+      pdfBytes=new Uint8Array(await f.arrayBuffer());
+      /* Pass pdf.js a COPY: in worker mode it detaches (transfers) the buffer
+         it is given, and pdf-lib still needs the original bytes at save time. */
+      pdfDoc=await pdfjsLib.getDocument({data:pdfBytes.slice()}).promise;
+      pages=[];
+      for(var i=0;i<pdfDoc.numPages;i++) pages.push({srcIndex:i, rotation:0});
+      saveBtn.disabled=false;
+      await renderGrid();
+      showMsg(pdfDoc.numPages+' page'+(pdfDoc.numPages===1?'':'s')+' loaded. Reorder, rotate or delete pages, then save.', true);
+    }catch(e){
+      clearAll();
+      showMsg(friendlyError(e));
+    }
+  }
+  fileInput.addEventListener('change',function(){ if(fileInput.files.length) setFile(fileInput.files[0]); fileInput.value=''; });
+  ['dragover','dragenter'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop',function(e){ if(e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]); });
+  resetBtn.addEventListener('click',function(){
+    if(!pdfDoc){ showMsg('Choose a PDF file first.'); return; }
+    pages=[];
+    for(var i=0;i<pdfDoc.numPages;i++) pages.push({srcIndex:i, rotation:0});
+    resetOutput(); renderGrid();
+    showMsg('Reset — the original order, rotation and pages are back.', true);
+  });
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The organized PDF only exists once a successful save
+     has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click',function(){
+    if(dl.getAttribute('href')==='#'){ showMsg('Nothing to download yet — organize a PDF and click “Save organized PDF” first.'); return; }
+    dl.click();
+    showMsg('Downloaded '+dl.getAttribute('download')+'.', true);
+  });
+  saveBtn.addEventListener('click',async function(){
+    if(!file || !pdfBytes){ showMsg('Please choose a PDF file first.'); return; }
+    if(pages.length===0){ showMsg('At least one page must remain — nothing left to save.'); return; }
+    if(busy) return;
+    busy=true; saveBtn.disabled=true; showMsg('Saving…', true);
+    try{
+      var ops=pages.map(function(p){ return {srcIndex:p.srcIndex, rotation:p.rotation}; });
+      var bytes=await organizePdf(pdfBytes, ops);
+      var check=await PDFLib.PDFDocument.load(bytes);
+      resetOutput();
+      outUrl=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+      dl.href=outUrl;
+      var base=file.name.replace(/\.pdf$/i,'');
+      dl.setAttribute('download', base+'-organized.pdf');
+      showMsg('Done! Your organized PDF has '+check.getPageCount()+' page'+(check.getPageCount()===1?'':'s')+' ('+formatBytes(bytes.length)+').', true);
+    }catch(e){
+      showMsg(friendlyError(e));
+    }
+    busy=false; saveBtn.disabled=!file;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Click the box (or drop a file onto it) and choose one PDF file.</li>
+    <li>Under each page thumbnail, use the arrow buttons to move it, Rotate to turn it 90°, or Delete to remove it. Reset restores the original document.</li>
+    <li>Click “Save organized PDF”, then download your reorganized file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Are my PDF files uploaded to a server?</summary><p>No. Organizing happens entirely in your browser — your documents never leave your device.</p></details>
+  <details><summary>Can I rotate a page more than once?</summary><p>Yes. Each click on Rotate turns the page 90° clockwise, so four clicks bring it back to where it started. The rotation is saved into the downloaded PDF.</p></details>
+  <details><summary>What if I delete every page by mistake?</summary><p>You cannot — the tool always keeps at least one page. If you try to delete the last remaining page it will tell you, and the Reset button restores the original order, rotation and deleted pages.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../pdf-merge/">PDF Merge</a></li>
+        <li><a href="../pdf-split/">PDF Split</a></li>
+        <li><a href="../image-to-pdf/">Image to PDF</a></li>
+        <li><a href="../pdf-compressor/">Compress PDF</a></li>
+        <li><a href="../pdf-to-image/">PDF to JPG/PNG</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>48 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
