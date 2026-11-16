@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OCR PDF — Extract Text from Scanned PDFs Free — ToolsDaily</title>
+<meta name="description" content="Free OCR for scanned PDFs: extract the text from image-only PDFs right in your browser. No uploads, no sign-up — your files never leave your device.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<style>
+#file-name{font-family:var(--font-mono);font-size:.9rem;color:var(--muted);margin:.6rem 0 0;min-height:1.2em}
+#file-name:empty{display:none}
+.btn-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.8rem}
+.dl-note{font-size:.9rem;color:var(--muted);margin:.5rem 0 0}
+#status{font-family:var(--font-mono);font-size:.9rem;color:var(--muted);margin:.6rem 0 0;min-height:1.2em}
+#status:empty{display:none}
+#results{margin-top:1rem}
+#results h3{font-family:var(--font-mono);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:1rem 0 .3rem}
+#results h3:first-child{margin-top:0}
+.page-text{white-space:pre-wrap;word-break:break-word;background:var(--surface-2);border-radius:var(--radius-sm);padding:.8rem .9rem;margin:0;font-size:.95rem;line-height:1.6}
+.page-text.empty{color:var(--muted);font-style:italic}
+</style>
+<link rel="canonical" href="https://toolsdaily.vercel.app/ocr-pdf/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OCR PDF — Extract Text from Scanned PDFs Free — ToolsDaily">
+<meta property="og:description" content="Free OCR for scanned PDFs: extract the text from image-only PDFs right in your browser. No uploads, no sign-up — your files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/ocr-pdf/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OCR PDF — Extract Text from Scanned PDFs Free — ToolsDaily">
+<meta name="twitter:description" content="Free OCR for scanned PDFs: extract the text from image-only PDFs right in your browser. No uploads, no sign-up — your files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "OCR PDF",
+    "url": "https://toolsdaily.vercel.app/ocr-pdf/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free OCR for scanned PDFs: extract the text from image-only PDFs right in your browser. No uploads, no sign-up — your files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is my PDF uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The OCR runs entirely in your browser — your PDF never leaves your device, and nothing is uploaded or saved anywhere."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does the first run take a moment?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The first run downloads the OCR engine (about 6 MB: the recognition core and the English language model) and your browser caches it, so later runs start right away. This version reads English only, and accuracy depends on scan quality — clean, straight, high-contrast scans read best."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I get a searchable PDF back?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not in this version. OCR PDF downloads the extracted text as a plain .txt file, one section per page. A searchable-PDF output is not included in v1."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">PDF Tools · No. 48</p></div>
+<h1 class="rise rise-1">OCR PDF</h1>
+<p class="lead rise rise-2">Turn a scanned or image-only PDF into selectable text — every page read by OCR, right in your browser. The OCR engine (about 6 MB) downloads on first use and is cached after that; this version reads English only, and accuracy depends on scan quality.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="drop" id="drop"><p>Drop a scanned PDF here, or</p><input type="file" id="file" accept="application/pdf,.pdf"></div>
+  <p id="file-name"></p>
+  <p class="btn-row">
+    <button id="ocr" type="button" disabled>Start OCR</button>
+    <button id="clear" type="button" class="secondary">Clear</button>
+    <button id="download" type="button" class="secondary"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M6 11l6 6 6-6M4 21h16"/></svg> Download text (.txt)</button>
+  </p>
+  <div class="bar hidden" id="bar-wrap"><div id="bar"></div></div>
+  <p id="status" aria-live="polite"></p>
+  <p class="msg" id="msg"></p>
+  <div class="stats hidden" id="stats">
+    <div class="stat"><b id="st-pages">0</b><span>Pages read</span></div>
+    <div class="stat"><b id="st-words">0</b><span>Words</span></div>
+    <div class="stat"><b id="st-chars">0</b><span>Characters</span></div>
+  </div>
+  <div id="results"></div>
+  <p class="dl-note">Best results come from clean, straight, high-contrast scans — faint or skewed pages may read partly or not at all. The output is a plain text file; a searchable-PDF output is not included in this version.</p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="document-ocr.txt">Download text (.txt)</a></p>
+</div>
+<script src="../assets/vendor/pdf.min.js"></script>
+<script>
+(function(){
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '../assets/vendor/pdf.worker.min.js';
+  var SCALE = 2; // render scale for OCR accuracy (~144 DPI from 72pt pages)
+  var TESS_DIR = '../assets/vendor/tesseract/';
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function countWords(text){
+    var t = String(text == null ? '' : text).trim();
+    if (!t) return 0;
+    return t.split(/\s+/).length;
+  }
+
+  /* ---------- Lazy Tesseract load (Kokoro precedent) ----------
+     NOTHING from the OCR engine loads with the page. The first "Start OCR"
+     click injects tesseract.min.js, then creates one worker with the vendored
+     core + English model. tesseract.js v7 resolves workerPath/corePath/
+     langPath against the page URL, so the ../ relative paths are correct
+     from this page. The worker is reused for every page, then terminated. */
+  var tessPromise = null;
+  function loadTesseract(){
+    if (typeof window.Tesseract !== 'undefined') return Promise.resolve(window.Tesseract);
+    if (tessPromise) return tessPromise;
+    tessPromise = new Promise(function(resolve, reject){
+      var s = document.createElement('script');
+      s.src = TESS_DIR + 'tesseract.min.js';
+      s.onload = function(){
+        if (typeof window.Tesseract !== 'undefined') resolve(window.Tesseract);
+        else { tessPromise = null; reject(new Error('ENGINE_LOAD')); }
+      };
+      s.onerror = function(){ tessPromise = null; reject(new Error('ENGINE_LOAD')); };
+      document.head.appendChild(s);
+    });
+    return tessPromise;
+  }
+
+  async function renderPageToCanvas(doc, pageNum){
+    var page = await doc.getPage(pageNum);
+    var viewport = page.getViewport({ scale: SCALE });
+    var canvas = document.createElement('canvas');
+    canvas.width = Math.round(viewport.width);
+    canvas.height = Math.round(viewport.height);
+    var ctx = canvas.getContext('2d');
+    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+    return canvas;
+  }
+
+  /* Pure core: pdfBytes (Uint8Array/ArrayBuffer) -> full extracted text with
+     "--- Page N ---" separators. onProgress receives {phase, page, total,
+     percent} — phases: 'engine' (loading the OCR engine), 'page' (rendering
+     a page), 'recognize' (OCR running on a page, with percent). A page with
+     no readable text contributes a plain notice line instead of crashing.
+     Throws: pdf.js PasswordException / InvalidPDFException for
+     protected/corrupt PDFs, Error('NO_PAGES') for a PDF with no pages,
+     Error('ENGINE_LOAD') if the OCR engine cannot load. */
+  async function ocrPdf(pdfBytes, onProgress){
+    onProgress = onProgress || function(){};
+    var doc = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
+    if (!doc.numPages) throw new Error('NO_PAGES');
+    var Tesseract = await loadTesseract();
+    var worker;
+    var currentPage = 0; // the logger also reports "recognizing text" — map
+    // that to the page being read, not to the engine still loading.
+    try {
+      worker = await Tesseract.createWorker('eng', 1, {
+        workerPath: TESS_DIR + 'worker.min.js',
+        corePath: TESS_DIR,
+        langPath: TESS_DIR,
+        logger: function(m){
+          var pct = (typeof m.progress === 'number') ? Math.round(m.progress * 100) : null;
+          if (m.status === 'recognizing text' && currentPage > 0) {
+            onProgress({ phase: 'recognize', page: currentPage, total: doc.numPages, percent: pct });
+          } else {
+            onProgress({ phase: 'engine', status: m.status, percent: pct });
+          }
+        }
+      });
+    } catch (e) {
+      if (e && e.message === 'ENGINE_LOAD') throw e;
+      throw new Error('ENGINE_LOAD');
+    }
+    var parts = [];
+    try {
+      for (var i = 1; i <= doc.numPages; i++) {
+        onProgress({ phase: 'page', page: i, total: doc.numPages });
+        var canvas = await renderPageToCanvas(doc, i);
+        currentPage = i;
+        var result = await worker.recognize(canvas);
+        currentPage = 0;
+        var text = result && result.data && typeof result.data.text === 'string' ? result.data.text.trim() : '';
+        if (text) parts.push('--- Page ' + i + ' ---\n' + text);
+        else parts.push('--- Page ' + i + ' ---\nNo readable text found on page ' + i + ' — the scan may be too faint.');
+      }
+    } finally {
+      try { await worker.terminate(); } catch (e) { /* ignore */ }
+    }
+    return parts.join('\n\n');
+  }
+  window.TD_ocrPdf = ocrPdf;
+
+  function friendlyError(e){
+    if (e && e.name === 'PasswordException') return 'This PDF is password-protected. Remove the password and try again.';
+    if (e && (e.name === 'InvalidPDFException' || /invalid pdf/i.test(e.message || ''))) return 'That file does not look like a valid PDF. Please choose a different file.';
+    if (e && e.message === 'NO_PAGES') return 'This PDF has no pages to read. Please choose a different file.';
+    if (e && e.message === 'ENGINE_LOAD') return 'The OCR engine could not be loaded. Please check your connection and try again — the engine downloads once (about 6 MB) and is cached after that.';
+    return 'Could not read this PDF. It may be damaged or password-protected — please try another file.';
+  }
+
+  var fileInput = document.getElementById('file'), drop = document.getElementById('drop'),
+      fileName = document.getElementById('file-name'), btn = document.getElementById('ocr'),
+      clearBtn = document.getElementById('clear'), msg = document.getElementById('msg'),
+      statusEl = document.getElementById('status'), barWrap = document.getElementById('bar-wrap'),
+      bar = document.getElementById('bar'), resultsEl = document.getElementById('results'),
+      statsEl = document.getElementById('stats'),
+      downloadBtn = document.getElementById('download'), dl = document.getElementById('dl'),
+      file = null, outUrl = null, running = false, outText = '';
+  function showMsg(t, ok){ msg.textContent = t; msg.className = 'msg ' + (t ? (ok ? 'ok' : 'err') : ''); }
+  function setStatus(t){ statusEl.textContent = t; }
+  function setBar(p){
+    barWrap.classList.remove('hidden');
+    barWrap.classList.remove('indet');
+    bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, p)) + ')';
+  }
+  function setBarIndet(){
+    barWrap.classList.remove('hidden');
+    barWrap.classList.add('indet');
+  }
+  function hideBar(){ barWrap.classList.add('hidden'); bar.style.transform = 'scaleX(0)'; }
+  function isPdf(f){ return f.type === 'application/pdf' || /\.pdf$/i.test(f.name || ''); }
+  function resetOutput(){
+    if (outUrl) { URL.revokeObjectURL(outUrl); outUrl = null; }
+    outText = '';
+    resultsEl.innerHTML = '';
+    statsEl.classList.add('hidden');
+    dl.setAttribute('href', '#');
+    dl.setAttribute('download', 'document-ocr.txt');
+    setStatus('');
+    hideBar();
+  }
+  function setFile(f){
+    if (!isPdf(f)) { showMsg('That is not a PDF file — please choose a file ending in .pdf.'); return; }
+    resetOutput();
+    file = f;
+    fileName.textContent = f.name + ' (' + formatBytes(f.size) + ')';
+    btn.disabled = false;
+    showMsg('Ready — press “Start OCR” to read the text from this PDF.', true);
+  }
+  fileInput.addEventListener('change', function(){ if (fileInput.files.length) setFile(fileInput.files[0]); fileInput.value = ''; });
+  ['dragover', 'dragenter'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function(e){ if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]); });
+  clearBtn.addEventListener('click', function(){
+    if (running) return;
+    file = null; fileName.textContent = ''; btn.disabled = true;
+    resetOutput(); showMsg('');
+  });
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The text file only exists once a successful OCR
+     run has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click', function(){
+    if (dl.getAttribute('href') === '#') { showMsg('Nothing to download yet — run OCR on a PDF first.'); return; }
+    dl.click();
+    showMsg('Downloaded ' + dl.getAttribute('download') + '.', true);
+  });
+  function renderResults(fullText, pageCount){
+    resultsEl.innerHTML = '';
+    /* Split on the separator lines, not on blank lines: OCR text itself
+       contains blank lines, so splitting on '\n\n' would shred a page. */
+    var chunks = fullText.split(/^--- Page (\d+) ---$/m);
+    var extractedParts = [];
+    for (var i = 1; i + 1 < chunks.length; i += 2) {
+      var body = (chunks[i + 1] || '').replace(/^\n/, '').replace(/\n+$/, '');
+      var h = document.createElement('h3');
+      h.textContent = 'Page ' + chunks[i];
+      var pre = document.createElement('p');
+      var isEmpty = /^No readable text found/.test(body);
+      pre.className = 'page-text' + (isEmpty ? ' empty' : '');
+      pre.textContent = body;
+      resultsEl.appendChild(h);
+      resultsEl.appendChild(pre);
+      if (!isEmpty) extractedParts.push(body);
+    }
+    var extracted = extractedParts.join('\n').trim();
+    document.getElementById('st-pages').textContent = String(pageCount);
+    document.getElementById('st-words').textContent = String(countWords(extracted));
+    document.getElementById('st-chars').textContent = String(extracted.length);
+    statsEl.classList.remove('hidden');
+    return extracted.length > 0;
+  }
+  btn.addEventListener('click', async function(){
+    if (!file || running) { if (!file) showMsg('Please choose a PDF file first.'); return; }
+    running = true;
+    btn.disabled = true;
+    clearBtn.disabled = true;
+    resetOutput();
+    showMsg('');
+    setStatus('Opening the PDF…');
+    setBarIndet();
+    var pageCount = 0;
+    try {
+      var bytes = new Uint8Array(await file.arrayBuffer());
+      var fullText = await ocrPdf(bytes, function(p){
+        if (p.phase === 'engine') {
+          var label = 'Loading OCR engine…';
+          if (p.status) label = 'Loading OCR engine — ' + p.status + (p.percent !== null && p.percent !== undefined ? ' ' + p.percent + '%' : '…');
+          setStatus(label);
+          if (typeof p.percent === 'number') setBar(p.percent / 100);
+          else setBarIndet();
+        } else if (p.phase === 'page') {
+          pageCount = p.total;
+          setStatus('Reading page ' + p.page + ' of ' + p.total + '…');
+          setBarIndet();
+        } else if (p.phase === 'recognize') {
+          setStatus('Reading page ' + p.page + ' of ' + p.total + '… ' + (typeof p.percent === 'number' ? p.percent + '%' : ''));
+          if (typeof p.percent === 'number') setBar(p.percent / 100);
+          else setBarIndet();
+        }
+      });
+      outText = fullText;
+      var hasText = renderResults(fullText, pageCount);
+      var baseName = file.name.replace(/\.pdf$/i, '').replace(/[^\w\-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'document';
+      if (outUrl) URL.revokeObjectURL(outUrl);
+      outUrl = URL.createObjectURL(new Blob([fullText], { type: 'text/plain;charset=utf-8' }));
+      dl.href = outUrl;
+      dl.setAttribute('download', baseName + '-ocr.txt');
+      hideBar();
+      setStatus('Done — read ' + pageCount + ' page' + (pageCount === 1 ? '' : 's') + '.');
+      if (hasText) showMsg('Done! Read ' + pageCount + ' page' + (pageCount === 1 ? '' : 's') + ' — the text is below, and you can download it as a .txt file.', true);
+      else showMsg('No readable text found in this PDF — the scan may be too faint, or the pages may be blank. Try a clearer, higher-contrast scan.');
+    } catch (e) {
+      hideBar();
+      setStatus('');
+      showMsg(friendlyError(e));
+    }
+    running = false;
+    btn.disabled = !file;
+    clearBtn.disabled = false;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Drop a scanned or image-only PDF onto the box (or click it to choose one). One file at a time.</li>
+    <li>Click “Start OCR”. The first run downloads the OCR engine (about 6 MB) — your browser caches it, so later runs start right away. Each page is rendered and read in turn.</li>
+    <li>Read the extracted text page by page below, then download it as a .txt file. This version reads English only, and accuracy depends on scan quality.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Is my PDF uploaded to a server?</summary><p>No. The OCR runs entirely in your browser — your PDF never leaves your device, and nothing is uploaded or saved anywhere.</p></details>
+  <details><summary>Why does the first run take a moment?</summary><p>The first run downloads the OCR engine (about 6 MB: the recognition core and the English language model) and your browser caches it, so later runs start right away. This version reads English only, and accuracy depends on scan quality — clean, straight, high-contrast scans read best.</p></details>
+  <details><summary>Can I get a searchable PDF back?</summary><p>Not in this version. OCR PDF downloads the extracted text as a plain .txt file, one section per page. A searchable-PDF output is not included in v1.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../pdf-merge/">PDF Merge</a></li>
+        <li><a href="../pdf-split/">PDF Split</a></li>
+        <li><a href="../pdf-to-word/">PDF to Word</a></li>
+        <li><a href="../image-to-pdf/">Image to PDF</a></li>
+        <li><a href="../pdf-compressor/">Compress PDF</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>48 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
