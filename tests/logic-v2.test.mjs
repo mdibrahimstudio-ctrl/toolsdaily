@@ -59,14 +59,34 @@ const NEW_PAGES = [
   { slug: 'bmi-calculator', name: 'BMI Calculator' },
   { slug: 'emi-calculator', name: 'EMI Calculator' },
   { slug: 'percentage-calculator', name: 'Percentage Calculator' },
+  { slug: 'pdf-compressor', name: 'Compress PDF' },
+  { slug: 'pdf-to-word', name: 'PDF to Word' },
+  { slug: 'pdf-to-image', name: 'PDF to JPG/PNG' },
+  { slug: 'sign-pdf', name: 'Sign PDF' },
+  { slug: 'unlock-pdf', name: 'Unlock PDF' },
+  { slug: 'protect-pdf', name: 'Protect PDF' },
+  { slug: 'organize-pdf', name: 'Organize PDF' },
+  { slug: 'watermark-pdf', name: 'Watermark PDF' },
+  { slug: 'add-page-numbers', name: 'Add Page Numbers' },
+  { slug: 'ocr-pdf', name: 'OCR PDF' },
 ];
 const OLD_SLUGS = ['qr-generator', 'image-compressor', 'image-converter', 'word-counter', 'password-generator', 'age-calculator', 'unit-converter', 'color-converter', 'text-case-converter', 'json-formatter'];
 // Related-tools internal linking (2026-11-15): each page's More-tools nav links
 // only its same-category / most-related tools (4-6), not every tool on the site.
 const RELATED = {
-  'pdf-merge': ['pdf-split', 'image-to-pdf', 'image-converter', 'image-compressor'],
-  'pdf-split': ['pdf-merge', 'image-to-pdf', 'image-converter', 'image-compressor'],
-  'image-to-pdf': ['pdf-merge', 'pdf-split', 'image-converter', 'image-compressor', 'image-resizer'],
+  'pdf-merge': ['pdf-split', 'pdf-compressor', 'organize-pdf', 'pdf-to-word', 'image-to-pdf'],
+  'pdf-split': ['pdf-merge', 'organize-pdf', 'pdf-compressor', 'pdf-to-image', 'image-to-pdf'],
+  'image-to-pdf': ['pdf-to-image', 'pdf-merge', 'pdf-split', 'pdf-compressor', 'ocr-pdf'],
+  'pdf-compressor': ['pdf-merge', 'pdf-split', 'image-to-pdf', 'pdf-to-image', 'unlock-pdf'],
+  'pdf-to-word': ['pdf-merge', 'pdf-split', 'image-to-pdf', 'pdf-compressor', 'ocr-pdf'],
+  'pdf-to-image': ['pdf-merge', 'pdf-split', 'image-to-pdf', 'image-converter', 'pdf-compressor'],
+  'sign-pdf': ['pdf-merge', 'pdf-split', 'protect-pdf', 'unlock-pdf', 'watermark-pdf'],
+  'unlock-pdf': ['pdf-merge', 'pdf-split', 'protect-pdf', 'sign-pdf', 'pdf-compressor'],
+  'protect-pdf': ['pdf-merge', 'pdf-split', 'unlock-pdf', 'sign-pdf', 'watermark-pdf'],
+  'organize-pdf': ['pdf-merge', 'pdf-split', 'image-to-pdf', 'pdf-compressor', 'pdf-to-image'],
+  'watermark-pdf': ['pdf-merge', 'pdf-split', 'sign-pdf', 'add-page-numbers', 'organize-pdf'],
+  'add-page-numbers': ['pdf-merge', 'pdf-split', 'organize-pdf', 'watermark-pdf', 'image-to-pdf'],
+  'ocr-pdf': ['pdf-merge', 'pdf-split', 'pdf-to-word', 'image-to-pdf', 'pdf-compressor'],
   'bmi-calculator': ['age-calculator', 'percentage-calculator', 'emi-calculator', 'tip-calculator', 'date-difference-calculator', 'gpa-calculator'],
   'emi-calculator': ['percentage-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'date-difference-calculator', 'gpa-calculator'],
   'percentage-calculator': ['emi-calculator', 'tip-calculator', 'bmi-calculator', 'age-calculator', 'unit-converter', 'gpa-calculator'],
@@ -110,13 +130,13 @@ for (const { slug, name } of NEW_PAGES) {
 }
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 39, 'sitemap.xml has 39 URLs');
-  ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 6 new tools');
+  ok((sitemap.match(/<loc>/g) || []).length === 49, 'sitemap.xml has 49 URLs');
+  ok(NEW_PAGES.every(({ slug }) => sitemap.includes(`https://toolsdaily.vercel.app/${slug}/`)), 'sitemap includes all 16 new tools');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-resizer/'), 'sitemap includes image-resizer');
   ok(sitemap.includes('https://toolsdaily.vercel.app/base64-encoder-decoder/'), 'sitemap includes base64-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 38, 'home has exactly 38 tool cards');
-  ok(NEW_PAGES.every(({ slug }) => home.includes(`/${slug}/`)), 'home cards + nav include all 6 new tools');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
+  ok(NEW_PAGES.every(({ slug }) => home.includes(`/${slug}/`)), 'home cards + nav include all 16 new tools');
   ok(home.includes('/image-resizer/'), 'home cards + nav include image-resizer');
   ok(home.includes('/base64-encoder-decoder/'), 'home cards + nav include base64-encoder-decoder');
   for (const slug of OLD_SLUGS) {
@@ -131,10 +151,10 @@ console.log('HOME SEARCH');
   const dom = await loadPage('');
   const w = dom.window;
   const visibleCount = () => [...w.document.querySelectorAll('.tool-card')].filter((c) => !c.classList.contains('hidden')).length;
-  ok(visibleCount() === 38, 'home shows 38 cards before searching');
+  ok(visibleCount() === 48, 'home shows 48 cards before searching');
   setVal(w, '#tool-search', 'pdf');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
-  ok(visibleCount() === 3, 'search "pdf" filters to the 3 PDF tools');
+  ok(visibleCount() === 13, 'search "pdf" filters to the 13 PDF tools');
   setVal(w, '#tool-search', 'calculator');
   await sleep(200);
   ok(visibleCount() === 8, 'search "calculator" finds the 8 Calculators (v2 kicker labels make section membership searchable)');
@@ -143,7 +163,7 @@ console.log('HOME SEARCH');
   ok(visibleCount() === 1, 'search "base64" finds only the new tool (1)');
   setVal(w, '#tool-search', '');
   await sleep(200);
-  ok(visibleCount() === 38, 'clearing the search restores all 38 cards');
+  ok(visibleCount() === 48, 'clearing the search restores all 48 cards');
   dom.window.close();
 }
 

@@ -48,6 +48,16 @@ const PAGES = [
   { path: 'binary-text-converter/', name: 'binary-text-converter', selectors: ['#mode-encode', '#mode-decode', '#text-in', '#sep', '#btn-convert', '#btn-swap', '#text-out', '#st-in', '#st-out', '#st-bits', '#copy-out', '#download', '#dl', '#msg'] },
   { path: 'dice-roller-coin-flip/', name: 'dice-roller-coin-flip', selectors: ['#dice-sides', '#dice-count', '#roll', '#clear-history', '#dice-results', '#dice-total', '#st-rolls', '#st-highest', '#st-lowest', '#dice-history', '#coin-flip', '#coin-result', '#coin-heads', '#coin-tails', '#coin-flips', '#msg', '#coin-msg'] },
   { path: 'username-generator/', name: 'username-generator', selectors: ['#keyword', '#style', '#count', '#generate', '#copy-all', '#download', '#dl', '#msg', '#st-count', '#st-style', '#st-keyword', '#results-list', '.name-row', '[data-copy]'] },
+  { path: 'pdf-compressor/', name: 'pdf-compressor', selectors: ['#file', '#quality', '#compress', '#download', '#dl', '#drop', '#results'] },
+  { path: 'pdf-to-word/', name: 'pdf-to-word', selectors: ['#file', '#convert', '#download', '#dl', '#drop', '#file-info'] },
+  { path: 'pdf-to-image/', name: 'pdf-to-image', selectors: ['#file', '#format', '#dpi', '#convert', '#download', '#dl', '#drop', '#thumbs'] },
+  { path: 'sign-pdf/', name: 'sign-pdf', selectors: ['#file', '#sig-canvas', '#sig-name', '#sig-file', '#sign', '#download', '#dl', '#drop', '#pages-mode', '#position'] },
+  { path: 'unlock-pdf/', name: 'unlock-pdf', selectors: ['#file', '#password', '#unlock', '#download', '#dl', '#drop'] },
+  { path: 'protect-pdf/', name: 'protect-pdf', selectors: ['#file', '#password', '#confirm-password', '#protect', '#download', '#dl', '#drop'] },
+  { path: 'organize-pdf/', name: 'organize-pdf', selectors: ['#file', '#pages', '#save', '#reset', '#download', '#dl', '#drop'] },
+  { path: 'watermark-pdf/', name: 'watermark-pdf', selectors: ['#file', '#wm-text', '#opacity', '#angle', '#watermark', '#download', '#dl', '#drop', '#tab-text', '#tab-image'] },
+  { path: 'add-page-numbers/', name: 'add-page-numbers', selectors: ['#file', '#format', '#position', '#start-page', '#add-numbers', '#download', '#dl', '#drop'] },
+  { path: 'ocr-pdf/', name: 'ocr-pdf', selectors: ['#file', '#ocr', '#download', '#dl', '#drop', '#results', '#status'] },
 ];
 
 async function loadPage(path) {
