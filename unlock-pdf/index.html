@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unlock PDF — Remove a PDF Password — ToolsDaily</title>
+<meta name="description" content="Free PDF unlocker: remove the password from a PDF you already know the password for, in your browser. No uploads, no sign-up — files never leave your device.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/unlock-pdf/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Unlock PDF — Remove a PDF Password — ToolsDaily">
+<meta property="og:description" content="Free PDF unlocker: remove the password from a PDF you already know the password for, in your browser. No uploads, no sign-up — files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/unlock-pdf/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unlock PDF — Remove a PDF Password — ToolsDaily">
+<meta name="twitter:description" content="Free PDF unlocker: remove the password from a PDF you already know the password for, in your browser. No uploads, no sign-up — files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Unlock PDF",
+    "url": "https://toolsdaily.vercel.app/unlock-pdf/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free PDF unlocker: remove the password from a PDF you already know the password for, in your browser. No uploads, no sign-up \u2014 files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can this tool unlock a PDF if I forgot the password?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. This tool does not guess or crack passwords \u2014 it only removes protection when you already know the password. If you forgot the password, there is no way to open the file with this tool."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if my PDF is not password-protected?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool tells you so \u2014 \u201cThis PDF is not password-protected \u2014 nothing to unlock\u201d \u2014 and does not produce a file. A PDF that already opens without a password has nothing to remove."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my PDF files uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Unlocking happens entirely in your browser \u2014 your files never leave your device, and the password is never sent anywhere."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">PDF Tools · No. 43</p></div>
+<h1 class="rise rise-1">Unlock PDF</h1>
+<p class="lead rise rise-2">Remove the password from a PDF you already know the password for — get back the same file, opening without a password. Everything runs in your browser; your file never leaves your device.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="drop" id="drop"><p>Drop a password-protected PDF here, or</p><input type="file" id="file" accept="application/pdf,.pdf"></div>
+  <p id="file-info" class="mono"></p>
+  <label for="password">PDF password</label>
+  <input type="password" id="password" autocomplete="off" placeholder="The password you already know">
+  <button id="unlock" type="button" disabled>Unlock PDF</button>
+  <button id="clear" type="button" class="secondary">Clear</button>
+  <button id="download" type="button" class="secondary">Download unlocked PDF</button>
+  <p class="msg" id="msg" aria-live="polite"></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="unlocked.pdf">Download unlocked PDF</a></p>
+  <p class="note">This tool does not guess or crack passwords — it only removes protection when you already know the password. If you forgot the password, there is no way to open the file with this tool.</p>
+  <p class="foot-note">Privacy first: your PDF and password never leave your device — everything runs in your browser.</p>
+</div>
+<script src="../assets/vendor/pdf.min.js"></script>
+<script src="../assets/vendor/pdf-lib.min.js"></script>
+<script>
+(function(){
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '../assets/vendor/pdf.worker.min.js';
+
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function makeError(code, message){ var e = new Error(message); e.code = code; return e; }
+
+  /* ---------- qpdf WASM engine, lazy-loaded on first use ----------
+     Same pattern as Protect PDF: the ~1.4 MB engine must NOT block page load,
+     so its <script> tag is injected only when an unlock actually needs it.
+     pdf-lib cannot read an encrypted PDF at all (verified 2026-11-16, even
+     with ignoreEncryption), so qpdf does the decryption and pdf-lib then
+     re-saves every page into a fresh unprotected document. */
+  var qpdfPromise = null;
+  function loadQpdfEngine(){
+    if (qpdfPromise) return qpdfPromise;
+    qpdfPromise = new Promise(function(resolve, reject){
+      function init(){
+        var factory = window.Module;
+        if (typeof factory !== 'function') {
+          qpdfPromise = null;
+          reject(new Error('The decryption engine failed to start. Please reload the page and try again.'));
+          return;
+        }
+        factory({ locateFile: function(){ return '../assets/vendor/qpdf/qpdf.wasm'; } }).then(resolve, function(){
+          qpdfPromise = null;
+          reject(new Error('The decryption engine failed to start. Please reload the page and try again.'));
+        });
+      }
+      if (typeof window.Module === 'function') { init(); return; }
+      var s = document.createElement('script');
+      s.src = '../assets/vendor/qpdf/qpdf.js';
+      s.onload = init;
+      s.onerror = function(){
+        qpdfPromise = null;
+        reject(new Error('Could not load the decryption engine. Check your connection and try again.'));
+      };
+      document.head.appendChild(s);
+    });
+    return qpdfPromise;
+  }
+
+  /* Decrypt with qpdf. The password was already validated by pdf.js, so a
+     failure here means a damaged file or an engine problem — never a wrong
+     password reaching this step. */
+  async function decryptWithQpdf(data, password){
+    var qpdf = await loadQpdfEngine();
+    try { qpdf.FS.unlink('/unlock-out.pdf'); } catch (e) {}
+    qpdf.FS.writeFile('/unlock-in.pdf', data);
+    var rc;
+    try {
+      rc = qpdf.callMain(['/unlock-in.pdf', '--password=' + password, '--decrypt', '--', '/unlock-out.pdf']);
+    } catch (e) {
+      rc = 1;
+    }
+    if (rc !== 0) {
+      try { qpdf.FS.unlink('/unlock-in.pdf'); } catch (e) {}
+      throw makeError('DECRYPT_FAILED', 'Could not decrypt this PDF — the file may be damaged.');
+    }
+    var out;
+    try { out = qpdf.FS.readFile('/unlock-out.pdf'); }
+    catch (e) {
+      throw makeError('DECRYPT_FAILED', 'Could not decrypt this PDF — the file may be damaged.');
+    }
+    var copy = new Uint8Array(out.length);
+    copy.set(out);
+    try { qpdf.FS.unlink('/unlock-in.pdf'); } catch (e) {}
+    try { qpdf.FS.unlink('/unlock-out.pdf'); } catch (e) {}
+    return copy;
+  }
+
+  /* Pure core: PDF bytes + known password -> unprotected PDF bytes.
+     Throws coded errors the UI turns into friendly messages:
+     NOT_PROTECTED (opens without a password already), EMPTY_PASSWORD,
+     WRONG_PASSWORD, DECRYPT_FAILED; a corrupt file throws pdf.js's
+     InvalidPDFException. pdf.js transfers (neuters) the buffer it is given,
+     so every getDocument call gets a fresh copy via data.slice(). */
+  async function unlockPdf(pdfBytes, password){
+    var data = pdfBytes instanceof Uint8Array ? pdfBytes : new Uint8Array(pdfBytes);
+    var noWorker = typeof Worker === 'undefined';
+    /* Probe: does the file open with no password? */
+    try {
+      var probe = await pdfjsLib.getDocument({ data: data.slice(), disableWorker: noWorker }).promise;
+      if (probe && typeof probe.destroy === 'function') { try { await probe.destroy(); } catch (e) {} }
+      throw makeError('NOT_PROTECTED', 'This PDF is not password-protected — nothing to unlock.');
+    } catch (e) {
+      if (e && e.code === 'NOT_PROTECTED') throw e;
+      if (!e || e.name !== 'PasswordException') throw e; /* InvalidPDFException etc. */
+      /* Protected — a password is required. */
+    }
+    if (!password) {
+      throw makeError('EMPTY_PASSWORD', 'This PDF is password-protected — enter its password to unlock it.');
+    }
+    /* Validate the password with pdf.js: a wrong one throws PasswordException. */
+    var pdf;
+    try {
+      pdf = await pdfjsLib.getDocument({ data: data.slice(), password: password, disableWorker: noWorker }).promise;
+    } catch (e) {
+      if (e && e.name === 'PasswordException') {
+        throw makeError('WRONG_PASSWORD', 'Wrong password — please try again.');
+      }
+      throw e;
+    }
+    if (pdf && typeof pdf.destroy === 'function') { try { await pdf.destroy(); } catch (e) {} }
+    /* Decrypt, then re-save every page with pdf-lib into a fresh document. */
+    var decrypted = await decryptWithQpdf(data, password);
+    var src = await PDFLib.PDFDocument.load(decrypted);
+    var out = await PDFLib.PDFDocument.create();
+    var pages = await out.copyPages(src, src.getPageIndices());
+    for (var i = 0; i < pages.length; i++) out.addPage(pages[i]);
+    return await out.save();
+  }
+  window.TD_unlockPdf = unlockPdf;
+
+  var fileInput = document.getElementById('file'), drop = document.getElementById('drop'),
+      fileInfo = document.getElementById('file-info'),
+      passwordInput = document.getElementById('password'),
+      btn = document.getElementById('unlock'),
+      clearBtn = document.getElementById('clear'), msg = document.getElementById('msg'),
+      downloadBtn = document.getElementById('download'),
+      dl = document.getElementById('dl'), file = null, outUrl = null, engineReady = false;
+
+  function showMsg(t, ok){ msg.textContent = t; msg.className = 'msg ' + (t ? (ok ? 'ok' : 'err') : ''); }
+  function isPdf(f){ return f.type === 'application/pdf' || /\.pdf$/i.test(f.name || ''); }
+  function baseName(name){ return name.replace(/\.pdf$/i, ''); }
+  function resetDownload(){
+    if (outUrl) { URL.revokeObjectURL(outUrl); outUrl = null; }
+    dl.setAttribute('href', '#');
+    dl.setAttribute('download', 'unlocked.pdf');
+  }
+  function setFile(f){
+    resetDownload();
+    if (!isPdf(f)) {
+      file = null; fileInfo.textContent = ''; btn.disabled = true;
+      showMsg('That is not a PDF file — please choose a file ending in .pdf.');
+      return;
+    }
+    file = f;
+    fileInfo.textContent = f.name + ' (' + formatBytes(f.size) + ')';
+    btn.disabled = false;
+    showMsg('Ready — type the password for ' + f.name + ' and press “Unlock PDF”.', true);
+  }
+  fileInput.addEventListener('change', function(){ if (fileInput.files.length) setFile(fileInput.files[0]); fileInput.value = ''; });
+  ['dragover', 'dragenter'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function(e){ if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]); });
+  clearBtn.addEventListener('click', function(){
+    file = null; fileInfo.textContent = ''; passwordInput.value = '';
+    btn.disabled = true; resetDownload(); showMsg('');
+  });
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The unlocked PDF only exists once a successful
+     unlock has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click', function(){
+    if (dl.getAttribute('href') === '#') { showMsg('Nothing to download yet — unlock a PDF first.'); return; }
+    dl.click();
+    showMsg('Downloaded ' + dl.getAttribute('download') + '.', true);
+  });
+  btn.addEventListener('click', async function(){
+    if (!file) { showMsg('Please choose a PDF file first.'); return; }
+    btn.disabled = true;
+    if (!engineReady) showMsg('Unlocking… (loading the decryption engine on first use)', true);
+    else showMsg('Unlocking…', true);
+    try {
+      var bytes = new Uint8Array(await file.arrayBuffer());
+      var out = await unlockPdf(bytes, passwordInput.value);
+      engineReady = true;
+      var check = await PDFLib.PDFDocument.load(out);
+      resetDownload();
+      outUrl = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      dl.href = outUrl;
+      dl.setAttribute('download', baseName(file.name) + '-unlocked.pdf');
+      showMsg('Done! Your unlocked PDF is ready (' + check.getPageCount() + ' pages, ' + formatBytes(out.length) + ') — it now opens without a password. Click “Download unlocked PDF” to save it.', true);
+    } catch (e) {
+      if (e && e.code === 'NOT_PROTECTED') {
+        showMsg('This PDF is not password-protected — nothing to unlock.');
+      } else if (e && e.code === 'EMPTY_PASSWORD') {
+        showMsg('This PDF is password-protected — enter its password to unlock it.');
+      } else if (e && e.code === 'WRONG_PASSWORD') {
+        showMsg('Wrong password — please try again.');
+      } else if (e && e.code === 'DECRYPT_FAILED') {
+        showMsg('Could not decrypt this PDF — the file may be damaged. Try another PDF.');
+      } else if (e && e.name === 'InvalidPDFException') {
+        showMsg('Could not read that PDF — the file may be damaged or not a real PDF. Try another file.');
+      } else {
+        showMsg('Something went wrong while unlocking the PDF. Please reload the page and try again.');
+      }
+    }
+    btn.disabled = !file;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Click the box (or drop a file onto it) and choose one password-protected PDF.</li>
+    <li>Type the password you already know for that PDF.</li>
+    <li>Click “Unlock PDF”, then download the same file without its password.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Can this tool unlock a PDF if I forgot the password?</summary><p>No. This tool does not guess or crack passwords — it only removes protection when you already know the password. If you forgot the password, there is no way to open the file with this tool.</p></details>
+  <details><summary>What if my PDF is not password-protected?</summary><p>The tool tells you so — “This PDF is not password-protected — nothing to unlock” — and does not produce a file. A PDF that already opens without a password has nothing to remove.</p></details>
+  <details><summary>Are my PDF files uploaded to a server?</summary><p>No. Unlocking happens entirely in your browser — your files never leave your device, and the password is never sent anywhere.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../pdf-merge/">PDF Merge</a></li>
+        <li><a href="../pdf-split/">PDF Split</a></li>
+        <li><a href="../protect-pdf/">Protect PDF</a></li>
+        <li><a href="../sign-pdf/">Sign PDF</a></li>
+        <li><a href="../pdf-compressor/">Compress PDF</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>48 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
