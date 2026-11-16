@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback — Suggest a tool or report a problem | ToolsDaily</title>
+<meta name="description" content="Suggest a new tool for ToolsDaily or report a problem with one — we read every message. No sign-up, just tell us what you need.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/feedback/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Feedback — Suggest a tool or report a problem | ToolsDaily">
+<meta property="og:description" content="Suggest a new tool for ToolsDaily or report a problem with one — we read every message. No sign-up, just tell us what you need.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/feedback/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Feedback — Suggest a tool or report a problem | ToolsDaily">
+<meta name="twitter:description" content="Suggest a new tool for ToolsDaily or report a problem with one — we read every message. No sign-up, just tell us what you need.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you reply to every message?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We read every message. If you leave your email and your message needs an answer, we reply to it — usually within a few days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to my email address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is only used to reply to you. We never share it or use it for anything else."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I suggest a tool that does not exist yet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — that is exactly what “Suggest a new tool” is for. Tell us what the tool should do and we will consider it for a future release."
+      }
+    }
+  ]
+}
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+<style>
+/* Feedback page only: radio pills, email input (design.css styles text inputs
+   but not type=email), honeypot hiding, small print. */
+input[type=email]{width:100%;padding:.68rem .8rem;border:1px solid var(--border);border-radius:var(--radius-sm);
+  font:inherit;font-size:1rem;background:var(--input-bg);color:var(--ink);
+  transition:border-color .15s ease,box-shadow .15s ease}
+input[type=email]:focus{outline:none;border-color:var(--brand);box-shadow:var(--ring)}
+fieldset.type-pills{border:0;padding:0;margin:0}
+fieldset.type-pills legend{display:block;font-weight:600;margin:.85rem 0 .3rem;font-size:.95rem;padding:0}
+.type-pills .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem}
+.pill{display:inline-flex;align-items:center;min-height:44px;padding:.55rem 1rem;border:1px solid var(--border-strong);
+  border-radius:999px;background:var(--surface);color:var(--ink);font-weight:600;font-size:.92rem;
+  cursor:pointer;margin:0;box-shadow:var(--shadow);
+  transition:transform .15s ease,border-color .15s ease,background-color .15s ease}
+.pill:hover{transform:translateY(-2px);border-color:var(--brand)}
+.pill input{position:absolute;opacity:0;pointer-events:none}
+.pill:has(input:checked),.pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill:has(input:focus-visible){outline:2px solid var(--brand);outline-offset:2px}
+.hp{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.fine{color:var(--muted);font-size:.88rem;margin-top:.9rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to form</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">ToolsDaily · Feedback</p></div>
+<h1 class="rise rise-1">Feedback</h1>
+<p class="lead rise rise-2">Suggest a new tool, report a problem, or tell us anything else — we read every message.</p>
+
+<div class="card rise rise-3" id="tool">
+  <form id="feedback-form" method="POST" action="https://docs.google.com/forms/d/e/1FAIpQLSfD5uphzzmHjnjOpBZ4OgOPUkR6fa55gMd3gZjpHuWspOz8qw/formResponse" target="fb-target">
+    <fieldset class="type-pills">
+      <legend>What is your message about?</legend>
+      <div class="pills">
+        <label class="pill"><input type="radio" name="entry.433333223" value="Suggest a new tool" required checked><span>Suggest a new tool</span></label>
+        <label class="pill"><input type="radio" name="entry.433333223" value="Report a problem"><span>Report a problem</span></label>
+        <label class="pill"><input type="radio" name="entry.433333223" value="Other feedback"><span>Other feedback</span></label>
+      </div>
+    </fieldset>
+    <label for="fb-tool">Which tool is this about? (optional)</label>
+    <input type="text" id="fb-tool" name="entry.740112104" list="tool-list" placeholder="Start typing a tool name…" autocomplete="off">
+    <datalist id="tool-list">
+      <option value="AI Audio Transcriber"></option>
+      <option value="AI Background Remover"></option>
+      <option value="Add Page Numbers"></option>
+      <option value="Age Calculator"></option>
+      <option value="BMI Calculator"></option>
+      <option value="Base64 Encoder / Decoder"></option>
+      <option value="Binary / Text Converter"></option>
+      <option value="Color Converter"></option>
+      <option value="Compress PDF"></option>
+      <option value="Date Difference Calculator"></option>
+      <option value="Dice Roller &amp; Coin Flip"></option>
+      <option value="EMI Calculator"></option>
+      <option value="Fancy Text Generator"></option>
+      <option value="GPA Calculator"></option>
+      <option value="Image Compressor"></option>
+      <option value="Image Converter"></option>
+      <option value="Image Cropper"></option>
+      <option value="Image Resizer"></option>
+      <option value="Image SynthID Remover"></option>
+      <option value="Image to PDF"></option>
+      <option value="JSON Formatter"></option>
+      <option value="Lorem Ipsum Generator"></option>
+      <option value="Morse Code Translator"></option>
+      <option value="OCR PDF"></option>
+      <option value="Organize PDF"></option>
+      <option value="PDF Merge"></option>
+      <option value="PDF Split"></option>
+      <option value="PDF to JPG/PNG"></option>
+      <option value="PDF to Word"></option>
+      <option value="Password Generator"></option>
+      <option value="Percentage Calculator"></option>
+      <option value="Protect PDF"></option>
+      <option value="QR Code Generator"></option>
+      <option value="QR Code Reader"></option>
+      <option value="Random Number Generator"></option>
+      <option value="Remove Duplicate Lines"></option>
+      <option value="Sign PDF"></option>
+      <option value="Stopwatch &amp; Countdown Timer"></option>
+      <option value="Text Case Converter"></option>
+      <option value="Text to Speech"></option>
+      <option value="Tip Calculator"></option>
+      <option value="URL Encoder / Decoder"></option>
+      <option value="UUID Generator"></option>
+      <option value="Unit Converter"></option>
+      <option value="Unlock PDF"></option>
+      <option value="Username Generator"></option>
+      <option value="Watermark PDF"></option>
+      <option value="Word Counter"></option>
+    </datalist>
+    <label for="fb-message">Your message</label>
+    <textarea id="fb-message" name="entry.2137828048" rows="6" minlength="10" required placeholder="Tell us what tool you would like, or what went wrong — the more detail, the better."></textarea>
+    <div class="row">
+      <div><label for="fb-name">Your name (optional)</label>
+      <input type="text" id="fb-name" name="entry.1003199486" autocomplete="name"></div>
+      <div><label for="fb-email">Your email (optional — only if you would like a reply)</label>
+      <input type="email" id="fb-email" name="entry.321475876" autocomplete="email" placeholder="you@example.com"></div>
+    </div>
+    <div class="hp" aria-hidden="true">
+      <label for="fb-hp">Leave this field empty</label>
+      <input type="text" id="fb-hp" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <p><button id="fb-submit" type="submit">Send feedback</button></p>
+    <p class="msg" id="fb-msg" role="status" aria-live="polite"></p>
+    <noscript><p class="fine">JavaScript is off — your message is still recorded when you press Send feedback; you just will not see the thank-you note here.</p></noscript>
+  </form>
+  <iframe name="fb-target" id="fb-target" title="Form submission" tabindex="-1" aria-hidden="true" style="width:0;height:0;border:0;position:absolute;left:-9999px"></iframe>
+  <p class="fine">Your email is only used to reply to you. We never share it.</p>
+  <p class="fine">Prefer email? Write to us via the form above — it lands in our inbox.</p>
+</div>
+<script>
+(function(){
+  var form = document.getElementById('feedback-form');
+  var msg = document.getElementById('fb-msg');
+  var submit = document.getElementById('fb-submit');
+  var honey = document.getElementById('fb-hp');
+  var message = document.getElementById('fb-message');
+  var origLabel = submit.textContent;
+  function showMsg(t, ok){
+    msg.textContent = t;
+    msg.className = 'msg ' + (t ? (ok ? 'ok' : 'err') : '');
+  }
+  /* Pill highlight: the :has() rule in the page CSS covers modern browsers;
+     the .on class below covers the rest. */
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.pill'));
+  function paintPills(){
+    pills.forEach(function(p){
+      var r = p.querySelector('input[type=radio]');
+      p.classList.toggle('on', !!(r && r.checked));
+    });
+  }
+  pills.forEach(function(p){
+    var r = p.querySelector('input[type=radio]');
+    if (r) r.addEventListener('change', paintPills);
+  });
+  paintPills();
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    /* Honeypot: a filled hidden field means a bot — block the submit silently. */
+    if (honey.value) return;
+    /* Second layer under the native required + minlength validation. */
+    if (message.value.trim().length < 10) {
+      showMsg('Please write a little more — at least 10 characters — so we can understand your message.');
+      message.focus();
+      return;
+    }
+    submit.disabled = true;
+    submit.textContent = 'Sending…';
+    /* fetch with no-cors: the response is opaque, but a network failure
+       rejects — so unlike the iframe-load trick (an iframe fires load even
+       for a failed navigation, which would fake a success), a failed send
+       is never reported as a success. The body is urlencoded, exactly what
+       the native form would send. Without JS the form still posts natively
+       to the hidden iframe (see the noscript note). */
+    fetch(form.action, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form))
+    }).then(function(){
+      showMsg('Thanks — your message is on its way. We read every one.', true);
+      form.reset();
+      paintPills();
+      submit.disabled = false;
+      submit.textContent = origLabel;
+    }).catch(function(){
+      showMsg('Sorry — your message could not be sent. Please check your connection and try again.');
+      submit.disabled = false;
+      submit.textContent = origLabel;
+    });
+  });
+  window.TD_feedback = { minMessageLength: 10 };
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Pick what your message is about — a tool suggestion, a problem, or anything else.</li>
+    <li>If it is about a tool, name it; then write your message with as much detail as you can.</li>
+    <li>Press “Send feedback”. Leave your email only if you would like a reply — we read every message either way.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Do you reply to every message?</summary><p>We read every message. If you leave your email and your message needs an answer, we reply to it — usually within a few days.</p></details>
+  <details><summary>What happens to my email address?</summary><p>It is only used to reply to you. We never share it or use it for anything else.</p></details>
+  <details><summary>Can I suggest a tool that does not exist yet?</summary><p>Yes — that is exactly what “Suggest a new tool” is for. Tell us what the tool should do and we will consider it for a future release.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../compress-pdf/">Compress PDF</a></li>
+        <li><a href="../pdf-merge/">PDF Merge</a></li>
+        <li><a href="../qr-generator/">QR Code Generator</a></li>
+        <li><a href="../random-number-generator/">Random Number Generator</a></li>
+        <li><a href="../word-counter/">Word Counter</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>48 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
