@@ -95,6 +95,28 @@ console.log('FEEDBACK STATIC');
   ok(html.includes('<a href="../feedback/">Feedback</a>'), 'feedback: its own footer links to ../feedback/');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('[Feedback](https://toolsdaily.vercel.app/feedback/)'), 'llms.txt mentions the feedback page');
+  // Header Feedback link: every page (homepage + 53 tool pages + feedback page),
+  // absolute /feedback/ everywhere, including the feedback page itself.
+  const pages = [{ file: path.join(SITE, 'index.html'), label: 'homepage' }];
+  for (const d of fs.readdirSync(SITE, { withFileTypes: true })) {
+    if (d.isDirectory() && fs.existsSync(path.join(SITE, d.name, 'index.html'))) {
+      pages.push({ file: path.join(SITE, d.name, 'index.html'), label: d.name });
+    }
+  }
+  ok(pages.length === 55, `feedback: header-link check covers all 55 pages (got ${pages.length})`);
+  for (const { file, label } of pages) {
+    const html = fs.readFileSync(file, 'utf8');
+    ok(html.includes('<a class="nav-feedback" href="/feedback/">Feedback</a>'), `feedback: header Feedback link on ${label}`);
+  }
+  // Homepage hero link under the search box.
+  ok(home.includes('<p class="hero-feedback rise rise-5"><a href="/feedback/">Missing a tool? Suggest it — or report a problem →</a></p>'), 'feedback: homepage hero links to /feedback/');
+  // Design.css styles both new links (mono, Workbench tokens).
+  const css = fs.readFileSync(path.join(SITE, 'assets', 'design.css'), 'utf8');
+  ok(css.includes('a.nav-feedback'), 'feedback: design.css styles the header Feedback link');
+  ok(css.includes('.hero .hero-feedback a'), 'feedback: design.css styles the homepage hero link');
+  // New-tool template carries the header link so future tools include it.
+  const tpl = fs.readFileSync(path.join(SITE, '..', 'tools-site-redesign', 'new-tool-template.html'), 'utf8');
+  ok(tpl.includes('<a class="nav-feedback" href="/feedback/">Feedback</a>'), 'feedback: new-tool template includes the header Feedback link');
 }
 
 console.log('FEEDBACK UI');
@@ -183,6 +205,18 @@ console.log('FEEDBACK UI');
   msgEl.className = 'msg';
   d.querySelector('#fb-target').dispatchEvent(new w.Event('load'));
   ok(msgEl.textContent === '', 'feedback: iframe load shows nothing');
+  dom.window.close();
+}
+
+console.log('FEEDBACK HEADER UI');
+{
+  const { dom, errors } = await loadPage('');
+  const w = dom.window, d = w.document;
+  ok(errors.length === 0, `feedback: homepage loads with zero JS/resource errors${errors.length ? ' — got: ' + errors.join(' | ') : ''}`);
+  const headerLink = d.querySelector('header.site nav.main-nav a.nav-feedback');
+  ok(!!headerLink && headerLink.getAttribute('href') === '/feedback/' && headerLink.textContent === 'Feedback', 'feedback: loaded homepage header Feedback link points to /feedback/');
+  const heroLink = d.querySelector('.hero .hero-feedback a');
+  ok(!!heroLink && heroLink.getAttribute('href') === '/feedback/' && heroLink.textContent.includes('Missing a tool?'), 'feedback: loaded homepage hero link points to /feedback/');
   dom.window.close();
 }
 
