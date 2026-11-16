@@ -106,12 +106,12 @@ console.log('METADATA STATIC');
   const related = ['image-compressor', 'image-converter', 'image-resizer', 'image-cropper', 'background-remover'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'metadata: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 55, 'sitemap.xml has 55 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/image-synthid-remover/'), 'sitemap includes image-synthid-remover');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 53, 'home has exactly 53 tool cards');
   ok(home.includes('/image-synthid-remover/'), 'home cards include image-synthid-remover');
-  ok(home.includes('Forty-eight handy tools'), 'home lead says Forty-eight tools');
+  ok(home.includes('Fifty-three handy tools'), 'home lead says Fifty-three tools');
 }
 
 console.log('METADATA CORE');

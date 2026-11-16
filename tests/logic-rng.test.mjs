@@ -61,12 +61,12 @@ console.log('RNG STATIC');
   const related = ['password-generator', 'uuid-generator', 'qr-generator', 'lorem-ipsum-generator', 'dice-roller-coin-flip', 'username-generator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'rng: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 50, 'sitemap.xml has 50 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 55, 'sitemap.xml has 55 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/random-number-generator/'), 'sitemap includes random-number-generator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 48, 'home has exactly 48 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 53, 'home has exactly 53 tool cards');
   ok(home.includes('/random-number-generator/'), 'home cards + nav include random-number-generator');
-  ok(home.includes('Forty-eight handy tools'), 'home lead says Forty-eight tools');
+  ok(home.includes('Fifty-three handy tools'), 'home lead says Fifty-three tools');
 }
 
 console.log('RNG CORE');
