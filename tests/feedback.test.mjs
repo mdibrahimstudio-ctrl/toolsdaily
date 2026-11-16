@@ -58,15 +58,15 @@ console.log('FEEDBACK STATIC');
   }
   // Form wiring: exact action, method, target, all 5 entry names.
   ok(html.includes(`<form id="feedback-form" method="POST" action="${FORM_ACTION}" target="fb-target">`), 'feedback: form action is the exact formResponse URL, POST, target fb-target');
-  for (const entry of ['entry.433333223', 'entry.740112104', 'entry.2137828048', 'entry.1003199486', 'entry.321475876']) {
+  for (const entry of ['entry.710891572', 'entry.1158283484', 'entry.504355358', 'entry.1980865801', 'entry.373892500']) {
     ok(html.includes(`name="${entry}"`), `feedback: entry ${entry} present`);
   }
-  const typeValues = [...html.matchAll(/name="entry\.433333223" value="([^"]+)"/g)].map((m) => m[1]);
+  const typeValues = [...html.matchAll(/name="entry\.710891572" value="([^"]+)"/g)].map((m) => m[1]);
   ok(JSON.stringify(typeValues) === JSON.stringify(['Suggest a new tool', 'Report a problem', 'Other feedback']), 'feedback: type options are exactly the 3 Google Form values');
-  ok(html.includes('name="entry.433333223" value="Suggest a new tool" required checked'), 'feedback: "Suggest a new tool" is the required default');
-  ok(/<textarea[^>]*name="entry\.2137828048"[^>]*minlength="10"[^>]*required/.test(html) || /<textarea[^>]*name="entry\.2137828048"[^>]*required[^>]*minlength="10"/.test(html), 'feedback: message textarea is required with minlength 10');
-  ok(html.includes('<input type="email" id="fb-email" name="entry.321475876"'), 'feedback: email input is type=email');
-  ok(!/name="entry\.1003199486"[^>]*required/.test(html) && !/name="entry\.321475876"[^>]*required/.test(html), 'feedback: name and email are optional (no required)');
+  ok(html.includes('name="entry.710891572" value="Suggest a new tool" required checked'), 'feedback: "Suggest a new tool" is the required default');
+  ok(/<textarea[^>]*name="entry\.504355358"[^>]*minlength="10"[^>]*required/.test(html) || /<textarea[^>]*name="entry\.504355358"[^>]*required[^>]*minlength="10"/.test(html), 'feedback: message textarea is required with minlength 10');
+  ok(html.includes('<input type="email" id="fb-email" name="entry.373892500"'), 'feedback: email input is type=email');
+  ok(!/name="entry\.1980865801"[^>]*required/.test(html) && !/name="entry\.373892500"[^>]*required/.test(html), 'feedback: name and email are optional (no required)');
   ok(html.includes('<input type="text" id="fb-hp" name="website"'), 'feedback: honeypot input present');
   ok(html.includes('class="hp"'), 'feedback: honeypot wrapper is visually hidden');
   const datalist = html.match(/<datalist id="tool-list">([\s\S]*?)<\/datalist>/)[1];
@@ -109,14 +109,14 @@ console.log('FEEDBACK UI');
   ok(form.getAttribute('method').toUpperCase() === 'POST' && form.getAttribute('target') === 'fb-target', 'feedback: loaded form is POST to the hidden iframe');
   ok(!!d.querySelector('#fb-tool') && !!d.querySelector('#fb-message') && !!d.querySelector('#fb-name') && !!d.querySelector('#fb-email') && !!d.querySelector('#fb-submit') && !!d.querySelector('#fb-target') && !!d.querySelector('#fb-msg'), 'feedback: all form elements exist');
   ok(w.TD_feedback && w.TD_feedback.minMessageLength === 10, 'feedback: TD_feedback exposed with minMessageLength 10');
-  const checked = d.querySelector('input[name="entry.433333223"]:checked');
+  const checked = d.querySelector('input[name="entry.710891572"]:checked');
   ok(checked && checked.value === 'Suggest a new tool', 'feedback: default type is "Suggest a new tool"');
   ok(checked.closest('.pill').classList.contains('on'), 'feedback: default pill carries the .on highlight');
   // Switching pills moves the checked state and the highlight.
-  const problem = d.querySelector('input[name="entry.433333223"][value="Report a problem"]');
+  const problem = d.querySelector('input[name="entry.710891572"][value="Report a problem"]');
   problem.checked = true;
   problem.dispatchEvent(new w.Event('change', { bubbles: true }));
-  ok(d.querySelector('input[name="entry.433333223"]:checked').value === 'Report a problem', 'feedback: clicking "Report a problem" checks it');
+  ok(d.querySelector('input[name="entry.710891572"]:checked').value === 'Report a problem', 'feedback: clicking "Report a problem" checks it');
   ok(problem.closest('.pill').classList.contains('on') && !checked.closest('.pill').classList.contains('on'), 'feedback: highlight follows the checked pill');
   // Native validation: empty / too-short message fails, 10+ chars passes.
   const message = d.querySelector('#fb-message');
@@ -160,13 +160,13 @@ console.log('FEEDBACK UI');
   ok(fetchArgs !== null && fetchArgs.url === FORM_ACTION, 'feedback: fetch POSTs to the exact formResponse URL');
   ok(fetchArgs && fetchArgs.opts.method === 'POST' && fetchArgs.opts.mode === 'no-cors', 'feedback: fetch is a no-cors POST');
   const body = fetchArgs ? String(fetchArgs.opts.body) : '';
-  ok(body.includes('entry.433333223=Report+a+problem'), 'feedback: fetch body carries the type entry (Report a problem)');
-  ok(body.includes('entry.740112104=Compress+PDF'), 'feedback: fetch body carries the tool entry');
-  ok(body.includes('entry.2137828048=Please+add+a+Pomodoro'), 'feedback: fetch body carries the message entry');
-  ok(body.includes('entry.1003199486=Test+User'), 'feedback: fetch body carries the name entry');
-  ok(body.includes('entry.321475876=test%40example.com'), 'feedback: fetch body carries the email entry');
+  ok(body.includes('entry.710891572=Report+a+problem'), 'feedback: fetch body carries the type entry (Report a problem)');
+  ok(body.includes('entry.1158283484=Compress+PDF'), 'feedback: fetch body carries the tool entry');
+  ok(body.includes('entry.504355358=Please+add+a+Pomodoro'), 'feedback: fetch body carries the message entry');
+  ok(body.includes('entry.1980865801=Test+User'), 'feedback: fetch body carries the name entry');
+  ok(body.includes('entry.373892500=test%40example.com'), 'feedback: fetch body carries the email entry');
   ok(msgEl.className.includes('ok') && msgEl.textContent === 'Thanks — your message is on its way. We read every one.', 'feedback: fetch success shows the exact success message');
-  ok(message.value === '' && d.querySelector('input[name="entry.433333223"]:checked').value === 'Suggest a new tool', 'feedback: form resets after success (message cleared, default type restored)');
+  ok(message.value === '' && d.querySelector('input[name="entry.710891572"]:checked').value === 'Suggest a new tool', 'feedback: form resets after success (message cleared, default type restored)');
   ok(submitBtn.disabled === false && submitBtn.textContent === 'Send feedback', 'feedback: submit button re-enables with its original label after success');
   // A failed fetch shows an honest error (never a fake success) and keeps the
   // message so the user can retry.
