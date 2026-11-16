@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign PDF — Add a Signature to Any PDF — ToolsDaily</title>
+<meta name="description" content="Sign any PDF free in your browser: draw, type or upload your signature and stamp it on any page. No uploads, no sign-up — your files never leave your device.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<style>
+.sig-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:.7rem 0}
+.sig-tabs button{padding:.45rem .9rem;font-size:.92rem}
+.sig-tabs button.active{background:var(--brand);color:#fff;border-color:transparent}
+.sig-panel{margin:.7rem 0}
+#sig-canvas{display:block;width:100%;max-width:560px;height:180px;border:2px dashed var(--border-strong);border-radius:var(--radius-sm);background:#fff;touch-action:none;cursor:crosshair}
+#type-canvas{display:block;width:100%;max-width:560px;height:120px;border:2px dashed var(--border-strong);border-radius:var(--radius-sm);background:#fff}
+#sig-preview{display:block;max-width:280px;max-height:100px;margin:.5rem 0;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff}
+.sig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin:.7rem 0}
+.sig-grid label{display:flex;flex-direction:column;gap:.25rem;font-size:.92rem}
+.sig-grid .wide{grid-column:1/-1}
+@media(max-width:560px){.sig-grid{grid-template-columns:1fr}}
+</style>
+<link rel="canonical" href="https://toolsdaily.vercel.app/sign-pdf/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sign PDF — Add a Signature to Any PDF — ToolsDaily">
+<meta property="og:description" content="Sign any PDF free in your browser: draw, type or upload your signature and stamp it on any page. No uploads, no sign-up — your files never leave your device.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/sign-pdf/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sign PDF — Add a Signature to Any PDF — ToolsDaily">
+<meta name="twitter:description" content="Sign any PDF free in your browser: draw, type or upload your signature and stamp it on any page. No uploads, no sign-up — your files never leave your device.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sign PDF",
+    "url": "https://toolsdaily.vercel.app/sign-pdf/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Sign any PDF free in your browser: draw, type or upload your signature and stamp it on any page. No uploads, no sign-up — your files never leave your device."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is my PDF uploaded to a server when I sign it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Signing happens entirely in your browser — your PDF and your signature never leave your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this add a legally binding digital signature?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. It stamps a visible image of your signature onto the page, like signing on paper. It does not add a cryptographic digital signature or certificate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which pages will my signature appear on?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You choose: all pages, the last page only, or specific pages (for example “1,3”). The signature is placed at the bottom of each chosen page, in the position and size you pick."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">PDF Tools · No. 42</p></div>
+<h1 class="rise rise-1">Sign PDF</h1>
+<p class="lead rise rise-2">Draw, type or upload your signature and stamp it on any page of your PDF — free, in your browser, nothing uploaded.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="drop" id="drop"><p>Drop a PDF file here, or</p><input type="file" id="file" accept="application/pdf,.pdf"></div>
+  <p class="msg" id="file-info"></p>
+
+  <p class="mono" style="margin-top:1rem">1 · Your signature</p>
+  <div class="sig-tabs" role="tablist" aria-label="Signature method">
+    <button type="button" class="sig-tab secondary active" data-method="draw" role="tab" aria-selected="true">Draw</button>
+    <button type="button" class="sig-tab secondary" data-method="type" role="tab" aria-selected="false">Type</button>
+    <button type="button" class="sig-tab secondary" data-method="upload" role="tab" aria-selected="false">Upload image</button>
+  </div>
+  <div class="sig-panel" id="panel-draw" role="tabpanel">
+    <canvas id="sig-canvas" width="560" height="180" aria-label="Draw your signature here"></canvas>
+    <p><button id="clear-canvas" type="button" class="secondary">Clear drawing</button></p>
+  </div>
+  <div class="sig-panel hidden" id="panel-type" role="tabpanel">
+    <label for="sig-name">Your name, as you sign it</label>
+    <input type="text" id="sig-name" placeholder="e.g. Jane Cooper" autocomplete="off">
+    <canvas id="type-canvas" width="560" height="120" aria-label="Typed signature preview"></canvas>
+  </div>
+  <div class="sig-panel hidden" id="panel-upload" role="tabpanel">
+    <label for="sig-file">Signature image (PNG or JPG — PNG keeps transparency)</label>
+    <input type="file" id="sig-file" accept="image/png,image/jpeg,.png,.jpg,.jpeg">
+  </div>
+  <img id="sig-preview" class="hidden" alt="Your signature preview">
+  <p><button id="clear-sig" type="button" class="secondary">Clear signature</button></p>
+
+  <p class="mono" style="margin-top:1rem">2 · Placement</p>
+  <div class="sig-grid">
+    <label>Pages
+      <select id="pages-mode">
+        <option value="all">All pages</option>
+        <option value="last">Last page only</option>
+        <option value="specific">Specific pages</option>
+      </select>
+    </label>
+    <label id="pages-list-wrap" class="hidden">Page numbers (e.g. 1,3)
+      <input type="text" id="pages-list" placeholder="1,3" inputmode="text" autocomplete="off">
+    </label>
+    <label>Position
+      <select id="position">
+        <option value="bottom-right">Bottom right</option>
+        <option value="bottom-left">Bottom left</option>
+        <option value="bottom-centre">Bottom centre</option>
+      </select>
+    </label>
+    <label class="wide">Signature width: <span id="width-val" class="mono">150 pt</span>
+      <input type="range" id="sig-width" min="60" max="300" step="10" value="150">
+    </label>
+  </div>
+
+  <button id="sign" type="button">Sign PDF</button>
+  <button id="download" type="button" class="secondary">Download signed PDF</button>
+  <p class="msg" id="msg"></p>
+  <p class="hidden"><a class="btn hidden" id="dl" href="#" download="signed.pdf">Download signed PDF</a></p>
+  <p class="foot-note">Privacy first: your PDF and signature never leave your device — everything runs in your browser.</p>
+</div>
+<script src="../assets/vendor/pdf-lib.min.js"></script>
+<script>
+(function(){
+  /* Pure core: stamp a PNG signature onto chosen pages of a PDF.
+     pages: 'all' | 'last' | array of 1-based page numbers.
+     position: 'bottom-right' | 'bottom-left' | 'bottom-centre'.
+     width: signature width in points (height scales with the image aspect). */
+  async function signPdf(pdfBytes, signaturePngBytes, opts){
+    opts = opts || {};
+    var doc = await PDFLib.PDFDocument.load(pdfBytes);
+    var pageCount = doc.getPageCount();
+    var indices, pages = opts.pages;
+    if (pages === 'all' || pages === undefined || pages === null) {
+      indices = doc.getPageIndices();
+    } else if (pages === 'last') {
+      indices = [pageCount - 1];
+    } else if (Array.isArray(pages)) {
+      if (!pages.length) throw new Error('No pages selected.');
+      indices = pages.map(function(p){
+        var n = Number(p);
+        if (!Number.isInteger(n) || n < 1 || n > pageCount)
+          throw new Error('Invalid page number: ' + p + ' (this PDF has ' + pageCount + (pageCount === 1 ? ' page' : ' pages') + ').');
+        return n - 1;
+      });
+    } else {
+      throw new Error('Invalid pages option.');
+    }
+    var img = await doc.embedPng(signaturePngBytes);
+    var width = Number(opts.width) || 150;
+    var scale = width / img.width;
+    var height = img.height * scale;
+    var margin = 36;
+    var pos = opts.position || 'bottom-right';
+    indices.forEach(function(i){
+      var page = doc.getPage(i);
+      var pw = page.getWidth(), ph = page.getHeight();
+      var w = width, h = height;
+      if (h > ph - margin * 2) { h = ph - margin * 2; w = h / img.height * img.width; }
+      if (w > pw - margin * 2) { w = pw - margin * 2; h = w / img.width * img.height; }
+      var x = pos === 'bottom-left' ? margin : pos === 'bottom-centre' ? (pw - w) / 2 : pw - w - margin;
+      page.drawImage(img, { x: x, y: margin, width: w, height: h });
+    });
+    return await doc.save();
+  }
+  window.TD_signPdf = signPdf;
+
+  function formatBytes(b){ if(b===0) return '0 B'; var u=['B','KB','MB','GB'], i=Math.floor(Math.log(b)/Math.log(1024)); return (b/Math.pow(1024,i)).toFixed(i?2:0)+' '+u[i]; }
+  function ctx2d(c){ try { return c.getContext('2d'); } catch(e){ return null; } }
+  /* Trim transparent borders off a canvas so the stamped signature hugs its ink. */
+  function trimCanvas(src){
+    var ctx = ctx2d(src); if (!ctx) return src;
+    var w = src.width, h = src.height, d;
+    try { d = ctx.getImageData(0, 0, w, h).data; } catch(e){ return src; }
+    var minX = w, minY = h, maxX = -1, maxY = -1;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+      if (d[(y * w + x) * 4 + 3] > 10) {
+        if (x < minX) minX = x; if (x > maxX) maxX = x;
+        if (y < minY) minY = y; if (y > maxY) maxY = y;
+      }
+    }
+    if (maxX < 0) return null; /* blank canvas */
+    var pad = 4, cw = maxX - minX + 1 + pad * 2, ch = maxY - minY + 1 + pad * 2;
+    var out = document.createElement('canvas'); out.width = cw; out.height = ch;
+    var octx = ctx2d(out); if (!octx) return src;
+    octx.drawImage(src, minX - pad, minY - pad, cw, ch, 0, 0, cw, ch);
+    return out;
+  }
+  function canvasToPngBytes(canvas){
+    return new Promise(function(resolve, reject){
+      try {
+        canvas.toBlob(function(blob){
+          if (!blob) { reject(new Error('Could not read the signature.')); return; }
+          blob.arrayBuffer().then(function(ab){ resolve(new Uint8Array(ab)); }).catch(reject);
+        }, 'image/png');
+      } catch(e){ reject(e); }
+    });
+  }
+  var fileInput = document.getElementById('file'), drop = document.getElementById('drop'),
+      fileInfo = document.getElementById('file-info'),
+      msg = document.getElementById('msg'),
+      signBtn = document.getElementById('sign'),
+      downloadBtn = document.getElementById('download'),
+      dl = document.getElementById('dl'),
+      drawCanvas = document.getElementById('sig-canvas'),
+      typeCanvas = document.getElementById('type-canvas'),
+      nameInput = document.getElementById('sig-name'),
+      sigFileInput = document.getElementById('sig-file'),
+      preview = document.getElementById('sig-preview'),
+      clearSigBtn = document.getElementById('clear-sig'),
+      clearCanvasBtn = document.getElementById('clear-canvas'),
+      pagesMode = document.getElementById('pages-mode'),
+      pagesListWrap = document.getElementById('pages-list-wrap'),
+      pagesList = document.getElementById('pages-list'),
+      positionSel = document.getElementById('position'),
+      widthSlider = document.getElementById('sig-width'),
+      widthVal = document.getElementById('width-val'),
+      outUrl = null, pdfFile = null, pdfBytes = null, pageCount = 0,
+      sigBytes = null, hasDrawn = false;
+
+  function showMsg(t, ok){ msg.textContent = t; msg.className = 'msg ' + (t ? (ok ? 'ok' : 'err') : ''); }
+  function isPdf(f){ return f && (f.type === 'application/pdf' || /\.pdf$/i.test(f.name || '')); }
+  function isEncryptedError(e){ return /encrypt/i.test((e && e.message) || ''); }
+
+  function setSignature(bytes, dataUrl){
+    sigBytes = bytes;
+    if (dataUrl) { preview.src = dataUrl; preview.classList.remove('hidden'); }
+    else preview.classList.add('hidden');
+  }
+  function clearSignature(){
+    sigBytes = null; hasDrawn = false;
+    preview.classList.add('hidden'); preview.removeAttribute('src');
+    nameInput.value = '';
+    sigFileInput.value = '';
+    var c = ctx2d(drawCanvas); if (c) c.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+    var t = ctx2d(typeCanvas); if (t) t.clearRect(0, 0, typeCanvas.width, typeCanvas.height);
+  }
+  clearSigBtn.addEventListener('click', function(){ clearSignature(); showMsg('Signature cleared. Draw, type or upload a new one.'); });
+  clearCanvasBtn.addEventListener('click', function(){
+    var c = ctx2d(drawCanvas); if (c) c.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+    hasDrawn = false; sigBytes = null; preview.classList.add('hidden');
+    showMsg('Drawing cleared.');
+  });
+
+  /* --- tabs --- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.sig-tab'));
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active'); tab.setAttribute('aria-selected', 'true');
+      ['draw', 'type', 'upload'].forEach(function(m){
+        document.getElementById('panel-' + m).classList.toggle('hidden', m !== tab.getAttribute('data-method'));
+      });
+    });
+  });
+
+  /* --- draw --- */
+  var drawing = false, lastX = 0, lastY = 0;
+  function canvasPos(e){
+    var r = drawCanvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * drawCanvas.width / r.width,
+             y: (e.clientY - r.top) * drawCanvas.height / r.height };
+  }
+  drawCanvas.addEventListener('pointerdown', function(e){
+    e.preventDefault(); drawCanvas.setPointerCapture(e.pointerId);
+    var p = canvasPos(e); drawing = true; lastX = p.x; lastY = p.y;
+  });
+  drawCanvas.addEventListener('pointermove', function(e){
+    if (!drawing) return;
+    var p = canvasPos(e), c = ctx2d(drawCanvas); if (!c) return;
+    c.strokeStyle = '#1b1730'; c.lineWidth = 2.5; c.lineCap = 'round'; c.lineJoin = 'round';
+    c.beginPath(); c.moveTo(lastX, lastY); c.lineTo(p.x, p.y); c.stroke();
+    lastX = p.x; lastY = p.y; hasDrawn = true;
+  });
+  function endDraw(){
+    if (!drawing) return;
+    drawing = false;
+    if (!hasDrawn) return;
+    var trimmed = trimCanvas(drawCanvas);
+    if (!trimmed) { showMsg('Nothing drawn yet — draw your signature on the canvas first.'); return; }
+    canvasToPngBytes(trimmed).then(function(bytes){
+      setSignature(bytes, trimmed.toDataURL('image/png'));
+      showMsg('Signature captured from your drawing.', true);
+    }).catch(function(){ showMsg('Could not read the drawing. Please try again.'); });
+  }
+  drawCanvas.addEventListener('pointerup', endDraw);
+  drawCanvas.addEventListener('pointercancel', function(){ drawing = false; });
+
+  /* --- type --- */
+  var CURSIVE = "'Segoe Script','Brush Script MT','Snell Roundhand','Lucida Handwriting',cursive";
+  function renderTyped(){
+    var name = nameInput.value.trim();
+    var c = ctx2d(typeCanvas); if (!c) return;
+    c.clearRect(0, 0, typeCanvas.width, typeCanvas.height);
+    if (!name) { if (sigBytes && !hasDrawn) { sigBytes = null; preview.classList.add('hidden'); } return; }
+    var size = 64;
+    c.fillStyle = '#1b1730'; c.textBaseline = 'middle';
+    c.font = 'italic ' + size + 'px ' + CURSIVE;
+    while (size > 20 && c.measureText(name).width > typeCanvas.width - 24) {
+      size -= 4; c.font = 'italic ' + size + 'px ' + CURSIVE;
+    }
+    c.fillText(name, 12, typeCanvas.height / 2 + 4);
+    var trimmed = trimCanvas(typeCanvas);
+    if (!trimmed) return;
+    canvasToPngBytes(trimmed).then(function(bytes){
+      setSignature(bytes, trimmed.toDataURL('image/png'));
+    }).catch(function(){});
+  }
+  nameInput.addEventListener('input', renderTyped);
+
+  /* --- upload --- */
+  sigFileInput.addEventListener('change', function(){
+    var f = sigFileInput.files && sigFileInput.files[0];
+    if (!f) return;
+    if (!/^image\/(png|jpe?g)$/i.test(f.type) && !/\.(png|jpe?g)$/i.test(f.name || '')) {
+      showMsg('That is not a PNG or JPG image. Please choose a PNG or JPG signature image.');
+      sigFileInput.value = '';
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(){
+      var bytes = new Uint8Array(reader.result);
+      if (/\.png$/i.test(f.name || '') || f.type === 'image/png') {
+        setSignature(bytes, URL.createObjectURL(new Blob([bytes], { type: 'image/png' })));
+        showMsg('Signature image loaded.', true);
+        return;
+      }
+      /* JPG: redraw through a canvas so the signer always gets PNG bytes. */
+      var img = new Image();
+      img.onload = function(){
+        var c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+        var cx = ctx2d(c); if (!cx) { showMsg('Could not read that image. Please try a PNG instead.'); return; }
+        cx.drawImage(img, 0, 0);
+        canvasToPngBytes(c).then(function(pngBytes){
+          setSignature(pngBytes, c.toDataURL('image/png'));
+          showMsg('Signature image loaded.', true);
+        }).catch(function(){ showMsg('Could not read that image. Please try a PNG instead.'); });
+        URL.revokeObjectURL(img.src);
+      };
+      img.onerror = function(){ showMsg('Could not read that image. Please try a different PNG or JPG file.'); };
+      img.src = URL.createObjectURL(new Blob([bytes], { type: f.type || 'image/jpeg' }));
+    };
+    reader.onerror = function(){ showMsg('Could not read that image file. Please try again.'); };
+    reader.readAsArrayBuffer(f);
+  });
+
+  /* --- PDF file --- */
+  async function setPdf(f){
+    if (!isPdf(f)) { showMsg('That is not a PDF file. Please choose a file ending in .pdf.'); return; }
+    showMsg('Reading ' + f.name + '…', true);
+    try {
+      var ab = await f.arrayBuffer();
+      var bytes = new Uint8Array(ab);
+      var doc = await PDFLib.PDFDocument.load(bytes);
+      pdfFile = f; pdfBytes = bytes; pageCount = doc.getPageCount();
+      fileInfo.textContent = f.name + ' (' + formatBytes(f.size) + ', ' + pageCount + (pageCount === 1 ? ' page' : ' pages') + ')';
+      fileInfo.className = 'msg ok';
+      if (outUrl) { URL.revokeObjectURL(outUrl); outUrl = null; }
+      dl.setAttribute('href', '#');
+      showMsg('PDF loaded. Create your signature below, then click “Sign PDF”.', true);
+    } catch(e){
+      pdfFile = null; pdfBytes = null; pageCount = 0;
+      fileInfo.textContent = ''; fileInfo.className = 'msg';
+      if (isEncryptedError(e)) showMsg('This PDF is password-protected. Unlock it first (see Unlock PDF) and try again.');
+      else showMsg('Could not read that PDF — the file may be damaged. Please try a different file.');
+    }
+  }
+  fileInput.addEventListener('change', function(){ if (fileInput.files.length) setPdf(fileInput.files[0]); fileInput.value = ''; });
+  ['dragover', 'dragenter'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function(ev){ drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function(e){ if (e.dataTransfer.files.length) setPdf(e.dataTransfer.files[0]); });
+
+  /* --- placement controls --- */
+  pagesMode.addEventListener('change', function(){
+    pagesListWrap.classList.toggle('hidden', pagesMode.value !== 'specific');
+  });
+  widthSlider.addEventListener('input', function(){ widthVal.textContent = widthSlider.value + ' pt'; });
+
+  function parsePages(){
+    var mode = pagesMode.value;
+    if (mode === 'all') return 'all';
+    if (mode === 'last') return 'last';
+    var raw = (pagesList.value || '').trim();
+    if (!raw) throw new Error('Enter at least one page number, for example “1,3”.');
+    var nums = raw.split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+    var out = nums.map(function(s){
+      if (!/^\d+$/.test(s)) throw new Error('“' + s + '” is not a valid page number. Use numbers separated by commas, for example “1,3”.');
+      var n = parseInt(s, 10);
+      if (n < 1 || n > pageCount) throw new Error('Page ' + n + ' does not exist — this PDF has ' + pageCount + (pageCount === 1 ? ' page' : ' pages') + '.');
+      return n;
+    });
+    if (!out.length) throw new Error('Enter at least one page number, for example “1,3”.');
+    return out;
+  }
+
+  /* Visible download (lorem pattern): always in the card; an early click hints
+     instead of downloading. The signed PDF only exists once a successful sign
+     has set the download link's href to a blob URL. */
+  downloadBtn.addEventListener('click', function(){
+    if (dl.getAttribute('href') === '#') { showMsg('Nothing to download yet — sign your PDF first.'); return; }
+    dl.click();
+    showMsg('Downloaded ' + dl.getAttribute('download') + '.', true);
+  });
+
+  signBtn.addEventListener('click', async function(){
+    if (!pdfBytes || !pdfFile) { showMsg('Choose a PDF file first.'); return; }
+    if (!sigBytes) { showMsg('Create your signature first — draw it, type your name, or upload an image.'); return; }
+    var pages;
+    try { pages = parsePages(); }
+    catch(e){ showMsg(e.message); return; }
+    signBtn.disabled = true; showMsg('Signing…', true);
+    try {
+      var out = await signPdf(pdfBytes, sigBytes, {
+        pages: pages,
+        position: positionSel.value,
+        width: parseInt(widthSlider.value, 10)
+      });
+      var check = await PDFLib.PDFDocument.load(out);
+      if (outUrl) URL.revokeObjectURL(outUrl);
+      outUrl = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      dl.href = outUrl;
+      var base = pdfFile.name.replace(/\.pdf$/i, '');
+      dl.setAttribute('download', base + '-signed.pdf');
+      var stamped = pages === 'all' ? pageCount : pages === 'last' ? 1 : pages.length;
+      showMsg('Done! Signature stamped on ' + stamped + (stamped === 1 ? ' page' : ' pages') + ' of ' + check.getPageCount() + ' (' + formatBytes(out.length) + '). Click “Download signed PDF”.', true);
+    } catch(e){
+      if (isEncryptedError(e)) showMsg('This PDF is password-protected. Unlock it first (see Unlock PDF) and try again.');
+      else showMsg('Could not sign that PDF — the file may be damaged. Please try a different file.');
+    }
+    signBtn.disabled = false;
+  });
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Drop a PDF onto the box (or click to choose one).</li>
+    <li>Create your signature — draw it on the canvas, type your name, or upload a signature image.</li>
+    <li>Choose the pages, position and size, click “Sign PDF”, then download your signed file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Is my PDF uploaded to a server when I sign it?</summary><p>No. Signing happens entirely in your browser — your PDF and your signature never leave your device.</p></details>
+  <details><summary>Does this add a legally binding digital signature?</summary><p>No. It stamps a visible image of your signature onto the page, like signing on paper. It does not add a cryptographic digital signature or certificate.</p></details>
+  <details><summary>Which pages will my signature appear on?</summary><p>You choose: all pages, the last page only, or specific pages (for example “1,3”). The signature is placed at the bottom of each chosen page, in the position and size you pick.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../pdf-merge/">PDF Merge</a></li>
+        <li><a href="../pdf-split/">PDF Split</a></li>
+        <li><a href="../protect-pdf/">Protect PDF</a></li>
+        <li><a href="../unlock-pdf/">Unlock PDF</a></li>
+        <li><a href="../watermark-pdf/">Watermark PDF</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>48 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
