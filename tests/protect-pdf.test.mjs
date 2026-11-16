@@ -187,7 +187,7 @@ ok(doc.title.length <= 60, `title is ${doc.title.length} chars (<= 60)`);
   ok(!!meta && meta.getAttribute('content').length <= 160, `meta description is ${meta ? meta.getAttribute('content').length : 0} chars (<= 160)`);
 }
 ok((doc.querySelector('.eyebrow') || {}).textContent.trim() === 'PDF Tools · No. 44', 'eyebrow is "PDF Tools · No. 44"');
-ok(doc.body.textContent.includes('48 tools'), 'footer count says "48 tools"');
+ok(doc.body.textContent.includes('53 tools'), 'footer count says "53 tools"');
 {
   const links = [...doc.querySelectorAll('nav.more a')].map((a) => a.getAttribute('href'));
   ok(links.length === 5, `nav.more has exactly 5 curated links (got ${links.length})`);

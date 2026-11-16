@@ -127,7 +127,7 @@ ok(ldAs.every((a, i) => a === visibleAs[i]), 'JSON-LD FAQ answers match the visi
 
 // Privacy line + footer count + curated nav.more
 ok(document.body.textContent.includes('never leave your device'), 'privacy line present ("never leave your device")');
-ok(document.body.textContent.includes('48 tools'), 'footer count reads "48 tools"');
+ok(document.body.textContent.includes('53 tools'), 'footer count reads "53 tools"');
 const moreLinks = [...document.querySelectorAll('nav.more ul li a')].map((a) => a.getAttribute('href'));
 ok(moreLinks.length === 5, `nav.more has exactly 5 curated links (found ${moreLinks.length})`);
 for (const href of ['../pdf-merge/', '../pdf-split/', '../image-to-pdf/', '../pdf-to-image/', '../unlock-pdf/']) {
