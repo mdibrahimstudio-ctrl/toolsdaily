@@ -67,17 +67,17 @@ console.log('BINARY STATIC');
   const related = ['base64-encoder-decoder', 'morse-code-translator', 'url-encoder-decoder', 'json-formatter', 'unit-converter'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'binary: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 55, 'sitemap.xml has 55 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 60, 'sitemap.xml has 60 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/binary-text-converter/'), 'sitemap includes binary-text-converter');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 53, 'home has exactly 53 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 58, 'home has exactly 58 tool cards');
   ok(home.includes('/binary-text-converter/'), 'home cards + nav include binary-text-converter');
-  ok(home.includes('Fifty-three handy tools'), 'home lead says Fifty-three tools');
-  ok(home.includes('Converters <span class="n">6</span>'), 'home Converters chip says 6');
+  ok(home.includes('Fifty-eight handy tools'), 'home lead says Fifty-eight tools');
+  ok(home.includes('Converters <span class="n">7</span>'), 'home Converters chip says 7');
   const convSec = home.match(/<section class="cat" id="converters"[\s\S]*?<\/section>/)[0];
-  ok(convSec.includes('<span class="cat-n">6 tools</span>'), 'home Converters section says 6 tools');
+  ok(convSec.includes('<span class="cat-n">7 tools</span>'), 'home Converters section says 7 tools');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
-  ok(llms.includes('browse all 53 free tools'), 'llms.txt says 53 tools');
+  ok(llms.includes('browse all 58 free tools'), 'llms.txt says 58 tools');
   ok(llms.includes('https://toolsdaily.vercel.app/binary-text-converter/'), 'llms.txt lists binary-text-converter');
 }
 

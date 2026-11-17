@@ -22,53 +22,53 @@ const TOOLS = [
 console.log('BATCH5 STATIC');
 {
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 55, 'sitemap.xml has 55 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 60, 'sitemap.xml has 60 URLs');
   for (const t of TOOLS) ok(sitemap.includes(`https://toolsdaily.vercel.app/${t.slug}/`), `sitemap includes ${t.slug}`);
 
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 53, 'home has exactly 53 tool cards');
-  ok(home.includes('53 free tools'), 'home eyebrow says 53 free tools');
-  ok(home.includes('Fifty-three handy tools'), 'home lead says Fifty-three tools');
-  ok(home.includes('Search 53 tools'), 'home search placeholder says 53 tools');
-  ok(home.includes('All <span class="n">53</span>'), 'home All chip says 53');
-  ok(home.includes('Calculators <span class="n">12</span>'), 'home Calculators chip says 12');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 58, 'home has exactly 58 tool cards');
+  ok(home.includes('58 free tools'), 'home eyebrow says 58 free tools');
+  ok(home.includes('Fifty-eight handy tools'), 'home lead says Fifty-eight tools');
+  ok(home.includes('Search 58 tools'), 'home search placeholder says 58 tools');
+  ok(home.includes('All <span class="n">58</span>'), 'home All chip says 58');
+  ok(home.includes('Calculators <span class="n">16</span>'), 'home Calculators chip says 16');
   ok(home.includes('Text Tools <span class="n">8</span>'), 'home Text Tools chip says 8');
   const calcSec = home.match(/<section class="cat" id="calculators"[\s\S]*?<\/section>/)[0];
-  ok(calcSec.includes('<span class="cat-n">12 tools</span>'), 'home Calculators section says 12 tools');
+  ok(calcSec.includes('<span class="cat-n">16 tools</span>'), 'home Calculators section says 16 tools');
   const textSec = home.match(/<section class="cat" id="text-tools"[\s\S]*?<\/section>/)[0];
   ok(textSec.includes('<span class="cat-n">8 tools</span>'), 'home Text Tools section says 8 tools');
-  ok(home.includes('53 tools · New tools added regularly.'), 'home footer says 53 tools');
+  ok(home.includes('58 tools · New tools added regularly.'), 'home footer says 58 tools');
   for (const t of TOOLS) {
     ok(home.includes(`/${t.slug}/`), `home includes ${t.slug}`);
     ok(home.includes(`<span class="card-no">${t.cardNo}</span>`), `home card number ${t.cardNo} for ${t.slug}`);
     ok(home.includes(`<h3>${t.name}</h3>`), `home card title is ${t.name}`);
   }
   const nums = [...home.matchAll(/<span class="card-no">(\d+)<\/span>/g)].map((m) => m[1]);
-  ok(nums.length === 53 && new Set(nums).size === 53, 'home card numbers are 53 unique values');
-  ok(JSON.stringify([...nums].sort()) === JSON.stringify(Array.from({ length: 53 }, (_, i) => String(i + 1).padStart(2, '0'))), 'home card numbers run 01..53 with no gaps');
+  ok(nums.length === 58 && new Set(nums).size === 58, 'home card numbers are 58 unique values');
+  ok(JSON.stringify([...nums].sort()) === JSON.stringify(Array.from({ length: 58 }, (_, i) => String(i + 1).padStart(2, '0'))), 'home card numbers run 01..58 with no gaps');
 
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
-  ok(llms.includes('browse all 53 free tools'), 'llms.txt says 53 tools');
+  ok(llms.includes('browse all 58 free tools'), 'llms.txt says 58 tools');
   for (const t of TOOLS) ok(llms.includes(`https://toolsdaily.vercel.app/${t.slug}/`), `llms.txt lists ${t.slug}`);
 
   const fb = fs.readFileSync(path.join(SITE, 'feedback', 'index.html'), 'utf8');
   const datalist = fb.match(/<datalist id="tool-list">([\s\S]*?)<\/datalist>/)[1];
   const options = [...datalist.matchAll(/<option value="([^"]+)"><\/option>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
-  ok(options.length === 53, 'feedback datalist has exactly 53 tool options');
+  ok(options.length === 58, 'feedback datalist has exactly 53 tool options');
   for (const t of TOOLS) ok(options.includes(t.name), `feedback datalist includes ${t.name}`);
-  ok(new Set(options).size === 53, 'feedback datalist options are unique');
-  ok(fb.includes('53 tools'), 'feedback footer says 53 tools');
+  ok(new Set(options).size === 58, 'feedback datalist options are unique');
+  ok(fb.includes('58 tools'), 'feedback footer says 58 tools');
 
-  // Every tool page footer says 53 tools (48 old + 5 new + feedback = 54 files).
+  // Every tool page footer says 58 tools (53 old + 5 new + feedback = 59 files).
   const dirs = fs.readdirSync(SITE, { withFileTypes: true })
     .filter((d) => d.isDirectory() && !d.name.startsWith('.') && d.name !== 'assets' && d.name !== 'tests')
     .map((d) => d.name);
   let footerBad = [];
   for (const d of dirs) {
     const html = fs.readFileSync(path.join(SITE, d, 'index.html'), 'utf8');
-    if (!html.includes('53 tools · New tools added regularly.')) footerBad.push(d);
+    if (!html.includes('58 tools · New tools added regularly.')) footerBad.push(d);
   }
-  ok(footerBad.length === 0, `all ${dirs.length} subdir pages footer says 53 tools${footerBad.length ? ' — bad: ' + footerBad.join(', ') : ''}`);
+  ok(footerBad.length === 0, `all ${dirs.length} subdir pages footer says 58 tools${footerBad.length ? ' — bad: ' + footerBad.join(', ') : ''}`);
 
   // Each new page: eyebrow number matches its card number, GA4 + canonical + JSON-LD.
   for (const t of TOOLS) {
@@ -76,7 +76,7 @@ console.log('BATCH5 STATIC');
     ok(html.includes(`<p class="eyebrow">${t.cat} · No. ${t.cardNo}</p>`), `${t.slug}: eyebrow is ${t.cat} · No. ${t.cardNo}`);
     ok(html.includes('G-KX85CZXTR4'), `${t.slug}: GA4 present`);
     ok(html.includes(`<link rel="canonical" href="https://toolsdaily.vercel.app/${t.slug}/">`), `${t.slug}: canonical present`);
-    ok(html.includes('53 tools · New tools added regularly.'), `${t.slug}: footer says 53 tools`);
+    ok(html.includes('58 tools · New tools added regularly.'), `${t.slug}: footer says 58 tools`);
     const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
     let data = null;
     try { data = JSON.parse(blocks[0]); } catch { /* handled below */ }
