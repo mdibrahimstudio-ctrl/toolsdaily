@@ -58,6 +58,16 @@ const PAGES = [
   { path: 'watermark-pdf/', name: 'watermark-pdf', selectors: ['#file', '#wm-text', '#opacity', '#angle', '#watermark', '#download', '#dl', '#drop', '#tab-text', '#tab-image'] },
   { path: 'add-page-numbers/', name: 'add-page-numbers', selectors: ['#file', '#format', '#position', '#start-page', '#add-numbers', '#download', '#dl', '#drop'] },
   { path: 'ocr-pdf/', name: 'ocr-pdf', selectors: ['#file', '#ocr', '#download', '#dl', '#drop', '#results', '#status'] },
+  { path: 'word-frequency-counter/', name: 'word-frequency-counter', selectors: ['#text-in', '#opt-ignore-case', '#opt-stop-words', '#opt-top-n', '#btn-analyze', '#freq-table', '#freq-body', '#st-words', '#st-unique', '#st-top', '#copy', '#download', '#dl', '#msg'] },
+  { path: 'compound-interest-calculator/', name: 'compound-interest-calculator', selectors: ['#principal', '#monthly', '#rate', '#years', '#frequency', '#calc', '#r-future', '#r-contrib', '#r-interest', '#year-table', '#year-body', '#chart', '#download', '#dl', '#msg'] },
+  { path: 'loan-calculator/', name: 'loan-calculator', selectors: ['#amount', '#rate', '#term', '#term-unit', '#extra', '#calc', '#r-payment', '#r-interest', '#r-total', '#r-months', '#sched-table', '#sched-body', '#download', '#dl', '#msg'] },
+  { path: 'mortgage-calculator/', name: 'mortgage-calculator', selectors: ['#price', '#down', '#rate', '#term', '#tax', '#insurance', '#pmi-rate', '#calc', '#r-pi', '#r-tax', '#r-ins', '#r-pmi', '#r-total', '#r-loan', '#pmi-note', '#sched-table', '#sched-body', '#download', '#dl', '#msg'] },
+  { path: 'calorie-tdee-calculator/', name: 'calorie-tdee-calculator', selectors: ['#age', '#sex', '#unit', '#weight', '#height-cm', '#weight-lb', '#height-ft', '#height-in', '#activity', '#calc', '#r-bmr', '#r-tdee', '#r-cut', '#r-maintain', '#r-bulk', '#goal-note', '#msg'] },
+  { path: 'discount-calculator/', name: 'discount-calculator', selectors: ['#price', '#pct', '#qty', '#calc', '#copy', '#download', '#dl', '#r-final', '#r-savings', '#r-orig', '#r-each', '#msg'] },
+  { path: 'currency-converter/', name: 'currency-converter', selectors: ['#amount', '#from', '#to', '#swap', '#result', '#rate-line', '#rate-source', '#msg'] },
+  { path: 'salary-pay-calculator/', name: 'salary-pay-calculator', selectors: ['#pay', '#period', '#hours', '#ot', '#ot-hours', '#calc', '#copy', '#download', '#dl', '#r-hourly', '#r-weekly', '#r-biweekly', '#r-monthly', '#r-annual', '#r-ot', '#msg'] },
+  { path: 'vat-tax-calculator/', name: 'vat-tax-calculator', selectors: ['#amount', '#rate', '#mode', '#calc', '#copy', '#download', '#dl', '#r-net', '#r-tax', '#r-gross', '#msg'] },
+  { path: 'markup-margin-calculator/', name: 'markup-margin-calculator', selectors: ['#cost', '#price', '#target-margin', '#calc', '#calc-price', '#copy', '#download', '#dl', '#r-markup', '#r-margin', '#r-profit', '#r-price', '#msg'] },
   { path: 'feedback/', name: 'feedback', selectors: ['#feedback-form', '#fb-tool', '#fb-message', '#fb-name', '#fb-email', '#fb-submit', '#fb-target', '#fb-msg'] },
 ];
 
