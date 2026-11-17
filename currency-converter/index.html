@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Currency Converter — Convert between 150+ currencies with live exchange rates — ToolsDaily</title>
+<meta name="description" content="Convert between 150+ currencies with live exchange rates — free, instant, and private.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/currency-converter/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Currency Converter — Convert between 150+ currencies with live exchange rates — ToolsDaily">
+<meta property="og:description" content="Convert between 150+ currencies with live exchange rates — free, instant, and private.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/currency-converter/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Currency Converter — Convert between 150+ currencies with live exchange rates — ToolsDaily">
+<meta name="twitter:description" content="Convert between 150+ currencies with live exchange rates — free, instant, and private.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Currency Converter",
+    "url": "https://toolsdaily.vercel.app/currency-converter/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Convert between 150+ currencies with live exchange rates — free, instant, and private."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where do the live exchange rates come from, and how often are they updated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Live rates come from open.er-api.com (ExchangeRate-API), a free public exchange-rate service, and are refreshed when the page loads and whenever you change the From currency. The provider updates its rates daily. Amounts are shown with 2 decimal places, except Japanese yen (JPY) and South Korean won (KRW), which are shown with no decimal places."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if I am offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If the live rates cannot be fetched, the converter falls back to a bundled snapshot of rates as of 2026-11-17 and tells you so on the page. Conversions still work, but the rates may be slightly out of date — reconnect and reload the page for the latest live rates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my amounts uploaded anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Your amounts are converted in your browser and are never uploaded or stored. The only network request is the public exchange-rate lookup, which sends no personal data and no amounts — only the currency code."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a><a class="nav-feedback" href="/feedback/">Feedback</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">Converters · No. 55</p></div>
+<h1 class="rise rise-1">Currency Converter</h1>
+<p class="lead rise rise-2">Convert between 150+ currencies with live exchange rates.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="row">
+    <div><label for="amount">Amount</label><input type="number" id="amount" value="100" min="0" step="any" placeholder="e.g. 100"></div>
+    <div><label for="from">From</label><select id="from"></select></div>
+    <div><label for="to">To</label><select id="to"></select></div>
+  </div>
+  <p><button id="swap" type="button" class="secondary"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 16V4M7 4 3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/></svg> Swap currencies</button></p>
+  <p class="out" id="result" aria-live="polite">–</p>
+  <p class="meta" id="rate-line" aria-live="polite">–</p>
+  <p class="meta" id="rate-source">Offline fallback rates as of 2026-11-17</p>
+  <p class="msg" id="msg"></p>
+</div>
+<script>
+(function(){
+  var FALLBACK_DATE = '2026-11-17';
+  var FALLBACK_RATES = {"USD": 1, "AED": 3.6725, "AFN": 65.373621, "ALL": 82.295897, "AMD": 360.427215, "ANG": 1.79, "AOA": 929.771257, "ARS": 1549.6732, "AUD": 1.483068, "AWG": 1.79, "AZN": 1.699413, "BAM": 1.777046, "BBD": 2, "BDT": 124.589647, "BGN": 1.777046, "BHD": 0.376, "BIF": 3006.728086, "BMD": 1, "BND": 1.288895, "BOB": 11.669516, "BRL": 5.714693, "BSD": 1, "BTN": 93.961475, "BWP": 14.336217, "BYN": 2.999865, "BZD": 2, "CAD": 1.42937, "CDF": 2314.093508, "CHF": 0.839814, "CLF": 0.025197, "CLP": 995.954763, "CNH": 6.665844, "CNY": 6.679257, "COP": 3315.703306, "CRC": 447.073657, "CUP": 24, "CVE": 100.185607, "CZK": 22.194798, "DJF": 177.721, "DKK": 6.789305, "DOP": 60.809039, "DZD": 136.975866, "EGP": 53.681178, "ERN": 15, "ETB": 161.251845, "EUR": 0.908584, "FJD": 2.275486, "FKP": 0.758261, "FOK": 6.789304, "GBP": 0.758255, "GEL": 2.593429, "GGP": 0.758261, "GHS": 11.750509, "GIP": 0.758261, "GMD": 74.812189, "GNF": 8847.206338, "GTQ": 7.640804, "GYD": 209.227868, "HKD": 7.846956, "HNL": 26.904225, "HRK": 6.845767, "HTG": 131.11754, "HUF": 331.21292, "IDR": 18273.211135, "ILS": 3.238987, "IMP": 0.758261, "INR": 93.959855, "IQD": 1513.820475, "IRR": 1805804.36113, "ISK": 124.096758, "JEP": 0.758261, "JMD": 158.422636, "JOD": 0.709, "JPY": 159.580113, "KES": 129.980012, "KGS": 87.470627, "KHR": 4063.475934, "KID": 1.483091, "KMF": 446.996669, "KRW": 1335.485864, "KWD": 0.311177, "KYD": 0.833333, "KZT": 444.74347, "LAK": 22342.668313, "LBP": 89500, "LKR": 332.677303, "LRD": 169.656679, "LSL": 16.965703, "LYD": 6.445536, "MAD": 9.972541, "MDL": 18.190675, "MGA": 4603.821789, "MKD": 54.865608, "MMK": 2098.829952, "MNT": 3605.217916, "MOP": 8.082365, "MRU": 40.688064, "MUR": 47.797506, "MVR": 15.432767, "MWK": 1744.863347, "MXN": 18.548392, "MYR": 4.094237, "MZN": 63.732652, "NAD": 16.965703, "NGN": 1350.055103, "NIO": 36.80446, "NOK": 9.629694, "NPR": 150.338359, "NZD": 1.816952, "OMR": 0.384497, "PAB": 1, "PEN": 3.411033, "PGK": 4.565121, "PHP": 63.93553, "PKR": 276.55578, "PLN": 4.001322, "PYG": 6203.611428, "QAR": 3.64, "RON": 4.85725, "RSD": 106.829941, "RUB": 82.518177, "RWF": 1479.716537, "SAR": 3.75, "SBD": 7.992208, "SCR": 13.995241, "SDG": 449.327197, "SEK": 10.092701, "SGD": 1.288895, "SHP": 0.758261, "SLE": 23.06523, "SLL": 23065.229822, "SOS": 571.869905, "SRD": 37.555303, "SSP": 5751.379291, "STN": 22.26044, "SYP": 121.640395, "SZL": 16.965703, "THB": 33.886826, "TJS": 9.208688, "TMT": 3.500037, "TND": 3.03381, "TOP": 2.394322, "TRY": 50.421147, "TTD": 6.759976, "TVD": 1.483091, "TWD": 32.977405, "TZS": 2643.698003, "UAH": 45.440971, "UGX": 4046.180899, "UYU": 40.612756, "UZS": 11981.61766, "VES": 915.7476, "VND": 25747.080419, "VUV": 120.14232, "WST": 2.77122, "XAF": 595.995559, "XCD": 2.7, "XCG": 1.79, "XDR": 0.74402, "XOF": 595.995559, "XPF": 108.423787, "YER": 236.353274, "ZAR": 16.959311, "ZMW": 20.580374, "ZWG": 26.6341, "ZWL": 26.6341};
+  var CURRENCIES = [["AED", "UAE Dirham"], ["AFN", "Afghan Afghani"], ["ALL", "Albanian Lek"], ["AMD", "Armenian Dram"], ["ANG", "Netherlands Antillean Guilder"], ["AOA", "Angolan Kwanza"], ["ARS", "Argentine Peso"], ["AUD", "Australian Dollar"], ["AWG", "Aruban Florin"], ["AZN", "Azerbaijani Manat"], ["BAM", "Bosnia-Herzegovina Convertible Mark"], ["BBD", "Barbadian Dollar"], ["BDT", "Bangladeshi Taka"], ["BGN", "Bulgarian Lev"], ["BHD", "Bahraini Dinar"], ["BIF", "Burundian Franc"], ["BMD", "Bermudian Dollar"], ["BND", "Brunei Dollar"], ["BOB", "Bolivian Boliviano"], ["BRL", "Brazilian Real"], ["BSD", "Bahamian Dollar"], ["BTN", "Bhutanese Ngultrum"], ["BWP", "Botswanan Pula"], ["BYN", "Belarusian Rouble"], ["BZD", "Belize Dollar"], ["CAD", "Canadian Dollar"], ["CDF", "Congolese Franc"], ["CHF", "Swiss Franc"], ["CLF", "Chilean Unit of Account (UF)"], ["CLP", "Chilean Peso"], ["CNH", "Chinese Yuan (Offshore)"], ["CNY", "Chinese Yuan"], ["COP", "Colombian Peso"], ["CRC", "Costa Rican Col\u00f3n"], ["CUP", "Cuban Peso"], ["CVE", "Cape Verdean Escudo"], ["CZK", "Czech Koruna"], ["DJF", "Djiboutian Franc"], ["DKK", "Danish Krone"], ["DOP", "Dominican Peso"], ["DZD", "Algerian Dinar"], ["EGP", "Egyptian Pound"], ["ERN", "Eritrean Nakfa"], ["ETB", "Ethiopian Birr"], ["EUR", "Euro"], ["FJD", "Fijian Dollar"], ["FKP", "Falkland Islands Pound"], ["FOK", "Faroese Kr\u00f3na"], ["GBP", "British Pound Sterling"], ["GEL", "Georgian Lari"], ["GGP", "Guernsey Pound"], ["GHS", "Ghanaian Cedi"], ["GIP", "Gibraltar Pound"], ["GMD", "Gambian Dalasi"], ["GNF", "Guinean Franc"], ["GTQ", "Guatemalan Quetzal"], ["GYD", "Guyanaese Dollar"], ["HKD", "Hong Kong Dollar"], ["HNL", "Honduran Lempira"], ["HRK", "Croatian Kuna"], ["HTG", "Haitian Gourde"], ["HUF", "Hungarian Forint"], ["IDR", "Indonesian Rupiah"], ["ILS", "Israeli New Shekel"], ["IMP", "Manx Pound"], ["INR", "Indian Rupee"], ["IQD", "Iraqi Dinar"], ["IRR", "Iranian Rial"], ["ISK", "Icelandic Kr\u00f3na"], ["JEP", "Jersey Pound"], ["JMD", "Jamaican Dollar"], ["JOD", "Jordanian Dinar"], ["JPY", "Japanese Yen"], ["KES", "Kenyan Shilling"], ["KGS", "Kyrgystani Som"], ["KHR", "Cambodian Riel"], ["KID", "Kiribati Dollar"], ["KMF", "Comorian Franc"], ["KRW", "South Korean Won"], ["KWD", "Kuwaiti Dinar"], ["KYD", "Cayman Islands Dollar"], ["KZT", "Kazakhstani Tenge"], ["LAK", "Laotian Kip"], ["LBP", "Lebanese Pound"], ["LKR", "Sri Lankan Rupee"], ["LRD", "Liberian Dollar"], ["LSL", "Lesotho Loti"], ["LYD", "Libyan Dinar"], ["MAD", "Moroccan Dirham"], ["MDL", "Moldovan Leu"], ["MGA", "Malagasy Ariary"], ["MKD", "Macedonian Denar"], ["MMK", "Myanmar Kyat"], ["MNT", "Mongolian Tugrik"], ["MOP", "Macanese Pataca"], ["MRU", "Mauritanian Ouguiya"], ["MUR", "Mauritian Rupee"], ["MVR", "Maldivian Rufiyaa"], ["MWK", "Malawian Kwacha"], ["MXN", "Mexican Peso"], ["MYR", "Malaysian Ringgit"], ["MZN", "Mozambican Metical"], ["NAD", "Namibian Dollar"], ["NGN", "Nigerian Naira"], ["NIO", "Nicaraguan C\u00f3rdoba"], ["NOK", "Norwegian Krone"], ["NPR", "Nepalese Rupee"], ["NZD", "New Zealand Dollar"], ["OMR", "Omani Rial"], ["PAB", "Panamanian Balboa"], ["PEN", "Peruvian Sol"], ["PGK", "Papua New Guinean Kina"], ["PHP", "Philippine Peso"], ["PKR", "Pakistani Rupee"], ["PLN", "Polish Zloty"], ["PYG", "Paraguayan Guarani"], ["QAR", "Qatari Riyal"], ["RON", "Romanian Leu"], ["RSD", "Serbian Dinar"], ["RUB", "Russian Rouble"], ["RWF", "Rwandan Franc"], ["SAR", "Saudi Riyal"], ["SBD", "Solomon Islands Dollar"], ["SCR", "Seychellois Rupee"], ["SDG", "Sudanese Pound"], ["SEK", "Swedish Krona"], ["SGD", "Singapore Dollar"], ["SHP", "St Helena Pound"], ["SLE", "Sierra Leonean Leone"], ["SLL", "Sierra Leonean Leone"], ["SOS", "Somali Shilling"], ["SRD", "Surinamese Dollar"], ["SSP", "South Sudanese Pound"], ["STN", "S\u00e3o Tom\u00e9 & Pr\u00edncipe Dobra"], ["SYP", "Syrian Pound"], ["SZL", "Swazi Lilangeni"], ["THB", "Thai Baht"], ["TJS", "Tajikistani Somoni"], ["TMT", "Turkmenistani Manat"], ["TND", "Tunisian Dinar"], ["TOP", "Tongan Pa'anga"], ["TRY", "Turkish Lira"], ["TTD", "Trinidad & Tobago Dollar"], ["TVD", "Tuvaluan Dollar"], ["TWD", "New Taiwan Dollar"], ["TZS", "Tanzanian Shilling"], ["UAH", "Ukrainian Hryvnia"], ["UGX", "Ugandan Shilling"], ["USD", "US Dollar"], ["UYU", "Uruguayan Peso"], ["UZS", "Uzbekistan Som"], ["VES", "Venezuelan Bol\u00edvar Soberano"], ["VND", "Vietnamese Dong"], ["VUV", "Vanuatu Vatu"], ["WST", "Samoan Tala"], ["XAF", "Central African CFA Franc"], ["XCD", "East Caribbean Dollar"], ["XCG", "Caribbean Guilder"], ["XDR", "Special Drawing Rights"], ["XOF", "West African CFA Franc"], ["XPF", "CFP Franc"], ["YER", "Yemeni Rial"], ["ZAR", "South African Rand"], ["ZMW", "Zambian Kwacha"], ["ZWG", "Zimbabwean Gold"], ["ZWL", "Zimbabwean Dollar"]];
+  var ZERO_DECIMAL = { JPY: true, KRW: true };
+  function isValidAmount(a){ return typeof a === 'number' && isFinite(a) && a >= 0; }
+  function convert(amount, rate){
+    if (!isValidAmount(amount) || typeof rate !== 'number' || !isFinite(rate) || rate < 0) return NaN;
+    return amount * rate;
+  }
+  function getRate(from, to, rates){
+    if (!rates || typeof rates !== 'object') return null;
+    if (from === to) return 1;
+    var f = rates[from], t = rates[to];
+    if (typeof f !== 'number' || typeof t !== 'number' || !isFinite(f) || !isFinite(t) || f <= 0 || t <= 0) return null;
+    return t / f;
+  }
+  function decimalsFor(code){ return ZERO_DECIMAL[code] ? 0 : 2; }
+  function formatAmount(value, code){
+    if (typeof value !== 'number' || !isFinite(value)) return '–';
+    var d = decimalsFor(code);
+    return value.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function fmtRate(r){
+    if (typeof r !== 'number' || !isFinite(r)) return '–';
+    return String(parseFloat(r.toPrecision(6)));
+  }
+  window.TD_currency = { convert: convert, getRate: getRate, lookup: getRate, formatAmount: formatAmount, decimalsFor: decimalsFor, fmtRate: fmtRate, fallbackDate: FALLBACK_DATE };
+  window.TD_currencyRates = FALLBACK_RATES;
+  var amountEl = document.getElementById('amount'),
+      fromEl = document.getElementById('from'),
+      toEl = document.getElementById('to'),
+      resultEl = document.getElementById('result'),
+      rateLineEl = document.getElementById('rate-line'),
+      rateSourceEl = document.getElementById('rate-source'),
+      msgEl = document.getElementById('msg');
+  var currentRates = FALLBACK_RATES;
+  function fillSelects(){
+    CURRENCIES.forEach(function(c){
+      var o1 = document.createElement('option'); o1.value = c[0]; o1.textContent = c[0] + ' \u2014 ' + c[1]; fromEl.appendChild(o1);
+      var o2 = document.createElement('option'); o2.value = c[0]; o2.textContent = c[0] + ' \u2014 ' + c[1]; toEl.appendChild(o2);
+    });
+    fromEl.value = 'USD'; toEl.value = 'EUR';
+  }
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function formatLiveDate(utcStr){
+    try {
+      var d = new Date(utcStr);
+      if (isNaN(d.getTime())) return utcStr;
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var hh = String(d.getUTCHours()).padStart(2, '0'), mm = String(d.getUTCMinutes()).padStart(2, '0');
+      return d.getUTCDate() + ' ' + months[d.getUTCMonth()] + ' ' + d.getUTCFullYear() + ', ' + hh + ':' + mm + ' UTC';
+    } catch (e) { return utcStr; }
+  }
+  function useFallback(){
+    currentRates = FALLBACK_RATES;
+    rateSourceEl.textContent = 'Offline fallback rates as of ' + FALLBACK_DATE;
+    update();
+  }
+  async function fetchRates(base){
+    try {
+      if (typeof fetch !== 'function') throw new Error('fetch unavailable');
+      var res = await fetch('https://open.er-api.com/v6/latest/' + encodeURIComponent(base));
+      if (!res || !res.ok) throw new Error('rate request failed');
+      var data = await res.json();
+      if (!data || data.result !== 'success' || !data.rates || typeof data.rates !== 'object') throw new Error('bad rate data');
+      currentRates = data.rates;
+      rateSourceEl.textContent = 'Live rates from open.er-api.com \u00b7 updated ' + formatLiveDate(data.time_last_update_utc || '');
+      update();
+    } catch (e) {
+      useFallback();
+    }
+  }
+  function update(){
+    var amount = parseFloat(amountEl.value);
+    if (!isValidAmount(amount)) {
+      resultEl.textContent = '–'; rateLineEl.textContent = '–';
+      showMsg('Enter a valid amount (0 or more).', 'err'); return;
+    }
+    var rate = getRate(fromEl.value, toEl.value, currentRates);
+    if (rate === null) {
+      resultEl.textContent = '–'; rateLineEl.textContent = '–';
+      showMsg('No exchange rate available for this currency pair.', 'err'); return;
+    }
+    var converted = convert(amount, rate);
+    resultEl.textContent = formatAmount(amount, fromEl.value) + ' ' + fromEl.value + ' = ' + formatAmount(converted, toEl.value) + ' ' + toEl.value;
+    rateLineEl.textContent = '1 ' + fromEl.value + ' = ' + fmtRate(rate) + ' ' + toEl.value;
+    showMsg('', '');
+  }
+  amountEl.addEventListener('input', update);
+  fromEl.addEventListener('change', function(){ update(); fetchRates(fromEl.value); });
+  toEl.addEventListener('change', update);
+  document.getElementById('swap').addEventListener('click', function(){
+    var t = fromEl.value; fromEl.value = toEl.value; toEl.value = t;
+    update(); fetchRates(fromEl.value);
+  });
+  fillSelects();
+  update();
+  fetchRates('USD');
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter an amount and pick the From and To currencies — the result updates live as you type.</li>
+    <li>Use the swap button to reverse the conversion.</li>
+    <li>Live rates load automatically; if you are offline the page falls back to the bundled rates snapshot dated 2026-11-17 and says so on the page.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Where do the live exchange rates come from, and how often are they updated?</summary><p>Live rates come from open.er-api.com (ExchangeRate-API), a free public exchange-rate service, and are refreshed when the page loads and whenever you change the From currency. The provider updates its rates daily. Amounts are shown with 2 decimal places, except Japanese yen (JPY) and South Korean won (KRW), which are shown with no decimal places.</p></details>
+  <details><summary>What happens if I am offline?</summary><p>If the live rates cannot be fetched, the converter falls back to a bundled snapshot of rates as of 2026-11-17 and tells you so on the page. Conversions still work, but the rates may be slightly out of date — reconnect and reload the page for the latest live rates.</p></details>
+  <details><summary>Are my amounts uploaded anywhere?</summary><p>No. Your amounts are converted in your browser and are never uploaded or stored. The only network request is the public exchange-rate lookup, which sends no personal data and no amounts — only the currency code.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../unit-converter/">Unit Converter</a></li>
+        <li><a href="../color-converter/">Color Converter</a></li>
+        <li><a href="../base64-encoder-decoder/">Base64 Encoder / Decoder</a></li>
+        <li><a href="../json-formatter/">JSON Formatter</a></li>
+        <li><a href="../url-encoder-decoder/">URL Encoder / Decoder</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>58 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
