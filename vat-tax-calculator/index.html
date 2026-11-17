@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAT &amp; Sales Tax Calculator — Add or Remove Tax — ToolsDaily</title>
+<meta name="description" content="Free VAT and sales tax calculator: add or remove VAT/sales tax — net, tax and gross in one go. Work out the tax in any price, entirely in your browser.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/vat-tax-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VAT &amp; Sales Tax Calculator — Add or Remove Tax — ToolsDaily">
+<meta property="og:description" content="Free VAT and sales tax calculator: add or remove VAT/sales tax — net, tax and gross in one go. Work out the tax in any price, entirely in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/vat-tax-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VAT &amp; Sales Tax Calculator — Add or Remove Tax — ToolsDaily">
+<meta name="twitter:description" content="Free VAT and sales tax calculator: add or remove VAT/sales tax — net, tax and gross in one go. Work out the tax in any price, entirely in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "VAT & Sales Tax Calculator",
+    "url": "https://toolsdaily.vercel.app/vat-tax-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free VAT and sales tax calculator: add or remove VAT/sales tax — net, tax and gross in one go. Work out the tax in any price, entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Add or remove tax — which mode do I pick?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pick 'Add tax' when the amount you entered is the price before tax (the net price) and you want the tax added on top — for example, a $100 net price at 20% becomes $120 gross. Pick 'Remove tax' when the amount you entered already includes tax (the gross price) and you want to work out how much of it is tax — for example, a $100 gross price at 20% contains $16.67 of tax and a net price of $83.33."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is the tax extracted from a gross price?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The net price is the gross price divided by 1 plus the tax rate — at 20%, divide the gross price by 1.20. The tax is then the gross price minus the net price. For a $100 gross price at 20%, that gives a net price of $83.33 and tax of $16.67. The calculator does the maths in whole cents, so half a cent always rounds up."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What VAT rates are used around the world?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rates vary a lot by country. The UK charges a standard VAT rate of 20%, most EU countries charge between 15% and 27%, and the US has no federal VAT — sales tax there varies by state and even by city, from 0% in some states to over 10% combined in others. Use the preset buttons for common rates, or type any rate you need."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a><a class="nav-feedback" href="/feedback/">Feedback</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">Calculators · No. 57</p></div>
+<h1 class="rise rise-1">VAT &amp; Sales Tax Calculator</h1>
+<p class="lead rise rise-2">Add or remove VAT/sales tax — net, tax and gross in one go.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="row">
+    <div><label for="amount">Amount ($)</label><input type="number" id="amount" min="0" step="0.01" value="100"></div>
+    <div><label for="rate">Tax rate (%)</label><input type="number" id="rate" min="0" max="100" step="0.1" value="20"></div>
+    <div><label for="mode">Mode</label><select id="mode"><option value="add" selected>Add tax — amount is net, add tax on top</option><option value="remove">Remove tax — amount is gross, extract the tax</option></select></div>
+  </div>
+  <p>Common rates:
+    <button type="button" class="secondary" data-rate="5">5%</button>
+    <button type="button" class="secondary" data-rate="10">10%</button>
+    <button type="button" class="secondary" data-rate="15">15%</button>
+    <button type="button" class="secondary" data-rate="20">20%</button>
+    <button type="button" class="secondary" data-rate="25">25%</button>
+  </p>
+  <p><button id="calc" type="button">Calculate</button> <button id="copy" type="button" class="secondary">Copy summary</button> <button id="download" type="button" class="secondary">Download .txt</button> <button id="reset" type="button" class="secondary">Reset</button></p>
+  <p class="msg" id="msg"></p>
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="r-net">–</b><span>Net amount</span></div>
+      <div class="stat"><b id="r-tax">–</b><span>Tax amount</span></div>
+      <div class="stat"><b id="r-gross">–</b><span>Gross amount</span></div>
+    </div>
+  </div>
+  <a id="dl" class="hidden" href="#" download="vat-tax-calculator.txt">Download</a>
+</div>
+<script>
+(function(){
+  // All money is handled in integer cents and the rate in integer basis
+  // points (1% = 100 bps), so $100 at 20% is exactly 2000 cents of tax —
+  // never a floating-point near-miss. Half a cent always rounds up.
+  var MAX_AMOUNT = 1000000;
+  var MAX_RATE = 100;
+  function fmtCents(cents){
+    return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function checkCents(cents){
+    if (cents === undefined || cents === null || !isFinite(cents) || !Number.isInteger(cents)) return 'Please enter a whole number of cents.';
+    if (cents < 0) return 'Please enter an amount of $0 or more.';
+    if (cents > MAX_AMOUNT * 100) return 'Please enter an amount of $' + MAX_AMOUNT.toLocaleString('en-US') + ' or less.';
+    return null;
+  }
+  function checkRateBps(rateBps){
+    if (rateBps === undefined || rateBps === null || !isFinite(rateBps) || !Number.isInteger(rateBps)) return 'Please enter a tax rate.';
+    if (rateBps < 0 || rateBps > MAX_RATE * 100) return 'Please enter a tax rate between 0% and 100%.';
+    return null;
+  }
+  // Add tax to a net price: tax = net * rate, rounded half-up to the cent.
+  function addTax(netCents, rateBps){
+    var err = checkCents(netCents) || checkRateBps(rateBps);
+    if (err) return { error: err };
+    var taxCents = Math.floor((netCents * rateBps + 5000) / 10000);
+    return { netCents: netCents, taxCents: taxCents, grossCents: netCents + taxCents };
+  }
+  // Extract tax from a gross price: net = gross * 100 / (100 + rate),
+  // rounded half-up to the cent; tax is whatever is left over.
+  function removeTax(grossCents, rateBps){
+    var err = checkCents(grossCents) || checkRateBps(rateBps);
+    if (err) return { error: err };
+    var denom = 10000 + rateBps;
+    var netCents = Math.floor((grossCents * 10000 + Math.floor(denom / 2)) / denom);
+    return { netCents: netCents, taxCents: grossCents - netCents, grossCents: grossCents };
+  }
+  function calculate(opts){
+    opts = opts || {};
+    if (opts.amount === undefined || opts.amount === null || isNaN(opts.amount)) return { error: 'Please enter an amount.' };
+    if (opts.amount < 0) return { error: 'Please enter an amount of $0 or more.' };
+    if (opts.amount > MAX_AMOUNT) return { error: 'Please enter an amount of $' + MAX_AMOUNT.toLocaleString('en-US') + ' or less.' };
+    if (opts.rate === undefined || opts.rate === null || isNaN(opts.rate)) return { error: 'Please enter a tax rate.' };
+    if (opts.rate < 0 || opts.rate > MAX_RATE) return { error: 'Please enter a tax rate between 0% and 100%.' };
+    if (opts.mode !== 'add' && opts.mode !== 'remove') return { error: 'Please choose add or remove tax.' };
+    var cents = Math.round(opts.amount * 100);
+    var rateBps = Math.round(opts.rate * 100);
+    return opts.mode === 'add' ? addTax(cents, rateBps) : removeTax(cents, rateBps);
+  }
+  function summary(r, amount, rate, mode){
+    var lines = [
+      'VAT & sales tax summary',
+      'Mode: ' + (mode === 'add' ? 'Add tax (amount is net)' : 'Remove tax (amount is gross)'),
+      'Amount entered: ' + fmtCents(Math.round(amount * 100)),
+      'Tax rate: ' + rate + '%',
+      'Net amount: ' + fmtCents(r.netCents),
+      'Tax amount: ' + fmtCents(r.taxCents),
+      'Gross amount: ' + fmtCents(r.grossCents)
+    ];
+    return lines.join('\n');
+  }
+  window.TD_vat = { addTax: addTax, removeTax: removeTax, calculate: calculate, fmtCents: fmtCents, summary: summary };
+  var msgEl = document.getElementById('msg');
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function clearResults(){
+    document.getElementById('r-net').textContent = '–';
+    document.getElementById('r-tax').textContent = '–';
+    document.getElementById('r-gross').textContent = '–';
+  }
+  function readInputs(){
+    var rawAmount = document.getElementById('amount').value;
+    var rawRate = document.getElementById('rate').value;
+    return {
+      amount: rawAmount === '' ? null : parseFloat(rawAmount),
+      rate: rawRate === '' ? null : parseFloat(rawRate),
+      mode: document.getElementById('mode').value
+    };
+  }
+  function render(){
+    var inp = readInputs();
+    var r = calculate(inp);
+    if (r.error) { showMsg(r.error, 'err'); clearResults(); return null; }
+    showMsg('', '');
+    document.getElementById('r-net').textContent = fmtCents(r.netCents);
+    document.getElementById('r-tax').textContent = fmtCents(r.taxCents);
+    document.getElementById('r-gross').textContent = fmtCents(r.grossCents);
+    return r;
+  }
+  function currentSummary(){
+    var inp = readInputs();
+    var r = calculate(inp);
+    if (r.error) return null;
+    return summary(r, inp.amount, inp.rate, inp.mode);
+  }
+  ['amount', 'rate', 'mode'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-rate]'), function(btn){
+    btn.addEventListener('click', function(){
+      document.getElementById('rate').value = btn.getAttribute('data-rate');
+      render();
+    });
+  });
+  document.getElementById('calc').addEventListener('click', render);
+  document.getElementById('reset').addEventListener('click', function(){
+    document.getElementById('amount').value = '100';
+    document.getElementById('rate').value = '20';
+    document.getElementById('mode').value = 'add';
+    document.getElementById('dl').setAttribute('href', '#');
+    render();
+  });
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = currentSummary();
+    if (!text) { showMsg('Nothing to copy yet — enter a valid amount and tax rate first.', 'err'); return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      showMsg(ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.', ok ? 'ok' : 'err');
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var dl = document.getElementById('dl');
+    var text = currentSummary();
+    if (!text) { showMsg('Nothing to download yet — enter a valid amount and tax rate first.', 'err'); return; }
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'vat-tax-calculator.txt';
+    dl.click();
+    showMsg('Downloaded vat-tax-calculator.txt.', 'ok');
+  });
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter the amount, then pick a tax rate — tap a common-rate button or type your own.</li>
+    <li>Choose “Add tax” if your amount is the price before tax, or “Remove tax” if it already includes tax.</li>
+    <li>Click “Calculate” to see the net, tax and gross amounts. Copy the summary or download it as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>Add or remove tax — which mode do I pick?</summary><p>Pick 'Add tax' when the amount you entered is the price before tax (the net price) and you want the tax added on top — for example, a $100 net price at 20% becomes $120 gross. Pick 'Remove tax' when the amount you entered already includes tax (the gross price) and you want to work out how much of it is tax — for example, a $100 gross price at 20% contains $16.67 of tax and a net price of $83.33.</p></details>
+  <details><summary>How is the tax extracted from a gross price?</summary><p>The net price is the gross price divided by 1 plus the tax rate — at 20%, divide the gross price by 1.20. The tax is then the gross price minus the net price. For a $100 gross price at 20%, that gives a net price of $83.33 and tax of $16.67. The calculator does the maths in whole cents, so half a cent always rounds up.</p></details>
+  <details><summary>What VAT rates are used around the world?</summary><p>Rates vary a lot by country. The UK charges a standard VAT rate of 20%, most EU countries charge between 15% and 27%, and the US has no federal VAT — sales tax there varies by state and even by city, from 0% in some states to over 10% combined in others. Use the preset buttons for common rates, or type any rate you need.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+        <li><a href="../tip-calculator/">Tip Calculator</a></li>
+        <li><a href="../emi-calculator/">EMI Calculator</a></li>
+        <li><a href="../loan-calculator/">Loan Calculator</a></li>
+        <li><a href="../discount-calculator/">Discount Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>58 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
