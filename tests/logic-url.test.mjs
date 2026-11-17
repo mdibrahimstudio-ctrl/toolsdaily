@@ -61,12 +61,12 @@ console.log('URL STATIC');
   const related = ['base64-encoder-decoder', 'json-formatter', 'unit-converter', 'color-converter', 'qr-generator', 'binary-text-converter'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'url: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 55, 'sitemap.xml has 55 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 60, 'sitemap.xml has 60 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/url-encoder-decoder/'), 'sitemap includes url-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 53, 'home has exactly 53 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 58, 'home has exactly 58 tool cards');
   ok(home.includes('/url-encoder-decoder/'), 'home cards + nav include url-encoder-decoder');
-  ok(home.includes('Fifty-three handy tools'), 'home lead says Fifty-three tools');
+  ok(home.includes('Fifty-eight handy tools'), 'home lead says Fifty-eight tools');
 }
 
 console.log('URL CORE');
@@ -190,7 +190,9 @@ console.log('URL UI');
   setVal(hw, '#tool-search', 'url');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   const visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/url-encoder-decoder/', 'home search "url" finds the new tool');
+  // 'url' is a substring of 'hourly', so the Salary & Hourly Pay Calculator card
+  // matches too — both cards are genuine substring matches.
+  ok(visible.length === 2 && JSON.stringify(visible.map((x) => x.getAttribute('href')).sort()) === JSON.stringify(['https://toolsdaily.vercel.app/salary-pay-calculator/', 'https://toolsdaily.vercel.app/url-encoder-decoder/']), 'home search "url" finds the URL tool + the Salary tool (hourly contains url)');
   homeDom.window.close();
   dom.window.close();
 }
