@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zakat Calculator — Work Out Your Zakat in Seconds — ToolsDaily</title>
+<meta name="description" content="Free zakat calculator: work out the 2.5% zakat on your cash, gold, silver and business assets — with a nisab check and an itemized breakdown.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/zakat-calculator/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zakat Calculator — Work Out Your Zakat in Seconds — ToolsDaily">
+<meta property="og:description" content="Free zakat calculator: work out the 2.5% zakat on your cash, gold, silver and business assets — with a nisab check and an itemized breakdown.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/zakat-calculator/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zakat Calculator — Work Out Your Zakat in Seconds — ToolsDaily">
+<meta name="twitter:description" content="Free zakat calculator: work out the 2.5% zakat on your cash, gold, silver and business assets — with a nisab check and an itemized breakdown.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Zakat Calculator",
+    "url": "https://toolsdaily.vercel.app/zakat-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free zakat calculator: work out the 2.5% zakat on your cash, gold, silver and business assets — with a nisab check and an itemized breakdown. Runs entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is nisab?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The minimum amount of wealth a Muslim must own before zakat becomes due — set by the value of 87.48 grams of gold or 612.36 grams of silver."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much zakat do I pay?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2.5% of your total zakatable wealth above the nisab, after subtracting debts."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data sent anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — the calculation happens entirely in your browser."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a><a class="nav-feedback" href="/feedback/">Feedback</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">Calculators · No. 60</p></div>
+<h1 class="rise rise-1">Zakat Calculator</h1>
+<p class="lead rise rise-2">Add up your zakatable wealth, check it against the nisab, and see exactly how much zakat you owe — 2.5% on what is above the threshold.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="row">
+    <div><label for="cash">Cash in hand and in the bank ($)</label><input type="number" id="cash" min="0" step="any" value="10000"></div>
+    <div><label for="business">Business assets and stock ($)</label><input type="number" id="business" min="0" step="any" value="0"></div>
+  </div>
+  <div class="row">
+    <div><label for="gold-g">Gold (grams)</label><input type="number" id="gold-g" min="0" step="any" value="0"></div>
+    <div><label for="gold-price">Gold price per gram ($)</label><input type="number" id="gold-price" min="0" step="any" value="80"></div>
+  </div>
+  <div class="row">
+    <div><label for="silver-g">Silver (grams)</label><input type="number" id="silver-g" min="0" step="any" value="0"></div>
+    <div><label for="silver-price">Silver price per gram ($)</label><input type="number" id="silver-price" min="0" step="any" value="1"></div>
+  </div>
+  <div class="row">
+    <div><label for="debts">Debts you owe ($)</label><input type="number" id="debts" min="0" step="any" value="0"></div>
+  </div>
+  <p>Zakat is 2.5% of your net zakatable wealth when it reaches the nisab. The nisab is the lower of 87.48 grams of gold and 612.36 grams of silver, valued at the prices you enter. Net zakatable wealth = cash + gold value + silver value + business assets − debts.</p>
+  <p>Gold and silver prices change daily — update the price fields to current market rates for an accurate result.</p>
+  <p><button id="calc" type="button">Calculate zakat</button></p>
+  <p class="msg" id="msg"></p>
+  <h3>Breakdown</h3>
+  <ul id="breakdown"></ul>
+  <div class="stats">
+    <div class="stat"><b id="r-net">–</b><span>Net zakatable wealth</span></div>
+    <div class="stat"><b id="r-nisab">–</b><span>Nisab threshold</span></div>
+    <div class="stat"><b id="r-zakat">–</b><span>Zakat due</span></div>
+  </div>
+  <p><button id="copy" type="button" class="secondary">Copy summary</button> <button id="download" type="button" class="secondary">Download summary (.txt)</button> <button id="reset" type="button" class="secondary">Reset</button></p>
+  <a id="dl" class="hidden" href="#" download="zakat-calculator.txt">Download</a>
+</div>
+<script>
+(function(){
+  var GOLD_NISAB_G = 87.48;
+  var SILVER_NISAB_G = 612.36;
+  var ZAKAT_RATE = 0.025;
+  function round2(x){ return Math.round(x * 100) / 100; }
+  function fmt(x){ return '$' + Number(x).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function calculate(opts){
+    opts = opts || {};
+    var cash = Number(opts.cash), goldG = Number(opts.goldG), goldPrice = Number(opts.goldPrice),
+        silverG = Number(opts.silverG), silverPrice = Number(opts.silverPrice),
+        business = Number(opts.business), debts = Number(opts.debts);
+    if (!isFinite(cash) || cash < 0) return { error: 'Cash must be 0 or more.' };
+    if (!isFinite(goldG) || goldG < 0) return { error: 'Gold weight must be 0 or more.' };
+    if (!isFinite(goldPrice) || goldPrice <= 0) return { error: 'Gold price per gram must be greater than 0 — the nisab cannot be computed without a price.' };
+    if (!isFinite(silverG) || silverG < 0) return { error: 'Silver weight must be 0 or more.' };
+    if (!isFinite(silverPrice) || silverPrice <= 0) return { error: 'Silver price per gram must be greater than 0 — the nisab cannot be computed without a price.' };
+    if (!isFinite(business) || business < 0) return { error: 'Business assets must be 0 or more.' };
+    if (!isFinite(debts) || debts < 0) return { error: 'Debts must be 0 or more.' };
+    var goldValue = round2(goldG * goldPrice);
+    var silverValue = round2(silverG * silverPrice);
+    var netWealth = round2(cash + goldValue + silverValue + business - debts);
+    var nisab = round2(Math.min(GOLD_NISAB_G * goldPrice, SILVER_NISAB_G * silverPrice));
+    var due = netWealth >= nisab;
+    var zakat = due ? round2(netWealth * ZAKAT_RATE) : 0;
+    return { cash: round2(cash), goldValue: goldValue, silverValue: silverValue, business: round2(business), debts: round2(debts), netWealth: netWealth, nisab: nisab, due: due, zakat: zakat };
+  }
+  function summary(result){
+    if (!result) return '';
+    if (result.error) return result.error;
+    var lines = [
+      'Zakat summary',
+      'Cash: ' + fmt(result.cash),
+      'Gold value: ' + fmt(result.goldValue),
+      'Silver value: ' + fmt(result.silverValue),
+      'Business assets: ' + fmt(result.business),
+      'Less debts: ' + fmt(result.debts),
+      'Net zakatable wealth: ' + fmt(result.netWealth),
+      'Nisab: ' + fmt(result.nisab)
+    ];
+    if (result.due) {
+      lines.push('Zakat due (2.5%): ' + fmt(result.zakat));
+    } else {
+      lines.push('No zakat due — below nisab');
+    }
+    return lines.join('\n');
+  }
+  window.TD_zakat = { calculate: calculate, summary: summary, fmt: fmt };
+  var msgEl = document.getElementById('msg');
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function clearResults(){
+    document.getElementById('r-net').textContent = '–';
+    document.getElementById('r-nisab').textContent = '–';
+    document.getElementById('r-zakat').textContent = '–';
+    document.getElementById('breakdown').innerHTML = '';
+  }
+  function readInputs(){
+    function num(id){
+      var v = document.getElementById(id).value;
+      return v === '' ? NaN : parseFloat(v);
+    }
+    return {
+      cash: num('cash'),
+      goldG: num('gold-g'),
+      goldPrice: num('gold-price'),
+      silverG: num('silver-g'),
+      silverPrice: num('silver-price'),
+      business: num('business'),
+      debts: num('debts')
+    };
+  }
+  function currentResult(){ return calculate(readInputs()); }
+  function currentSummary(){
+    var r = currentResult();
+    if (r.error) return null;
+    return summary(r);
+  }
+  function render(){
+    var r = currentResult();
+    if (r.error) {
+      clearResults();
+      showMsg(r.error, 'err');
+      return null;
+    }
+    showMsg('', '');
+    var list = document.getElementById('breakdown');
+    list.innerHTML = '';
+    [
+      ['Cash', fmt(r.cash)],
+      ['Gold value', fmt(r.goldValue)],
+      ['Silver value', fmt(r.silverValue)],
+      ['Business assets', fmt(r.business)],
+      ['Less debts', '−' + fmt(r.debts)]
+    ].forEach(function(pair){
+      var li = document.createElement('li');
+      li.textContent = pair[0] + ': ' + pair[1];
+      list.appendChild(li);
+    });
+    document.getElementById('r-net').textContent = fmt(r.netWealth);
+    document.getElementById('r-nisab').textContent = fmt(r.nisab);
+    document.getElementById('r-zakat').textContent = r.due ? fmt(r.zakat) : 'No zakat due — below nisab';
+    return r;
+  }
+  ['cash', 'gold-g', 'gold-price', 'silver-g', 'silver-price', 'business', 'debts'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', render);
+    document.getElementById(id).addEventListener('change', render);
+  });
+  document.getElementById('calc').addEventListener('click', render);
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = currentSummary();
+    if (!text) {
+      var r = currentResult();
+      showMsg('Nothing to copy yet — ' + (r.error || 'enter valid amounts first.'), 'err');
+      return;
+    }
+    var settled = false;
+    function done(okCopy){
+      if (settled) return; settled = true;
+      showMsg(okCopy ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.', okCopy ? 'ok' : 'err');
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  document.getElementById('download').addEventListener('click', function(){
+    var dl = document.getElementById('dl');
+    var text = currentSummary();
+    if (!text) {
+      dl.setAttribute('href', '#');
+      var r = currentResult();
+      showMsg('Nothing to download yet — ' + (r.error || 'enter valid amounts first.'), 'err');
+      return;
+    }
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    dl.href = URL.createObjectURL(blob);
+    dl.download = 'zakat-calculator.txt';
+    dl.click();
+    showMsg('Downloaded zakat-calculator.txt.', 'ok');
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    document.getElementById('cash').value = '10000';
+    document.getElementById('gold-g').value = '0';
+    document.getElementById('gold-price').value = '80';
+    document.getElementById('silver-g').value = '0';
+    document.getElementById('silver-price').value = '1';
+    document.getElementById('business').value = '0';
+    document.getElementById('debts').value = '0';
+    document.getElementById('dl').setAttribute('href', '#');
+    showMsg('', '');
+    render();
+  });
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter your cash, business assets and stock, plus the weight of any gold and silver you own — and the current price per gram for each metal.</li>
+    <li>Subtract anything you owe in the debts field. Your net zakatable wealth is checked against the nisab automatically — the lower of the gold and silver nisab values.</li>
+    <li>If your wealth is at or above the nisab, your zakat is 2.5% of it. Copy the itemized summary or download it as a .txt file.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is nisab?</summary><p>The minimum amount of wealth a Muslim must own before zakat becomes due — set by the value of 87.48 grams of gold or 612.36 grams of silver.</p></details>
+  <details><summary>How much zakat do I pay?</summary><p>2.5% of your total zakatable wealth above the nisab, after subtracting debts.</p></details>
+  <details><summary>Is my data sent anywhere?</summary><p>No — the calculation happens entirely in your browser.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../roi-calculator/">ROI Calculator</a></li>
+        <li><a href="../compound-interest-calculator/">Compound Interest Calculator</a></li>
+        <li><a href="../emi-calculator/">EMI Calculator</a></li>
+        <li><a href="../loan-calculator/">Loan Calculator</a></li>
+        <li><a href="../percentage-calculator/">% Percentage Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>63 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
