@@ -45,7 +45,7 @@ console.log('FEEDBACK STATIC');
   ok([...html.matchAll(/src="(https?:\/\/[^"]+)"/g)].every((m) => m[1] === 'https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4'), 'feedback: no external resource loads except the GA4 tag');
   ok(html.includes('G-KX85CZXTR4'), 'feedback: GA4 tag present');
   ok(!html.includes('No. '), 'feedback: no tool number anywhere (it is a page, not a tool)');
-  ok(html.includes('58 tools'), 'feedback: footer still says "58 tools"');
+  ok(html.includes('63 tools'), 'feedback: footer still says "63 tools"');
   const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   let data = null;
   try { data = JSON.parse(blocks[0]); } catch { /* handled below */ }
@@ -71,9 +71,9 @@ console.log('FEEDBACK STATIC');
   ok(html.includes('class="hp"'), 'feedback: honeypot wrapper is visually hidden');
   const datalist = html.match(/<datalist id="tool-list">([\s\S]*?)<\/datalist>/)[1];
   const options = [...datalist.matchAll(/<option value="([^"]+)"><\/option>/g)].map((m) => unescapeHtml(m[1]));
-  ok(options.length === 58, 'feedback: datalist has exactly 58 tool options');
+  ok(options.length === 63, 'feedback: datalist has exactly 63 tool options');
   ok(options.includes('Compress PDF') && options.includes('QR Code Generator') && options.includes('Dice Roller & Coin Flip'), 'feedback: datalist includes real tool names incl. an &-name');
-  ok(new Set(options).size === 58, 'feedback: datalist options are unique');
+  ok(new Set(options).size === 63, 'feedback: datalist options are unique');
   ok(html.includes('<iframe name="fb-target" id="fb-target"'), 'feedback: hidden iframe named fb-target present');
   ok(html.includes('Your email is only used to reply to you. We never share it.'), 'feedback: privacy line present');
   ok(html.includes('Prefer email? Write to us via the form above — it lands in our inbox.'), 'feedback: fallback line present');
@@ -81,10 +81,10 @@ console.log('FEEDBACK STATIC');
   const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
   ok((nav.match(/<li>/g) || []).length === 5, 'feedback: More-tools nav has 5 links');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 60, 'sitemap.xml has 60 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/feedback/'), 'sitemap includes feedback');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 58, 'home still has exactly 58 tool cards (feedback is not a card)');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home still has exactly 63 tool cards (feedback is not a card)');
   ok(!home.includes('/feedback/" class="tool-card'), 'home has no feedback tool card');
   // Footer Feedback link: homepage + 3 sample tool pages + the feedback page itself.
   ok(home.includes('<a href="/feedback/">Feedback</a>'), 'feedback: homepage footer links to /feedback/');
@@ -95,7 +95,7 @@ console.log('FEEDBACK STATIC');
   ok(html.includes('<a href="../feedback/">Feedback</a>'), 'feedback: its own footer links to ../feedback/');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('[Feedback](https://toolsdaily.vercel.app/feedback/)'), 'llms.txt mentions the feedback page');
-  // Header Feedback link: every page (homepage + 58 tool pages + feedback page),
+  // Header Feedback link: every page (homepage + 63 tool pages + feedback page),
   // absolute /feedback/ everywhere, including the feedback page itself.
   const pages = [{ file: path.join(SITE, 'index.html'), label: 'homepage' }];
   for (const d of fs.readdirSync(SITE, { withFileTypes: true })) {
@@ -103,7 +103,7 @@ console.log('FEEDBACK STATIC');
       pages.push({ file: path.join(SITE, d.name, 'index.html'), label: d.name });
     }
   }
-  ok(pages.length === 60, `feedback: header-link check covers all 60 pages (got ${pages.length})`);
+  ok(pages.length === 65, `feedback: header-link check covers all 65 pages (got ${pages.length})`);
   for (const { file, label } of pages) {
     const html = fs.readFileSync(file, 'utf8');
     ok(html.includes('<a class="nav-feedback" href="/feedback/">Feedback</a>'), `feedback: header Feedback link on ${label}`);
