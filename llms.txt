@@ -27,6 +27,7 @@
 - [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
 - [Fancy Text Generator](https://toolsdaily.vercel.app/fancy-text-generator/): Free fancy text generator: turn plain text into bold, italic, script, fraktur, circled, fullwidth and 12 more stylish Unicode fonts for Instagram, TikTok and gaming bios — copy any style in one click.
 - [GPA Calculator](https://toolsdaily.vercel.app/gpa-calculator/): Free GPA calculator: work out your GPA on a 4.0 scale from course grades and credit hours, and find the GPA you need to hit your target.
+- [Gold Weight Converter](https://toolsdaily.vercel.app/gold-weight-converter/): Free gold weight converter: convert between tola, bhori, masha, ratti, grams, kilograms and troy ounces.
 - [Image Compressor](https://toolsdaily.vercel.app/image-compressor/): Free image compressor: reduce image file size with a quality slider and optional resize.
 - [Image Converter](https://toolsdaily.vercel.app/image-converter/): Free image converter: change images between PNG, JPEG and WebP formats online.
 - [Image Cropper](https://toolsdaily.vercel.app/image-cropper/): Free image cropper: drag to crop any photo, lock it to an aspect ratio like 1:1 or 16:9, or type exact pixel coordinates.
@@ -35,6 +36,7 @@
 - [Image to PDF](https://toolsdaily.vercel.app/image-to-pdf/): Free image to PDF converter: turn one or more JPG and PNG images into a single PDF, one image per page.
 - [JSON Formatter](https://toolsdaily.vercel.app/json-formatter/): Free JSON formatter and validator: pretty-print, minify and check JSON with clear error messages.
 - [Lorem Ipsum Generator](https://toolsdaily.vercel.app/lorem-ipsum-generator/): Free lorem ipsum generator: create placeholder text by paragraphs, sentences or words, with the classic 'Lorem ipsum dolor sit amet…' opening.
+- [Land Area Converter](https://toolsdaily.vercel.app/land-area-converter/): Free land area converter: convert between decimal, katha, bigha, acre, hectare, square feet, square metres, marla and kanal.
 - [Loan Calculator](https://toolsdaily.vercel.app/loan-calculator/): Free loan calculator: work out the monthly payment, total interest and payoff time, with a full amortization schedule and CSV download.
 - [Markup & Margin Calculator](https://toolsdaily.vercel.app/markup-margin-calculator/): Free markup and margin calculator: work out markup, margin and profit from cost and price — or the price you need for a target margin.
 - [Morse Code Translator](https://toolsdaily.vercel.app/morse-code-translator/): Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed.
@@ -47,10 +49,12 @@
 - [PDF to JPG/PNG](https://toolsdaily.vercel.app/pdf-to-image/): Free PDF to image converter: export every PDF page as a JPG or PNG at 72–300 DPI, as a ZIP for multi-page files.
 - [PDF to Word](https://toolsdaily.vercel.app/pdf-to-word/): Free PDF to Word converter: turn a PDF into an editable Word document, keeping text, paragraphs and headings.
 - [Percentage Calculator](https://toolsdaily.vercel.app/percentage-calculator/): Free percentage calculator with three quick tools: find a percentage, what percentage one number is of another, and the percentage change between two numbers.
+- [Pregnancy Due Date Calculator](https://toolsdaily.vercel.app/pregnancy-due-date-calculator/): Free pregnancy due date calculator: find your estimated due date, trimester dates and weeks pregnant from your last period.
 - [Protect PDF](https://toolsdaily.vercel.app/protect-pdf/): Free PDF password protection: lock a PDF with AES-256 encryption, entirely in your browser.
 - [QR Code Generator](https://toolsdaily.vercel.app/qr-generator/): Free QR code generator: turn any text or URL into a QR code and download it as a PNG.
 - [QR Code Reader](https://toolsdaily.vercel.app/qr-reader/): Free QR code reader: upload a QR code image and decode its text or link instantly, right in your browser.
 - [Random Number Generator](https://toolsdaily.vercel.app/random-number-generator/): Free random number generator: pick random numbers in any range, with unique-only and sort options.
+- [ROI Calculator](https://toolsdaily.vercel.app/roi-calculator/): Free ROI calculator: work out your return on investment, net profit and annualized return (CAGR) — with a year-by-year growth table.
 - [Remove Duplicate Lines](https://toolsdaily.vercel.app/remove-duplicate-lines/): Free duplicate line remover: paste text, remove duplicate lines while keeping the original order, with case-insensitive, trim and sort options.
 - [Salary & Hourly Pay Calculator](https://toolsdaily.vercel.app/salary-pay-calculator/): Free salary and hourly pay calculator: convert pay between hourly, weekly, biweekly, monthly and annual, with time-and-a-half overtime.
 - [Sign PDF](https://toolsdaily.vercel.app/sign-pdf/): Free PDF signer: draw, type or upload a signature and stamp it onto any pages of a PDF.
@@ -67,8 +71,9 @@
 - [Watermark PDF](https://toolsdaily.vercel.app/watermark-pdf/): Free PDF watermarker: stamp a text or image watermark on any pages of a PDF, with opacity and angle controls.
 - [Word Counter](https://toolsdaily.vercel.app/word-counter/): Free word counter: count words, characters, sentences and paragraphs, and estimate reading time.
 - [Word Frequency Counter](https://toolsdaily.vercel.app/word-frequency-counter/): Free word frequency counter: count how often each word appears in your text, with percentages, a top-N limit and a downloadable list.
+- [Zakat Calculator](https://toolsdaily.vercel.app/zakat-calculator/): Free zakat calculator: work out the 2.5% zakat on your cash, gold, silver and business assets, with a nisab check.
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 58 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 63 free tools by category, with live search.
 - [Feedback](https://toolsdaily.vercel.app/feedback/): suggest a new tool or report a problem with one — we read every message.
