@@ -70,7 +70,7 @@ console.log('WORDFREQ STATIC');
   const nav = html.match(/<nav class="more">[\s\S]*?<\/nav>/)[0];
   const related = ['word-counter', 'text-case-converter', 'remove-duplicate-lines', 'lorem-ipsum-generator', 'fancy-text-generator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'wordfreq: More-tools nav links exactly its 5 related tools');
-  ok(html.includes('<p>58 tools · New tools added regularly.</p>'), 'wordfreq: footer count line stays 58 tools');
+  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'wordfreq: footer count line stays 63 tools');
 }
 
 console.log('WORDFREQ CORE');
