@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Land Area Converter — Convert Decimal, Katha, Bigha, Acre &amp; More — ToolsDaily</title>
+<meta name="description" content="Free land area converter: convert between decimal, katha, bigha, acre, hectare, square feet, square metres, marla and kanal — the land units used in Bangladesh, India and Pakistan.">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<style>
+.res-table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.92rem}
+.res-table th,.res-table td{padding:.45rem .5rem;text-align:right;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums}
+.res-table th{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.res-table th:first-child,.res-table td:first-child{text-align:left}
+.res-table td{font-family:var(--font-mono);font-size:.85rem}
+.table-wrap{overflow-x:auto}
+</style>
+<link rel="canonical" href="https://toolsdaily.vercel.app/land-area-converter/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Land Area Converter — Convert Decimal, Katha, Bigha, Acre &amp; More — ToolsDaily">
+<meta property="og:description" content="Free land area converter: convert between decimal, katha, bigha, acre, hectare, square feet, square metres, marla and kanal — the land units used in Bangladesh, India and Pakistan.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/land-area-converter/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Land Area Converter — Convert Decimal, Katha, Bigha, Acre &amp; More — ToolsDaily">
+<meta name="twitter:description" content="Free land area converter: convert between decimal, katha, bigha, acre, hectare, square feet, square metres, marla and kanal — the land units used in Bangladesh, India and Pakistan.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Land Area Converter",
+    "url": "https://toolsdaily.vercel.app/land-area-converter/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free land area converter: convert between decimal, katha, bigha, acre, hectare, square feet, square metres, marla and kanal — the land units used in Bangladesh, India and Pakistan."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many square feet are in one decimal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1 decimal = 435.6 square feet; 1 acre = 100 decimals"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does katha have different values in different places?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "this converter uses the Bangladesh standard — 1 katha = 720 square feet and 1 bigha = 20 katha. In parts of India the katha is different, so always confirm the local standard before a land deal"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data sent anywhere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No — the conversion happens entirely in your browser."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a><a class="nav-feedback" href="/feedback/">Feedback</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">Converters · No. 63</p></div>
+<h1 class="rise rise-1">Land Area Converter</h1>
+<p class="lead rise rise-2">Convert land area between decimal, katha, bigha, acre, hectare, marla and kanal — the units used for plots and farmland across South Asia.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="row">
+    <div><label for="val">Area</label><input type="number" id="val" value="1" min="0" step="any"></div>
+    <div><label for="from">From unit</label>
+      <select id="from">
+        <option value="decimal">Decimal</option>
+        <option value="katha">Katha</option>
+        <option value="bigha">Bigha</option>
+        <option value="acre" selected>Acre</option>
+        <option value="hectare">Hectare</option>
+        <option value="sqft">Square feet</option>
+        <option value="sqm">Square metres</option>
+        <option value="marla">Marla</option>
+        <option value="kanal">Kanal</option>
+      </select></div>
+  </div>
+  <p><button id="convert" type="button">Convert</button></p>
+  <p class="msg" id="msg"></p>
+  <p>Bangladesh standard: 1 katha = 720 sq ft · 1 bigha = 20 katha · 1 acre = 100 decimal · 1 marla = 272.25 sq ft · 1 kanal = 20 marla</p>
+  <div class="table-wrap">
+  <table class="res-table">
+    <thead><tr><th>Unit</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Decimal</td><td id="r-decimal">–</td></tr>
+      <tr><td>Katha</td><td id="r-katha">–</td></tr>
+      <tr><td>Bigha</td><td id="r-bigha">–</td></tr>
+      <tr><td>Acre</td><td id="r-acre">–</td></tr>
+      <tr><td>Hectare</td><td id="r-hectare">–</td></tr>
+      <tr><td>Square feet</td><td id="r-sqft">–</td></tr>
+      <tr><td>Square metres</td><td id="r-sqm">–</td></tr>
+      <tr><td>Marla</td><td id="r-marla">–</td></tr>
+      <tr><td>Kanal</td><td id="r-kanal">–</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+<script>
+(function(){
+  // Conversion factors in square feet (source of truth).
+  var FACTORS = {
+    decimal: 435.6,
+    katha: 720,
+    bigha: 14400,
+    acre: 43560,
+    hectare: 107639.104,
+    sqft: 1,
+    sqm: 10.7639,
+    marla: 272.25,
+    kanal: 5445
+  };
+  var UNITS = ['decimal', 'katha', 'bigha', 'acre', 'hectare', 'sqft', 'sqm', 'marla', 'kanal'];
+  function round4(x){ return Math.round(x * 10000) / 10000; }
+  function convert(value, fromUnit){
+    if (typeof value !== 'number' || !isFinite(value) || value < 0) return { error: 'Enter an area of 0 or more.' };
+    if (UNITS.indexOf(fromUnit) === -1) return { error: 'Unknown unit.' };
+    var sqft = value * FACTORS[fromUnit];
+    var out = {};
+    UNITS.forEach(function(u){ out[u] = round4(sqft / FACTORS[u]); });
+    return out;
+  }
+  function fmt(x){
+    if (typeof x !== 'number' || !isFinite(x)) return '–';
+    return String(parseFloat(x.toFixed(4)));
+  }
+  window.TD_landarea = { convert: convert, fmt: fmt };
+  var valEl = document.getElementById('val'),
+      fromEl = document.getElementById('from'),
+      msgEl = document.getElementById('msg');
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function clearResults(){
+    UNITS.forEach(function(u){ document.getElementById('r-' + u).textContent = '–'; });
+  }
+  function render(){
+    var raw = valEl.value;
+    var v = raw === '' ? NaN : parseFloat(raw);
+    var r = convert(v, fromEl.value);
+    if (r.error) {
+      clearResults();
+      showMsg(r.error, 'err');
+      return;
+    }
+    showMsg('', '');
+    UNITS.forEach(function(u){ document.getElementById('r-' + u).textContent = fmt(r[u]); });
+  }
+  valEl.addEventListener('input', render);
+  valEl.addEventListener('change', render);
+  fromEl.addEventListener('input', render);
+  fromEl.addEventListener('change', render);
+  document.getElementById('convert').addEventListener('click', render);
+  render();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Enter an area and pick the unit it is measured in — decimal, katha, bigha, acre or any of the others.</li>
+    <li>Click Convert — or just keep typing, the results update live as you change the value or the unit.</li>
+    <li>Read the matching value in every unit at once, from decimal to kanal, and check it against the Bangladesh standard shown above the table.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How many square feet are in one decimal?</summary><p>1 decimal = 435.6 square feet; 1 acre = 100 decimals</p></details>
+  <details><summary>Why does katha have different values in different places?</summary><p>this converter uses the Bangladesh standard — 1 katha = 720 square feet and 1 bigha = 20 katha. In parts of India the katha is different, so always confirm the local standard before a land deal</p></details>
+  <details><summary>Is my data sent anywhere?</summary><p>No — the conversion happens entirely in your browser.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../unit-converter/">Unit Converter</a></li>
+        <li><a href="../currency-converter/">Currency Converter</a></li>
+        <li><a href="../color-converter/">Color Converter</a></li>
+        <li><a href="../base64-encoder-decoder/">Base64 Encoder / Decoder</a></li>
+        <li><a href="../url-encoder-decoder/">URL Encoder / Decoder</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>63 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
