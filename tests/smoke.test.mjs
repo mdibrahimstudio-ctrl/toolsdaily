@@ -68,6 +68,11 @@ const PAGES = [
   { path: 'salary-pay-calculator/', name: 'salary-pay-calculator', selectors: ['#pay', '#period', '#hours', '#ot', '#ot-hours', '#calc', '#copy', '#download', '#dl', '#r-hourly', '#r-weekly', '#r-biweekly', '#r-monthly', '#r-annual', '#r-ot', '#msg'] },
   { path: 'vat-tax-calculator/', name: 'vat-tax-calculator', selectors: ['#amount', '#rate', '#mode', '#calc', '#copy', '#download', '#dl', '#r-net', '#r-tax', '#r-gross', '#msg'] },
   { path: 'markup-margin-calculator/', name: 'markup-margin-calculator', selectors: ['#cost', '#price', '#target-margin', '#calc', '#calc-price', '#copy', '#download', '#dl', '#r-markup', '#r-margin', '#r-profit', '#r-price', '#msg'] },
+  { path: 'roi-calculator/', name: 'roi-calculator', selectors: ['#invest', '#return', '#years', '#calc', '#r-roi', '#r-profit', '#r-cagr', '#year-table', '#year-body', '#download', '#dl', '#msg'] },
+  { path: 'zakat-calculator/', name: 'zakat-calculator', selectors: ['#cash', '#gold-g', '#gold-price', '#silver-g', '#silver-price', '#business', '#debts', '#calc', '#r-net', '#r-nisab', '#r-zakat', '#breakdown', '#download', '#dl', '#msg'] },
+  { path: 'pregnancy-due-date-calculator/', name: 'pregnancy-due-date-calculator', selectors: ['#lmp', '#cycle', '#calc', '#r-due', '#r-weeks', '#r-conception', '#r-tri1', '#r-tri2', '#r-tri3', '#download', '#dl', '#msg'] },
+  { path: 'gold-weight-converter/', name: 'gold-weight-converter', selectors: ['#val', '#from', '#convert', '#r-tola', '#r-masha', '#r-ratti', '#r-bhori', '#r-gram', '#r-kg', '#r-troyoz', '#msg'] },
+  { path: 'land-area-converter/', name: 'land-area-converter', selectors: ['#val', '#from', '#convert', '#r-decimal', '#r-katha', '#r-bigha', '#r-acre', '#r-hectare', '#r-sqft', '#r-sqm', '#r-marla', '#r-kanal', '#msg'] },
   { path: 'feedback/', name: 'feedback', selectors: ['#feedback-form', '#fb-tool', '#fb-message', '#fb-name', '#fb-email', '#fb-submit', '#fb-target', '#fb-msg'] },
 ];
 

@@ -75,7 +75,7 @@ const emojiRe = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}]
 ok(!emojiRe.test(doc.body.textContent), 'no emoji anywhere in page text');
 ok(!!doc.querySelector('script[src*="googletagmanager.com/gtag/js?id=G-KX85CZXTR4"]'), 'GA4 script present');
 ok(doc.querySelector('.eyebrow')?.textContent.includes('No. 42'), 'eyebrow says "No. 42"');
-ok(doc.querySelector('.foot-copy')?.textContent.includes('58 tools'), 'footer count says "58 tools"');
+ok(doc.querySelector('.foot-copy')?.textContent.includes('63 tools'), 'footer count says "63 tools"');
 ok(doc.querySelectorAll('nav.more a').length === 5, 'nav.more has exactly 5 curated links');
 ok(typeof window.TD_signPdf === 'function', 'window.TD_signPdf is exposed');
 
