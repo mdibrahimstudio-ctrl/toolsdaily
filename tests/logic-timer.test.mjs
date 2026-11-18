@@ -62,17 +62,17 @@ console.log('TIMER STATIC');
   const related = ['date-difference-calculator', 'age-calculator', 'percentage-calculator', 'tip-calculator', 'bmi-calculator', 'gpa-calculator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'timer: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 60, 'sitemap.xml has 60 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'sitemap includes stopwatch-countdown-timer');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 58, 'home has exactly 58 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home has exactly 63 tool cards');
   ok(home.includes('/stopwatch-countdown-timer/'), 'home cards + nav include stopwatch-countdown-timer');
-  ok(home.includes('Fifty-eight handy tools'), 'home lead says Fifty-eight tools');
-  ok(home.includes('Search 58 tools'), 'home search placeholder says 58 tools');
-  ok(home.includes('Calculators <span class="n">16</span>'), 'home Calculators chip says 16');
+  ok(home.includes('Sixty-three handy tools'), 'home lead says Fifty-eight tools');
+  ok(home.includes('Search 63 tools'), 'home search placeholder says 63 tools');
+  ok(home.includes('Calculators <span class="n">19</span>'), 'home Calculators chip says 19');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
   ok(llms.includes('https://toolsdaily.vercel.app/stopwatch-countdown-timer/'), 'llms.txt lists the new tool');
-  ok(llms.includes('browse all 58 free tools'), 'llms.txt says 58 tools');
+  ok(llms.includes('browse all 63 free tools'), 'llms.txt says 63 tools');
 }
 
 console.log('TIMER CORE');
@@ -300,7 +300,7 @@ console.log('TIMER UI');
   setVal(hw, '#tool-search', 'calculator');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 16, 'home search "calculator" finds all 16 Calculators (v2 kicker labels make section membership searchable)');
+  ok(visible.length === 19, 'home search "calculator" finds all 19 Calculators (v2 kicker labels make section membership searchable)');
   homeDom.window.close();
   dom.window.close();
 }

@@ -80,7 +80,7 @@ console.log('SALARY STATIC');
   const related = ['emi-calculator', 'loan-calculator', 'compound-interest-calculator', 'tip-calculator', 'percentage-calculator'];
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'salary: nav.more has exactly the 5 related links, in order');
-  ok(html.includes('58 tools · New tools added regularly.'), 'salary: footer says 58 tools');
+  ok(html.includes('63 tools · New tools added regularly.'), 'salary: footer says 63 tools');
 }
 
 console.log('SALARY CORE');
