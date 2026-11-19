@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Number to Words Converter — Free Number to Words — ToolsDaily</title>
+<meta name="description" content="Free number to words converter: turn numbers into English words in plain, cheque, or currency style — entirely in your browser.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/number-to-words-converter/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Number to Words Converter — Free Number to Words — ToolsDaily">
+<meta property="og:description" content="Free number to words converter: turn numbers into English words in plain, cheque, or currency style — entirely in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/number-to-words-converter/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Number to Words Converter — Free Number to Words — ToolsDaily">
+<meta name="twitter:description" content="Free number to words converter: turn numbers into English words in plain, cheque, or currency style — entirely in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Number to Words Converter",
+    "url": "https://toolsdaily.vercel.app/number-to-words-converter/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free number to words converter: turn numbers into English words in plain, cheque, or currency style — entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I convert a number to words?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Type the number into the field and pick a style — plain words, cheque style, or currency — then click Convert. The result appears instantly, and you can copy it with one click. The converter works for whole numbers, decimals, and negative numbers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the largest number this converter can handle?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The converter handles numbers up to 999 trillion, which is 999,999,999,999,999. Anything larger returns an error, because the words get too long to be useful. Zero, negative numbers, and decimals are all supported within that range."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use the result on a cheque or in a document?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Cheque style capitalises the first letter and adds the word only at the end, for example One thousand two hundred thirty-four only. Currency mode writes the amount in dollars and cents, which is handy for invoices, contracts, and other documents. Always double-check the amount before you use it anywhere official."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a><a class="nav-feedback" href="/feedback/">Feedback</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">Converters · No. 68</p></div>
+<h1 class="rise rise-1">Number to Words Converter</h1>
+<p class="lead rise rise-2">Turn any number into English words — plain words, cheque style, or currency amounts.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="row">
+    <div><label for="num">Number</label><input type="number" id="num" step="any" value="1234"></div>
+    <div><label for="mode">Style</label><select id="mode"><option value="words" selected>Plain words</option><option value="cheque">Cheque style</option><option value="currency">Currency</option></select></div>
+    <div><label for="currency">Currency</label><select id="currency"><option value="USD" selected>USD — dollars</option><option value="EUR">EUR — euros</option><option value="GBP">GBP — pounds</option></select></div>
+  </div>
+  <p><button id="convert" type="button">Convert</button> <button id="copy" type="button" class="secondary">Copy result</button> <button id="reset" type="button" class="secondary">Reset</button></p>
+  <p class="msg" id="msg"></p>
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="r-result">–</b><span>Words</span></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var ONES = ['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  var TENS = ['', '', 'twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  var SCALES = ['', ' thousand', ' million', ' billion', ' trillion'];
+  var MAX_ABS = 1000000000000000; // 1 quadrillion: anything at or beyond it is out of range (up to 999 trillion supported)
+  var ERR_RANGE = 'Please enter a number between minus 999 trillion and 999 trillion.';
+  var ERR_NUM = 'Please enter a valid number.';
+
+  function parseNum(v){
+    var s;
+    if (typeof v === 'number') {
+      if (typeof v !== 'number' || isNaN(v) || !isFinite(v)) return { error: ERR_NUM };
+      if (Math.abs(v) >= MAX_ABS) return { error: ERR_RANGE };
+      s = String(v);
+      if (/e/i.test(s)) {
+        // Scientific notation only arises for very large/small magnitudes here;
+        // large ones are already rejected above, small ones are plain decimals.
+        if (Math.abs(v) >= 1) return { error: ERR_RANGE };
+        s = v.toFixed(15).replace(/0+$/, '').replace(/\.$/, '');
+      }
+    } else if (typeof v === 'string') {
+      s = v.trim();
+      if (s === '') return { error: ERR_NUM };
+      if (!/^-?(\d+(\.\d*)?|\.\d+)$/.test(s)) return { error: ERR_NUM };
+    } else {
+      return { error: ERR_NUM };
+    }
+    var neg = s.charAt(0) === '-';
+    if (neg) s = s.slice(1);
+    var parts = s.split('.');
+    var intPart = parts[0] === '' ? '0' : parts[0].replace(/^0+(?=\d)/, '');
+    var fracPart = parts.length > 1 ? parts[1] : null;
+    if (fracPart === '') fracPart = null;
+    if (intPart.length > 15) return { error: ERR_RANGE };
+    if (intPart.length === 15 && Number(intPart.slice(0, 1)) >= 1 && intPart === '1000000000000000') return { error: ERR_RANGE };
+    // Any 15-digit integer is below 1 quadrillion, so it is in range.
+    var isZero = /^0+$/.test(intPart) && (!fracPart || /^0+$/.test(fracPart));
+    return { neg: neg && !isZero, intPart: intPart, fracPart: fracPart };
+  }
+  function under1000(n){
+    var out = [];
+    if (n >= 100) {
+      out.push(ONES[Math.floor(n / 100)] + ' hundred');
+      n = n % 100;
+    }
+    if (n >= 20) {
+      var t = TENS[Math.floor(n / 10)];
+      out.push(n % 10 ? t + '-' + ONES[n % 10] : t);
+    } else if (n > 0) {
+      out.push(ONES[n]);
+    }
+    return out.join(' ');
+  }
+  function integerToWords(intStr){
+    if (/^0+$/.test(intStr)) return 'zero';
+    var groups = [];
+    var s = intStr;
+    while (s.length > 0) {
+      groups.unshift(parseInt(s.slice(-3), 10));
+      s = s.slice(0, -3);
+    }
+    var words = [];
+    for (var i = 0; i < groups.length; i++) {
+      if (groups[i] === 0) continue;
+      var scale = SCALES[groups.length - 1 - i];
+      if (scale === undefined) return null;
+      words.push(under1000(groups[i]) + scale);
+    }
+    return words.join(' ');
+  }
+  function toWords(v){
+    var p = parseNum(v);
+    if (p.error) return { error: p.error };
+    var words = integerToWords(p.intPart);
+    if (words === null) return { error: ERR_RANGE };
+    if (p.fracPart) {
+      var digits = p.fracPart.split('').map(function(d){ return ONES[parseInt(d, 10)]; });
+      words += ' point ' + digits.join(' ');
+    }
+    if (p.neg) words = 'minus ' + words;
+    return words;
+  }
+  function toCheque(v){
+    var r = toWords(v);
+    if (typeof r !== 'string') return r;
+    return r.charAt(0).toUpperCase() + r.slice(1) + ' only';
+  }
+  var CURRENCIES = {
+    USD: { one: 'dollar', many: 'dollars', subOne: 'cent', subMany: 'cents' },
+    EUR: { one: 'euro', many: 'euros', subOne: 'cent', subMany: 'cents' },
+    GBP: { one: 'pound', many: 'pounds', subOne: 'penny', subMany: 'pence' }
+  };
+  function toCurrency(v, currency){
+    var code = currency === undefined || currency === null || currency === '' ? 'USD' : String(currency).toUpperCase();
+    var cur = CURRENCIES[code];
+    if (!cur) return { error: 'Please choose USD, EUR, or GBP.' };
+    var num;
+    if (typeof v === 'number') {
+      if (isNaN(v) || !isFinite(v)) return { error: ERR_NUM };
+      num = v;
+    } else if (typeof v === 'string') {
+      if (v.trim() === '' || !/^-?(\d+(\.\d*)?|\.\d+)$/.test(v.trim())) return { error: ERR_NUM };
+      num = parseFloat(v);
+    } else {
+      return { error: ERR_NUM };
+    }
+    if (Math.abs(num) >= MAX_ABS) return { error: ERR_RANGE };
+    var neg = num < 0;
+    var totalCents = Math.round(Math.abs(num) * 100);
+    var whole = Math.floor(totalCents / 100);
+    var cents = totalCents % 100;
+    var wholeWords = integerToWords(String(whole));
+    if (wholeWords === null) return { error: ERR_RANGE };
+    var out = wholeWords + ' ' + (whole === 1 ? cur.one : cur.many);
+    if (cents > 0) {
+      out += ' and ' + integerToWords(String(cents)) + ' ' + (cents === 1 ? cur.subOne : cur.subMany);
+    }
+    if (neg && totalCents !== 0) out = 'minus ' + out;
+    return out;
+  }
+  window.TD_numwords = { toWords: toWords, toCheque: toCheque, toCurrency: toCurrency };
+  var msgEl = document.getElementById('msg');
+  var resultEl = document.getElementById('r-result');
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function convertCurrent(){
+    var raw = document.getElementById('num').value;
+    var mode = document.getElementById('mode').value;
+    var currency = document.getElementById('currency').value;
+    var r;
+    if (mode === 'cheque') r = toCheque(raw);
+    else if (mode === 'currency') r = toCurrency(raw, currency);
+    else r = toWords(raw);
+    if (typeof r !== 'string') { showMsg(r.error, 'err'); resultEl.textContent = '–'; return null; }
+    showMsg('', '');
+    resultEl.textContent = r;
+    return r;
+  }
+  ['num', 'mode', 'currency'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', convertCurrent);
+    document.getElementById(id).addEventListener('change', convertCurrent);
+  });
+  document.getElementById('convert').addEventListener('click', convertCurrent);
+  document.getElementById('reset').addEventListener('click', function(){
+    document.getElementById('num').value = '1234';
+    document.getElementById('mode').value = 'words';
+    document.getElementById('currency').value = 'USD';
+    convertCurrent();
+  });
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = resultEl.textContent;
+    if (!text || text === '–') { showMsg('Nothing to copy yet — enter a valid number first.', 'err'); return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      showMsg(ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.', ok ? 'ok' : 'err');
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  convertCurrent();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type a number — for example 1234 — into the number field.</li>
+    <li>Pick a style: plain words, cheque style, or currency.</li>
+    <li>Click Convert to see the result in words, or copy it straight to your clipboard.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>How do I convert a number to words?</summary><p>Type the number into the field and pick a style — plain words, cheque style, or currency — then click Convert. The result appears instantly, and you can copy it with one click. The converter works for whole numbers, decimals, and negative numbers.</p></details>
+  <details><summary>What is the largest number this converter can handle?</summary><p>The converter handles numbers up to 999 trillion, which is 999,999,999,999,999. Anything larger returns an error, because the words get too long to be useful. Zero, negative numbers, and decimals are all supported within that range.</p></details>
+  <details><summary>Can I use the result on a cheque or in a document?</summary><p>Yes. Cheque style capitalises the first letter and adds the word only at the end, for example One thousand two hundred thirty-four only. Currency mode writes the amount in dollars and cents, which is handy for invoices, contracts, and other documents. Always double-check the amount before you use it anywhere official.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../roman-numeral-converter/">Roman Numeral Converter</a></li>
+        <li><a href="../unit-converter/">Unit Converter</a></li>
+        <li><a href="../currency-converter/">Currency Converter</a></li>
+        <li><a href="../binary-text-converter/">Binary / Text Converter</a></li>
+        <li><a href="../date-difference-calculator/">Date Difference Calculator</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>68 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
