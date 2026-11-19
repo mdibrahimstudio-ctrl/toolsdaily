@@ -27,6 +27,7 @@
 - [EMI Calculator](https://toolsdaily.vercel.app/emi-calculator/): Free EMI calculator: work out the monthly payment on any loan from the amount, interest rate and tenure, plus the total interest you'll pay back.
 - [Fancy Text Generator](https://toolsdaily.vercel.app/fancy-text-generator/): Free fancy text generator: turn plain text into bold, italic, script, fraktur, circled, fullwidth and 12 more stylish Unicode fonts for Instagram, TikTok and gaming bios — copy any style in one click.
 - [GPA Calculator](https://toolsdaily.vercel.app/gpa-calculator/): Free GPA calculator: work out your GPA on a 4.0 scale from course grades and credit hours, and find the GPA you need to hit your target.
+- [Fraction Calculator](https://toolsdaily.vercel.app/fraction-calculator/): Free fraction calculator: add, subtract, multiply and divide fractions — auto-simplified with decimal output and step-by-step working.
 - [Gold Weight Converter](https://toolsdaily.vercel.app/gold-weight-converter/): Free gold weight converter: convert between tola, bhori, masha, ratti, grams, kilograms and troy ounces.
 - [Image Compressor](https://toolsdaily.vercel.app/image-compressor/): Free image compressor: reduce image file size with a quality slider and optional resize.
 - [Image Converter](https://toolsdaily.vercel.app/image-converter/): Free image converter: change images between PNG, JPEG and WebP formats online.
@@ -41,6 +42,7 @@
 - [Markup & Margin Calculator](https://toolsdaily.vercel.app/markup-margin-calculator/): Free markup and margin calculator: work out markup, margin and profit from cost and price — or the price you need for a target margin.
 - [Morse Code Translator](https://toolsdaily.vercel.app/morse-code-translator/): Free Morse code translator: convert text to Morse code and decode Morse code back to text, with audio playback at any speed.
 - [Mortgage Calculator](https://toolsdaily.vercel.app/mortgage-calculator/): Free mortgage calculator: work out the monthly payment on a home loan — principal and interest plus tax, insurance and PMI — with a full amortization schedule and CSV download.
+- [Number to Words Converter](https://toolsdaily.vercel.app/number-to-words-converter/): Free number to words converter: turn numbers into English words — plain, cheque-style or currency mode.
 - [OCR PDF](https://toolsdaily.vercel.app/ocr-pdf/): Free OCR for PDFs: read scanned or image-only PDFs into selectable text in your browser, then download it as .txt.
 - [Organize PDF](https://toolsdaily.vercel.app/organize-pdf/): Free PDF organizer: delete, reorder and rotate PDF pages with thumbnails, then save the rearranged file.
 - [Password Generator](https://toolsdaily.vercel.app/password-generator/): Free password generator: create strong, truly random passwords with your browser's secure random generator.
@@ -56,12 +58,15 @@
 - [Random Number Generator](https://toolsdaily.vercel.app/random-number-generator/): Free random number generator: pick random numbers in any range, with unique-only and sort options.
 - [ROI Calculator](https://toolsdaily.vercel.app/roi-calculator/): Free ROI calculator: work out your return on investment, net profit and annualized return (CAGR) — with a year-by-year growth table.
 - [Remove Duplicate Lines](https://toolsdaily.vercel.app/remove-duplicate-lines/): Free duplicate line remover: paste text, remove duplicate lines while keeping the original order, with case-insensitive, trim and sort options.
+- [Roman Numeral Converter](https://toolsdaily.vercel.app/roman-numeral-converter/): Free Roman numeral converter: convert numbers to Roman numerals and back — 1 to 3999, with validation.
 - [Salary & Hourly Pay Calculator](https://toolsdaily.vercel.app/salary-pay-calculator/): Free salary and hourly pay calculator: convert pay between hourly, weekly, biweekly, monthly and annual, with time-and-a-half overtime.
+- [Scientific Calculator](https://toolsdaily.vercel.app/scientific-calculator/): Free scientific calculator: trig, logs, powers, roots and pi/e — with a full keypad and calculation history.
 - [Sign PDF](https://toolsdaily.vercel.app/sign-pdf/): Free PDF signer: draw, type or upload a signature and stamp it onto any pages of a PDF.
 - [Stopwatch & Countdown Timer](https://toolsdaily.vercel.app/stopwatch-countdown-timer/): Free online stopwatch with lap times and a countdown timer with presets and an alarm, right in your browser.
 - [Text Case Converter](https://toolsdaily.vercel.app/text-case-converter/): Free text case converter: change text to UPPERCASE, lowercase, Title Case, Sentence case, alternating case, or reverse it.
 - [Text to Speech](https://toolsdaily.vercel.app/text-to-speech/): Free text to speech reader: type or paste any text and hear it read aloud in your browser, with your choice of voice, speed and pitch.
 - [Tip Calculator](https://toolsdaily.vercel.app/tip-calculator/): Free tip calculator: work out the tip, the total bill and each person's share.
+- [Typing Speed Test](https://toolsdaily.vercel.app/typing-speed-test/): Free typing speed test: test your typing speed in 60 seconds — live WPM and accuracy, with instant restart.
 - [Unit Converter](https://toolsdaily.vercel.app/unit-converter/): Free unit converter for length, weight and temperature: kilometres to miles, kilograms to pounds, Celsius to Fahrenheit and more, with instant results.
 - [Unlock PDF](https://toolsdaily.vercel.app/unlock-pdf/): Free PDF unlocker: remove the password from a PDF you own, when you already know the password.
 - [URL Encoder / Decoder](https://toolsdaily.vercel.app/url-encoder-decoder/): Free URL encoder and decoder: percent-encode text for safe use in links and query strings, or decode an encoded URL back to readable text.
@@ -75,5 +80,5 @@
 
 ## Site
 
-- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 63 free tools by category, with live search.
+- [ToolsDaily home](https://toolsdaily.vercel.app/): browse all 68 free tools by category, with live search.
 - [Feedback](https://toolsdaily.vercel.app/feedback/): suggest a new tool or report a problem with one — we read every message.
