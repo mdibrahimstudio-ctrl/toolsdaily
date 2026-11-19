@@ -80,7 +80,7 @@ console.log('LOAN STATIC');
   const related = ['emi-calculator', 'mortgage-calculator', 'compound-interest-calculator', 'percentage-calculator', 'tip-calculator'];
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'loan: More-tools nav lists exactly the 5 related tools in order');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'loan: footer count line stays "63 tools"');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'loan: footer count line stays "68 tools"');
   ok(!/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]/u.test(html), 'loan: no emoji anywhere in the page');
 }
 

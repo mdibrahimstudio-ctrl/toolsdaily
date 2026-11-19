@@ -78,7 +78,7 @@ console.log('MARKUP STATIC');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'markup: nav.more has exactly the 5 related links in order');
   ok(nav.includes('% Percentage Calculator') && nav.includes('Discount Calculator') && nav.includes('Tip Calculator') && nav.includes('EMI Calculator') && nav.includes('Loan Calculator'), 'markup: nav.more display names correct');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'markup: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'markup: footer says 68 tools');
 }
 
 console.log('MARKUP CORE');

@@ -78,7 +78,7 @@ console.log('ROI STATIC');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'roi: nav.more has exactly the 5 related links in order');
   ok(nav.includes('Compound Interest Calculator') && nav.includes('EMI Calculator') && nav.includes('Loan Calculator') && nav.includes('Mortgage Calculator') && nav.includes('% Percentage Calculator'), 'roi: nav.more display names correct');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'roi: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'roi: footer says 68 tools');
 }
 
 console.log('ROI CORE');

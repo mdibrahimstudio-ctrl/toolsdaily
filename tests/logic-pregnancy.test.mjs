@@ -78,7 +78,7 @@ console.log('PREGNANCY STATIC');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'pregnancy: nav.more has exactly the 5 related links in order');
   ok(nav.includes('Age Calculator') && nav.includes('Date Difference Calculator') && nav.includes('BMI Calculator') && nav.includes('Calorie &amp; TDEE Calculator') && nav.includes('Tip Calculator'), 'pregnancy: nav.more display names correct');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'pregnancy: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'pregnancy: footer says 68 tools');
   ok(html.includes('Estimate only'), 'pregnancy: estimate-only note present');
 }
 
