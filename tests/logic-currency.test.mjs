@@ -76,7 +76,7 @@ console.log('CURRENCY STATIC');
     nav.indexOf('base64-encoder-decoder') < nav.indexOf('json-formatter') &&
     nav.indexOf('json-formatter') < nav.indexOf('url-encoder-decoder'), 'currency: nav.more links are the 5 related tools in order');
   ok(nav.includes('>Unit Converter<') && nav.includes('>Color Converter<') && nav.includes('>Base64 Encoder / Decoder<') && nav.includes('>JSON Formatter<') && nav.includes('>URL Encoder / Decoder<'), 'currency: nav.more display names match the target pages');
-  ok(html.includes('63 tools · New tools added regularly.'), 'currency: footer says 63 tools');
+  ok(html.includes('68 tools · New tools added regularly.'), 'currency: footer says 68 tools');
   ok(html.includes('Offline fallback rates as of 2026-11-17'), 'currency: fallback snapshot is dated 2026-11-17 in the UI');
   ok(!/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(html), 'currency: no emoji anywhere on the page');
 }

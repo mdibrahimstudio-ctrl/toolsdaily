@@ -74,7 +74,7 @@ console.log('COMPOUND STATIC');
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'compound: More-tools nav links exactly its 5 related tools in order');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'compound: nav.more order is emi, loan, mortgage, tip, percentage');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'compound: footer count line stays 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'compound: footer count line stays 68 tools');
 }
 
 console.log('COMPOUND CORE');

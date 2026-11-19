@@ -67,17 +67,17 @@ console.log('BINARY STATIC');
   const related = ['base64-encoder-decoder', 'morse-code-translator', 'url-encoder-decoder', 'json-formatter', 'unit-converter'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'binary: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 70, 'sitemap.xml has 70 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/binary-text-converter/'), 'sitemap includes binary-text-converter');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home has exactly 63 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 68, 'home has exactly 68 tool cards');
   ok(home.includes('/binary-text-converter/'), 'home cards + nav include binary-text-converter');
-  ok(home.includes('Sixty-three handy tools'), 'home lead says Fifty-eight tools');
-  ok(home.includes('Converters <span class="n">9</span>'), 'home Converters chip says 9');
+  ok(home.includes('Sixty-eight handy tools'), 'home lead says Sixty-eight tools');
+  ok(home.includes('Converters <span class="n">11</span>'), 'home Converters chip says 11');
   const convSec = home.match(/<section class="cat" id="converters"[\s\S]*?<\/section>/)[0];
-  ok(convSec.includes('<span class="cat-n">9 tools</span>'), 'home Converters section says 9 tools');
+  ok(convSec.includes('<span class="cat-n">11 tools</span>'), 'home Converters section says 11 tools');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
-  ok(llms.includes('browse all 63 free tools'), 'llms.txt says 63 tools');
+  ok(llms.includes('browse all 68 free tools'), 'llms.txt says 68 tools');
   ok(llms.includes('https://toolsdaily.vercel.app/binary-text-converter/'), 'llms.txt lists binary-text-converter');
 }
 
