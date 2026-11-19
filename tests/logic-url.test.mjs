@@ -61,12 +61,12 @@ console.log('URL STATIC');
   const related = ['base64-encoder-decoder', 'json-formatter', 'unit-converter', 'color-converter', 'qr-generator', 'binary-text-converter'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'url: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 70, 'sitemap.xml has 70 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/url-encoder-decoder/'), 'sitemap includes url-encoder-decoder');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home has exactly 63 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 68, 'home has exactly 68 tool cards');
   ok(home.includes('/url-encoder-decoder/'), 'home cards + nav include url-encoder-decoder');
-  ok(home.includes('Sixty-three handy tools'), 'home lead says Fifty-eight tools');
+  ok(home.includes('Sixty-eight handy tools'), 'home lead says Sixty-eight tools');
 }
 
 console.log('URL CORE');

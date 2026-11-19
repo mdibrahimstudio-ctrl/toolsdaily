@@ -61,12 +61,12 @@ console.log('TIP STATIC');
   const related = ['percentage-calculator', 'emi-calculator', 'bmi-calculator', 'age-calculator', 'date-difference-calculator', 'gpa-calculator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'tip: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 70, 'sitemap.xml has 70 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/tip-calculator/'), 'sitemap includes tip-calculator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home has exactly 63 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 68, 'home has exactly 68 tool cards');
   ok(home.includes('/tip-calculator/'), 'home cards + nav include tip-calculator');
-  ok(home.includes('Sixty-three handy tools'), 'home lead says Fifty-eight tools');
+  ok(home.includes('Sixty-eight handy tools'), 'home lead says Sixty-eight tools');
 }
 
 console.log('TIP CORE');
@@ -164,7 +164,7 @@ console.log('TIP UI');
   setVal(hw, '#tool-search', 'tip');
   await sleep(200); // v2 filter animates hides over 150ms before adding .hidden
   const visible = [...hw.document.querySelectorAll('.tool-card')].filter((x) => !x.classList.contains('hidden'));
-  ok(visible.length === 1 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/tip-calculator/', 'home search "tip" finds the new tool');
+  ok(visible.length === 2 && visible[0].getAttribute('href') === 'https://toolsdaily.vercel.app/tip-calculator/' && visible[1].getAttribute('href') === 'https://toolsdaily.vercel.app/fraction-calculator/', 'home search "tip" finds Tip Calculator first, then Fraction Calculator ("multiply" contains "tip")');
   homeDom.window.close();
   dom.window.close();
 }
