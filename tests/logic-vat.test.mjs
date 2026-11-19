@@ -78,7 +78,7 @@ console.log('VAT STATIC');
   ok(related.every((s) => nav.includes(`href="../${s}/"`)), 'vat: More-tools nav links the 5 related tools');
   ok(nav.indexOf('percentage-calculator') < nav.indexOf('tip-calculator') && nav.indexOf('tip-calculator') < nav.indexOf('emi-calculator') && nav.indexOf('emi-calculator') < nav.indexOf('loan-calculator') && nav.indexOf('loan-calculator') < nav.indexOf('discount-calculator'), 'vat: More-tools nav links are in the required order');
   ok(nav.includes('>Tip Calculator<') && nav.includes('>EMI Calculator<') && nav.includes('>Loan Calculator<') && nav.includes('>Discount Calculator<'), 'vat: More-tools nav uses the tools’ display names');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'vat: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'vat: footer says 68 tools');
   ok(!/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(html), 'vat: no emoji anywhere on the page');
   for (const id of ['#amount', '#rate', '#mode', '#calc', '#copy', '#download', '#reset', '#r-net', '#r-tax', '#r-gross', '#msg', '#dl']) {
     ok(html.includes(`id="${id.slice(1)}"`), `vat: element ${id} present`);

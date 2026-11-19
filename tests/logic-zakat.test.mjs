@@ -78,7 +78,7 @@ console.log('ZAKAT STATIC');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'zakat: nav.more has exactly the 5 related links in order');
   ok(nav.includes('ROI Calculator') && nav.includes('Compound Interest Calculator') && nav.includes('EMI Calculator') && nav.includes('Loan Calculator') && nav.includes('% Percentage Calculator'), 'zakat: nav.more display names correct');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'zakat: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'zakat: footer says 68 tools');
 }
 
 console.log('ZAKAT CORE');
