@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roman Numeral Converter — Free Roman Numerals Converter — ToolsDaily</title>
+<meta name="description" content="Free Roman numeral converter: turn any number from 1 to 3,999 into Roman numerals, or a Roman numeral back into a number — instantly, entirely in your browser.">
+<link rel="icon" type="image/png" sizes="192x192" href="https://toolsdaily.vercel.app/favicon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>try{var t=localStorage.getItem('td-theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}</script>
+<link rel="stylesheet" href="../assets/design.css">
+<link rel="canonical" href="https://toolsdaily.vercel.app/roman-numeral-converter/">
+<meta property="og:site_name" content="ToolsDaily">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Roman Numeral Converter — Free Roman Numerals Converter — ToolsDaily">
+<meta property="og:description" content="Free Roman numeral converter: turn any number from 1 to 3,999 into Roman numerals, or a Roman numeral back into a number — instantly, entirely in your browser.">
+<meta property="og:url" content="https://toolsdaily.vercel.app/roman-numeral-converter/">
+<meta property="og:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Roman Numeral Converter — Free Roman Numerals Converter — ToolsDaily">
+<meta name="twitter:description" content="Free Roman numeral converter: turn any number from 1 to 3,999 into Roman numerals, or a Roman numeral back into a number — instantly, entirely in your browser.">
+<meta name="twitter:image" content="https://toolsdaily.vercel.app/assets/og-image.png">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Roman Numeral Converter",
+    "url": "https://toolsdaily.vercel.app/roman-numeral-converter/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free Roman numeral converter: turn any number from 1 to 3,999 into Roman numerals, or a Roman numeral back into a number — instantly, entirely in your browser."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the largest number Roman numerals can show?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Roman numerals in the standard system go up to 3,999 (MMMCMXCIX). There is no symbol for zero, and numbers above 3,999 need extra notation such as a bar over a numeral, which this converter does not use — so it accepts numbers from 1 to 3,999 only."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is 4 written as IV and not IIII?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Roman numerals use subtractive notation: a smaller numeral placed before a larger one is subtracted. So 4 is IV (5 minus 1), 9 is IX, 40 is XL, 90 is XC, 400 is CD and 900 is CM. Writing IIII or VV breaks the rules, so this converter rejects those forms as invalid."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert a Roman numeral back to a number?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Type the numeral in the Roman numeral box — for example, MCMXCIV — and click Convert to Number. The converter checks every character and the order of the symbols, then shows the number (1994 for MCMXCIV). Lowercase letters work too, so xiv converts to 14."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KX85CZXTR4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-KX85CZXTR4');
+</script>
+</head>
+<body>
+<a class="skip" href="#tool">Skip to tool</a>
+<header class="site"><div class="wrap">
+  <a class="logo" href="../" aria-label="ToolsDaily — home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</a>
+  <span class="tag">Free everyday tools — no sign-up, files never leave your device</span>
+  <nav class="main-nav" aria-label="Main"><a href="../">All tools</a><a class="nav-feedback" href="/feedback/">Feedback</a></nav>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode"><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</div></header>
+<main>
+<div class="panel-head rise"><p class="eyebrow">Converters · No. 67</p></div>
+<h1 class="rise rise-1">Roman Numeral Converter</h1>
+<p class="lead rise rise-2">Convert numbers to Roman numerals and Roman numerals back to numbers — from 1 to 3,999, in both directions.</p>
+
+<div class="card rise rise-3" id="tool">
+  <div class="row">
+    <div><label for="num">Number (1–3,999)</label><input type="number" id="num" min="1" max="3999" step="1" value="2026"></div>
+    <div><label for="roman">Roman numeral</label><input type="text" id="roman" value="MMXXVI" autocapitalize="characters" spellcheck="false"></div>
+  </div>
+  <p><button id="to-roman" type="button">Convert to Roman</button> <button id="to-number" type="button" class="secondary">Convert to Number</button> <button id="copy" type="button" class="secondary">Copy result</button> <button id="reset" type="button" class="secondary">Reset</button></p>
+  <p class="msg" id="msg"></p>
+  <div id="results">
+    <div class="stats">
+      <div class="stat"><b id="r-result">MMXXVI</b><span>Result</span></div>
+    </div>
+  </div>
+  <section>
+    <h2>Quick reference</h2>
+    <table>
+      <thead><tr><th>Symbol</th><th>I</th><th>V</th><th>X</th><th>L</th><th>C</th><th>D</th><th>M</th></tr></thead>
+      <tbody><tr><th>Value</th><td>1</td><td>5</td><td>10</td><td>50</td><td>100</td><td>500</td><td>1,000</td></tr></tbody>
+    </table>
+    <table>
+      <thead><tr><th>Subtractive pair</th><th>IV</th><th>IX</th><th>XL</th><th>XC</th><th>CD</th><th>CM</th></tr></thead>
+      <tbody><tr><th>Value</th><td>4</td><td>9</td><td>40</td><td>90</td><td>400</td><td>900</td></tr></tbody>
+    </table>
+    <p>Examples: 14 = XIV · 44 = XLIV · 99 = XCIX · 1994 = MCMXCIV · 2026 = MMXXVI · 3999 = MMMCMXCIX</p>
+  </section>
+</div>
+<script>
+(function(){
+  // Standard Roman numerals, 1–3999. Subtractive pairs keep every value
+  // canonical: 4 is IV, never IIII; 900 is CM, never DCCCC.
+  var TABLE = [
+    [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+    [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+  ];
+  var VALUES = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+  // Strict canonical form: rejects IIII, VV, IC, IL, VX and friends.
+  var ROMAN_RE = /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
+  function toRoman(n){
+    if (n === undefined || n === null || typeof n !== 'number' || !isFinite(n) || !Number.isInteger(n)) return { error: 'Please enter a whole number.' };
+    if (n < 1) return { error: 'Please enter a number of 1 or more. Roman numerals have no zero or negative numbers.' };
+    if (n > 3999) return { error: 'Please enter a number of 3,999 or less. Standard Roman numerals go up to 3,999.' };
+    var out = '', rest = n;
+    for (var i = 0; i < TABLE.length; i++) {
+      while (rest >= TABLE[i][0]) { out += TABLE[i][1]; rest -= TABLE[i][0]; }
+    }
+    return out;
+  }
+  function fromRoman(s){
+    if (s === undefined || s === null || typeof s !== 'string') return { error: 'Please enter a Roman numeral.' };
+    var r = s.trim().toUpperCase();
+    if (r === '') return { error: 'Please enter a Roman numeral.' };
+    if (/[^IVXLCDM]/.test(r)) return { error: 'Invalid character in the Roman numeral. Only the letters I, V, X, L, C, D and M are allowed.' };
+    if (!ROMAN_RE.test(r)) return { error: 'That is not a valid Roman numeral. Check the order of the symbols — for example, 4 is IV, not IIII.' };
+    var total = 0;
+    for (var i = 0; i < r.length; i++) {
+      var v = VALUES[r[i]];
+      var next = i + 1 < r.length ? VALUES[r[i + 1]] : 0;
+      total += v < next ? -v : v;
+    }
+    return total;
+  }
+  function isValidRoman(s){
+    return typeof s === 'string' && s.trim() !== '' && typeof fromRoman(s) === 'number';
+  }
+  window.TD_roman = { toRoman: toRoman, fromRoman: fromRoman, isValidRoman: isValidRoman };
+  var msgEl = document.getElementById('msg');
+  var resultEl = document.getElementById('r-result');
+  function showMsg(text, kind){ msgEl.textContent = text; msgEl.className = 'msg ' + (kind || ''); }
+  function clearResult(){ resultEl.textContent = '–'; }
+  function convertToRoman(){
+    var raw = document.getElementById('num').value;
+    if (raw === '' || raw === null) { showMsg('Please enter a number from 1 to 3,999.', 'err'); clearResult(); return null; }
+    var n = Number(raw);
+    var r = toRoman(n);
+    if (r && r.error) { showMsg(r.error, 'err'); clearResult(); return null; }
+    showMsg('', '');
+    resultEl.textContent = r;
+    document.getElementById('roman').value = r;
+    return r;
+  }
+  function convertToNumber(){
+    var raw = document.getElementById('roman').value;
+    var r = fromRoman(raw);
+    if (r && r.error) { showMsg(r.error, 'err'); clearResult(); return null; }
+    showMsg('', '');
+    resultEl.textContent = String(r);
+    document.getElementById('num').value = String(r);
+    return r;
+  }
+  function currentText(){
+    var res = resultEl.textContent;
+    if (!res || res === '–') return null;
+    return document.getElementById('num').value + ' = ' + document.getElementById('roman').value;
+  }
+  document.getElementById('num').addEventListener('input', convertToRoman);
+  document.getElementById('roman').addEventListener('input', convertToNumber);
+  document.getElementById('to-roman').addEventListener('click', convertToRoman);
+  document.getElementById('to-number').addEventListener('click', convertToNumber);
+  document.getElementById('reset').addEventListener('click', function(){
+    document.getElementById('num').value = '2026';
+    document.getElementById('roman').value = 'MMXXVI';
+    convertToRoman();
+  });
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = currentText();
+    if (!text) { showMsg('Nothing to copy yet — enter a valid number or Roman numeral first.', 'err'); return; }
+    var settled = false;
+    function done(ok){
+      if (settled) return; settled = true;
+      showMsg(ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text and copy it manually.', ok ? 'ok' : 'err');
+    }
+    function fallback(){
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        var okCopy = document.execCommand && document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (okCopy) { done(true); return; }
+      } catch (e) { /* fall through */ }
+      done(false);
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        var timer = setTimeout(fallback, 1500);
+        navigator.clipboard.writeText(text).then(function(){ clearTimeout(timer); done(true); }, function(){ clearTimeout(timer); fallback(); });
+        return;
+      }
+    } catch (e) { /* fall through to the fallback */ }
+    fallback();
+  });
+  convertToRoman();
+})();
+</script>
+<section><h2>How to use</h2><ol>
+    <li>Type a number from 1 to 3,999 in the number box and click “Convert to Roman” — or type a Roman numeral in the other box and click “Convert to Number”.</li>
+    <li>Check the result below the buttons. Typing in either box converts as you type, and the other box fills in automatically.</li>
+    <li>Use the reference table above to read any numeral by hand, and click “Copy result” to copy the conversion to your clipboard.</li>
+</ol></section>
+<section><h2>FAQ</h2>
+  <details><summary>What is the largest number Roman numerals can show?</summary><p>Roman numerals in the standard system go up to 3,999 (MMMCMXCIX). There is no symbol for zero, and numbers above 3,999 need extra notation such as a bar over a numeral, which this converter does not use — so it accepts numbers from 1 to 3,999 only.</p></details>
+  <details><summary>Why is 4 written as IV and not IIII?</summary><p>Roman numerals use subtractive notation: a smaller numeral placed before a larger one is subtracted. So 4 is IV (5 minus 1), 9 is IX, 40 is XL, 90 is XC, 400 is CD and 900 is CM. Writing IIII or VV breaks the rules, so this converter rejects those forms as invalid.</p></details>
+  <details><summary>How do I convert a Roman numeral back to a number?</summary><p>Type the numeral in the Roman numeral box — for example, MCMXCIV — and click Convert to Number. The converter checks every character and the order of the symbols, then shows the number (1994 for MCMXCIV). Lowercase letters work too, so xiv converts to 14.</p></details>
+</section>
+<nav class="more"><h2>More tools</h2><ul>
+        <li><a href="../unit-converter/">Unit Converter</a></li>
+        <li><a href="../binary-text-converter/">Binary / Text Converter</a></li>
+        <li><a href="../number-to-words-converter/">Number to Words Converter</a></li>
+        <li><a href="../color-converter/">Color Converter</a></li>
+        <li><a href="../currency-converter/">Currency Converter</a></li>
+</ul></nav>
+</main>
+<footer class="site"><div class="foot-wrap">
+  <div class="foot-top">
+    <p class="foot-brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.4 L6 13.2 h4.08 L9.6 21.6 L18 10.8 h-4.32 z"/></svg></span> ToolsDaily</p>
+    <nav class="foot-nav" aria-label="Footer">
+      <a href="../#ai-tools">AI Tools</a>
+      <a href="../#image-tools">Image Tools</a>
+      <a href="../#pdf-tools">PDF Tools</a>
+      <a href="../#calculators">Calculators</a>
+      <a href="../#text-tools">Text Tools</a>
+      <a href="../#converters">Converters</a>
+      <a href="../#generators">Generators</a>
+      <a href="../feedback/">Feedback</a>
+    </nav>
+  </div>
+  <p class="foot-note">Privacy first: every ToolsDaily tool runs 100% in your browser. Your files and text are never uploaded to a server.</p>
+  <div class="foot-copy"><p>© <span id="year">2026</span> ToolsDaily — free tools for everyday tasks.</p><p>68 tools · New tools added regularly.</p></div>
+</div></footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
