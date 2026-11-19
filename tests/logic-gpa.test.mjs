@@ -61,17 +61,17 @@ console.log('GPA STATIC');
   const related = ['percentage-calculator', 'bmi-calculator', 'age-calculator', 'emi-calculator', 'date-difference-calculator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'gpa: More-tools nav links exactly its 5 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 70, 'sitemap.xml has 70 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/gpa-calculator/'), 'sitemap includes gpa-calculator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home has exactly 63 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 68, 'home has exactly 68 tool cards');
   ok(home.includes('/gpa-calculator/'), 'home cards + nav include gpa-calculator');
-  ok(home.includes('Sixty-three handy tools'), 'home lead says Fifty-eight tools');
-  ok(home.includes('Calculators <span class="n">19</span>'), 'home Calculators chip says 19');
+  ok(home.includes('Sixty-eight handy tools'), 'home lead says Sixty-eight tools');
+  ok(home.includes('Calculators <span class="n">21</span>'), 'home Calculators chip says 21');
   const calcSec = home.match(/<section class="cat" id="calculators"[\s\S]*?<\/section>/)[0];
-  ok(calcSec.includes('<span class="cat-n">19 tools</span>'), 'home Calculators section says 19 tools');
+  ok(calcSec.includes('<span class="cat-n">21 tools</span>'), 'home Calculators section says 21 tools');
   const llms = fs.readFileSync(path.join(SITE, 'llms.txt'), 'utf8');
-  ok(llms.includes('browse all 63 free tools'), 'llms.txt says 63 tools');
+  ok(llms.includes('browse all 68 free tools'), 'llms.txt says 68 tools');
   ok(llms.includes('https://toolsdaily.vercel.app/gpa-calculator/'), 'llms.txt lists gpa-calculator');
 }
 

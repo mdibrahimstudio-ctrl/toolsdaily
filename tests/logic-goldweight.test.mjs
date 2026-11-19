@@ -77,7 +77,7 @@ console.log('GOLDWEIGHT STATIC');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'goldweight: nav.more has exactly the 5 related links in order');
   ok(nav.includes('Unit Converter') && nav.includes('Currency Converter') && nav.includes('Color Converter') && nav.includes('Base64 Encoder / Decoder') && nav.includes('JSON Formatter'), 'goldweight: nav.more display names correct');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'goldweight: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'goldweight: footer says 68 tools');
   ok(html.includes('1 tola = 11.6638 g'), 'goldweight: conversion factors stated on the page');
 }
 

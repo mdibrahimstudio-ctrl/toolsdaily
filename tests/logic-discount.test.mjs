@@ -73,7 +73,7 @@ console.log('DISCOUNT STATIC');
   ok((nav.match(/<li>/g) || []).length === 5, 'discount: nav.more has exactly 5 related links');
   ok(related.every((s, i) => nav.indexOf(`href="../${s}/"`) > (i === 0 ? -1 : nav.indexOf(`href="../${related[i - 1]}/"`))), 'discount: nav.more links in order tip, percentage, emi, loan, mortgage');
   ok(nav.includes('>Tip Calculator<') && nav.includes('>Percentage Calculator<') && nav.includes('>EMI Calculator<') && nav.includes('>Loan Calculator<') && nav.includes('>Mortgage Calculator<'), 'discount: nav.more display names match the linked pages');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'discount: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'discount: footer says 68 tools');
   for (const id of ['price', 'pct', 'qty', 'calc', 'copy', 'download', 'reset', 'r-final', 'r-savings', 'r-orig', 'r-each', 'msg', 'dl']) {
     ok(html.includes(`id="${id}"`), `discount: element #${id} present`);
   }

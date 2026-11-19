@@ -82,7 +82,7 @@ console.log('LANDAREA STATIC');
   const navHrefs = [...nav.matchAll(/href="\.\.\/([^/]+)\/"/g)].map((m) => m[1]);
   ok(JSON.stringify(navHrefs) === JSON.stringify(related), 'landarea: nav.more has exactly the 5 related links in order');
   ok(nav.includes('Unit Converter') && nav.includes('Currency Converter') && nav.includes('Color Converter') && nav.includes('Base64 Encoder / Decoder') && nav.includes('URL Encoder / Decoder'), 'landarea: nav.more display names correct');
-  ok(html.includes('<p>63 tools · New tools added regularly.</p>'), 'landarea: footer says 63 tools');
+  ok(html.includes('<p>68 tools · New tools added regularly.</p>'), 'landarea: footer says 68 tools');
 }
 
 console.log('LANDAREA CORE');

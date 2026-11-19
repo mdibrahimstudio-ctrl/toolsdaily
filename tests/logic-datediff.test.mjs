@@ -61,10 +61,10 @@ console.log('DATEDIFF STATIC');
   const related = ['age-calculator', 'stopwatch-countdown-timer', 'percentage-calculator', 'bmi-calculator', 'emi-calculator', 'gpa-calculator'];
   ok((nav.match(/<li>/g) || []).length === related.length && related.every((s) => nav.includes(`href="../${s}/"`)), 'datediff: More-tools nav links exactly its 6 related tools');
   const sitemap = fs.readFileSync(path.join(SITE, 'sitemap.xml'), 'utf8');
-  ok((sitemap.match(/<loc>/g) || []).length === 65, 'sitemap.xml has 65 URLs');
+  ok((sitemap.match(/<loc>/g) || []).length === 70, 'sitemap.xml has 70 URLs');
   ok(sitemap.includes('https://toolsdaily.vercel.app/date-difference-calculator/'), 'sitemap includes date-difference-calculator');
   const home = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
-  ok((home.match(/class="tool-card[\s"]/g) || []).length === 63, 'home has exactly 63 tool cards');
+  ok((home.match(/class="tool-card[\s"]/g) || []).length === 68, 'home has exactly 68 tool cards');
   ok(home.includes('/date-difference-calculator/'), 'home cards + nav include date-difference-calculator');
 }
 
